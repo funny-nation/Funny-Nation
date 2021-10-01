@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: discord
+Version: 1.7.3
+Summary: A mirror package for discord.py. Please install that instead.
+Home-page: https://github.com/Rapptz/discord.py
+Author: Rapptz
+License: UNKNOWN
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+Requires-Dist: discord.py (>=1.7.3)
+
+### This is a mirror package!
+
+It is recommended to install `discord.py` instead.
+
+
