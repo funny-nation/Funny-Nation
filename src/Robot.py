@@ -9,5 +9,5 @@ class Robot(discord.Client):
             print(channel)
 
     async def on_message(self, message):
-        logger.info(message.author.name + ' : ' + message.content)
+        logger.info(str(message.author.id) + ' : ' + message.content)
 
