@@ -21,6 +21,7 @@ def helperThreat(self):
         myGuild = self.guilds[0]
         voiceChannels = myGuild.voice_channels
         db = makeDatabaseConnection.makeDatabaseConnection()
+        logger.info("Finding who is in voice channel")
         for voiceChannel in voiceChannels:
             if myGuild.afk_channel is not None:
                 if voiceChannel == myGuild.afk_channel:
