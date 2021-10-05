@@ -32,6 +32,7 @@ def whenSomeoneSendMessage(userID, hasBoosted, db) -> bool:
             logger.error(f"Cannot create new account to {userID} when sending message. ")
             return False
         userInfo = userManagement.getUser(db, userID)
+        logger.info("New account created for " + userID)
         if userInfo is None:
             logger.error(f"Cannot get {userID} information")
             return False
@@ -56,6 +57,7 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
         logger.info(f"Added {int(config['moneyEarning']['perMessage'])} to user {userInfo[0]}")
         return userManagement.editUser(db, userInfo[0], money=moneyAdded,
                                        lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
+    logger.info(f"No added to {userInfo[0]}")
     return True
 
 

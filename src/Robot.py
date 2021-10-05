@@ -18,6 +18,7 @@ class Robot(discord.Client):
     async def on_message(self, message):
         if message.author == self.user:
             return
+        logger.info(f"{message.author.id} : {message.content}")
         db = makeDatabaseConnection()
         isBooster = checkIfMessagerIsBooster(self, message.author)
         whenSomeoneSendMessage(message.author.id, isBooster, db)

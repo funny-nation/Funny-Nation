@@ -35,7 +35,8 @@ def helperThreat(self):
                     # not existed? create a new account
                     if not userManagement.addNewUser(db, userID):
                         logger.error(f"Cannot create new account to {userID} when sending message. ")
-
+                    else:
+                        logger.info(f"New account created for user {userID}")
                 if voiceStates[userID].self_mute:
                     continue
                 if voiceStates[userID].self_stream:
