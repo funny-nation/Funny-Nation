@@ -34,16 +34,16 @@ def helperThreat(self):
                 if userInfo is None:
                     # not existed? create a new account
                     if not userManagement.addNewUser(db, userID):
-                        logger.error(f"Cannot create new account to {userID} when sending message. ")
+                        logger.error(f"Cannot create new account to {str(userID)} when sending message. ")
                     else:
-                        logger.info(f"New account created for user {userID}")
+                        logger.info(f"New account created for user {str(userID)}")
                 if voiceStates[userID].self_mute:
                     continue
                 if voiceStates[userID].self_stream:
                     userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoiceWithStream'])
-                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoiceWithStream']} to {userID}")
+                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoiceWithStream']} to {str(userID)}")
                 else:
                     userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoice'])
-                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoice']} to {userID}")
+                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoice']} to {str(userID)}")
         db.close()
         time.sleep(60)

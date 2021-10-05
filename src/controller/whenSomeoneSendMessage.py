@@ -29,12 +29,12 @@ def whenSomeoneSendMessage(userID, hasBoosted, db) -> bool:
     if userInfo is None:
         # not existed? create a new account
         if not userManagement.addNewUser(db, userID):
-            logger.error(f"Cannot create new account to {userID} when sending message. ")
+            logger.error(f"Cannot create new account to {str(userID)} when sending message. ")
             return False
         userInfo = userManagement.getUser(db, userID)
-        logger.info("New account created for " + userID)
+        logger.info(f"New account created for {str(userID)}")
         if userInfo is None:
-            logger.error(f"Cannot get {userID} information")
+            logger.error(f"Cannot get {str(userID)} information")
             return False
     addMoneyToUserForMessageResult = addMoneyToUserForMessage(db, userInfo)
     userInfo = userManagement.getUser(db, userID)
@@ -54,10 +54,10 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     lastEarnFromMessageTimeStamp = datetime.timestamp(userInfo[2])
     moneyAdded = int(userInfo[1]) + int(config['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
-        logger.info(f"Added {int(config['moneyEarning']['perMessage'])} to user {userInfo[0]}")
+        logger.info(f"Added {config['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
         return userManagement.editUser(db, userInfo[0], money=moneyAdded,
                                        lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
-    logger.info(f"No added to {userInfo[0]}")
+    logger.info(f"No added to {str(userInfo[0])}")
     return True
 
 
@@ -76,7 +76,7 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
         if hasBoosted:
             moneyAdded += 2 * int(config['moneyEarning']['perCheckIn'])
             moneyDelta *= 3
-        logger.info(f"Added {moneyDelta} to user {userInfo[0]}")
+        logger.info(f"Added {str(moneyDelta)} to user {str(userInfo[0])}")
         return userManagement.editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
     return True
 
