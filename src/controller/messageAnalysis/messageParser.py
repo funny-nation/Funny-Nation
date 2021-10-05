@@ -13,6 +13,14 @@ commandPrefixLen = len(commandPrefix)
 
 
 async def messageParser(self, message, db):
+    """
+    Parse message
+    Identify whether it is a command to this bot, or just a normal message
+    :param self: Discord's client object
+    :param message: Message obj
+    :param db: Database object
+    :return: None
+    """
     if message.content[:commandPrefixLen] != commandPrefix:
         return
     command = message.content[3:]

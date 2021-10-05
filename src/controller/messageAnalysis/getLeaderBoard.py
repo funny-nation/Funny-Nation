@@ -6,6 +6,13 @@ import userManagement
 
 
 async def getLeaderBoard(self, message, db):
+    """
+    Reply for leader board top 10
+    :param self: Client obj
+    :param message: Message Obj
+    :param db: Database obj
+    :return: None
+    """
     leaderBoardData = userManagement.getLeaderBoard(db)
     myGuild = self.guilds[0]
     print(message.author.id)

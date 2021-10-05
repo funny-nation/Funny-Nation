@@ -6,6 +6,12 @@ import userManagement
 
 
 async def checkBalance(message, db):
+    """
+    Reply user's balance result
+    :param message: Message obj
+    :param db: Database obj
+    :return: None
+    """
     user = message.author
     userInfo = userManagement.getUser(db, user.id)
     messageSendBack = ''
