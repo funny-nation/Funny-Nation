@@ -14,4 +14,4 @@ perMinuteInVoice=50
 perMinuteInVoiceWithStream=80
 
 [command]
-prefix="Boss "
+prefix=Boss

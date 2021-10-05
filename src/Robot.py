@@ -21,7 +21,6 @@ class Robot(discord.Client):
         db = makeDatabaseConnection()
         isBooster = checkIfMessagerIsBooster(self, message.author)
         whenSomeoneSendMessage(message.author.id, isBooster, db)
-        logger.info(str(message.author.name) + ' : ' + message.content)
         await messageParser(self, message, db)
         db.close()
 

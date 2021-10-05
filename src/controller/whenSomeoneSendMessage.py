@@ -55,6 +55,7 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     lastEarnFromMessageTimeStamp = datetime.timestamp(userInfo[2])
     moneyAdded = int(userInfo[1]) + int(config['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
+        logger.info(f"Added {int(config['moneyEarning']['perMessage'])} to user {userInfo[0]}")
         return userManagement.editUser(db, userInfo[0], money=moneyAdded,
                                        lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
     return True
@@ -71,8 +72,11 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
     now = datetime.utcnow()
     if now.day != userInfo[3].day:
         moneyAdded = userInfo[1] + int(config['moneyEarning']['perCheckIn'])
+        moneyDelta = int(config['moneyEarning']['perCheckIn'])
         if hasBoosted:
             moneyAdded += 2 * int(config['moneyEarning']['perCheckIn'])
+            moneyDelta *= 3
+        logger.info(f"Added {moneyDelta} to user {userInfo[0]}")
         return userManagement.editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
     return True
 
