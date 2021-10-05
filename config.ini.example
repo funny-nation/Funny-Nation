@@ -1,0 +1,17 @@
+[private]
+token=xxxxxx
+
+[database]
+address=127.0.0.1
+username=yourUserName
+password=yourPassword
+database=yourDatabase
+
+[moneyEarning]
+perMessage=100
+perCheckIn=1000
+perMinuteInVoice=50
+perMinuteInVoiceWithStream=80
+
+[command]
+prefix="Boss "
