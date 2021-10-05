@@ -1,0 +1,4 @@
+PyMySQL==1.0.2
+loguru==0.5.3
+discord.py==1.7.3
+discord==1.7.3
