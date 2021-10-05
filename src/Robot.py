@@ -1,10 +1,10 @@
 import discord
 from loguru import logger
-from model.makeDatabaseConnection import makeDatabaseConnection
-from controller.whenSomeoneSendMessage import whenSomeoneSendMessage
-from controller.checkIfMessagerIsBooster import checkIfMessagerIsBooster
-from controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
-from controller.messageAnalysis.messageParser import messageParser
+from .model.makeDatabaseConnection import makeDatabaseConnection
+from .controller.whenSomeoneSendMessage import whenSomeoneSendMessage
+from .controller.checkIfMessagerIsBooster import checkIfMessagerIsBooster
+from .controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
+from .controller.messageAnalysis.messageParser import messageParser
 
 
 class Robot(discord.Client):
