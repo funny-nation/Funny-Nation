@@ -30,12 +30,10 @@ def whenSomeoneSendMessage(userID, hasBoosted, db) -> bool:
         # not existed? create a new account
         if not userManagement.addNewUser(db, userID):
             logger.error(f"Cannot create new account to {userID} when sending message. ")
-            db.close()
             return False
         userInfo = userManagement.getUser(db, userID)
         if userInfo is None:
             logger.error(f"Cannot get {userID} information")
-            db.close()
             return False
     addMoneyToUserForMessageResult = addMoneyToUserForMessage(db, userInfo)
     userInfo = userManagement.getUser(db, userID)

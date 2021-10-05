@@ -27,6 +27,15 @@ def helperThreat(self):
                     continue
             voiceStates = voiceChannel.voice_states
             for userID in voiceStates:
+
+                # get user information
+                userInfo = userManagement.getUser(db, userID)
+                # Check if user existed
+                if userInfo is None:
+                    # not existed? create a new account
+                    if not userManagement.addNewUser(db, userID):
+                        logger.error(f"Cannot create new account to {userID} when sending message. ")
+
                 if voiceStates[userID].self_mute:
                     continue
                 if voiceStates[userID].self_stream:
