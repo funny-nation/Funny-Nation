@@ -6,6 +6,7 @@ from loguru import logger
 sys.path.append(os.path.dirname(__file__) + '/../model')
 import makeDatabaseConnection
 import userManagement
+import cashFlowManagement
 import configparser
 
 config = configparser.ConfigParser()
@@ -41,10 +42,17 @@ def helperThreat(self):
                 if voiceStates[userID].self_mute:
                     continue
                 if voiceStates[userID].self_stream:
-                    userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoiceWithStream'])
-                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoiceWithStream']} to {str(userID)}")
+                    if userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoiceWithStream']):
+                        logger.info(f"Added {config['moneyEarning']['perMinuteInVoiceWithStream']} to {str(userID)}")
+                        if not cashFlowManagement.addNewCashFlow(db, userID, config['moneyEarning']['perMinuteInVoiceWithStream'], config['cashFlowMessage']['earnFromStream']):
+                            logger.error(f"Cannot add to cash flow for {userID}")
+                    else:
+                        logger.error(f"Cannot add money to user {userID} while streaming")
                 else:
-                    userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoice'])
-                    logger.info(f"Added {config['moneyEarning']['perMinuteInVoice']} to {str(userID)}")
+                    if userManagement.addMoneyToUser(db, userID, config['moneyEarning']['perMinuteInVoice']):
+                        logger.info(f"Added {config['moneyEarning']['perMinuteInVoice']} to {str(userID)}")
+                        if not cashFlowManagement.addNewCashFlow(db, userID, config['moneyEarning']['perMinuteInVoice'], config['cashFlowMessage']['earnFromVoice']):
+                            logger.error(f"Cannot add to cash flow for {userID}")
+
         db.close()
         time.sleep(60)

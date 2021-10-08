@@ -6,6 +6,7 @@ from loguru import logger
 sys.path.append(os.path.dirname(__file__) + '/../model')
 import makeDatabaseConnection
 import userManagement
+import cashFlowManagement
 from datetime import datetime
 import configparser
 
@@ -54,9 +55,14 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     lastEarnFromMessageTimeStamp = datetime.timestamp(userInfo[2])
     moneyAdded = int(userInfo[1]) + int(config['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
-        logger.info(f"Added {config['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
-        return userManagement.editUser(db, userInfo[0], money=moneyAdded,
-                                       lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
+        editUserResult = userManagement.editUser(db, userInfo[0], money=moneyAdded, lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
+        if editUserResult:
+            logger.info(f"Added {config['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
+            if not cashFlowManagement.addNewCashFlow(db, userInfo[0], config['moneyEarning']['perMessage'], config['cashFlowMessage']['earnMoneyFromMessage']):
+                logger.error(f"Cannot add to cash flow for {userInfo[0]}")
+            return True
+        else:
+            return False
     logger.info(f"No added to {str(userInfo[0])}")
     return True
 
@@ -76,8 +82,15 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
         if hasBoosted:
             moneyAdded += 2 * int(config['moneyEarning']['perCheckIn'])
             moneyDelta *= 3
-        logger.info(f"Added {str(moneyDelta)} to user {str(userInfo[0])}")
-        return userManagement.editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
+        editResult = userManagement.editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
+        if editResult:
+            logger.info(f"Added {moneyDelta} to user {str(userInfo[0])}")
+            if not cashFlowManagement.addNewCashFlow(db, userInfo[0], moneyDelta,config['cashFlowMessage']['earnFromCheckIn']):
+                logger.error(f"Cannot add to cash flow for {userInfo[0]}")
+            return True
+        else:
+            return False
+
     return True
 
 

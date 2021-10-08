@@ -5,6 +5,7 @@ import sys
 sys.path.append(os.path.dirname(__file__) + '/')
 import checkBalance
 import getLeaderBoard
+import checkCashFlow
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')
@@ -28,3 +29,5 @@ async def messageParser(self, message, db):
         await checkBalance.checkBalance(message, db)
     if command == "富豪榜":
         await getLeaderBoard.getLeaderBoard(self, message, db)
+    if command == "流水记录":
+        await checkCashFlow.checkCashFlow(self, message, db)
