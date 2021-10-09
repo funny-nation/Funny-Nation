@@ -1,2 +1,5 @@
-i = "你好 xxx分"
-print(i[3:])
+import re
+
+txt = '老板 sf'
+result = re.match(r"^老板 (.+)$", txt)
+print(result)

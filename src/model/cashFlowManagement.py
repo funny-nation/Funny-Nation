@@ -80,7 +80,8 @@ def get10RecentCashflowsByUserID(db, userID, msg):
         if msg is None:
             cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = {userID} ORDER BY `cashFlow`.`date` DESC LIMIT 10;")
         else:
-            cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = {userID} AND `message` LIKE '{msg}' ORDER BY `cashFlow`.`date` DESC LIMIT 10;")
+            args = msg
+            cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = {userID} AND `message` LIKE %s ORDER BY `cashFlow`.`date` DESC LIMIT 10;", args)
         results = cursor.fetchall()
     except Exception as err:
         logger.error(err)
@@ -93,7 +94,8 @@ def test_addNewCashFlow():
     assert addNewCashFlow(db, '123123123', 100, "转账") is True
     assert addNewCashFlow(db, '123123123', -50, "转账") is True
     cashflow = getCashflowsByUserID(db, '123123123')
-    assert get10RecentCashflowsByUserID(db, '123123123', None) is not None
+    cashFlow10Result = get10RecentCashflowsByUserID(db, '123123123', "转账")
+    assert len(cashFlow10Result) == 2
     assert cashflow is not None
     assert len(cashflow) == 2
     assert deleteCashFlow(db, cashflow[0][0]) is True

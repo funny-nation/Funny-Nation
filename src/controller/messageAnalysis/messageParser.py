@@ -1,6 +1,7 @@
 import os
 import configparser
 import sys
+import re
 
 sys.path.append(os.path.dirname(__file__) + '/')
 import checkBalance
@@ -24,10 +25,15 @@ async def messageParser(self, message, db):
     """
     if message.content[:commandPrefixLen] != commandPrefix:
         return
+    if len(message.content) > 30:
+        await message.channel.send("你说的太长了")
+        return
     command = message.content[3:]
-    if command == "余额":
+    if re.match(f"^余额$", command):
         await checkBalance.checkBalance(message, db)
-    if command == "富豪榜":
+    if re.match(f"^富豪榜$", command):
         await getLeaderBoard.getLeaderBoard(self, message, db)
-    if command == "流水记录":
+    if re.match(f"^流水$", command):
         await checkCashFlow.checkCashFlow(self, message, db)
+    if re.match(f"^流水 .+", command):
+        await checkCashFlow.checkCashFlowWithFilter(self, message, db)
