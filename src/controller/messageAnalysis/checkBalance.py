@@ -1,6 +1,6 @@
 import sys
 import os
-
+from loguru import logger
 sys.path.append(os.path.dirname(__file__) + '/../../model')
 import userManagement
 
@@ -16,6 +16,7 @@ async def checkBalance(message, db):
     userInfo = userManagement.getUser(db, user.id)
     messageSendBack = ''
     if userInfo is None:
+        logger.error(f"User {user.id} check balance failed")
         messageSendBack = '系统错误'
     else:
         displayMoney = userInfo[1] / 100

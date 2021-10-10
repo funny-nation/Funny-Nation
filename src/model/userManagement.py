@@ -149,6 +149,8 @@ def test_():
     assert addMoneyToUser(db, '123', 10)
     getUserResult = getUser(db, '123')
     assert getUserResult[1] == 1010
+    assert addMoneyToUser(db, '123', -20)
+    assert getUser(db, '123')[1] == 990
     assert getLeaderBoard(db) is not None
     assert deleteUser(db, '123') is True
     assert getUser(db, '123') is None

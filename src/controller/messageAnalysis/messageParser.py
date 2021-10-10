@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(__file__) + '/')
 import checkBalance
 import getLeaderBoard
 import checkCashFlow
+import transferMoney
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')
@@ -25,7 +26,7 @@ async def messageParser(self, message, db):
     """
     if message.content[:commandPrefixLen] != commandPrefix:
         return
-    if len(message.content) > 30:
+    if len(message.content) > 100:
         await message.channel.send("你说的太长了")
         return
     command = message.content[3:]
@@ -33,7 +34,9 @@ async def messageParser(self, message, db):
         await checkBalance.checkBalance(message, db)
     if re.match(f"^富豪榜$", command):
         await getLeaderBoard.getLeaderBoard(self, message, db)
-    if re.match(f"^流水$", command):
+    if re.match(f"^账单$", command):
         await checkCashFlow.checkCashFlow(self, message, db)
-    if re.match(f"^流水 .+", command):
+    if re.match(f"^账单 .+", command):
         await checkCashFlow.checkCashFlowWithFilter(self, message, db)
+    if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+        await transferMoney.transferMoney(self, db, message, command)
