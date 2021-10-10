@@ -1,1 +1,3 @@
-# Discord Manager
+# Funny Nations
+<hr>
+ 
