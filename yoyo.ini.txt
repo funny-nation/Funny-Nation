@@ -1,0 +1,2 @@
+[DEFAULT]
+database = mysql://funnynationdev:GR2CX1FIEQle4hxt@173.255.210.86/funnyNationsDevelopment

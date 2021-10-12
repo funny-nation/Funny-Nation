@@ -1,4 +1,5 @@
-import re
-
-i = '12.9'
-print(-int(float(i)))
+i = {}
+i[123] = 1
+print(i)
+del i[123]
+print(i)
