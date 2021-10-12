@@ -8,6 +8,7 @@ import checkBalance
 import getLeaderBoard
 import checkCashFlow
 import transferMoney
+import liveGift
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')
@@ -40,3 +41,5 @@ async def messageParser(self, message, db):
         await checkCashFlow.checkCashFlowWithFilter(self, message, db)
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney.transferMoney(self, db, message, command)
+    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
+        await liveGift.liveGift(self, db, message, command)
