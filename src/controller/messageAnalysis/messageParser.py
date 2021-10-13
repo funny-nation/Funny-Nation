@@ -7,6 +7,7 @@ from src.controller.messageAnalysis.getLeaderBoard import getLeaderBoard
 from src.controller.messageAnalysis.checkCashFlow import checkCashFlow
 from src.controller.messageAnalysis.transferMoney import transferMoney
 from src.controller.messageAnalysis.playBlackJack import playBlackJack
+from src.controller.messageAnalysis.liveGift import liveGift
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')
@@ -39,5 +40,7 @@ async def messageParser(self, message, db):
         await checkCashFlow(self, message, db)
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)
+    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
+        await liveGift(self, db, message, command)
     if re.match(f"^玩 21点 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$"):
         await playBlackJack(self, message, db, command)
