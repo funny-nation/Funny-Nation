@@ -1,8 +1,7 @@
 import sys
 import os
 from loguru import logger
-sys.path.append(os.path.dirname(__file__) + '/../../model')
-import userManagement
+from src.model.userManagement import getUser
 
 
 async def checkBalance(message, db):
@@ -13,7 +12,7 @@ async def checkBalance(message, db):
     :return: None
     """
     user = message.author
-    userInfo = userManagement.getUser(db, user.id)
+    userInfo = getUser(db, user.id)
     messageSendBack = ''
     if userInfo is None:
         logger.error(f"User {user.id} check balance failed")

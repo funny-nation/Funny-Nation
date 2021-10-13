@@ -2,12 +2,11 @@ import sys
 import os
 from loguru import logger
 
-sys.path.append(os.path.dirname(__file__) + '/../../model')
-import cashFlowManagement
+from src.model.cashFlowManagement import get10RecentCashflowsByUserID
 
 
 async def checkCashFlow(self, message, db):
-    cashFlowData = cashFlowManagement.get10RecentCashflowsByUserID(db, message.author.id, None)
+    cashFlowData = get10RecentCashflowsByUserID(db, message.author.id, None)
     messageSendBack = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
@@ -22,7 +21,7 @@ async def checkCashFlow(self, message, db):
 
 async def checkCashFlowWithFilter(self, message, db):
     filterMessage = message.content[6:]
-    cashFlowData = cashFlowManagement.get10RecentCashflowsByUserID(db, message.author.id, filterMessage)
+    cashFlowData = get10RecentCashflowsByUserID(db, message.author.id, filterMessage)
     messageSendBack = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")

@@ -3,10 +3,9 @@ import os
 
 from loguru import logger
 
-sys.path.append(os.path.dirname(__file__) + '/../model')
-import makeDatabaseConnection
-import userManagement
-import cashFlowManagement
+from src.model.makeDatabaseConnection import makeDatabaseConnection
+from src.model.userManagement import getUser, addNewUser, editUser, deleteUser
+from src.model.cashFlowManagement import addNewCashFlow
 from datetime import datetime
 import configparser
 
@@ -25,20 +24,20 @@ def whenSomeoneSendMessage(userID, hasBoosted, db) -> bool:
     if db is None:
         return False
     # get user information
-    userInfo = userManagement.getUser(db, userID)
+    userInfo = getUser(db, userID)
     # Check if user existed
     if userInfo is None:
         # not existed? create a new account
-        if not userManagement.addNewUser(db, userID):
+        if not addNewUser(db, userID):
             logger.error(f"Cannot create new account to {str(userID)} when sending message. ")
             return False
-        userInfo = userManagement.getUser(db, userID)
+        userInfo = getUser(db, userID)
         logger.info(f"New account created for {str(userID)}")
         if userInfo is None:
             logger.error(f"Cannot get {str(userID)} information")
             return False
     addMoneyToUserForMessageResult = addMoneyToUserForMessage(db, userInfo)
-    userInfo = userManagement.getUser(db, userID)
+    userInfo = getUser(db, userID)
     addMoneyToUserForCheckInResult = addMoneyToUserForCheckIn(db, userInfo, hasBoosted)
     return addMoneyToUserForMessageResult and addMoneyToUserForCheckInResult
 
@@ -55,10 +54,10 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     lastEarnFromMessageTimeStamp = datetime.timestamp(userInfo[2])
     moneyAdded = int(userInfo[1]) + int(config['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
-        editUserResult = userManagement.editUser(db, userInfo[0], money=moneyAdded, lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
+        editUserResult = editUser(db, userInfo[0], money=moneyAdded, lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
         if editUserResult:
             logger.info(f"Added {config['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
-            if not cashFlowManagement.addNewCashFlow(db, userInfo[0], config['moneyEarning']['perMessage'], config['cashFlowMessage']['earnMoneyFromMessage']):
+            if not addNewCashFlow(db, userInfo[0], config['moneyEarning']['perMessage'], config['cashFlowMessage']['earnMoneyFromMessage']):
                 logger.error(f"Cannot add to cash flow for {userInfo[0]}")
             return True
         else:
@@ -82,10 +81,10 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
         if hasBoosted:
             moneyAdded += 2 * int(config['moneyEarning']['perCheckIn'])
             moneyDelta *= 3
-        editResult = userManagement.editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
+        editResult = editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
         if editResult:
             logger.info(f"Added {moneyDelta} to user {str(userInfo[0])}")
-            if not cashFlowManagement.addNewCashFlow(db, userInfo[0], moneyDelta,config['cashFlowMessage']['earnFromCheckIn']):
+            if not addNewCashFlow(db, userInfo[0], moneyDelta,config['cashFlowMessage']['earnFromCheckIn']):
                 logger.error(f"Cannot add to cash flow for {userInfo[0]}")
             return True
         else:
@@ -95,36 +94,36 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
 
 
 def test_whenSomeoneSendMessage():
-    db = makeDatabaseConnection.makeDatabaseConnection()
+    db = makeDatabaseConnection()
     assert whenSomeoneSendMessage('123', False, db) is True
     assert whenSomeoneSendMessage('123', False, db) is True
-    userinfo = userManagement.getUser(db, '123')
+    userinfo = getUser(db, '123')
     assert userinfo[1] == 0  # Check if send message within 1 minute
-    assert userManagement.editUser(db, '123', lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
+    assert editUser(db, '123', lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
     assert whenSomeoneSendMessage('123', False, db) is True
-    userinfo = userManagement.getUser(db, '123')
+    userinfo = getUser(db, '123')
     moneyShouldBe = int(config['moneyEarning']['perMessage']) + int(config['moneyEarning']['perCheckIn'])
     assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day
     now = datetime.utcnow()
     assert datetime.timestamp(now) - datetime.timestamp(userinfo[2]) < 10
     assert datetime.timestamp(now) - datetime.timestamp(userinfo[3]) < 10
-    assert userManagement.deleteUser(db, '123') is True
+    assert deleteUser(db, '123') is True
     db.close()
 
 
 def test_whenSomeoneSendMessageForBoostedUser():
-    db = makeDatabaseConnection.makeDatabaseConnection()
+    db = makeDatabaseConnection()
     assert whenSomeoneSendMessage('123', True, db) is True
     assert whenSomeoneSendMessage('123', True, db) is True
-    userinfo = userManagement.getUser(db, '123')
+    userinfo = getUser(db, '123')
     assert userinfo[1] == 0  # Check if send message within 1 minute
-    assert userManagement.editUser(db, '123', lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
+    assert editUser(db, '123', lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
     assert whenSomeoneSendMessage('123', True, db) is True
-    userinfo = userManagement.getUser(db, '123')
+    userinfo = getUser(db, '123')
     moneyShouldBe = int(config['moneyEarning']['perMessage']) + (int(config['moneyEarning']['perCheckIn']) * 3)
     assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day
     now = datetime.utcnow()
     assert datetime.timestamp(now) - datetime.timestamp(userinfo[2]) < 10
     assert datetime.timestamp(now) - datetime.timestamp(userinfo[3]) < 10
-    assert userManagement.deleteUser(db, '123') is True
+    assert deleteUser(db, '123') is True
     db.close()

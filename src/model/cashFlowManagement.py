@@ -1,6 +1,6 @@
 from loguru import logger
 from datetime import datetime
-from makeDatabaseConnection import makeDatabaseConnection
+from src.model.makeDatabaseConnection import makeDatabaseConnection
 
 
 def addNewCashFlow(db, userID, amount, msg) -> bool:
