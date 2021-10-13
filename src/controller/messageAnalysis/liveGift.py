@@ -3,9 +3,8 @@ import sys
 import os
 from loguru import logger
 
-sys.path.append(os.path.dirname(__file__) + '/../../model')
-import userManagement
-import cashFlowManagement
+from src.model.userManagement import getUser, addMoneyToUser
+from src.model.cashFlowManagement import addNewCashFlow
 
 # should be replaced by fetching from database
 giftList = {
@@ -15,7 +14,7 @@ giftList = {
 
 
 async def liveGift(self, db, message, command):
-    userInfo = userManagement.getUser(db, message.author.id)
+    userInfo = getUser(db, message.author.id)
     if userInfo is None:
         await message.channel.send("404")
         logger.error(f"Get user info {message.author.id} failed")
@@ -54,21 +53,21 @@ async def liveGift(self, db, message, command):
         await message.channel.send('没有这么多钱')
         return
 
-    if not userManagement.addMoneyToUser(db, userInfo[0], -money):
+    if not addMoneyToUser(db, userInfo[0], -money):
         logger.error(f"Cannot reduce money from user {userInfo[0]}")
         await message.channel.send("404")
         return
 
-    if not cashFlowManagement.addNewCashFlow(db, userInfo[0], -money, '直播礼物'):
+    if not addNewCashFlow(db, userInfo[0], -money, '直播礼物'):
         logger.error(f"Cannot create cash flow for user {userInfo[0]}")
 
-    if not userManagement.addMoneyToUser(db, message.mentions[0].id, money * 0.6):
+    if not addMoneyToUser(db, message.mentions[0].id, money * 0.6):
         logger.error(f"Cannot add money to user {message.mentions[0].id}")
         await message.channel.send("404")
-        cashFlowManagement.addNewCashFlow(db, userInfo[0], money, '直播礼物')
+        addNewCashFlow(db, userInfo[0], money, '直播礼物')
         return
-    if not cashFlowManagement.addNewCashFlow(db, message.mentions[0].id, money * 0.6, '直播礼物'):
+    if not addNewCashFlow(db, message.mentions[0].id, money * 0.6, '直播礼物'):
         logger.error(f"Cannot create cash flow for user {message.mentions[0].id}")
-        cashFlowManagement.addNewCashFlow(db, userInfo[0], money, '直播礼物')
+        addNewCashFlow(db, userInfo[0], money, '直播礼物')
 
     await message.channel.send(f"赠送成功 <@{message.mentions[0].id}> 你收到了 {giftName} * {giftNum}")
