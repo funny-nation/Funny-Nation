@@ -1,7 +1,7 @@
-from Poker import Poker
+from src.data.poker.Poker import Poker
 
 
-class BlackJack(Poker):
+class BlackJackPoker(Poker):
 
     def __init__(self):
         Poker.__init__(self)
@@ -63,8 +63,9 @@ class BlackJack(Poker):
                 rank += 10
         return rank
 
+
 def test_BlackJack():
-    poker = BlackJack()
+    poker = BlackJackPoker()
     poker.shuffle()
     playerAlphaCards = []
     playerBetaCards = []
@@ -84,5 +85,3 @@ def test_BlackJack():
 
     print("Result: ")
     print(poker.compareForBlackJack(playerAlphaCards, playerBetaCards))
-
-test_BlackJack()

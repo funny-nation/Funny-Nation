@@ -1,6 +1,6 @@
 from loguru import logger
 from datetime import datetime
-from makeDatabaseConnection import makeDatabaseConnection
+from src.model.makeDatabaseConnection import makeDatabaseConnection
 
 
 def addNewUser(db, userID) -> bool:
@@ -16,7 +16,7 @@ def addNewUser(db, userID) -> bool:
     currentTime = now.strftime("%Y-%m-%d %H:%M:%S")
     try:
         cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `user` (`userID`, `money`, `lastEarnFromMessage`, `lastCheckIn`) VALUES ('{userID}', '0', '{currentTime}', '{currentTime}');")
+        cursor.execute(f"INSERT INTO `user` (`userID`, `money`, `lastEarnFromMessage`, `lastCheckIn`, `robSince`) VALUES ('{userID}', '0', '{currentTime}', '{currentTime}', '{currentTime}');")
         db.commit()
     except Exception as err:
         logger.error(err)

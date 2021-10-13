@@ -1,10 +1,7 @@
 import re
-import sys
-import os
 from loguru import logger
-sys.path.append(os.path.dirname(__file__) + '/../../model')
-import userManagement
-import cashFlowManagement
+from src.model.userManagement import getUser, addMoneyToUser
+from src.model.cashFlowManagement import addNewCashFlow
 
 
 async def transferMoney(self, db, message, command):
@@ -20,7 +17,7 @@ async def transferMoney(self, db, message, command):
     if moneyTransfer == 0:
         await message.channel.send("真抠门")
         return
-    userInfo = userManagement.getUser(db, message.author.id)
+    userInfo = getUser(db, message.author.id)
     if userInfo is None:
         await message.channel.send("404")
         logger.error(f"Get user info {message.author.id} failed")
@@ -30,17 +27,17 @@ async def transferMoney(self, db, message, command):
         await message.channel.send("你不够钱")
         return
 
-    if not userManagement.addMoneyToUser(db, userInfo[0], -moneyTransfer):
+    if not addMoneyToUser(db, userInfo[0], -moneyTransfer):
         logger.error(f"Cannot reduce money from user {userInfo[0]}")
         await message.channel.send("404")
         return
-    if not cashFlowManagement.addNewCashFlow(db, userInfo[0], -moneyTransfer, '转账'):
+    if not addNewCashFlow(db, userInfo[0], -moneyTransfer, '转账'):
         logger.error(f"Cannot create cash flow for user {userInfo[0]}")
-    if not userManagement.addMoneyToUser(db, message.mentions[0].id, moneyTransfer):
+    if not addMoneyToUser(db, message.mentions[0].id, moneyTransfer):
         logger.error(f"Cannot add money to user {message.mentions[0].id}")
         await message.channel.send("404")
         return
-    if not cashFlowManagement.addNewCashFlow(db, message.mentions[0].id, moneyTransfer, '转账'):
+    if not addNewCashFlow(db, message.mentions[0].id, moneyTransfer, '转账'):
         logger.error(f"Cannot create cash flow for user {message.mentions[0].id}")
     await message.channel.send(f"转账成功 <@{message.mentions[0].id}> 你收到了{moneyTransfer / 100} 元")
 

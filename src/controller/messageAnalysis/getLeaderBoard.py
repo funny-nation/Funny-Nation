@@ -1,8 +1,7 @@
 import sys
 import os
 
-sys.path.append(os.path.dirname(__file__) + '/../../model')
-import userManagement
+from src.model.userManagement import getLeaderBoard
 
 
 async def getLeaderBoard(self, message, db):
@@ -13,7 +12,7 @@ async def getLeaderBoard(self, message, db):
     :param db: Database obj
     :return: None
     """
-    leaderBoardData = userManagement.getLeaderBoard(db)
+    leaderBoardData = getLeaderBoard(db)
     myGuild = self.guilds[0]
     messageSendBack = ''
     if leaderBoardData is None:

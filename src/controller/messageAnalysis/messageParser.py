@@ -1,14 +1,12 @@
 import os
 import configparser
-import sys
 import re
 
-sys.path.append(os.path.dirname(__file__) + '/')
-import checkBalance
-import getLeaderBoard
-import checkCashFlow
-import transferMoney
-import playBlackJack
+from src.controller.messageAnalysis.checkBalance import checkBalance
+from src.controller.messageAnalysis.getLeaderBoard import getLeaderBoard
+from src.controller.messageAnalysis.checkCashFlow import checkCashFlow
+from src.controller.messageAnalysis.transferMoney import transferMoney
+from src.controller.messageAnalysis.playBlackJack import playBlackJack
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')
@@ -32,14 +30,14 @@ async def messageParser(self, message, db):
         return
     command = message.content[3:]
     if re.match(f"^余额$", command):
-        await checkBalance.checkBalance(message, db)
+        await checkBalance(message, db)
     if re.match(f"^富豪榜$", command):
-        await getLeaderBoard.getLeaderBoard(self, message, db)
+        await getLeaderBoard(self, message, db)
     if re.match(f"^账单$", command):
-        await checkCashFlow.checkCashFlow(self, message, db)
+        await checkCashFlow(self, message, db)
     if re.match(f"^账单 .+", command):
-        await checkCashFlow.checkCashFlowWithFilter(self, message, db)
+        await checkCashFlow(self, message, db)
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
-        await transferMoney.transferMoney(self, db, message, command)
+        await transferMoney(self, db, message, command)
     if re.match(f"^玩 21点 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$"):
-        await playBlackJack.playBlackJack(self, message, db, command)
+        await playBlackJack(self, message, db, command)
