@@ -1,23 +1,23 @@
-import sys
-import os
 from loguru import logger
 from src.model.userManagement import getUser
+from discord import Message, Member
+from pymysql import Connection
 
 
-async def checkBalance(message, db):
+async def checkBalance(message: Message, db: Connection):
     """
     Reply user's balance result
     :param message: Message obj
     :param db: Database obj
     :return: None
     """
-    user = message.author
-    userInfo = getUser(db, user.id)
-    messageSendBack = ''
+    user: Member = message.author
+    userInfo: tuple = getUser(db, user.id)
+    messageSendBack: str = ''
     if userInfo is None:
         logger.error(f"User {user.id} check balance failed")
-        messageSendBack = '系统错误'
+        messageSendBack: str = '系统错误'
     else:
-        displayMoney = userInfo[1] / 100
-        messageSendBack = f"{user.display_name}，你还有{displayMoney}元"
+        displayMoney: float = userInfo[1] / 100
+        messageSendBack: str = f"{user.display_name}，你还有{displayMoney}元"
     await message.channel.send(messageSendBack)

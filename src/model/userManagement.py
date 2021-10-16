@@ -1,9 +1,11 @@
 from loguru import logger
 from datetime import datetime
-from src.model.makeDatabaseConnection import makeDatabaseConnection
+
+from pymysql import Connection
+from pymysql.cursors import Cursor
 
 
-def addNewUser(db, userID) -> bool:
+def addNewUser(db: Connection, userID: int) -> bool:
     """
     Add new user to database
     :param db: database object instance
@@ -12,10 +14,10 @@ def addNewUser(db, userID) -> bool:
     """
     if db is None:
         return False
-    now = datetime.utcnow()
-    currentTime = now.strftime("%Y-%m-%d %H:%M:%S")
+    now: datetime = datetime.utcnow()
+    currentTime: str = now.strftime("%Y-%m-%d %H:%M:%S")
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"INSERT INTO `user` (`userID`, `money`, `lastEarnFromMessage`, `lastCheckIn`, `robSince`) VALUES ('{userID}', '0', '{currentTime}', '{currentTime}', '{currentTime}');")
         db.commit()
     except Exception as err:
@@ -24,7 +26,7 @@ def addNewUser(db, userID) -> bool:
     return True
 
 
-def deleteUser(db, userID) -> bool:
+def deleteUser(db: Connection, userID: int) -> bool:
     """
     Delete existed user
     :param db: database object instance
@@ -34,7 +36,7 @@ def deleteUser(db, userID) -> bool:
     if db is None:
         return False
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"DELETE FROM `user` WHERE `userID` = {userID};")
         db.commit()
     except Exception as err:
@@ -43,7 +45,7 @@ def deleteUser(db, userID) -> bool:
     return True
 
 
-def getUser(db, userID) -> tuple:
+def getUser(db: Connection, userID: int) -> tuple or None:
     """
     Get User Information
     :param db: database object instance
@@ -54,19 +56,19 @@ def getUser(db, userID) -> tuple:
     if db is None:
         return None
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"SELECT * FROM `user` WHERE `userID` = '{userID}';")
-        result = cursor.fetchone()
+        result: tuple = cursor.fetchone()
     except Exception as err:
         logger.error(err)
         return None
     return result
 
 
-def editUser(db, userID, *,
-             money=None,
-             lastCheckIn=None,
-            lastEarnFromMessage=None
+def editUser(db: Connection, userID: int, *,
+             money: int = None,
+             lastCheckIn: str = None,
+            lastEarnFromMessage: str = None
              ) -> bool:
     """
     Edit user information
@@ -87,8 +89,8 @@ def editUser(db, userID, *,
     if lastCheckIn is not None:
         sqlFragment += f" `lastCheckIn` = '{lastCheckIn}',"
     try:
-        cursor = db.cursor()
-        sql = f"UPDATE `user` SET{sqlFragment[:-1]} WHERE `user`.`userID` = '{userID}';"
+        cursor: Cursor = db.cursor()
+        sql: str = f"UPDATE `user` SET{sqlFragment[:-1]} WHERE `user`.`userID` = '{userID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
@@ -97,7 +99,7 @@ def editUser(db, userID, *,
     return True
 
 
-def getLeaderBoard(db) -> tuple:
+def getLeaderBoard(db: Connection) -> tuple or None:
     """
     get leader board of top 10
     :param db: Database object
@@ -109,14 +111,14 @@ def getLeaderBoard(db) -> tuple:
     try:
         cursor = db.cursor()
         cursor.execute("SELECT `userID`, `money` FROM `user` ORDER BY `money` DESC LIMIT 10;")
-        result = cursor.fetchall()
+        result: tuple = cursor.fetchall()
     except Exception as err:
         logger.error(err)
         return None
     return result
 
 
-def addMoneyToUser(db, userID, money) -> bool:
+def addMoneyToUser(db: Connection, userID: int, money: int) -> bool:
     """
     Add money to user
     :param db: database object instance
@@ -127,7 +129,7 @@ def addMoneyToUser(db, userID, money) -> bool:
     if db is None:
         return False
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         sql = f"UPDATE `user` SET `money` = `money` + {money} WHERE `user`.`userID` = '{userID}';"
         cursor.execute(sql)
         db.commit()
@@ -138,20 +140,21 @@ def addMoneyToUser(db, userID, money) -> bool:
 
 
 def test_():
+    from src.model.makeDatabaseConnection import makeDatabaseConnection
     testingTime1 = '2000-01-01 01:01:01'
     testingTime2 = '2001-02-02 02:02:02'
-    db = makeDatabaseConnection()
-    assert addNewUser(db, '123') is True
-    assert editUser(db, '123', money=1000, lastCheckIn=testingTime1, lastEarnFromMessage=testingTime2) is True
-    getUserResult = getUser(db, '123')
+    db: Connection = makeDatabaseConnection()
+    assert addNewUser(db, 123) is True
+    assert editUser(db, 123, money=1000, lastCheckIn=testingTime1, lastEarnFromMessage=testingTime2) is True
+    getUserResult = getUser(db, 123)
     assert getUserResult[2].strftime("%Y-%m-%d %H:%M:%S") == testingTime2
     assert getUserResult[3].strftime("%Y-%m-%d %H:%M:%S") == testingTime1
-    assert addMoneyToUser(db, '123', 10)
-    getUserResult = getUser(db, '123')
+    assert addMoneyToUser(db, 123, 10)
+    getUserResult = getUser(db, 123)
     assert getUserResult[1] == 1010
-    assert addMoneyToUser(db, '123', -20)
-    assert getUser(db, '123')[1] == 990
+    assert addMoneyToUser(db, 123, -20)
+    assert getUser(db, 123)[1] == 990
     assert getLeaderBoard(db) is not None
-    assert deleteUser(db, '123') is True
-    assert getUser(db, '123') is None
+    assert deleteUser(db, 123) is True
+    assert getUser(db, 123) is None
     db.close()

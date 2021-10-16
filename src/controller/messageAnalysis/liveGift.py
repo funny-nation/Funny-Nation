@@ -2,9 +2,13 @@ import re
 import sys
 import os
 from loguru import logger
+from typing import List, Dict
 
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
+
+from discord import Client, Message, Guild, VoiceChannel, VoiceState
+from pymysql import Connection
 
 # should be replaced by fetching from database
 giftList = {
@@ -13,25 +17,25 @@ giftList = {
 }
 
 
-async def liveGift(self, db, message, command):
-    userInfo = getUser(db, message.author.id)
+async def liveGift(self: Client, db: Connection, message: Message, command: str):
+    userInfo: tuple = getUser(db, message.author.id)
     if userInfo is None:
         await message.channel.send("404")
         logger.error(f"Get user info {message.author.id} failed")
         return
 
-    temp = re.findall(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command)
-    giftName = temp[0]
+    temp: List[str] = re.findall(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command)
+    giftName: str = temp[0]
     if giftName not in giftList.keys():
         await message.channel.send('没有这样的礼物')
         return
 
-    myGuild = self.guilds[0]
-    voiceChannels = myGuild.voice_channels
+    myGuild: Guild = self.guilds[0]
+    voiceChannels: List[VoiceChannel] = myGuild.voice_channels
 
     foundIt = False
     for voiceChannel in voiceChannels:
-        voiceStates = voiceChannel.voice_states
+        voiceStates: Dict[int, VoiceChannel] = voiceChannel.voice_states
         if userInfo[0] in voiceStates:
             if message.mentions[0].id not in voiceStates:
                 await message.channel.send('该用户并不在同一个频道')
@@ -44,10 +48,10 @@ async def liveGift(self, db, message, command):
         await message.channel.send('没有进语音怎么看直播呢')
         return
 
-    temp = re.findall(f"^礼物 .+ ([1-9][0-9]*) \<\@\![0-9]+\>$", command)
+    temp: List[str] = re.findall(f"^礼物 .+ ([1-9][0-9]*) \<\@\![0-9]+\>$", command)
     giftNum = int(temp[0])
 
-    money = giftNum * giftList.get(giftName) * 100
+    money: int = giftNum * giftList.get(giftName) * 100
 
     if userInfo[1] < money:
         await message.channel.send('没有这么多钱')

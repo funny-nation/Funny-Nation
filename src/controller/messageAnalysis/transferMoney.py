@@ -1,11 +1,16 @@
 import re
 from loguru import logger
+from typing import List
+
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 
+from discord import Client, Message
+from pymysql import Connection
 
-async def transferMoney(self, db, message, command):
-    moneyStrings = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
+
+async def transferMoney(self: Client, db: Connection, message: Message, command: str):
+    moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
     if len(moneyStrings) == 0:
         await message.channel.send("不知道你要转多少钱")
         return
@@ -13,11 +18,11 @@ async def transferMoney(self, db, message, command):
         await message.channel.send("不知道你要转给谁")
         return
 
-    moneyTransfer = int(float(moneyStrings[0]) * 100)
+    moneyTransfer: int = int(float(moneyStrings[0]) * 100)
     if moneyTransfer == 0:
         await message.channel.send("真抠门")
         return
-    userInfo = getUser(db, message.author.id)
+    userInfo: tuple = getUser(db, message.author.id)
     if userInfo is None:
         await message.channel.send("404")
         logger.error(f"Get user info {message.author.id} failed")

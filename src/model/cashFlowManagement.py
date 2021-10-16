@@ -1,9 +1,11 @@
 from loguru import logger
 from datetime import datetime
-from src.model.makeDatabaseConnection import makeDatabaseConnection
+
+from pymysql import Connection
+from pymysql.cursors import Cursor
 
 
-def addNewCashFlow(db, userID, amount, msg) -> bool:
+def addNewCashFlow(db: Connection, userID: int, amount: int, msg: str) -> bool:
     """
     Add new cash flow to database
     :param db: database connection object
@@ -14,10 +16,10 @@ def addNewCashFlow(db, userID, amount, msg) -> bool:
     """
     if db is None:
         return False
-    now = datetime.utcnow()
-    currentTime = now.strftime("%Y-%m-%d %H:%M:%S")
+    now: datetime = datetime.utcnow()
+    currentTime: str = now.strftime("%Y-%m-%d %H:%M:%S")
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"INSERT INTO `cashFlow` (`flowID`, `userID`, `amount`, `message`, `date`) VALUES (NULL, {userID}, {amount}, '{msg}', '{currentTime}');")
         db.commit()
     except Exception as err:
@@ -26,7 +28,7 @@ def addNewCashFlow(db, userID, amount, msg) -> bool:
     return True
 
 
-def deleteCashFlow(db, flowID) -> bool:
+def deleteCashFlow(db: Connection, flowID: int) -> bool:
     """
     Delete existed Cash flow
     :param db: database object
@@ -36,7 +38,7 @@ def deleteCashFlow(db, flowID) -> bool:
     if db is None:
         return False
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"DELETE FROM `cashFlow` WHERE `flowID` = {flowID};")
         db.commit()
     except Exception as err:
@@ -45,7 +47,7 @@ def deleteCashFlow(db, flowID) -> bool:
     return True
 
 
-def getCashflowsByUserID(db, userID):
+def getCashflowsByUserID(db: Connection, userID: int) -> tuple or None:
     """
     Get cash flows by user's ID
     :param db: database object
@@ -56,18 +58,19 @@ def getCashflowsByUserID(db, userID):
     if db is None:
         return None
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = '{userID}';")
-        results = cursor.fetchall()
+        results: tuple = cursor.fetchall()
     except Exception as err:
         logger.error(err)
         return None
     return results
 
 
-def get10RecentCashflowsByUserID(db, userID, msg):
+def get10RecentCashflowsByUserID(db: Connection, userID: int, msg: str or None) -> tuple or None:
     """
     Get 10 cash flows by user's ID
+    :param msg: message detail for cash flow
     :param db: database object
     :param userID: user's ID
     :return: Tuple of cash flow
@@ -76,13 +79,13 @@ def get10RecentCashflowsByUserID(db, userID, msg):
     if db is None:
         return None
     try:
-        cursor = db.cursor()
+        cursor: Cursor = db.cursor()
         if msg is None:
             cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = {userID} ORDER BY `cashFlow`.`date` DESC LIMIT 10;")
         else:
-            args = msg
+            args: str = msg
             cursor.execute(f"SELECT * FROM `cashFlow` WHERE `userID` = {userID} AND `message` LIKE %s ORDER BY `cashFlow`.`date` DESC LIMIT 10;", args)
-        results = cursor.fetchall()
+        results: tuple = cursor.fetchall()
     except Exception as err:
         logger.error(err)
         return None
@@ -90,11 +93,12 @@ def get10RecentCashflowsByUserID(db, userID, msg):
 
 
 def test_addNewCashFlow():
+    from src.model.makeDatabaseConnection import makeDatabaseConnection
     db = makeDatabaseConnection()
-    assert addNewCashFlow(db, '123123123', 100, "转账") is True
-    assert addNewCashFlow(db, '123123123', -50, "转账") is True
-    cashflow = getCashflowsByUserID(db, '123123123')
-    cashFlow10Result = get10RecentCashflowsByUserID(db, '123123123', "转账")
+    assert addNewCashFlow(db, 123123123, 100, "转账") is True
+    assert addNewCashFlow(db, 123123123, -50, "转账") is True
+    cashflow = getCashflowsByUserID(db, 123123123)
+    cashFlow10Result = get10RecentCashflowsByUserID(db, 123123123, "转账")
     assert len(cashFlow10Result) == 2
     assert cashflow is not None
     assert len(cashflow) == 2

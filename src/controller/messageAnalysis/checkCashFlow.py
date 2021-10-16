@@ -1,16 +1,17 @@
-import sys
-import os
 from loguru import logger
 
 from src.model.cashFlowManagement import get10RecentCashflowsByUserID
 
+from discord import Client, Message
+from pymysql import Connection
 
-async def checkCashFlow(self, message, db):
-    cashFlowData = get10RecentCashflowsByUserID(db, message.author.id, None)
-    messageSendBack = ''
+
+async def checkCashFlow(self: Client, message: Message, db: Connection):
+    cashFlowData: tuple = get10RecentCashflowsByUserID(db, message.author.id, None)
+    messageSendBack: str = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
-        messageSendBack = '系统错误'
+        messageSendBack: str = '系统错误'
     else:
         messageSendBack += '最近的记录：\n'
         for cashFlow in cashFlowData:
@@ -19,10 +20,10 @@ async def checkCashFlow(self, message, db):
     await message.channel.send(messageSendBack)
 
 
-async def checkCashFlowWithFilter(self, message, db):
-    filterMessage = message.content[6:]
-    cashFlowData = get10RecentCashflowsByUserID(db, message.author.id, filterMessage)
-    messageSendBack = ''
+async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection):
+    filterMessage: str = message.content[6:]
+    cashFlowData: tuple = get10RecentCashflowsByUserID(db, message.author.id, filterMessage)
+    messageSendBack: str = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
         messageSendBack = '系统错误'
