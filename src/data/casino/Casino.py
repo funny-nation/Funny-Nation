@@ -30,3 +30,10 @@ class Casino:
 
     def deleteTable(self, tableID: int):
         del self.tables[tableID]
+
+    def getTableByPlayerID(self, playerID: int) -> Table or None:
+        for tableID in self.tables:
+            table: Table = self.tables[tableID]
+            if table.hasPlayer(playerID):
+                return table
+        return None

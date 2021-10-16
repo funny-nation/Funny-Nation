@@ -4,7 +4,7 @@ from discord import Client, Message
 from pymysql import Connection
 from src.data.casino.Casino import Casino
 from src.data.casino.table import Table
-from src.controller.messageAnalysis.blackJack.joinGame import joinBlackJack
+from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 
 
 async def joinGame(self: Client, message: Message, db: Connection, casino: Casino):

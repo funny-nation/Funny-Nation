@@ -2,17 +2,17 @@ import os
 import configparser
 import re
 
-from src.controller.messageAnalysis.checkBalance import checkBalance
-from src.controller.messageAnalysis.getLeaderBoard import getLeaderBoardTop10
-from src.controller.messageAnalysis.checkCashFlow import checkCashFlow
-from src.controller.messageAnalysis.transferMoney import transferMoney
+from src.controller.onMessage.checkBalance import checkBalance
+from src.controller.onMessage.getLeaderBoard import getLeaderBoardTop10
+from src.controller.onMessage.checkCashFlow import checkCashFlow
+from src.controller.onMessage.transferMoney import transferMoney
 
-from src.controller.messageAnalysis.blackJack.newBlackJackGame import newBlackJackGame
-from src.controller.messageAnalysis.blackJack.hit import blackJackHit
-from src.controller.messageAnalysis.blackJack.stay import blackJackStay
+from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
+from src.controller.onMessage.blackJack.hit import blackJackHit
+from src.controller.onMessage.blackJack.stay import blackJackStay
 
-from src.controller.messageAnalysis.liveGift import liveGift
-from src.controller.messageAnalysis.joinGame import joinGame
+from src.controller.onMessage.liveGift import liveGift
+from src.controller.onMessage.joinGame import joinGame
 
 from discord import Client, Message
 from pymysql import Connection
@@ -25,7 +25,7 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def messageParser(self: Client, message: Message, db: Connection, casino: Casino):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
