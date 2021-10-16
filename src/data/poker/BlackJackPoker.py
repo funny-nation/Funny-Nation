@@ -1,4 +1,5 @@
 from src.data.poker.Poker import Poker
+from src.data.poker.Card import Card
 
 
 class BlackJackPoker(Poker):
@@ -6,7 +7,7 @@ class BlackJackPoker(Poker):
     def __init__(self):
         Poker.__init__(self)
 
-    def compareForBlackJack(self, playerAlphaCards, playerBetaCards):
+    def compareForBlackJack(self, playerAlphaCards, playerBetaCards) -> int:
         """
 
         :param playerAlphaCards:
@@ -16,18 +17,18 @@ class BlackJackPoker(Poker):
         2 for player beta win
         0 for draw
         """
-        rankForPlayerAlpha = self.calculateRankBlackJackWithAceAs11(playerAlphaCards)
-        rankForPlayerBeta = self.calculateRankBlackJackWithAceAs11(playerBetaCards)
+        rankForPlayerAlpha: int = self.calculateRankBlackJackWithAceAs11(playerAlphaCards)
+        rankForPlayerBeta: int = self.calculateRankBlackJackWithAceAs11(playerBetaCards)
 
-        if rankForPlayerAlpha > 21 and rankForPlayerBeta <= 21:
+        if (rankForPlayerAlpha > 21) and (rankForPlayerBeta <= 21):
             rankForPlayerAlpha = self.calculateRankBlackJack(playerAlphaCards)
             if rankForPlayerAlpha > 21:
                 return 2
-        if rankForPlayerAlpha <= 21 and rankForPlayerBeta > 21:
+        if (rankForPlayerAlpha <= 21) and (rankForPlayerBeta > 21):
             rankForPlayerBeta = self.calculateRankBlackJack(playerBetaCards)
             if rankForPlayerBeta > 21:
                 return 1
-        if rankForPlayerAlpha > 21 and rankForPlayerBeta > 21:
+        if (rankForPlayerAlpha > 21) and (rankForPlayerBeta > 21):
             return 0
 
         if rankForPlayerAlpha > rankForPlayerBeta:
@@ -42,7 +43,8 @@ class BlackJackPoker(Poker):
 
         return 0
 
-    def calculateRankBlackJack(self, cards):
+    @staticmethod
+    def calculateRankBlackJack(cards: [Card]):
         rank = 0
         for card in cards:
             if card.rank < 10:
@@ -51,7 +53,8 @@ class BlackJackPoker(Poker):
                 rank += 10
         return rank
 
-    def calculateRankBlackJackWithAceAs11(self, cards):
+    @staticmethod
+    def calculateRankBlackJackWithAceAs11(cards: [Card]):
         rank = 0
         for card in cards:
             if card.rank < 10:
@@ -69,10 +72,10 @@ def test_BlackJack():
     poker.shuffle()
     playerAlphaCards = []
     playerBetaCards = []
-    while(poker.calculateRankBlackJack(playerAlphaCards) < 15):
+    while poker.calculateRankBlackJack(playerAlphaCards) < 15:
         playerAlphaCards.append(poker.getACard())
 
-    while(poker.calculateRankBlackJack(playerBetaCards) < 15):
+    while poker.calculateRankBlackJack(playerBetaCards) < 15:
         playerBetaCards.append(poker.getACard())
 
     print("Alpha: ")

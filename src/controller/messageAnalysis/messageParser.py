@@ -55,7 +55,7 @@ async def messageParser(self: Client, message: Message, db: Connection, casino: 
         await liveGift(self, db, message, command)
 
 
-    if re.match(f"^开局21点 [0-9]+\.?[0-9]*元$", command):
+    if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
         await newBlackJackGame(self, message, db, command, casino)
     if re.match(f"^要牌$", command):
         await blackJackHit(self, message, casino)

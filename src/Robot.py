@@ -28,10 +28,9 @@ class Robot(discord.Client):
     async def on_message(self, message: Message):
         if message.author == self.user:
             return
-        e = discord.Embed()
-        e.set_image(url='https://www.teenet.me/wp-content/uploads/2020/12/zcapt-1.png')
-        e.add_field()
-        await message.channel.send(embed=e)
+        # e = discord.Embed()
+        # e.set_image(url='https://www.teenet.me/wp-content/uploads/2020/12/zcapt-1.png')
+        # await message.channel.send(embed=e)
         db: Connection = makeDatabaseConnection()
         logger.info(f"{message.author.name} : {message.content}")
         if message.channel != message.author.dm_channel:

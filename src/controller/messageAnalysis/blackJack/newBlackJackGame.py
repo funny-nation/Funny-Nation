@@ -11,7 +11,7 @@ from src.data.casino.Casino import Casino
 
 
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino):
-    moneyStrings: List[str] = re.findall(f"^开局21点 ([0-9]+\.?[0-9]*)元$", command)
+    moneyStrings: List[str] = re.findall(f"^开局21点 ([0-9]+\.?[0-9]*)$", command)
     money: int = int(float(moneyStrings[0]) * 100)
     alphaPlayerInfo: tuple = getUser(db, message.author.id)
     if alphaPlayerInfo[1] < money:

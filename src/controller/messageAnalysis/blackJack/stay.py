@@ -30,5 +30,6 @@ async def blackJackStay(self: Client, message: Message, casino: Casino):
                 resultMessage += card.getString() + '\n'
             resultMessage += '---\n'
         print(resultMessage)
+        resultMessage += '-'
         await message.channel.send(resultMessage)
         await message.channel.send(f"{winner.display_name}胜利")

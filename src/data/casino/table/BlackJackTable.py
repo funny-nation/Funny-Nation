@@ -1,5 +1,6 @@
 from src.data.casino.table.Table import Table
 from data.poker.BlackJackPoker import BlackJackPoker
+from src.data.poker.Card import Card
 
 
 class BlackJackTable(Table):
@@ -9,42 +10,42 @@ class BlackJackTable(Table):
         self.poker = BlackJackPoker()
         self.money = money
 
-    def gameStart(self):
+    def gameStart(self) -> bool:
         if len(self.players) != 2:
             return False
         self.poker.shuffle()
         for playerID in self.players:
-            cardA = self.poker.getACard()
-            cardB = self.poker.getACard()
+            cardA: Card = self.poker.getACard()
+            cardB: Card = self.poker.getACard()
             self.players[playerID]['cards'] = [cardA, cardB]
             self.players[playerID]['stay'] = False
         return True
 
-    def viewCards(self, playerID):
+    def viewCards(self, playerID: int) -> [Card]:
         return self.players[playerID]['cards']
 
-    def hit(self, playerID):
-        card = self.poker.getACard()
+    def hit(self, playerID) -> Card:
+        card: Card = self.poker.getACard()
         self.players[playerID]['cards'].append(card)
         return card
 
     def stay(self, playerID):
         self.players[playerID]['stay'] = True
 
-    def isOver(self):
+    def isOver(self) -> bool:
         for playerID in self.players:
             if not self.players[playerID]['stay']:
                 return False
         return True
 
-    def shouldStopHitting(self, playerID):
+    def shouldStopHitting(self, playerID) -> bool:
         """
         Return true if player's rank is not less than 21 with ace as 1 rank
         :param playerID:
         :return:
         """
-        cards = self.players[playerID]['cards']
-        rank = self.poker.calculateRankBlackJack(cards)
+        cards: [Card] = self.players[playerID]['cards']
+        rank: int = self.poker.calculateRankBlackJack(cards)
         return rank >= 21
 
     def endAndGetWinner(self):
@@ -54,7 +55,7 @@ class BlackJackTable(Table):
                 'id': playerID,
                 'cards': self.players[playerID]['cards']
             })
-        result = self.poker.compareForBlackJack(playersArr[0]['cards'], playersArr[1]['cards'])
+        result: int = self.poker.compareForBlackJack(playersArr[0]['cards'], playersArr[1]['cards'])
         if result == 1:
             return playersArr[0]['id']
         if result == 2:

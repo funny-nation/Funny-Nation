@@ -13,7 +13,7 @@ class Poker:
     def shuffle(self):
         random.shuffle(self.cards)
 
-    def getACard(self):
+    def getACard(self) -> Card or None:
         """
         Get a card from
         :return:

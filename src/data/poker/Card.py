@@ -3,7 +3,7 @@ class Card:
         self.suit = suit
         self.rank = rank
 
-    def getString(self):
+    def getString(self) -> str:
         if self.suit == 0:
             return f"方片{self.convertRankToStr(self.rank)}"
         if self.suit == 1:
@@ -13,7 +13,9 @@ class Card:
         if self.suit == 3:
             return f"黑桃{self.convertRankToStr(self.rank)}"
 
-    def convertRankToStr(self, rank):
+
+    @staticmethod
+    def convertRankToStr(rank: int) -> str:
         if rank == 11:
             return 'J'
         if rank == 12:
