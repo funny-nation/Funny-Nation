@@ -1,3 +1,6 @@
+import os
+
+
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit
@@ -12,6 +15,9 @@ class Card:
             return f"红桃{self.convertRankToStr(self.rank)}"
         if self.suit == 3:
             return f"黑桃{self.convertRankToStr(self.rank)}"
+
+    def getCardImgPath(self):
+        return f"img{os.path.sep}cards{os.path.sep}{self.rank}_{self.suit}.png"
 
 
     @staticmethod

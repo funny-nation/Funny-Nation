@@ -4,6 +4,8 @@ from discord import Client, Message, Member, DMChannel
 
 from src.data.casino import Casino
 from src.data.poker.Card import Card
+from src.data.poker.pokerImage import getPokerImage
+
 
 
 async def blackJackHit(self: Client, message: Message, casino: Casino):
@@ -20,7 +22,8 @@ async def blackJackHit(self: Client, message: Message, casino: Casino):
     if table.shouldStopHitting(playerID):
         await message.channel.send("你不能再要了")
         return
-    card: Card = table.hit(playerID)
+    table.hit(playerID)
+    cards = table.viewCards(playerID)
     dmChannel: DMChannel = await user.create_dm()
-    await dmChannel.send(card.getString())
+    await dmChannel.send(file=getPokerImage(cards))
     await dmChannel.send("你还要吗")

@@ -27,3 +27,6 @@ class Casino:
         if tableID not in self.tables:
             return None
         return self.tables[tableID]
+
+    def deleteTable(self, tableID: int):
+        del self.tables[tableID]

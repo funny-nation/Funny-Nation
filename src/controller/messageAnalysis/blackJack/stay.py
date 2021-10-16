@@ -1,6 +1,7 @@
 from src.data.casino.table.BlackJackTable import BlackJackTable
 
 from src.data.casino.Casino import Casino
+from src.data.poker.pokerImage import getPokerImage
 from discord import Client, Message, Member, User
 
 
@@ -22,14 +23,10 @@ async def blackJackStay(self: Client, message: Message, casino: Casino):
         winnerID: int = table.endAndGetWinner()
         winner: User = await self.fetch_user(winnerID)
 
-        resultMessage = ''
         for eachPlayerID in table.players:
             eachPlayer = await self.fetch_user(eachPlayerID)
-            resultMessage += f"玩家{eachPlayer.display_name}: \n"
-            for card in table.viewCards(eachPlayerID):
-                resultMessage += card.getString() + '\n'
-            resultMessage += '---\n'
-        print(resultMessage)
-        resultMessage += '-'
-        await message.channel.send(resultMessage)
+            await message.channel.send(f"--------\n玩家{eachPlayer.display_name}的牌: ")
+            cards = table.viewCards(eachPlayerID)
+            await message.channel.send(file=getPokerImage(cards))
         await message.channel.send(f"{winner.display_name}胜利")
+        casino.deleteTable(message.channel.id)
