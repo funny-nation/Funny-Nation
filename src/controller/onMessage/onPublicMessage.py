@@ -59,8 +59,9 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await newBlackJackGame(self, message, db, command, casino)
     if re.match(f"^要牌$", command):
         await blackJackHit(self, message, casino)
-    if re.match(f"^停牌$", command):
-        await blackJackStay(self, message, casino)
+    if re.match(f"^开牌$", command):
+        member = message.author
+        await blackJackStay(self, message, casino, member.id, member)
 
 
     if re.match(f"^加入$", command):

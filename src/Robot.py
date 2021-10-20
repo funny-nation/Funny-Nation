@@ -1,7 +1,7 @@
 import discord
 import random
 from loguru import logger
-from discord import Guild, Role, Message
+from discord import Guild, Role, Message, Reaction, User
 from pymysql import Connection
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
@@ -11,6 +11,7 @@ from src.controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceC
 from src.controller.onMessage.onPublicMessage import onPublicMessage
 from src.controller.onMessage.onPrivateMessage import onPrivateMessage
 from src.data.casino.Casino import Casino
+from src.controller.onMessage.onMessageReaction import onMessageReaction
 
 
 class Robot(discord.Client):
@@ -38,3 +39,7 @@ class Robot(discord.Client):
         else:
             await onPrivateMessage(self, message, db, self.casino)
         db.close()
+
+    async def on_reaction_add(self, reaction: Reaction, user: User):
+        if user != self.user:
+            await onMessageReaction(self, reaction, user, self.casino)

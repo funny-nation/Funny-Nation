@@ -1,14 +1,15 @@
 from src.data.casino.table.Table import Table
 from data.poker.BlackJackPoker import BlackJackPoker
 from src.data.poker.Card import Card
+from discord import Message
 
 
 class BlackJackTable(Table):
 
-    def __init__(self, money):
-        Table.__init__(self, 'blackJack')
-        self.poker = BlackJackPoker()
-        self.money = money
+    def __init__(self, money: int, inviteMessage: Message):
+        Table.__init__(self, 'blackJack', inviteMessage)
+        self.poker: BlackJackPoker = BlackJackPoker()
+        self.money: int = money
 
     def gameStart(self) -> bool:
         if len(self.players) != 2:

@@ -1,6 +1,7 @@
 import random
 from src.data.casino.table.BlackJackTable import BlackJackTable
 from src.data.casino.table.Table import Table
+from discord import Message
 
 
 class Casino:
@@ -10,7 +11,7 @@ class Casino:
     def getTableNumber(self) -> int:
         return len(self.tables)
 
-    def createBlackJackTableByID(self, tableID: int, money: int) -> bool:
+    def createBlackJackTableByID(self, tableID: int, money: int, inviteMessage: Message) -> bool:
         """
         Return true if table created success
         Return false if someone is using this table
@@ -20,7 +21,7 @@ class Casino:
         """
         if tableID in self.tables:
             return False
-        self.tables[tableID] = BlackJackTable(money)
+        self.tables[tableID] = BlackJackTable(money, inviteMessage)
         return True
 
     def getTable(self, tableID: int) -> Table or None:
