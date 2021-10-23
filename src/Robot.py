@@ -42,4 +42,6 @@ class Robot(discord.Client):
 
     async def on_reaction_add(self, reaction: Reaction, user: User):
         if user != self.user:
-            await onMessageReaction(self, reaction, user, self.casino)
+            db: Connection = makeDatabaseConnection()
+            await onMessageReaction(self, reaction, user, self.casino, db)
+            db.close()

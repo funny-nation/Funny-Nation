@@ -29,7 +29,10 @@ class BlackJackPoker(Poker):
             if rankForPlayerBeta > 21:
                 return 1
         if (rankForPlayerAlpha > 21) and (rankForPlayerBeta > 21):
-            return 0
+            rankForPlayerBeta = self.calculateRankBlackJack(playerBetaCards)
+            rankForPlayerAlpha = self.calculateRankBlackJack(playerAlphaCards)
+            if (rankForPlayerAlpha > 21) and (rankForPlayerBeta > 21):
+                return 0
 
         if rankForPlayerAlpha > rankForPlayerBeta:
             return 1

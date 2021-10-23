@@ -1,6 +1,6 @@
 from src.model.userManagement import getUser
 
-from discord import Client, Message
+from discord import Client, Message, Reaction, TextChannel, User
 from pymysql import Connection
 from src.data.casino.Casino import Casino
 from src.data.casino.table import Table
@@ -16,11 +16,18 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
     if table.hasPlayer(playerID):
         await message.channel.send("你已经加入了")
         return
-    userInfo: tuple = getUser(db, playerID)
-    if userInfo[1] < table.money:
-        await message.channel.send("你好像不太够钱")
+    if table.getPlayerCount() >= table.maxPlayer:
+        await message.channel.send(f"{message.author.display_name}，满人了")
         return
 
     if table.game == 'blackJack':
-        await joinBlackJack(table, playerID, message, self)
+        await joinBlackJack(table, message.author, message.channel, self, db)
 
+
+async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self: Client, db: Connection):
+    channel: TextChannel = reaction.message.channel
+    if table.getPlayerCount() >= table.maxPlayer:
+        await channel.send(f"{user.display_name}，满人了")
+        return
+    if table.game == 'blackJack':
+        await joinBlackJack(table, user, channel, self, db)

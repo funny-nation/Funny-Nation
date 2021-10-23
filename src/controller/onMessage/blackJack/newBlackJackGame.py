@@ -1,6 +1,7 @@
 import re
 
 from typing import List
+from loguru import logger
 
 from src.model.userManagement import getUser
 
@@ -13,8 +14,8 @@ from src.data.casino.Casino import Casino
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino):
     moneyStrings: List[str] = re.findall(f"^开局21点 ([0-9]+\.?[0-9]*)$", command)
     money: int = int(float(moneyStrings[0]) * 100)
-    alphaPlayerInfo: tuple = getUser(db, message.author.id)
-    if alphaPlayerInfo[1] < money:
+    playerInfo: tuple = getUser(db, message.author.id)
+    if playerInfo[1] < money:
         await message.channel.send("你不够钱")
         return
     if not casino.createBlackJackTableByID(message.channel.id, money, message):
@@ -22,4 +23,5 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
         return
     casino.getTable(message.channel.id).addPlayer(message.author.id)
     await message.add_reaction('\N{White Heavy Check Mark}')
-    await message.channel.send("牌局已建立，等待一名玩家加入，想加入的可以点击上面的✅图标")
+    await message.channel.send("牌局已建立，等待玩家加入，想加入的可以点击上面的✅图标")
+    logger.info(f"{message.author.id} create a blackJack Table in channel {message.channel.id}")

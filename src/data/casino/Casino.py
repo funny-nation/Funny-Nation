@@ -15,13 +15,14 @@ class Casino:
         """
         Return true if table created success
         Return false if someone is using this table
+        :param inviteMessage:
         :param tableID:
         :param money:
         :return:
         """
         if tableID in self.tables:
             return False
-        self.tables[tableID] = BlackJackTable(money, inviteMessage)
+        self.tables[tableID] = BlackJackTable(money, inviteMessage, 5, inviteMessage.author)
         return True
 
     def getTable(self, tableID: int) -> Table or None:

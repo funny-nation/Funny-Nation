@@ -1,25 +1,27 @@
 from src.data.casino.table.BlackJackTable import BlackJackTable
-from discord import User, DMChannel, File, Client, Message
-from src.data.poker.pokerImage import getPokerImage
+from discord import User, DMChannel, File, Client, Message, TextChannel
+from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
+from pymysql import Connection
+
+from loguru import logger
+from src.model.userManagement import getUser
 
 
-async def joinBlackJack(table: BlackJackTable, playerID: int, message: Message, self: Client):
-    if table.hasPlayer(playerID):
-        player: User = await self.fetch_user(playerID)
-        await message.channel.send(f"{player.display_name}，你已经加入了")
+async def joinBlackJack(table: BlackJackTable, player: User, channel: TextChannel, self: Client, db: Connection):
+    userInfo: tuple = getUser(db, player.id)
+    if userInfo[1] < table.money:
+        await channel.send(f"{player.display_name}，你好像不太够钱")
         return
-    table.addPlayer(playerID)
-
-    if not table.gameStart():
-        await message.channel.send("炸了")
+    if table.gameStarted:
+        await channel.send(f"{player.display_name}，游戏已经开始了，等下一局吧")
         return
 
-    await message.channel.send("开始了，底牌已经私聊你们了，请各位查看自己的牌")
+    if not table.addPlayer(player.id):
+        await channel.send("炸了")
+        return
 
-    for userID in table.players:
-        user: User = await self.fetch_user(userID)
-        dmChannel: DMChannel = await user.create_dm()
-        await dmChannel.send("这是你的牌：")
-        cards = table.viewCards(userID)
-        await dmChannel.send(file=getPokerImage(cards))
-        await dmChannel.send("你还要牌吗，要的话，在这里回复\"要\"或者\"不要\"")
+    await channel.send(f"{player.display_name}，加入")
+    logger.info(f"{player.id} join a blackJack table {channel.id}")
+    if table.getPlayerCount() >= table.maxPlayer:
+        await blackJackGameStart(table, table.inviteMessage, self)
+        logger.info(f"Table {channel.id} started automatically due to full")

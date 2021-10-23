@@ -1,18 +1,22 @@
+from typing import List
+
+import discord
+
 from src.data.casino.table.Table import Table
 from data.poker.BlackJackPoker import BlackJackPoker
 from src.data.poker.Card import Card
-from discord import Message
+from discord import Message, Member
 
 
 class BlackJackTable(Table):
 
-    def __init__(self, money: int, inviteMessage: Message):
-        Table.__init__(self, 'blackJack', inviteMessage)
+    def __init__(self, money: int, inviteMessage: Message, maxPlayer, owner: Member):
+        Table.__init__(self, 'blackJack', inviteMessage, maxPlayer, owner)
         self.poker: BlackJackPoker = BlackJackPoker()
         self.money: int = money
 
     def gameStart(self) -> bool:
-        if len(self.players) != 2:
+        if self.getPlayerCount() == 1:
             return False
         self.poker.shuffle()
         for playerID in self.players:
@@ -20,6 +24,7 @@ class BlackJackTable(Table):
             cardB: Card = self.poker.getACard()
             self.players[playerID]['cards'] = [cardA, cardB]
             self.players[playerID]['stay'] = False
+        self.gameStarted = True
         return True
 
     def viewCards(self, playerID: int) -> [Card]:
@@ -63,12 +68,37 @@ class BlackJackTable(Table):
             return playersArr[1]['id']
         return None
 
+    def getTheHighHand(self) -> List[int]:
+        """
+        Get the highest hand
+        :return:
+        A list of winner player id
+        """
+        playerList: list = list(self.players.keys())
+        highHand: list = [playerList[0]]
+        for i in range(1, len(playerList)):
+            cardsCurrentHighHand: List[Card] = self.viewCards(highHand[0])
+            cardsCompareTo: List[Card] = self.viewCards(playerList[i])
+            compareResult = self.poker.compareForBlackJack(cardsCurrentHighHand, cardsCompareTo)
+            if compareResult == 1:
+                continue
+            if compareResult == 2:
+                highHand = [playerList[i]]
+                continue
+            if compareResult == 0:
+                highHand.append(playerList[i])
+
+        return highHand
+
 
 def test_BlackJackTable():
-    table = BlackJackTable(10)
-    table.addPlayer(123)
-    table.addPlayer(456)
-    table.gameStart()
+    table = BlackJackTable(10, 'discord.Message()', 3)
+    assert table.addPlayer(123) is True
+    assert table.gameStart() is False
+    assert table.addPlayer(456) is True
+    assert table.addPlayer(789) is True
+    assert table.addPlayer(135) is False
+    assert table.gameStart() is True
     assert table.isOver() is False
     while not table.shouldStopHitting(123):
         table.hit(123)
@@ -77,9 +107,17 @@ def test_BlackJackTable():
     table.stay(123)
     assert table.isOver() is False
     table.stay(456)
+    table.stay(789)
     assert table.isOver() is True
-    print(table.viewCards(123))
+
+    print('\n')
+    for card in table.viewCards(123):
+        print(card.getString())
     print('----')
-    print(table.viewCards(456))
+    for card in table.viewCards(456):
+        print(card.getString())
+    print('----')
+    for card in table.viewCards(789):
+        print(card.getString())
     print('Winner: ')
-    print(table.endAndGetWinner())
+    print(table.getTheHighHand())

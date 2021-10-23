@@ -10,6 +10,8 @@ from src.controller.onMessage.transferMoney import transferMoney
 from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.onMessage.blackJack.hit import blackJackHit
 from src.controller.onMessage.blackJack.stay import blackJackStay
+from src.controller.onMessage.startGame import gameStartByTableOwner
+from src.controller.onMessage.pauseGame import pauseGame
 
 from src.controller.onMessage.liveGift import liveGift
 from src.controller.onMessage.joinGame import joinGame
@@ -43,27 +45,40 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
     command: str = message.content[3:]
     if re.match(f"^余额$", command):
         await checkBalance(message, db)
+        return
     if re.match(f"^富豪榜$", command):
         await getLeaderBoardTop10(self, message, db)
+        return
     if re.match(f"^账单$", command):
         await checkCashFlow(self, message, db)
+        return
     if re.match(f"^账单 .+", command):
         await checkCashFlow(self, message, db)
+        return
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)
+        return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
-
+        return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
         await newBlackJackGame(self, message, db, command, casino)
+        return
     if re.match(f"^要牌$", command):
         await blackJackHit(self, message, casino)
+        return
     if re.match(f"^开牌$", command):
         member = message.author
         await blackJackStay(self, message, casino, member.id, member)
-
+        return
 
     if re.match(f"^加入$", command):
         await joinGame(self, message, db, casino)
-
+        return
+    if re.match(f"^开$", command):
+        await gameStartByTableOwner(self, message, casino)
+        return
+    if re.match(f"^掀桌$", command):
+        await pauseGame(self, message, casino)
+        return
