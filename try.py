@@ -35,7 +35,16 @@
 #
 # time.sleep(5)
 # print("over")
+import _thread
+import asyncio
+import time
 
-i = [1,2,3]
-i = [2]
-print(i)
+
+async def p():
+    print("123")
+
+def f():
+    asyncio.run(p())
+
+_thread.start_new_thread(f, ())
+time.sleep(1)

@@ -5,10 +5,10 @@ from loguru import logger
 
 from src.model.userManagement import getUser
 
-from discord import Client, Message, Emoji
+from discord import Client, Message
 from pymysql import Connection
 
-from src.data.casino.Casino import Casino
+from util.casino.Casino import Casino
 
 
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino):

@@ -1,16 +1,14 @@
 from typing import List
 
-import discord
-
-from src.data.casino.table.Table import Table
-from data.poker.BlackJackPoker import BlackJackPoker
-from src.data.poker.Card import Card
+from util.casino.table.Table import Table
+from util.poker.BlackJackPoker import BlackJackPoker
+from util.poker.Card import Card
 from discord import Message, Member
 
 
 class BlackJackTable(Table):
 
-    def __init__(self, money: int, inviteMessage: Message, maxPlayer, owner: Member):
+    def __init__(self, money: int, inviteMessage: Message or str, maxPlayer, owner: Member or str):
         Table.__init__(self, 'blackJack', inviteMessage, maxPlayer, owner)
         self.poker: BlackJackPoker = BlackJackPoker()
         self.money: int = money
@@ -51,7 +49,7 @@ class BlackJackTable(Table):
         :return:
         """
         cards: [Card] = self.players[playerID]['cards']
-        rank: int = self.poker.calculateRankBlackJack(cards)
+        rank: int = BlackJackPoker.calculateRankBlackJackWithAceAs1(cards)
         return rank >= 21
 
     def endAndGetWinner(self):
@@ -76,23 +74,23 @@ class BlackJackTable(Table):
         """
         playerList: list = list(self.players.keys())
         highHand: list = [playerList[0]]
+        highHandVal: int = BlackJackPoker.calculateValue(self.viewCards(highHand[0]))
         for i in range(1, len(playerList)):
             cardsCurrentHighHand: List[Card] = self.viewCards(highHand[0])
             cardsCompareTo: List[Card] = self.viewCards(playerList[i])
-            compareResult = self.poker.compareForBlackJack(cardsCurrentHighHand, cardsCompareTo)
-            if compareResult == 1:
-                continue
-            if compareResult == 2:
+            valueOfCardsCompareTo: int = BlackJackPoker.calculateValue(cardsCompareTo)
+            if valueOfCardsCompareTo > highHandVal:
                 highHand = [playerList[i]]
+                highHandVal = valueOfCardsCompareTo
                 continue
-            if compareResult == 0:
+            if valueOfCardsCompareTo == highHand:
                 highHand.append(playerList[i])
 
         return highHand
 
 
 def test_BlackJackTable():
-    table = BlackJackTable(10, 'discord.Message()', 3)
+    table = BlackJackTable(10, 'test', 3, "test")
     assert table.addPlayer(123) is True
     assert table.gameStart() is False
     assert table.addPlayer(456) is True

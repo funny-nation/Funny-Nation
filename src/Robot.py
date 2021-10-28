@@ -1,5 +1,4 @@
 import discord
-import random
 from loguru import logger
 from discord import Guild, Role, Message, Reaction, User
 from pymysql import Connection
@@ -10,7 +9,7 @@ from src.controller.checkIfMessagerIsBooster import checkIfMessagerIsBooster
 from src.controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
 from src.controller.onMessage.onPublicMessage import onPublicMessage
 from src.controller.onMessage.onPrivateMessage import onPrivateMessage
-from src.data.casino.Casino import Casino
+from util.casino.Casino import Casino
 from src.controller.onMessage.onMessageReaction import onMessageReaction
 
 

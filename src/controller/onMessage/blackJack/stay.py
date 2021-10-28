@@ -1,11 +1,10 @@
-from typing import Dict, List
+from typing import Dict
 
-from src.data.casino.table.BlackJackTable import BlackJackTable
+from util.casino.table.BlackJackTable import BlackJackTable
 
-from src.data.casino.Casino import Casino
-from src.data.casino.table.Table import Table
-from discord import Client, Message, Member, User
-from loguru import logger
+from util.casino.Casino import Casino
+from util.casino.table.Table import Table
+from discord import Client, Message, Member
 from src.controller.onMessage.blackJack.endGame import blackJackEndGame
 
 

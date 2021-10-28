@@ -1,11 +1,10 @@
-import sys
 import os
 from io import BytesIO
 from PIL import Image
 from typing import List
 from discord import File
 
-from src.data.poker.Card import Card
+from util.poker.Card import Card
 
 pokerImages = []
 

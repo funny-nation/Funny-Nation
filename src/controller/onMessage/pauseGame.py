@@ -1,7 +1,6 @@
-from discord import User, DMChannel, File, Client, Message
-from src.data.casino.Casino import Casino
-from src.data.casino.table.Table import Table
-from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
+from discord import Client, Message
+from util.casino.Casino import Casino
+from util.casino.table.Table import Table
 
 
 async def pauseGame(self: Client, message: Message, casino: Casino):

@@ -19,7 +19,7 @@ from src.controller.onMessage.joinGame import joinGame
 from discord import Client, Message
 from pymysql import Connection
 
-from src.data.casino.Casino import Casino
+from util.casino.Casino import Casino
 
 config = configparser.ConfigParser()
 config.read(os.path.dirname(__file__) + '/../../../config.ini')

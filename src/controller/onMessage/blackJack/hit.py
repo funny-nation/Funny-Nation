@@ -1,12 +1,12 @@
 from typing import List
 
-from src.data.casino.table.BlackJackTable import BlackJackTable
+from util.casino.table.BlackJackTable import BlackJackTable
 
 from discord import Client, Message, Member, DMChannel
 
-from src.data.casino import Casino
-from src.data.poker.Card import Card
-from src.data.poker.pokerImage import getPokerImage
+from util.casino import Casino
+from util.poker.Card import Card
+from util.poker.pokerImage import getPokerImage
 
 
 async def blackJackHit(self: Client, message: Message, casino: Casino):

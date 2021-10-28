@@ -1,4 +1,4 @@
-from src.data.poker.Card import Card
+from util.poker.Card import Card
 import random
 
 

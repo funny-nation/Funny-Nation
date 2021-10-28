@@ -1,9 +1,7 @@
-from src.model.userManagement import getUser
-
 from discord import Client, Message, Reaction, TextChannel, User
 from pymysql import Connection
-from src.data.casino.Casino import Casino
-from src.data.casino.table import Table
+from util.casino.Casino import Casino
+from util.casino.table import Table
 from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 
 

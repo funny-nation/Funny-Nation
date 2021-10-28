@@ -1,8 +1,6 @@
-from src.data.casino.table.BlackJackTable import BlackJackTable
-from discord import User, DMChannel, File, Client, Message
-from src.data.poker.pokerImage import getPokerImage
-from src.data.casino.Casino import Casino
-from src.data.casino.table.BlackJackTable import BlackJackTable
+from discord import User, DMChannel, Client, Message
+from util.poker.pokerImage import getPokerImage
+from util.casino.table.BlackJackTable import BlackJackTable
 
 from loguru import logger
 

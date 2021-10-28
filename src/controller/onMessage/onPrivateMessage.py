@@ -1,6 +1,6 @@
 from discord import Client, Message
 from pymysql import Connection
-from src.data.casino.Casino import Casino
+from util.casino.Casino import Casino
 from src.controller.onMessage.blackJack.hit import blackJackHitWithPrivateMessage
 from src.controller.onMessage.blackJack.stay import blackJackStayWithPrivateMsg
 

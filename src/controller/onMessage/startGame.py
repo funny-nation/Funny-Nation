@@ -1,6 +1,6 @@
-from discord import User, DMChannel, File, Client, Message
-from src.data.casino.Casino import Casino
-from src.data.casino.table.BlackJackTable import BlackJackTable
+from discord import Client, Message
+from util.casino.Casino import Casino
+from util.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
 
 

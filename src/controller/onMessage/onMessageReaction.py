@@ -1,10 +1,10 @@
 from discord import Client, Reaction, User
-from typing import List, Dict
+from typing import Dict
 from pymysql import Connection
 
-from src.data.casino.Casino import Casino
-from src.data.casino.table.Table import Table
-from src.data.casino.table.BlackJackTable import BlackJackTable
+from util.casino.Casino import Casino
+from util.casino.table.Table import Table
+from util.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.joinGame import joinGameByReaction
 
 

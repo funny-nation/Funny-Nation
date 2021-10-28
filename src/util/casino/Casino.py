@@ -1,6 +1,5 @@
-import random
-from src.data.casino.table.BlackJackTable import BlackJackTable
-from src.data.casino.table.Table import Table
+from util.casino.table.BlackJackTable import BlackJackTable
+from util.casino.table.Table import Table
 from discord import Message
 
 
