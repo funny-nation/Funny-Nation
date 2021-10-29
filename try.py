@@ -1,50 +1,39 @@
-#
-# import threading
-# import time
-#
-# exitFlag = True
-#
-#
-# class myThread(threading.Thread):
-#     def __init__(self, threadID, name):
-#         threading.Thread.__init__(self)
-#         self.threadID = threadID
-#         self.name = name
-#
-#     def run(self):
-#         print ("开始线程：" + self.name)
-#         print_time(self.name)
-#         print ("退出线程：" + self.name)
-#
-#
-# def print_time(threadName):
-#     while exitFlag:
-#         print("Thread running")
-#         time.sleep(1)
-#
-#
-# thread1 = myThread(1, "Thread-1")
-#
-# print("start")
-# thread1.start()
-# time.sleep(5)
-#
-# print("ending")
-#
-# exitFlag = False
-#
-# time.sleep(5)
-# print("over")
-import _thread
-import asyncio
+import threading
 import time
 
+g_num = 0
 
-async def p():
-    print("123")
+def test1(num):
+    global g_num
+    for i in range(num):
+        mutex.acquire()  # 上锁
+        g_num += 1
+        mutex.release()  # 解锁
 
-def f():
-    asyncio.run(p())
+    print("---test1---g_num=%d" % g_num)
 
-_thread.start_new_thread(f, ())
-time.sleep(1)
+def test2(num):
+    global g_num
+    for i in range(num):
+        mutex.acquire()  # 上锁
+        g_num += 1
+        mutex.release()  # 解锁
+
+    print("---test2---g_num=%d" % g_num)
+
+# 创建一个互斥锁
+# 默认是未上锁的状态
+mutex = threading.Lock()
+
+# 创建2个线程，让他们各自对g_num加1000000次
+p1 = threading.Thread(target=test1, args=(1000000,))
+p1.start()
+
+p2 = threading.Thread(target=test2, args=(1000000,))
+p2.start()
+
+# 等待计算完成
+while len(threading.enumerate()) != 1:
+    time.sleep(1)
+
+print("2个线程对同一个全局变量操作之后的最终结果是:%s" % g_num)

@@ -1,6 +1,6 @@
 from discord import User, DMChannel, Client, Message
-from util.poker.pokerImage import getPokerImage
-from util.casino.table.BlackJackTable import BlackJackTable
+from src.utils.poker.pokerImage import getPokerImage
+from src.utils.casino.table.BlackJackTable import BlackJackTable
 
 from loguru import logger
 

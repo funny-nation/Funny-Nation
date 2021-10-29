@@ -2,13 +2,15 @@ import re
 
 from typing import List
 from loguru import logger
+import asyncio
 
 from src.model.userManagement import getUser
-
+from src.utils.gameWaiting.main import newWait
 from discord import Client, Message
 from pymysql import Connection
+from src.controller.onMessage.pauseGame import pauseGame
 
-from util.casino.Casino import Casino
+from src.utils.casino.Casino import Casino
 
 
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino):
@@ -24,4 +26,16 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     casino.getTable(message.channel.id).addPlayer(message.author.id)
     await message.add_reaction('\N{White Heavy Check Mark}')
     await message.channel.send("牌局已建立，等待玩家加入，想加入的可以点击上面的✅图标")
+
+    async def timeOutFunction():
+        print("结束")
+        casino.deleteTable(message.channel.id)
+
+    async def timeWarning():
+        client: Client = self
+        print(await client.fetch_channel(message.channel.id))
+
+        print("还有10秒超时")
+
+    newWait(playerInfo[0], timeOutFunction, timeWarning)
     logger.info(f"{message.author.id} create a blackJack Table in channel {message.channel.id}")

@@ -4,7 +4,7 @@ from PIL import Image
 from typing import List
 from discord import File
 
-from util.poker.Card import Card
+from src.utils.poker.Card import Card
 
 pokerImages = []
 

@@ -1,8 +1,8 @@
 from typing import List
 
-from util.casino.table.Table import Table
-from util.poker.BlackJackPoker import BlackJackPoker
-from util.poker.Card import Card
+from src.utils.casino.table.Table import Table
+from src.utils.poker.BlackJackPoker import BlackJackPoker
+from src.utils.poker.Card import Card
 from discord import Message, Member
 
 

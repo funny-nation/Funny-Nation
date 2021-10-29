@@ -1,8 +1,8 @@
 import copy
 from typing import List
 
-from util.poker.Poker import Poker
-from util.poker.Card import Card
+from src.utils.poker.Poker import Poker
+from src.utils.poker.Card import Card
 
 
 class BlackJackPoker(Poker):

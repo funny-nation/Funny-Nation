@@ -1,6 +1,6 @@
 import discord
 from loguru import logger
-from discord import Guild, Role, Message, Reaction, User
+from discord import Guild, Role, Message, Reaction, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
@@ -9,8 +9,10 @@ from src.controller.checkIfMessagerIsBooster import checkIfMessagerIsBooster
 from src.controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
 from src.controller.onMessage.onPublicMessage import onPublicMessage
 from src.controller.onMessage.onPrivateMessage import onPrivateMessage
-from util.casino.Casino import Casino
+from src.utils.casino.Casino import Casino
 from src.controller.onMessage.onMessageReaction import onMessageReaction
+from src.controller.onMessage.onMessageReactionDelete import onMessageReactionDelete
+from src.utils.gameWaiting.main import startPlayerWaitingThread
 
 
 class Robot(discord.Client):
@@ -25,6 +27,8 @@ class Robot(discord.Client):
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
         addMoneyToUserInVoiceChannels(self)
+        startPlayerWaitingThread()
+
 
     async def on_message(self, message: Message):
         if message.author == self.user:
@@ -43,4 +47,12 @@ class Robot(discord.Client):
         if user != self.user:
             db: Connection = makeDatabaseConnection()
             await onMessageReaction(self, reaction, user, self.casino, db)
+            db.close()
+
+    async def on_raw_reaction_remove(self, event: RawReactionActionEvent):
+        user: User = await self.fetch_user(event.user_id)
+        channel: TextChannel = await self.fetch_channel(event.channel_id)
+        if user != self.user:
+            db: Connection = makeDatabaseConnection()
+            await onMessageReactionDelete(self, channel, user, self.casino, db)
             db.close()

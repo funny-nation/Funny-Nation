@@ -1,4 +1,4 @@
-from util.casino.table.BlackJackTable import BlackJackTable
+from src.utils.casino.table.BlackJackTable import BlackJackTable
 from discord import User, Client, TextChannel
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
 from pymysql import Connection
@@ -11,9 +11,6 @@ async def joinBlackJack(table: BlackJackTable, player: User, channel: TextChanne
     userInfo: tuple = getUser(db, player.id)
     if userInfo[1] < table.money:
         await channel.send(f"{player.display_name}，你好像不太够钱")
-        return
-    if table.gameStarted:
-        await channel.send(f"{player.display_name}，游戏已经开始了，等下一局吧")
         return
 
     if not table.addPlayer(player.id):

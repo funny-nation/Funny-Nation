@@ -1,7 +1,7 @@
 from discord import Client, Message, Reaction, TextChannel, User
 from pymysql import Connection
-from util.casino.Casino import Casino
-from util.casino.table import Table
+from src.utils.casino.Casino import Casino
+from src.utils.casino.table import Table
 from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 
 
@@ -17,6 +17,9 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
     if table.getPlayerCount() >= table.maxPlayer:
         await message.channel.send(f"{message.author.display_name}，满人了")
         return
+    if table.gameStarted:
+        await message.channel.send(f"{message.author.display_name}，游戏已经开始了，等下一局吧")
+        return
 
     if table.game == 'blackJack':
         await joinBlackJack(table, message.author, message.channel, self, db)
@@ -24,6 +27,12 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
 
 async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self: Client, db: Connection):
     channel: TextChannel = reaction.message.channel
+    if table.hasPlayer(user.id):
+        await channel.send(f"{user.display_name}，你已经加入了")
+        return
+    if table.gameStarted:
+        await channel.send(f"{user.display_name}，游戏已经开始了，等下一局吧")
+        return
     if table.getPlayerCount() >= table.maxPlayer:
         await channel.send(f"{user.display_name}，满人了")
         return

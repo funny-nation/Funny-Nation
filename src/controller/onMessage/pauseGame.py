@@ -1,9 +1,10 @@
 from discord import Client, Message
-from util.casino.Casino import Casino
-from util.casino.table.Table import Table
+from src.utils.casino.Casino import Casino
+from src.utils.casino.table.Table import Table
+from pymysql import Connection
 
 
-async def pauseGame(self: Client, message: Message, casino: Casino):
+async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection):
     table: Table = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("这里没人开游戏")

@@ -11,7 +11,7 @@ from datetime import datetime
 import configparser
 
 config = configparser.ConfigParser()
-config.read(os.path.dirname(__file__) + '/../../config.ini')
+config.read('config.ini')
 
 
 def whenSomeoneSendMessage(userID: int, hasBoosted: bool, db: Connection) -> bool:

@@ -15,14 +15,15 @@ from src.controller.onMessage.pauseGame import pauseGame
 
 from src.controller.onMessage.liveGift import liveGift
 from src.controller.onMessage.joinGame import joinGame
+from src.controller.onMessage.quitGame import quitGame
 
 from discord import Client, Message
 from pymysql import Connection
 
-from util.casino.Casino import Casino
+from src.utils.casino.Casino import Casino
 
 config = configparser.ConfigParser()
-config.read(os.path.dirname(__file__) + '/../../../config.ini')
+config.read('config.ini')
 commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
@@ -42,7 +43,7 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
     if len(message.content) > 100:
         await message.channel.send("你说的太长了")
         return
-    command: str = message.content[3:]
+    command: str = message.content[commandPrefixLen:]
     if re.match(f"^余额$", command):
         await checkBalance(message, db)
         return
@@ -76,9 +77,12 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
     if re.match(f"^加入$", command):
         await joinGame(self, message, db, casino)
         return
+    if re.match(f"^退出$", command):
+        await quitGame(self, message, db, casino)
+        return
     if re.match(f"^开$", command):
         await gameStartByTableOwner(self, message, casino)
         return
     if re.match(f"^掀桌$", command):
-        await pauseGame(self, message, casino)
+        await pauseGame(self, message, casino, db)
         return

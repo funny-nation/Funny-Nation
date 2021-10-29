@@ -1,6 +1,6 @@
 from discord import Client, Message
-from util.casino.Casino import Casino
-from util.casino.table.BlackJackTable import BlackJackTable
+from src.utils.casino.Casino import Casino
+from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
 
 

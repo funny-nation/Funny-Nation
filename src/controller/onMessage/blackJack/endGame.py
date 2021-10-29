@@ -1,6 +1,6 @@
 from typing import List
 
-from util.poker.pokerImage import getPokerImage
+from src.utils.poker.pokerImage import getPokerImage
 from loguru import logger
 
 

@@ -13,7 +13,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 import configparser
 
 config = configparser.ConfigParser()
-config.read(os.path.dirname(__file__) + '/../../config.ini')
+config.read('config.ini')
 
 
 def addMoneyToUserInVoiceChannels(self: Client):

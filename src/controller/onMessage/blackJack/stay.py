@@ -1,9 +1,9 @@
 from typing import Dict
 
-from util.casino.table.BlackJackTable import BlackJackTable
+from src.utils.casino.table.BlackJackTable import BlackJackTable
 
-from util.casino.Casino import Casino
-from util.casino.table.Table import Table
+from src.utils.casino.Casino import Casino
+from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member
 from src.controller.onMessage.blackJack.endGame import blackJackEndGame
 
