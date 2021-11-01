@@ -1,4 +1,5 @@
 import discord
+from discord.ext import tasks
 from loguru import logger
 from discord import Guild, Role, Message, Reaction, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
@@ -12,7 +13,7 @@ from src.controller.onMessage.onPrivateMessage import onPrivateMessage
 from src.utils.casino.Casino import Casino
 from src.controller.onMessage.onMessageReaction import onMessageReaction
 from src.controller.onMessage.onMessageReactionDelete import onMessageReactionDelete
-from src.utils.gameWaiting.main import startPlayerWaitingThread
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
 class Robot(discord.Client):
@@ -21,14 +22,14 @@ class Robot(discord.Client):
         super().__init__(**options)
         self.boostedRole = None
         self.casino: Casino = Casino()
+        self.gamePlayerWaiting = GamePlayerWaiting()
+        self.runPerSecond.start()
 
     async def on_ready(self):
         logger.info('Logged in as ' + self.user.name)
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
         addMoneyToUserInVoiceChannels(self)
-        startPlayerWaitingThread()
-
 
     async def on_message(self, message: Message):
         if message.author == self.user:
@@ -38,9 +39,9 @@ class Robot(discord.Client):
         if message.channel != message.author.dm_channel:
             isBooster: bool = checkIfMessagerIsBooster(self.boostedRole, message.author)
             whenSomeoneSendMessage(message.author.id, isBooster, db)
-            await onPublicMessage(self, message, db, self.casino)
+            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         else:
-            await onPrivateMessage(self, message, db, self.casino)
+            await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()
 
     async def on_reaction_add(self, reaction: Reaction, user: User):
@@ -56,3 +57,9 @@ class Robot(discord.Client):
             db: Connection = makeDatabaseConnection()
             await onMessageReactionDelete(self, channel, user, self.casino, db)
             db.close()
+
+    @tasks.loop(seconds=1)
+    async def runPerSecond(self):
+        await self.gamePlayerWaiting.countDown()
+
+

@@ -2,9 +2,10 @@ from discord import Client, Message
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def gameStartByTableOwner(self: Client, message: Message, casino: Casino):
+async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("没人开游戏")
@@ -20,4 +21,4 @@ async def gameStartByTableOwner(self: Client, message: Message, casino: Casino):
         return
 
     if table.game == 'blackJack':
-        await blackJackGameStart(table, message, self)
+        await blackJackGameStart(table, message, self, gamePlayerWaiting, casino)

@@ -23,11 +23,13 @@ async def quitGame(self: Client, message: Message, db: Connection, casino: Casin
         await message.channel.send("你是房主，不能退出，只能关闭")
         return
 
+    casino.onlinePlayer.remove(playerID)
+
     if table.game == 'blackJack':
         await quitBlackJack(table, message.author, message.channel, self, db)
 
 
-async def quitGameByReaction(table: Table, user: User, channel: TextChannel, self: Client, db: Connection):
+async def quitGameByReaction(table: Table, user: User, channel: TextChannel, self: Client, db: Connection, casino: Casino):
     if table.gameStarted:
         await channel.send(f"{user.display_name}，游戏已经开始了，你来不及退了")
         return
@@ -40,5 +42,6 @@ async def quitGameByReaction(table: Table, user: User, channel: TextChannel, sel
         await channel.send(f"{user.display_name}，你是房主，不能退出，只能关闭")
         return
 
+    casino.onlinePlayer.remove(user.id)
     if table.game == 'blackJack':
         await quitBlackJack(table, user, channel, self, db)

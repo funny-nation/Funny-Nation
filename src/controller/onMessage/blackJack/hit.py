@@ -7,9 +7,11 @@ from discord import Client, Message, Member, DMChannel
 from src.utils.casino import Casino
 from src.utils.poker.Card import Card
 from src.utils.poker.pokerImage import getPokerImage
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.controller.onMessage.blackJack.stay import blackJackStay, blackJackStayWithPrivateMsg
 
 
-async def blackJackHit(self: Client, message: Message, casino: Casino):
+async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     table: BlackJackTable = casino.getTable(message.channel.id)
     playerID: int = message.author.id
     user: Member = message.author
@@ -29,8 +31,17 @@ async def blackJackHit(self: Client, message: Message, casino: Casino):
     await dmChannel.send(file=getPokerImage(cards))
     await dmChannel.send("你还要吗")
 
+    async def timeoutFun():
+        await message.channel.send(f"玩家{user.display_name}由于太久没没反应，自动开牌")
+        await blackJackStay(self, message, casino, playerID, user)
 
-async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino: Casino):
+    async def warningFun():
+        await message.channel.send(f"玩家{user.display_name}由于太久没没反应，将会在5秒内自动开牌")
+
+    await gamePlayerWaiting.newWait(playerID, timeoutFun, warningFun)
+
+
+async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     player: Member = message.author
     table: BlackJackTable = casino.getTableByPlayerID(player.id)
     if table is None:
@@ -43,3 +54,12 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
     cards: List[Card] = table.viewCards(player.id)
     await message.channel.send(file=getPokerImage(cards))
     await message.channel.send("你还要吗")
+
+    async def timeoutFun():
+        await message.channel.send("由于你太久没没反应，系统自动开牌了")
+        await blackJackStayWithPrivateMsg(self, message, casino)
+
+    async def warningFun():
+        await message.channel.send("由于你太久没没反应，系统将会在5秒后自动开牌")
+
+    await gamePlayerWaiting.newWait(player.id, timeoutFun, warningFun)

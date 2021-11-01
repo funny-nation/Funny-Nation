@@ -13,4 +13,4 @@ async def onMessageReactionDelete(self: Client, channel: TextChannel, user: User
     # For game
     tables: Dict[int, Table] = casino.tables
     if channel.id in tables:
-        await quitGameByReaction(tables[channel.id], user, channel, self, db)
+        await quitGameByReaction(tables[channel.id], user, channel, self, db, casino)

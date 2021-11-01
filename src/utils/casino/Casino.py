@@ -6,6 +6,7 @@ from discord import Message
 class Casino:
     def __init__(self):
         self.tables = {}
+        self.onlinePlayer = []
 
     def getTableNumber(self) -> int:
         return len(self.tables)

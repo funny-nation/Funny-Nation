@@ -15,6 +15,6 @@ async def onMessageReaction(self: Client, reaction: Reaction, user: User, casino
     for tableID in tables:
         if tables[tableID].isInviteMessage(reaction.message):
             table: Table = tables[tableID]
-            await joinGameByReaction(table, user, reaction, self, db)
+            await joinGameByReaction(table, user, reaction, self, db, casino)
             break
 

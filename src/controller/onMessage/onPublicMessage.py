@@ -16,6 +16,7 @@ from src.controller.onMessage.pauseGame import pauseGame
 from src.controller.onMessage.liveGift import liveGift
 from src.controller.onMessage.joinGame import joinGame
 from src.controller.onMessage.quitGame import quitGame
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 from discord import Client, Message
 from pymysql import Connection
@@ -28,10 +29,11 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
+    :param gamePlayerWaiting:
     :param casino:
     :param self: Discord's client object
     :param message: Message obj
@@ -64,10 +66,10 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
-        await newBlackJackGame(self, message, db, command, casino)
+        await newBlackJackGame(self, message, db, command, casino, gamePlayerWaiting)
         return
     if re.match(f"^要牌$", command):
-        await blackJackHit(self, message, casino)
+        await blackJackHit(self, message, casino, gamePlayerWaiting)
         return
     if re.match(f"^开牌$", command):
         member = message.author
@@ -75,13 +77,13 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         return
 
     if re.match(f"^加入$", command):
-        await joinGame(self, message, db, casino)
+        await joinGame(self, message, db, casino, gamePlayerWaiting)
         return
     if re.match(f"^退出$", command):
         await quitGame(self, message, db, casino)
         return
     if re.match(f"^开$", command):
-        await gameStartByTableOwner(self, message, casino)
+        await gameStartByTableOwner(self, message, casino, gamePlayerWaiting)
         return
     if re.match(f"^掀桌$", command):
         await pauseGame(self, message, casino, db)
