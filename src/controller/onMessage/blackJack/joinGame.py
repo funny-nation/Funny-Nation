@@ -6,9 +6,10 @@ from pymysql import Connection
 from loguru import logger
 from src.model.userManagement import getUser
 from src.utils.casino.Casino import Casino
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def joinBlackJack(table: BlackJackTable, player: User, channel: TextChannel, self: Client, db: Connection, casino: Casino):
+async def joinBlackJack(table: BlackJackTable, player: User, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     userInfo: tuple = getUser(db, player.id)
     if userInfo[1] < table.money:
         await channel.send(f"{player.display_name}，你好像不太够钱")
@@ -24,5 +25,5 @@ async def joinBlackJack(table: BlackJackTable, player: User, channel: TextChanne
     await channel.send(f"{player.display_name}，加入")
     logger.info(f"{player.id} join a blackJack table {channel.id}")
     if table.getPlayerCount() >= table.maxPlayer:
-        await blackJackGameStart(table, table.inviteMessage, self, casino)
+        await blackJackGameStart(table, table.inviteMessage, self, gamePlayerWaiting, casino)
         logger.info(f"Table {channel.id} started automatically due to full")

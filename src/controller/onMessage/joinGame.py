@@ -23,10 +23,10 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
         return
 
     if table.game == 'blackJack':
-        await joinBlackJack(table, message.author, message.channel, self, db, casino)
+        await joinBlackJack(table, message.author, message.channel, self, db, casino, gamePlayerWaiting)
 
 
-async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self: Client, db: Connection, casino: Casino):
+async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     channel: TextChannel = reaction.message.channel
     if table.hasPlayer(user.id):
         await channel.send(f"{user.display_name}，你已经加入了")
@@ -38,4 +38,4 @@ async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self:
         await channel.send(f"{user.display_name}，满人了")
         return
     if table.game == 'blackJack':
-        await joinBlackJack(table, user, channel, self, db, casino)
+        await joinBlackJack(table, user, channel, self, db, casino, gamePlayerWaiting)

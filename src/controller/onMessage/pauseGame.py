@@ -16,5 +16,7 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
         await message.channel.send("游戏已经开了，掀个毛")
         return
 
+    for playerID in table.players:
+        casino.onlinePlayer.remove(playerID)
     casino.deleteTable(message.channel.id)
     await message.channel.send("游戏关闭")

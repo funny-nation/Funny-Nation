@@ -33,7 +33,7 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     await message.channel.send("牌局已建立，等待玩家加入，想加入的可以点击上面的✅图标")
 
     async def timeOutFunction():
-        casino.deleteTable(message.channel.id)
+        await pauseGame(self, message, casino, db)
         await message.channel.send("由于时间过长，牌局自动关闭")
 
     async def timeWarning():
