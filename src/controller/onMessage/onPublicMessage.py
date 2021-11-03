@@ -86,5 +86,5 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await gameStartByTableOwner(self, message, casino, gamePlayerWaiting)
         return
     if re.match(f"^掀桌$", command):
-        await pauseGame(self, message, casino, db)
+        await pauseGame(self, message, casino, db, gamePlayerWaiting)
         return
