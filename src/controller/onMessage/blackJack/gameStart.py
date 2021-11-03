@@ -28,7 +28,7 @@ async def creategamePlayerWaiting(member: Member, message: Message, self: Client
 
     async def timeoutFun():
         await message.channel.send(f"玩家{member.display_name}由于长时间没反应，自动开牌")
-        await blackJackStay(self, message, casino, member.id, member)
+        await blackJackStay(self, message, casino, member.id, member, gamePlayerWaiting)
 
     async def warningFun():
         await message.channel.send(f"玩家{member.display_name}由于长时间没反应，将会在5秒后自动开牌")
