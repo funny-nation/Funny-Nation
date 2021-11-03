@@ -1,4 +1,4 @@
-from discord import Client, Message, Reaction, TextChannel, User
+from discord import Client, Message, Reaction, TextChannel, User, Member
 from pymysql import Connection
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
@@ -26,8 +26,7 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
         await joinBlackJack(table, message.author, message.channel, self, db, casino, gamePlayerWaiting)
 
 
-async def joinGameByReaction(table: Table, user: User, reaction: Reaction, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
-    channel: TextChannel = reaction.message.channel
+async def joinGameByReaction(table: Table, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     if table.hasPlayer(user.id):
         await channel.send(f"{user.display_name}，你已经加入了")
         return

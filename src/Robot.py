@@ -44,10 +44,10 @@ class Robot(discord.Client):
             await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()
 
-    async def on_reaction_add(self, reaction: Reaction, user: User):
-        if user != self.user:
+    async def on_raw_reaction_add(self, event: RawReactionActionEvent):
+        if event.user_id != self.user.id:
             db: Connection = makeDatabaseConnection()
-            await onMessageReaction(self, reaction, user, self.casino, db, self.gamePlayerWaiting)
+            await onMessageReaction(self, event, self.casino, db, self.gamePlayerWaiting)
             db.close()
 
     async def on_raw_reaction_remove(self, event: RawReactionActionEvent):
