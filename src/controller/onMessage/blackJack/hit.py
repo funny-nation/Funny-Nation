@@ -57,7 +57,7 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
 
     async def timeoutFun():
         await message.channel.send("由于你太久没没反应，系统自动开牌了")
-        await blackJackStayWithPrivateMsg(self, message, casino, gamePlayerWaiting)
+        await blackJackStayWithPrivateMsg(self, message, casino, gamePlayerWaiting, removeWait=False)
 
     async def warningFun():
         await message.channel.send("由于你太久没没反应，系统将会在5秒后自动开牌")

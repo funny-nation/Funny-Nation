@@ -5,7 +5,7 @@ from pymysql import Connection
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting):
+async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: Table = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("这里没人开游戏")
@@ -16,9 +16,9 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
     if table.gameStarted:
         await message.channel.send("游戏已经开了，掀个毛")
         return
-
     for playerID in table.players:
         casino.onlinePlayer.remove(playerID)
-    await gamePlayerWaiting.removeWait(message.author.id)
+    if removeWait:
+        await gamePlayerWaiting.removeWait(message.author.id)
     casino.deleteTable(message.channel.id)
     await message.channel.send("游戏关闭")

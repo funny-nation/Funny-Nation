@@ -48,10 +48,13 @@ class GamePlayerWaiting:
         self.waitingLocker.release()
 
     async def removeWait(self, userID: int):
+        print("remove wait")
         self.waitingLocker.acquire()
+        print("aquired")
         if userID in self.waiting:
             del self.waiting[userID]
         self.waitingLocker.release()
+        print("removed")
 
     async def countDown(self):
         self.waitingLocker.acquire()
