@@ -14,4 +14,4 @@ async def onPrivateMessage(self: Client, message: Message, db: Connection, casin
         await blackJackHitWithPrivateMessage(self, message, casino, gamePlayerWaiting)
 
     if re.match(f"^不要$", message.content):
-        await blackJackStayWithPrivateMsg(self, message, casino)
+        await blackJackStayWithPrivateMsg(self, message, casino, gamePlayerWaiting)

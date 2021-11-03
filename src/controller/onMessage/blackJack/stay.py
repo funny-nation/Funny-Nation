@@ -6,9 +6,10 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member
 from src.controller.onMessage.blackJack.endGame import blackJackEndGame
+from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Casino):
+async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     tables: Dict[int, Table] = casino.tables
     playerID = message.author.id
     tableInviteMsg = None
@@ -23,11 +24,12 @@ async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Ca
     table: BlackJackTable = casino.getTable(tableInviteMsg.channel.id)
     table.stay(playerID)
     await tableInviteMsg.channel.send(f"玩家{member.display_name}可以开牌了")
+    await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
         await blackJackEndGame(self, table, tableInviteMsg, casino)
 
 
-async def blackJackStay(self: Client, message: Message, casino: Casino, playerID: int, user: Member):
+async def blackJackStay(self: Client, message: Message, casino: Casino, playerID: int, user: Member, gamePlayerWaiting: GamePlayerWaiting):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("这里没人开游戏")
@@ -37,6 +39,7 @@ async def blackJackStay(self: Client, message: Message, casino: Casino, playerID
         return
     table.stay(playerID)
     await message.channel.send(f"玩家{user.display_name}可以开牌了")
+    await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
         await blackJackEndGame(self, table, message, casino)
 

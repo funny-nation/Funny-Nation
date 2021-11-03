@@ -47,6 +47,12 @@ class GamePlayerWaiting:
         }
         self.waitingLocker.release()
 
+    async def removeWait(self, userID: int):
+        self.waitingLocker.acquire()
+        if userID in self.waiting:
+            del self.waiting[userID]
+        self.waitingLocker.release()
+
     async def countDown(self):
         self.waitingLocker.acquire()
         for userID in list(self.waiting):
@@ -59,4 +65,3 @@ class GamePlayerWaiting:
 
             self.waiting[userID]['timeLeft'] -= 1
         self.waitingLocker.release()
-
