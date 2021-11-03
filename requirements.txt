@@ -6,3 +6,5 @@ discord==1.7.3
 Pillow~=8.4.0
 schedule~=1.1.0
 APScheduler~=3.8.0
+
+yoyo-migrations==7.3.2
