@@ -1,4 +1,5 @@
 from discord import Message, Member
+import uuid
 
 
 class Table:
@@ -10,6 +11,7 @@ class Table:
         self.gameOver = False
         self.inviteMessage: Message = inviteMessage
         self.owner: Member = owner
+        self.uuid = str(uuid.uuid1())
 
     def addPlayer(self, playerID: int) -> bool:
         if self.gameStarted:

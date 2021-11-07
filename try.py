@@ -37,6 +37,7 @@
 #     time.sleep(1)
 #
 # print("2个线程对同一个全局变量操作之后的最终结果是:%s" % g_num)
-i = 12345
-j = i + 0
-print(j)
+import uuid
+
+print(len(str(uuid.uuid1())))
+

@@ -14,6 +14,7 @@ from src.utils.casino.Casino import Casino
 from src.controller.onMessage.onMessageReaction import onMessageReaction
 from src.controller.onMessage.onMessageReactionDelete import onMessageReactionDelete
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.utils.printMemoryStatus.main import PrintMemoryLogThread
 
 
 class Robot(discord.Client):
@@ -30,6 +31,8 @@ class Robot(discord.Client):
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
         addMoneyToUserInVoiceChannels(self)
+        printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
+        printMemoryLog.start()
 
     async def on_message(self, message: Message):
         if message.author == self.user:
@@ -61,5 +64,6 @@ class Robot(discord.Client):
     @tasks.loop(seconds=1)
     async def runPerSecond(self):
         await self.gamePlayerWaiting.countDown()
+
 
 
