@@ -10,3 +10,4 @@ def run():
     robot = Robot()
     robot.run(config['private']['token'])
 
+run()
