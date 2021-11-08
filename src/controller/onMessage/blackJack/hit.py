@@ -3,6 +3,7 @@ from typing import List
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 
 from discord import Client, Message, Member, DMChannel
+from loguru import logger
 
 from src.utils.casino import Casino
 from src.utils.poker.Card import Card
@@ -29,11 +30,12 @@ async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlaye
     cards = table.viewCards(playerID)
     dmChannel: DMChannel = await user.create_dm()
     await dmChannel.send(file=getPokerImage(cards))
+    logger.info(f"Player {playerID} hit on black jack")
     await dmChannel.send("你还要吗")
 
     async def timeoutFun():
         await message.channel.send(f"玩家{user.display_name}由于太久没没反应，自动开牌")
-        await blackJackStay(self, message, casino, playerID, user)
+        await blackJackStay(self, message, casino, playerID, user, gamePlayerWaiting, removeWait=True)
 
     async def warningFun():
         await message.channel.send(f"玩家{user.display_name}由于太久没没反应，将会在5秒内自动开牌")
@@ -54,6 +56,7 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
     cards: List[Card] = table.viewCards(player.id)
     await message.channel.send(file=getPokerImage(cards))
     await message.channel.send("你还要吗")
+    logger.info(f"Player {player.id} hit on black jack")
 
     async def timeoutFun():
         await message.channel.send("由于你太久没没反应，系统自动开牌了")

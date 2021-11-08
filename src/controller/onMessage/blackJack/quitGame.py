@@ -11,4 +11,5 @@ async def quitBlackJack(table: BlackJackTable, player: User, channel: TextChanne
     userInfo: tuple = getUser(db, player.id)
 
     table.dropPlayer(player.id)
+    logger.info(f"Player {player.id} quit the talbe")
     await channel.send(f"{player.display_name}退出了游戏")

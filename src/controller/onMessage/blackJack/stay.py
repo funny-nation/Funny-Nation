@@ -1,4 +1,5 @@
 from typing import Dict
+from loguru import logger
 
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 
@@ -24,6 +25,7 @@ async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Ca
     table: BlackJackTable = casino.getTable(tableInviteMsg.channel.id)
     table.stay(playerID)
     await tableInviteMsg.channel.send(f"玩家{member.display_name}可以开牌了")
+    logger.info(f"Player {playerID} stay in Black Jack")
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
@@ -39,7 +41,9 @@ async def blackJackStay(self: Client, message: Message, casino: Casino, playerID
         await message.channel.send("你不在这场牌局里")
         return
     table.stay(playerID)
+    logger.info(f"Player {playerID} stay in Black Jack")
     await message.channel.send(f"玩家{user.display_name}可以开牌了")
+
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
