@@ -1,5 +1,6 @@
 from typing import Dict
 from loguru import logger
+from pymysql import Connection
 
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 
@@ -10,7 +11,7 @@ from src.controller.onMessage.blackJack.endGame import blackJackEndGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
+async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     tables: Dict[int, Table] = casino.tables
     playerID = message.author.id
     tableInviteMsg = None
@@ -29,10 +30,10 @@ async def blackJackStayWithPrivateMsg(self: Client, message: Message, casino: Ca
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
-        await blackJackEndGame(self, table, tableInviteMsg, casino)
+        await blackJackEndGame(self, table, tableInviteMsg, casino, db)
 
 
-async def blackJackStay(self: Client, message: Message, casino: Casino, playerID: int, user: Member, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
+async def blackJackStay(self: Client, db: Connection, message: Message, casino: Casino, playerID: int, user: Member, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("这里没人开游戏")
@@ -47,5 +48,5 @@ async def blackJackStay(self: Client, message: Message, casino: Casino, playerID
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():
-        await blackJackEndGame(self, table, message, casino)
+        await blackJackEndGame(self, table, message, casino, db)
 

@@ -10,6 +10,7 @@ from src.utils.poker.Card import Card
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.onMessage.blackJack.stay import blackJackStay, blackJackStayWithPrivateMsg
+from src.model.makeDatabaseConnection import makeDatabaseConnection
 
 
 async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
@@ -34,8 +35,10 @@ async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlaye
     await dmChannel.send("你还要吗")
 
     async def timeoutFun():
+        db = makeDatabaseConnection()
         await message.channel.send(f"玩家{user.display_name}由于太久没没反应，自动开牌")
-        await blackJackStay(self, message, casino, playerID, user, gamePlayerWaiting, removeWait=True)
+        await blackJackStay(self, db, message, casino, playerID, user, gamePlayerWaiting, removeWait=True)
+        db.close()
 
     async def warningFun():
         await message.channel.send(f"玩家{user.display_name}由于太久没没反应，将会在5秒内自动开牌")
@@ -59,8 +62,10 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
     logger.info(f"Player {player.id} hit on black jack")
 
     async def timeoutFun():
+        db = makeDatabaseConnection()
         await message.channel.send("由于你太久没没反应，系统自动开牌了")
-        await blackJackStayWithPrivateMsg(self, message, casino, gamePlayerWaiting, removeWait=False)
+        await blackJackStayWithPrivateMsg(self, db, message, casino, gamePlayerWaiting, removeWait=False)
+        db.close()
 
     async def warningFun():
         await message.channel.send("由于你太久没没反应，系统将会在5秒后自动开牌")

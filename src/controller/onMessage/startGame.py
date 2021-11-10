@@ -3,9 +3,10 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from pymysql import Connection
 
 
-async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
+async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
         await message.channel.send("没人开游戏")
@@ -21,4 +22,4 @@ async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, 
         return
 
     if table.game == 'blackJack':
-        await blackJackGameStart(table, message, self, gamePlayerWaiting, casino)
+        await blackJackGameStart(table, message, self, gamePlayerWaiting, casino, db)

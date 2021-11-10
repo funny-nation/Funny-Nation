@@ -73,7 +73,7 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         return
     if re.match(f"^开牌$", command):
         member = message.author
-        await blackJackStay(self, message, casino, member.id, member, gamePlayerWaiting)
+        await blackJackStay(self, db, message, casino, member.id, member, gamePlayerWaiting)
         return
 
     if re.match(f"^加入$", command):
@@ -83,7 +83,7 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await quitGame(self, message, db, casino)
         return
     if re.match(f"^开$", command):
-        await gameStartByTableOwner(self, message, casino, gamePlayerWaiting)
+        await gameStartByTableOwner(self, message, casino, gamePlayerWaiting, db)
         return
     if re.match(f"^掀桌$", command):
         await pauseGame(self, message, casino, db, gamePlayerWaiting)
