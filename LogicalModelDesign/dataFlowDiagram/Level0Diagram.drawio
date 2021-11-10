@@ -1,1 +1,277 @@
-<mxfile host="app.diagrams.net" modified="2021-11-10T22:46:16.494Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" version="15.7.3" etag="1nnWmwy0s9zvy99ak69B" type="github"><diagram id="NvV_3oKcafoGeMXL9aTj">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-11-10T23:29:25.143Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="KLiX7Eck2wETha-D0ojm" version="15.7.3" type="github">
+  <diagram id="NvV_3oKcafoGeMXL9aTj" name="Page-1">
+    <mxGraphModel dx="1298" dy="721" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="T3nsWM0yjByjAR0msgmm-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-3" target="T3nsWM0yjByjAR0msgmm-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-2" value="Messages,&amp;nbsp;&lt;br&gt;Reactions,&amp;nbsp;&lt;br&gt;Voice&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-1">
+          <mxGeometry x="-0.2462" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-3" value="User" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-13" target="T3nsWM0yjByjAR0msgmm-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-19" value="Discord Information" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-18">
+          <mxGeometry x="-0.1385" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-13" target="T3nsWM0yjByjAR0msgmm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-21" value="Message" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-20">
+          <mxGeometry x="-0.1535" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-13" target="T3nsWM0yjByjAR0msgmm-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-23" value="Add Reaction" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-22">
+          <mxGeometry x="0.1263" relative="1" as="geometry">
+            <mxPoint x="30" y="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-13" target="T3nsWM0yjByjAR0msgmm-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-26" value="Delete Reaction" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-24">
+          <mxGeometry x="0.3852" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-13" value="Discord" style="rounded=0;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="180" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=52.5;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-14" target="T3nsWM0yjByjAR0msgmm-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-35" value="Update user information" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-34">
+          <mxGeometry x="-0.0936" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-14" target="T3nsWM0yjByjAR0msgmm-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-37" value="New Cash flow" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-36">
+          <mxGeometry x="-0.1298" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-14" target="T3nsWM0yjByjAR0msgmm-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-47" value="Update Casino" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-46">
+          <mxGeometry x="0.0087" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-14" target="T3nsWM0yjByjAR0msgmm-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-64" value="New Waiting Player" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-63">
+          <mxGeometry x="0.6536" y="5" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.855;entryY=0;entryDx=0;entryDy=4.35;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-14" target="T3nsWM0yjByjAR0msgmm-29">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="480" />
+              <mxPoint x="620" y="650" />
+              <mxPoint x="783" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-81" value="Update Game Records" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-80">
+          <mxGeometry x="0.2176" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-14" value="2, On Message Handle" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="370" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-15" target="T3nsWM0yjByjAR0msgmm-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-31" value="Update user information" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-30">
+          <mxGeometry x="-0.1415" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-15" value="1, Initialization and background tasks" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="250" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=-15;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-16" target="T3nsWM0yjByjAR0msgmm-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-39" value="New Cash flow" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-38">
+          <mxGeometry x="0.0196" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.145;entryY=1;entryDx=0;entryDy=-4.35;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-16" target="T3nsWM0yjByjAR0msgmm-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-71" value="Update Casino" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-70">
+          <mxGeometry x="0.872" y="-4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-16" target="T3nsWM0yjByjAR0msgmm-29">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="730" />
+              <mxPoint x="740" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-79" value="Update Game Records" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-78">
+          <mxGeometry x="0.275" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-16" value="3, On Reaction Add Handle" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="530" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.145;entryY=1;entryDx=0;entryDy=-4.35;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-17" target="T3nsWM0yjByjAR0msgmm-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-43" value="New Cash flow" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-42">
+          <mxGeometry x="-0.1641" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-17" target="T3nsWM0yjByjAR0msgmm-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-75" value="Update Casino" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-74">
+          <mxGeometry x="-0.1611" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-17" target="T3nsWM0yjByjAR0msgmm-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-77" value="Update Game Records" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-76">
+          <mxGeometry x="0.0977" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-17" value="4, On Reaction Delete Handle" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="670" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-27" value="User Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="770" y="310" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=52.5;exitPerimeter=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-28" target="T3nsWM0yjByjAR0msgmm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-45" value="Get cash flow" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-44">
+          <mxGeometry x="0.4433" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-28" value="Cash Flow Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="770" y="470" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-29" value="Game Records Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="680" y="770" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-32" target="T3nsWM0yjByjAR0msgmm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-69" value="Get Casino tables" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-67">
+          <mxGeometry x="0.5678" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.145;exitY=1;exitDx=0;exitDy=-4.35;exitPerimeter=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-32">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="610" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="987" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-73" value="Get Casino Info" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-72">
+          <mxGeometry x="0.8043" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-32" value="Casino (In memory)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="970" y="420" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-33" target="T3nsWM0yjByjAR0msgmm-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1130" y="170" />
+              <mxPoint x="450" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-51" value="Waiting functions, time left" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-50">
+          <mxGeometry x="0.1147" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-33" value="Player Waiting (In memory)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="280" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-52" target="T3nsWM0yjByjAR0msgmm-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="95" y="340" />
+              <mxPoint x="450" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-55" value="Configuration" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-54">
+          <mxGeometry x="0.3333" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=27.5;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-52" target="T3nsWM0yjByjAR0msgmm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-57" value="Configuration" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-56">
+          <mxGeometry x="0.0218" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=52.5;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-52" target="T3nsWM0yjByjAR0msgmm-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-60" value="Configuration" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-58">
+          <mxGeometry x="0.1215" y="1" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.855;exitY=1;exitDx=0;exitDy=-4.35;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="T3nsWM0yjByjAR0msgmm-52" target="T3nsWM0yjByjAR0msgmm-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="150" y="526" />
+              <mxPoint x="150" y="745" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-62" value="Configuration" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="T3nsWM0yjByjAR0msgmm-61">
+          <mxGeometry x="0.187" y="-4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T3nsWM0yjByjAR0msgmm-52" value="Configuration" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="110" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
