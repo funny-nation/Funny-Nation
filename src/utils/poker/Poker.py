@@ -24,6 +24,9 @@ class Poker:
             return self.cards.pop()
         return None
 
+    def getAllCards(self) -> List[Card]:
+        return self.cards
+
 
 def test_Poker():
     poker = Poker()

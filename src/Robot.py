@@ -3,6 +3,7 @@ from discord.ext import tasks
 from loguru import logger
 from discord import Guild, Role, Message, Reaction, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
+from typing import List
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.controller.whenSomeoneSendMessage import whenSomeoneSendMessage
@@ -15,7 +16,9 @@ from src.controller.onMessage.onMessageReaction import onMessageReaction
 from src.controller.onMessage.onMessageReactionDelete import onMessageReactionDelete
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.printMemoryStatus.main import PrintMemoryLogThread
-
+from src.utils.poker.pokerImage import getPokerImage
+from src.utils.poker.Card import Card
+from src.utils.poker.Poker import Poker
 
 class Robot(discord.Client):
 
@@ -46,6 +49,8 @@ class Robot(discord.Client):
         else:
             await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()
+        # Test on poker image
+        # await testOnPokerImage(message.channel)
 
     async def on_raw_reaction_add(self, event: RawReactionActionEvent):
         if event.user_id != self.user.id:
@@ -66,4 +71,8 @@ class Robot(discord.Client):
         await self.gamePlayerWaiting.countDown()
 
 
+async def testOnPokerImage(channel: TextChannel):
+    poker = Poker()
+    pokerList: List[Card] = poker.getAllCards()
+    await channel.send(file=getPokerImage(pokerList))
 

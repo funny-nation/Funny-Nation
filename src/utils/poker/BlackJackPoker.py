@@ -77,8 +77,13 @@ class BlackJackPoker(Poker):
 
 
 def test_CalculateValueBlackJack():
-    cards = [Card(0, 11), Card(0, 1)]
+    cards = [Card(0, 12), Card(1, 1)]
     assert BlackJackPoker.calculateValue(cards) == 21
+
+
+def test_CalculateValueDoubleTen():
+    cards = [Card(3, 11), Card(2, 10)]
+    assert BlackJackPoker.calculateValue(cards) == 20
 
 
 def test_CalculateValueDoubleAce():

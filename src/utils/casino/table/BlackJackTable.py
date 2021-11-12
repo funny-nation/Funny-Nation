@@ -76,14 +76,13 @@ class BlackJackTable(Table):
         highHand: list = [playerList[0]]
         highHandVal: int = BlackJackPoker.calculateValue(self.viewCards(highHand[0]))
         for i in range(1, len(playerList)):
-            cardsCurrentHighHand: List[Card] = self.viewCards(highHand[0])
             cardsCompareTo: List[Card] = self.viewCards(playerList[i])
             valueOfCardsCompareTo: int = BlackJackPoker.calculateValue(cardsCompareTo)
             if valueOfCardsCompareTo > highHandVal:
                 highHand = [playerList[i]]
                 highHandVal = valueOfCardsCompareTo
                 continue
-            if valueOfCardsCompareTo == highHand:
+            if valueOfCardsCompareTo == highHandVal:
                 highHand.append(playerList[i])
 
         return highHand
