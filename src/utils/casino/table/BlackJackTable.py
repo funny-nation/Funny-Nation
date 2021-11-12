@@ -25,11 +25,27 @@ class BlackJackTable(Table):
         self.gameStarted = True
         return True
 
+    def gameStartWithoutCards(self) -> bool:
+        if self.getPlayerCount() == 1:
+            return False
+        self.poker.shuffle()
+        for playerID in self.players:
+            self.players[playerID]['cards'] = []
+            self.players[playerID]['stay'] = False
+        self.gameStarted = True
+        return True
+
+
     def viewCards(self, playerID: int) -> [Card]:
         return self.players[playerID]['cards']
 
     def hit(self, playerID) -> Card:
         card: Card = self.poker.getACard()
+        self.players[playerID]['cards'].append(card)
+        return card
+
+    def blackBackgroundHit(self, playerID, suit, rank) -> Card:
+        card: Card = Card(suit, rank)
         self.players[playerID]['cards'].append(card)
         return card
 
@@ -75,15 +91,27 @@ class BlackJackTable(Table):
         playerList: list = list(self.players.keys())
         highHand: list = [playerList[0]]
         highHandVal: int = BlackJackPoker.calculateValue(self.viewCards(highHand[0]))
+        highHandCards: List[Card] = self.viewCards(playerList[0])
         for i in range(1, len(playerList)):
             cardsCompareTo: List[Card] = self.viewCards(playerList[i])
             valueOfCardsCompareTo: int = BlackJackPoker.calculateValue(cardsCompareTo)
             if valueOfCardsCompareTo > highHandVal:
                 highHand = [playerList[i]]
                 highHandVal = valueOfCardsCompareTo
+                highHandCards = cardsCompareTo
                 continue
             if valueOfCardsCompareTo == highHandVal:
-                highHand.append(playerList[i])
+                if (highHandVal == 21) and (len(cardsCompareTo) < len(highHandCards)):
+                    highHand = [playerList[i]]
+                    highHandVal = valueOfCardsCompareTo
+                    highHandCards = cardsCompareTo
+                    continue
+                elif (highHandVal == 21) and (len(cardsCompareTo) == len(highHandCards)):
+                    highHand.append(playerList[i])
+                    continue
+                elif highHandVal < 21:
+                    highHand.append(playerList[i])
+                    continue
 
         return highHand
 
@@ -103,6 +131,37 @@ def test_BlackJackTable():
         table.hit(456)
     table.stay(123)
     assert table.isOver() is False
+    table.stay(456)
+    table.stay(789)
+    assert table.isOver() is True
+
+    print('\n')
+    for card in table.viewCards(123):
+        print(card.getString())
+    print('----')
+    for card in table.viewCards(456):
+        print(card.getString())
+    print('----')
+    for card in table.viewCards(789):
+        print(card.getString())
+    print('Winner: ')
+    print(table.getTheHighHand())
+
+
+def test_anotherBlackJackTable():
+    table = BlackJackTable(10, 'test', 3, "test")
+    assert table.addPlayer(123) is True
+    assert table.addPlayer(456) is True
+    assert table.addPlayer(789) is True
+    table.gameStartWithoutCards()
+    table.blackBackgroundHit(123, 2, 10)
+    table.blackBackgroundHit(123, 1, 11)
+    table.blackBackgroundHit(456, 0, 12)
+    table.blackBackgroundHit(456, 1, 1)
+    table.blackBackgroundHit(789, 0, 6)
+    table.blackBackgroundHit(789, 0, 7)
+    table.blackBackgroundHit(789, 2, 11)
+    table.stay(123)
     table.stay(456)
     table.stay(789)
     assert table.isOver() is True
