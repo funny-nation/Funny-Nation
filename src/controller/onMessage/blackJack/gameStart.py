@@ -6,6 +6,7 @@ from src.controller.onMessage.blackJack.stay import blackJackStay
 from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection
+from src.model.makeDatabaseConnection import makeDatabaseConnection
 
 
 async def blackJackGameStart(table: BlackJackTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
@@ -28,8 +29,10 @@ async def blackJackGameStart(table: BlackJackTable, message: Message, self: Clie
 async def creategamePlayerWaiting(member: Member, message: Message, self: Client, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):
 
     async def timeoutFun():
+        dbTemp = makeDatabaseConnection()
         await message.channel.send(f"玩家{member.display_name}由于长时间没反应，自动开牌")
-        await blackJackStay(self, db, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
+        await blackJackStay(self, dbTemp, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
+        dbTemp.close()
 
     async def warningFun():
         await message.channel.send(f"玩家{member.display_name}由于长时间没反应，将会在5秒后自动开牌")
