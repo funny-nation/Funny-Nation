@@ -38,13 +38,14 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         await message.channel.send(f"{winner.display_name}胜利，你将获得{totalMoney / 100}元")
     else:
         prizeMoney = int(totalMoney / len(winnerList))
-        await message.channel.send(f"以下玩家牌面一样，将会平分奖金，你们每人获得{prizeMoney / 100}元")
+        winnersString = ''
         for winnerID in winnerList:
             winner = await self.fetch_user(winnerID)
             databaseResult = databaseResult and addMoneyToUser(db, winner.id, prizeMoney)
             databaseResult = databaseResult and addNewCashFlow(db, winner.id, prizeMoney, config['cashFlowMessage']['blackJackWin'])
             databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
-            await message.channel.send(f"{winner.display_name}")
+            winnersString += str(winner.display_name) + '、'
+        await message.channel.send(f"{winnersString[:-1]} 玩家牌面一样，将会平分奖金，你们每人获得{prizeMoney / 100}元")
     if not databaseResult:
         await message.channel.send(f"数据库炸了，你的奖金可能卡住了，请联系一下群主")
         logger.error(f"Database error while game {table.uuid} is ending")
