@@ -15,20 +15,25 @@ config.read('config.ini')
 
 
 async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message, casino: Casino, db: Connection):
+    logger.info("Start ending the game")
     if table.gameOver:
         return
     table.gameOver = True
     databaseResult = True
     await message.channel.send("牌局结束，正在判断结果")
+    logger.info("Sending player cards and working on database")
     for eachPlayerID in table.players:
         eachPlayer = await self.fetch_user(eachPlayerID)
         await message.channel.send(f"玩家{eachPlayer.display_name}的牌: ")
         cards = table.viewCards(eachPlayerID)
+        logger.info(f"Sending poker image for player {eachPlayerID}")
         await message.channel.send(file=getPokerImage(cards))
         casino.onlinePlayer.remove(eachPlayerID)
         databaseResult = databaseResult and setGameStatus(db, eachPlayerID, table.uuid, 1)
 
+    logger.info("player cards sent, start to calculate result")
     winnerList: List[int] = table.getTheHighHand()
+    logger.info("got the high hand")
     totalMoney = len(table.players) * table.money
     if len(winnerList) == 1:
         winner: User = await self.fetch_user(winnerList[0])
