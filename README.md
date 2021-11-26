@@ -24,7 +24,7 @@
         Remember that you could only run that on one Discord server. This script does not support multi-servers. 
     </p>
 </div>
-
+<hr/>
 <div>
     <h3>Get started</h3>
     <h4>Environment</h4>
@@ -42,7 +42,16 @@
     <p>Start application</p>
     <pre><code>python3.8 main.py</code></pre>
 </div>
-
+<hr/>
+<div>
+    <h3>Instructions for Usage</h3>
+    <p>You could find them in <code>instructionsForUses</code> folder. </p>
+    <p>Only the Chinese version is available. English version is currently not available yet. </p>
+    <ul>
+        <li><a></a></li>
+    </ul>
+</div>
+<hr/>
 <div>
     <h3>Contact</h3>
     <p>If you want to get involved in this project or gain any help, you could join this Discord server and message me. </p>
