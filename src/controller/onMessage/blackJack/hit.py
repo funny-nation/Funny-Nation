@@ -27,6 +27,8 @@ async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlaye
     if table.shouldStopHitting(playerID):
         await message.channel.send("你不能再要了")
         return
+    if table.gameOver:
+        return
     table.hit(playerID)
     cards = table.viewCards(playerID)
     dmChannel: DMChannel = await user.create_dm()
@@ -54,6 +56,8 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
         return
     if table.shouldStopHitting(player.id):
         await message.channel.send("你不能再要了")
+        return
+    if table.gameOver:
         return
     table.hit(player.id)
     cards: List[Card] = table.viewCards(player.id)

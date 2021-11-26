@@ -68,20 +68,6 @@ class BlackJackTable(Table):
         rank: int = BlackJackPoker.calculateRankBlackJackWithAceAs1(cards)
         return rank >= 21
 
-    def endAndGetWinner(self):
-        playersArr = []
-        for playerID in self.players:
-            playersArr.append({
-                'id': playerID,
-                'cards': self.players[playerID]['cards']
-            })
-        result: int = self.poker.compareForBlackJack(playersArr[0]['cards'], playersArr[1]['cards'])
-        if result == 1:
-            return playersArr[0]['id']
-        if result == 2:
-            return playersArr[1]['id']
-        return None
-
     def getTheHighHand(self) -> List[int]:
         """
         Get the highest hand
