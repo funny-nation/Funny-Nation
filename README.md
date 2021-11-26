@@ -1,7 +1,6 @@
 <div align="center">
     <h1>Funny Nations</h1>
 </div>
-<hr>
 <div align="center">
     <a href="https://discord.gg/uhAv4J4F7Z"><img src="https://img.shields.io/badge/Chat-Discord-7289da" alt="Our Discord"></a>
 </div>
