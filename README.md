@@ -46,7 +46,7 @@
 <div>
     <h3>Instructions for Use</h3>
     <p>You could find them in <code>docs/</code> folder. </p>
-    <p>We only have a Simplified Chinese version yet. English version is currently not available yet. </p>
+    <p>We only have a Simplified Chinese version. English version is currently not available yet. </p>
     <ul>
         <li><a href="docs/InstructionsForUse_SimplifiedChinese.md">Simplified Chinese</a></li>
     </ul>
