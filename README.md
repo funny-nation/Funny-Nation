@@ -45,10 +45,10 @@
 <hr/>
 <div>
     <h3>Instructions for Use</h3>
-    <p>You could find them in <code>docs</code> folder. </p>
-    <p>Only the Chinese version is available. English version is currently not available yet. </p>
+    <p>You could find them in <code>docs/</code> folder. </p>
+    <p>We only have a Simplified Chinese version yet. English version is currently not available yet. </p>
     <ul>
-        <li>[Chinese](docs/InstructionsForUse_simpleChinese.md)</li>
+        <li><a href="docs/InstructionsForUse_SimplifiedChinese.md">Simplified Chinese</a></li>
     </ul>
 </div>
 <hr/>
@@ -57,4 +57,3 @@
     <p>If you want to get involved in this project or gain any help, you could join this Discord server and message me. </p>
     <p><a href="https://discord.gg/uhAv4J4F7Z">https://discord.gg/uhAv4J4F7Z</a></p>
 </div>
-This site was built using [docs/InstructionsForUse_simpleChinese.md](url).
