@@ -53,7 +53,7 @@
 </div>
 <hr/>
 <div>
-    <h3>Contact</h3>
+    <h3>Chat</h3>
     <p>If you want to get involved in this project or gain any help, you could join this Discord server and message me. </p>
     <p><a href="https://discord.gg/uhAv4J4F7Z">https://discord.gg/uhAv4J4F7Z</a></p>
 </div>
