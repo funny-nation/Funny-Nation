@@ -44,11 +44,11 @@
 </div>
 <hr/>
 <div>
-    <h3>Instructions for Usage</h3>
-    <p>You could find them in <code>instructionsForUses</code> folder. </p>
+    <h3>Instructions for Use</h3>
+    <p>You could find them in <code>docs</code> folder. </p>
     <p>Only the Chinese version is available. English version is currently not available yet. </p>
     <ul>
-        <li><a></a></li>
+        <li>[Chinese](docs/InstructionsForUse_simpleChinese.md)</li>
     </ul>
 </div>
 <hr/>
