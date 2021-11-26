@@ -4,7 +4,7 @@ import re
 
 from src.controller.onMessage.checkBalance import checkBalance
 from src.controller.onMessage.getLeaderBoard import getLeaderBoardTop10
-from src.controller.onMessage.checkCashFlow import checkCashFlow
+from src.controller.onMessage.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
 from src.controller.onMessage.transferMoney import transferMoney
 
 from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
@@ -56,7 +56,7 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await checkCashFlow(self, message, db)
         return
     if re.match(f"^账单 .+", command):
-        await checkCashFlow(self, message, db)
+        await checkCashFlowWithFilter(self, message, db, command)
         return
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)

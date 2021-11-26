@@ -1,3 +1,5 @@
+import re
+
 from loguru import logger
 
 from src.model.cashFlowManagement import get10RecentCashflowsByUserID
@@ -20,8 +22,8 @@ async def checkCashFlow(self: Client, message: Message, db: Connection):
     await message.channel.send(messageSendBack)
 
 
-async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection):
-    filterMessage: str = message.content[6:]
+async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection, command: str):
+    filterMessage: str = re.findall(f"^账单 (.+)", command)[0]
     cashFlowData: tuple = get10RecentCashflowsByUserID(db, message.author.id, filterMessage)
     messageSendBack: str = ''
     if cashFlowData is None:

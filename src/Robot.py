@@ -1,7 +1,7 @@
 import discord
 from discord.ext import tasks
 from loguru import logger
-from discord import Guild, Role, Message, Reaction, User, RawReactionActionEvent, TextChannel
+from discord import Guild, Role, Message, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
 from typing import List
 
@@ -9,8 +9,8 @@ from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.controller.whenSomeoneSendMessage import whenSomeoneSendMessage
 from src.controller.checkIfMessagerIsBooster import checkIfMessagerIsBooster
 from src.controller.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
-from src.controller.onMessage.onPublicMessage import onPublicMessage
-from src.controller.onMessage.onPrivateMessage import onPrivateMessage
+from src.controller.onPublicMessage import onPublicMessage
+from src.controller.onPrivateMessage import onPrivateMessage
 from src.utils.casino.Casino import Casino
 from src.controller.onMessage.onMessageReaction import onMessageReaction
 from src.controller.onMessage.onMessageReactionDelete import onMessageReactionDelete
