@@ -57,4 +57,4 @@
     <p>If you want to get involved in this project or gain any help, you could join this Discord server and message me. </p>
     <p><a href="https://discord.gg/uhAv4J4F7Z">https://discord.gg/uhAv4J4F7Z</a></p>
 </div>
-This site was built using [GitHub Pages](https://pages.github.com/).
+This site was built using docs/InstructionsForUse_simpleChinese.md.
