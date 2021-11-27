@@ -12,7 +12,7 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 async def joinBlackJack(table: BlackJackTable, player: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):

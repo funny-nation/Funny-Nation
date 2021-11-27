@@ -7,6 +7,9 @@ from loguru import logger
 from pymysql import Connection
 from pymysql.cursors import Cursor
 
+config = configparser.ConfigParser()
+config.read("config.ini", encoding="utf-8")
+
 
 def makeDatabaseConnection():
     """
@@ -14,10 +17,7 @@ def makeDatabaseConnection():
     db.close()
     :return: pymysql connect instance
     """
-    config = configparser.ConfigParser()
-    config.read(os.path.dirname(__file__) + '/../../config.ini')
     try:
-
         db: Connection = pymysql.connect(
             host=config['database']['address'],
             user=config['database']['username'],

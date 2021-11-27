@@ -4,7 +4,7 @@ import configparser
 from typing import Dict
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 secondWaitingPerPerson = int(config['gameWaitForPlayer']['secondWaitingPerPerson'])
 secondOnWarning = int(config['gameWaitForPlayer']['secondOnWarning'])
 
