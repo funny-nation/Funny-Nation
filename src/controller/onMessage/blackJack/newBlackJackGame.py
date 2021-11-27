@@ -15,7 +15,7 @@ from src.utils.casino.Casino import Casino
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):

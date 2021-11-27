@@ -10,7 +10,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from loguru import logger
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):

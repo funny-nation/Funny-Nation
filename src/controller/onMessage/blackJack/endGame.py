@@ -11,7 +11,7 @@ from src.model.blackJackRecordManagement import setGameStatus
 
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message, casino: Casino, db: Connection):

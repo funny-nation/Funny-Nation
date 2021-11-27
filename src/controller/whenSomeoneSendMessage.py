@@ -11,7 +11,7 @@ from datetime import datetime
 import configparser
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 def whenSomeoneSendMessage(userID: int, hasBoosted: bool, db: Connection) -> bool:

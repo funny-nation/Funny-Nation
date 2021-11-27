@@ -24,7 +24,7 @@ from pymysql import Connection
 from src.utils.casino.Casino import Casino
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
