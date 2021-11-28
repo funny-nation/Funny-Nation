@@ -18,17 +18,17 @@ giftConfig.read('giftConfig.ini')
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-img: Dict[str, File] = {}
-
-
-def loadPictures():
-    path = config['img']['giftImgPath']
-    filePaths = glob.glob(path + '*')
-    for filePath in filePaths:
-        img[Path(filePath).stem] = File(filePath)
-
-
-loadPictures()
+# img: Dict[str, File] = {}
+#
+#
+# def loadPictures():
+#     path = config['img']['giftImgPath']
+#     filePaths = glob.glob(path + '*')
+#     for filePath in filePaths:
+#         img[Path(filePath).stem] = File(filePath)
+#
+#
+# loadPictures()
 
 
 async def sendGift(self: Client, db: Connection, message: Message, command: str, giftAnnouncementChannel: TextChannel):
@@ -77,4 +77,9 @@ async def sendGift(self: Client, db: Connection, message: Message, command: str,
     await message.channel.send("送礼成功，ta收到了")
     await giftAnnouncementChannel.send(giftMsg)
 
-    await giftAnnouncementChannel.send(file=img[giftName])
+    path = config['img']['giftImgPath']
+    filePaths = glob.glob(path + '*')
+    for filePath in filePaths:
+        if Path(filePath).stem == giftName:
+            await giftAnnouncementChannel.send(file=File(filePath))
+
