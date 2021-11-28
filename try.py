@@ -1,12 +1,3 @@
-# import configparser
-#
-# config = configparser.ConfigParser()
-# config.read('giftConfig.ini')
-# for keys in config.sections():
-#     print(keys)
-
-import glob
-from pathlib import Path
-
-for i in glob.glob('*'):
-    print(Path(i).stem)
+i = [1,2,3]
+j = [4,5]
+print(i+j)
