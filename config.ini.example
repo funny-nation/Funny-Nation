@@ -36,3 +36,6 @@ secondOnWarning = 5
 [log]
 path=log/
 memoryLog=onMemory/
+
+[img]
+giftImgPath=img/gift/
