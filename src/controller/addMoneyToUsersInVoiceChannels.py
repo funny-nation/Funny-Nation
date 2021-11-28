@@ -13,7 +13,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 import configparser
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 def addMoneyToUserInVoiceChannels(self: Client):

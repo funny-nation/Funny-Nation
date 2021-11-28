@@ -9,7 +9,7 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.printMemoryStatus.printCasinoLog import printCasinoLog
 from src.utils.printMemoryStatus.printGamePlayerWaiting import printGamePlayerWaiting
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 logPath = config['log']['path'] + config['log']['memoryLog']
 
 

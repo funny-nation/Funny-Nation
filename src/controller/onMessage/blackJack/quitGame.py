@@ -8,7 +8,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.model.blackJackRecordManagement import setGameStatus
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 async def quitBlackJack(table: BlackJackTable, player: User, channel: TextChannel, self: Client, db: Connection):
