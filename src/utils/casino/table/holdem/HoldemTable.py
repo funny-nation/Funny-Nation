@@ -5,7 +5,7 @@ from src.utils.poker.Poker import Poker
 
 
 class HoldemTable(Table):
-    def __init__(self, inviteMessage: Message, owner: Member):
+    def __init__(self, inviteMessage: Message or None, owner: Member or None):
         Table.__init__(self, 'holdem', inviteMessage, 10, owner)
         self.mainPot = 0
         self.poker = Poker()
@@ -51,3 +51,10 @@ class HoldemTable(Table):
         """
         winners: list = getTheHighHand(self)
 
+def test_():
+    holdemTable = HoldemTable(None, None)
+    holdemTable.addPlayer(1)
+    holdemTable.addPlayer(2)
+    holdemTable.addPlayer(3)
+    holdemTable.addPlayer(4)
+    holdemTable.gameStart()
