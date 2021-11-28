@@ -6,6 +6,7 @@ from src.controller.onMessage.checkBalance import checkBalance
 from src.controller.onMessage.getLeaderBoard import getLeaderBoardTop10
 from src.controller.onMessage.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
 from src.controller.onMessage.transferMoney import transferMoney
+from src.controller.onMessage.sendGift import sendGift
 
 from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.onMessage.blackJack.hit import blackJackHit
@@ -18,7 +19,7 @@ from src.controller.onMessage.joinGame import joinGame
 from src.controller.onMessage.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
-from discord import Client, Message
+from discord import Client, Message, TextChannel
 from pymysql import Connection
 
 from src.utils.casino.Casino import Casino
@@ -29,7 +30,7 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, giftAnnouncementChannel: TextChannel):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
@@ -63,6 +64,9 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
+        return
+    if re.match(f"^送 .+ \<\@\![0-9]+\>$", command):
+        await sendGift(self, db, message, command, giftAnnouncementChannel)
         return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
