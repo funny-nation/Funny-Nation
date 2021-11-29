@@ -1,6 +1,8 @@
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.table.Table import Table
-from discord import Message
+from discord import Message, Member
+
+from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 
 
 class Casino:
@@ -23,6 +25,12 @@ class Casino:
         if tableID in self.tables:
             return False
         self.tables[tableID] = BlackJackTable(money, inviteMessage, 5, inviteMessage.author)
+        return True
+
+    def createHoldemTableByID(self,owner: Member, tableID: int, inviteMsg: Message) -> bool:
+        if tableID in self.tables:
+            return False
+        self.tables[tableID] = HoldemTable(inviteMsg, owner)
         return True
 
     def getTable(self, tableID: int) -> Table or None:

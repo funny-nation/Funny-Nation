@@ -1,7 +1,9 @@
 from discord import Client, Message
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.BlackJackTable import BlackJackTable
+from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
+from src.controller.onMessage.holdem.gameStart import holdemGameStart
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from pymysql import Connection
 
@@ -23,3 +25,7 @@ async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, 
 
     if table.game == 'blackJack':
         await blackJackGameStart(table, message, self, gamePlayerWaiting, casino, db)
+
+    if table.game == 'holdem':
+        table: HoldemTable
+        await holdemGameStart(table, message, self, gamePlayerWaiting, casino, db)

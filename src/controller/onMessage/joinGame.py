@@ -1,5 +1,7 @@
 from discord import Client, Message, Reaction, TextChannel, User, Member
 from pymysql import Connection
+
+from src.controller.onMessage.holdem.joinGame import joinHoldemGame
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
 from src.controller.onMessage.blackJack.joinGame import joinBlackJack
@@ -25,6 +27,9 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
     if table.game == 'blackJack':
         await joinBlackJack(table, message.author, message.channel, self, db, casino, gamePlayerWaiting)
 
+    if table.game == 'holdem':
+        await joinHoldemGame(table, message.author, message.channel, self, db, casino, gamePlayerWaiting)
+
 
 async def joinGameByReaction(table: Table, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     if table.hasPlayer(user.id):
@@ -38,3 +43,6 @@ async def joinGameByReaction(table: Table, user: Member, channel: TextChannel, s
         return
     if table.game == 'blackJack':
         await joinBlackJack(table, user, channel, self, db, casino, gamePlayerWaiting)
+
+    if table.game == 'holdem':
+        await joinHoldemGame(table, user, channel, self, db, casino, gamePlayerWaiting)

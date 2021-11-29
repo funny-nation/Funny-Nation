@@ -3,6 +3,8 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from pymysql import Connection
+
+from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.model.userManagement import addMoneyToUser
 import src.model.blackJackRecordManagement as bjRecords
@@ -31,6 +33,10 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
             databaseResult = databaseResult and addMoneyToUser(db, playerID, table.money)
             databaseResult = databaseResult and addNewCashFlow(db, playerID, table.money, config['cashFlowMessage']['blackJackRefund'])
             databaseResult = databaseResult and bjRecords.setGameStatus(db, playerID, table.uuid, 4)
+        if table.game == 'holdem':
+            table: HoldemTable
+            databaseResult = databaseResult and addMoneyToUser(db, playerID, table.ante)
+            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.ante, config['cashFlowMessage']['holdemAnteRefund'])
         casino.onlinePlayer.remove(playerID)
 
     if not databaseResult:

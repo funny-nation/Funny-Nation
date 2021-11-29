@@ -1,3 +1,6 @@
-i = [1,2,3]
-j = [4,5]
-print(i+j)
+i = {
+    'first': 0,
+    'second': 1,
+    'third': 2
+}
+print(list(i.keys()))
