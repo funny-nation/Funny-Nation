@@ -7,6 +7,7 @@ from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection
 from src.model.makeDatabaseConnection import makeDatabaseConnection
+from src.controller.onMessage.holdem.sendPromptMsg import sendPromptMsg
 
 
 async def holdemGameStart(table: HoldemTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
@@ -24,19 +25,9 @@ async def holdemGameStart(table: HoldemTable, message: Message, self: Client, ga
         await dmChannel.send("点击下面链接回到牌桌")
         invite: Invite = await message.channel.create_invite(max_age=60)
         await dmChannel.send(invite.url)
-        await creategamePlayerWaiting(member, message, self, casino, gamePlayerWaiting, db)
+    table.whoBet = table.owner
+    table.whosTurn = table.owner
+    await sendPromptMsg(message.channel, table.whosTurn)
+
+
     logger.info(f"Holdem started in table {table.inviteMessage.channel.id} with players: {playerListStr}")
-
-
-async def creategamePlayerWaiting(member: Member, message: Message, self: Client, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):
-
-    async def timeoutFun():
-        dbTemp = makeDatabaseConnection()
-        await message.channel.send(f"玩家{member.display_name}由于长时间没反应，自动开牌")
-        await blackJackStay(self, dbTemp, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
-        dbTemp.close()
-
-    async def warningFun():
-        await message.channel.send(f"玩家{member.display_name}由于长时间没反应，将会在5秒后自动开牌")
-
-    await gamePlayerWaiting.newWait(member.id, timeoutFun, warningFun)

@@ -10,7 +10,8 @@ class HoldemTable(Table):
         self.poker = Poker()
         self.sidePots = {}
         self.board = []
-        self.whoRise: Member or None = None
+        self.whoBet: Member or None = None
+        self.whosTurn: Member or None = None
         self.ante = 100
 
     def gameStart(self):
