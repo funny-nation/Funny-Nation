@@ -12,7 +12,7 @@ class HoldemTable(Table):
         self.board = []
         self.whoBet: Member or None = None
         self.whosTurn: Member or None = None
-        self.ante = 100
+        self.ante = 500
 
     def gameStart(self):
         self.poker.shuffle()
