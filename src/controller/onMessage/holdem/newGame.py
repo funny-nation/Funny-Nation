@@ -42,17 +42,6 @@ async def newHoldemGame(self: Client, message: Message, db: Connection, casino: 
     table.addPlayer(userInfo[0])
 
 
-    async def timeOutFunction():
-        dbTemp = makeDatabaseConnection()
-        await pauseGame(self, message, casino, dbTemp, gamePlayerWaiting, removeWait=False)
-        dbTemp.close()
-        await message.channel.send("由于时间过长，牌局自动关闭")
-
-    async def timeWarning():
-        await message.channel.send("还有5秒钟牌局将会自动关闭")
-
-    await gamePlayerWaiting.newWait(userInfo[0], timeOutFunction, timeWarning, 100)
-
     await message.add_reaction('\N{White Heavy Check Mark}')
     await channel.send(f"德州扑克牌局已建立，你需要有至少10元，想加入的可以点击上面的✅图标")
     logger.info(f"User {owner.id} created a holdem game")

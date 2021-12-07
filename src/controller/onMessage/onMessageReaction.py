@@ -30,6 +30,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
                 return
         return
 
+    # Holdem fold
     if emoji.name == '❌':
         tables: Dict[int, HoldemTable]
         for tableID in tables:
@@ -38,8 +39,10 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
                 return
         return
 
+    # Holdem all in
     if emoji.name == '🔺':
         return
 
+    # Holdem call and check
     if emoji.name == '➡':
         return
