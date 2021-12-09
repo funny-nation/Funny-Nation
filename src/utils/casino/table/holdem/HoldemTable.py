@@ -1,10 +1,10 @@
 from src.utils.casino.table.Table import Table
 from discord import Message, Member
 from src.utils.poker.Poker import Poker
-
+from src.utils.poker.HoldemScoreDetector import HoldemScoreDetector
 
 class HoldemTable(Table):
-    def __init__(self, inviteMessage: Message or None, owner: Member or None):
+    def __init__(self, inviteMessage: Message or None, owner: Member or None, scoreDetector: HoldemScoreDetector):
         Table.__init__(self, 'holdem', inviteMessage, 10, owner)
         self.mainPot = 0
         self.poker = Poker()
@@ -14,6 +14,10 @@ class HoldemTable(Table):
         self.whosTurn: int or None = None
         self.ante = 500
         self.numberOfPlayersNotFold = 0
+        self._scoreDetector: HoldemScoreDetector = scoreDetector
+        self.playersCards = {}
+        self.communityCards = []
+
 
     def gameStart(self):
         self.poker.shuffle()
@@ -80,7 +84,6 @@ class HoldemTable(Table):
             [playerID, money]
         ]
         """
-
 
 def test_():
     holdemTable = HoldemTable(None, None)
