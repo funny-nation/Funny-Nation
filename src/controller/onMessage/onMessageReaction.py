@@ -34,7 +34,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
     if emoji.name == '❌':
         tables: Dict[int, HoldemTable]
         for tableID in tables:
-            if tables[tableID].whosTurn.id == user.id:
+            if tables[tableID].whosTurn == user.id:
                 await fold(tables[tableID], user, channel, self, db, casino, gamePlayerWaiting)
                 return
         return

@@ -14,17 +14,17 @@ from src.utils.poker.pokerImage import getPokerImage
 
 
 async def holdemNextRound(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
-    def afterFlopTurnRiver():
+    async def afterFlopTurnRiver():
         await channel.send("公开牌：")
         await channel.send(file=getPokerImage(table.board))
         await sendPromptMsg(channel, table.whosTurn)
 
     if len(table.board) == 0:
         table.flop()
-        afterFlopTurnRiver()
+        await afterFlopTurnRiver()
     if (len(table.board) == 3) or (len(table.board) == 4):
         table.turnOrRiver()
-        afterFlopTurnRiver()
+        await afterFlopTurnRiver()
     if len(table.board) == 5:
         await holdemEndGame(table, channel, self, db, casino, gamePlayerWaiting)
 
