@@ -5,7 +5,7 @@ class Card:
     def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
-        self._value: int = (rank << 2) + suit
+
     def getString(self) -> str:
         if self.suit == 0:
             return f"方片{self.convertRankToStr(self.rank)}"
@@ -31,23 +31,3 @@ class Card:
         if rank == 1:
             return 'A'
         return str(rank)
-
-    @property
-    def rank(self) -> int:
-        return self._value >> 2
-
-    @property
-    def suit(self) -> int:
-        return self._value & 3
-
-    def __lt__(self, other):
-        return int(self) < int(other)
-
-    def __eq__(self, other):
-        return int(self) == int(other)
-
-    def __int__(self):
-        return self._value
-
-    def dto(self):
-        return self.rank, self.suit
