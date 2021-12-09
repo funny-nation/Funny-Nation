@@ -1,28 +1,24 @@
-from discord import Client, Message, Reaction, TextChannel, User, Member
+from discord import Client, TextChannel, Member
 from pymysql import Connection
 
 from src.controller.onMessage.holdem.checkOutMoneyAndEnd import holdemCheckOutMoneyAndEnd
-from src.controller.onMessage.holdem.joinGame import joinHoldemGame
-from src.controller.onMessage.holdem.nextRound import holdemNextRound
+from src.controller.onMessage.holdem.endGame import holdemEndGame
+from src.controller.onMessage.holdem.next.nextPlayer import holdemNextPlayer
+from src.controller.onMessage.holdem.next.nextRound import holdemNextRound
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from loguru import logger
 
 
 async def fold(table: HoldemTable, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     table.fold(user.id)
     await channel.send(f"玩家{user.display_name}弃牌")
+    logger.info(f"Player {user.id} fold in holdem table {channel.id}")
 
     if table.numberOfPlayersNotFold == 1:
-        playerIDLeft = list(table.players.keys())[0]
-        moneyToPlayer = [
-            [playerIDLeft, table.mainPot]
-        ]
-        await holdemCheckOutMoneyAndEnd(self, user, channel, moneyToPlayer)
-        casino.onlinePlayer.remove(playerIDLeft)
-        casino.deleteTable(table.inviteMessage.channel.id)
+        await holdemEndGame(table, channel, self, db, casino, gamePlayerWaiting)
         return
 
-    if table.toNext():
-        await holdemNextRound(table, channel, self, db, casino, gamePlayerWaiting)
+    await holdemNextPlayer(table, channel, self, db, casino, gamePlayerWaiting)
+

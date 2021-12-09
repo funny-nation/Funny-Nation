@@ -146,3 +146,7 @@ config.ini
 # Yoyo
 yoyo.ini
 
+log/
+
+# System
+.DS_Store

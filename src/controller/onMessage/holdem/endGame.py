@@ -8,5 +8,7 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
+
 async def holdemEndGame(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
+    await channel.send("Game end")
     return

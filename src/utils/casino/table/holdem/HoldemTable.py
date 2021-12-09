@@ -98,6 +98,9 @@ class HoldemTable(Table):
         self.players[playerID]['tempPot'] = self.currentBet
         return
 
+    def getAmountOfMoneyToCall(self, playerID):
+        return self.currentBet - self.players[playerID]['tempPot']
+
 
     def allIn(self, playerID):
         return
@@ -118,7 +121,7 @@ class HoldemTable(Table):
         """
 
 
-def test_Store1():
+def test_Story1():
     class MemberTest:
         id = 1
     owner = MemberTest()
@@ -223,3 +226,106 @@ def test_Store1():
     # End
 
 
+def test_story2():
+    class MemberTest:
+        id = 1
+    owner = MemberTest()
+    holdemTable = HoldemTable(None, owner)
+    holdemTable.addPlayer(1)
+    holdemTable.addPlayer(2)
+    holdemTable.addPlayer(3)
+    holdemTable.addPlayer(4)
+    holdemTable.addPlayer(5)
+    holdemTable.gameStart()
+    # Game start
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    # pre-flop (round 1) start
+    holdemTable.rise(1, 10000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.callOrCheck(2)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 3
+    holdemTable.rise(3, 20000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.callOrCheck(5)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 1
+    holdemTable.callOrCheck(1)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.callOrCheck(2)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 1
+    assert holdemTable.mainPot == 152500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 5
+    # Round 1 end
+    holdemTable.flop()
+    # Round 2 start
+    holdemTable.rise(1, 20000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.fold(2)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 3
+    holdemTable.fold(3)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.rise(5, 10000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 1
+    holdemTable.fold(1)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 2
+
+    # Round 2 end
+
+    holdemTable.turnOrRiver()
+    # Round 3 start
+    holdemTable.rise(4, 1000000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.callOrCheck(5)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 2232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 2
+    # Round 3 end
+
+    holdemTable.turnOrRiver()
+    # Round 3 start
+
+    holdemTable.rise(4, 10000000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.callOrCheck(5)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 22232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 2
+    # End

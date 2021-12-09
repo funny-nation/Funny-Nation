@@ -31,7 +31,6 @@ async def newHoldemGame(self: Client, message: Message, db: Connection, casino: 
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, owner.id, -table.ante)
     databaseResult = databaseResult and addNewCashFlow(db, owner.id, -table.ante, config['cashFlowMessage']['holdemAnte'])
-    table.mainPot += table.ante
 
     if not databaseResult:
         await channel.send(f"炸了，麻烦通知一下群主")

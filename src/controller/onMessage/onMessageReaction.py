@@ -2,6 +2,7 @@ from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, Tex
 from typing import Dict
 from pymysql import Connection
 
+from src.controller.onMessage.holdem.callAndCheck import holdemCallAndCheck
 from src.controller.onMessage.holdem.fold import fold
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
@@ -45,4 +46,9 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
 
     # Holdem call and check
     if emoji.name == '➡':
+        tables: Dict[int, HoldemTable]
+        for tableID in tables:
+            if tables[tableID].whosTurn == user.id:
+                await holdemCallAndCheck(tables[tableID], user, channel, self, db, casino, gamePlayerWaiting)
+                return
         return

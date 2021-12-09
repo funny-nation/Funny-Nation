@@ -32,7 +32,6 @@ async def joinHoldemGame(table: HoldemTable, player: Member, channel: TextChanne
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, userInfo[0], -table.ante)
     databaseResult = databaseResult and addNewCashFlow(db, userInfo[0], -table.ante, config['cashFlowMessage']['holdemAnte'])
-    table.mainPot += table.ante
 
     if not databaseResult:
         await channel.send("数据库炸了，请告诉一下群主")
@@ -45,4 +44,4 @@ async def joinHoldemGame(table: HoldemTable, player: Member, channel: TextChanne
         return
     casino.onlinePlayer.append(userInfo[0])
     await channel.send(f"{player.display_name}，加入")
-    logger.info(f"{player.id} join a blackJack table {channel.id}")
+    logger.info(f"{player.id} join a holdem table {channel.id}")
