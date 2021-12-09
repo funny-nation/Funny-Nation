@@ -25,8 +25,8 @@ async def holdemGameStart(table: HoldemTable, message: Message, self: Client, ga
         await dmChannel.send("点击下面链接回到牌桌")
         invite: Invite = await message.channel.create_invite(max_age=60)
         await dmChannel.send(invite.url)
-    table.whoBet = table.owner
-    table.whosTurn = table.owner
+    table.whoBet = table.owner.id
+    table.whosTurn = table.owner.id
     await sendPromptMsg(message.channel, table.whosTurn)
 
 

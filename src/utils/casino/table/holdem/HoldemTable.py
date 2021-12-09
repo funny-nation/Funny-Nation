@@ -11,8 +11,9 @@ class HoldemTable(Table):
         self.sidePots = {}
         self.board = []
         self.whoBet: int or None = None
-        self.whosTurn: int or None = None
+        self.whosTurn: int = owner.id
         self.ante = 500
+        self.currentBet = 0
         self.numberOfPlayersNotFold = 0
 
     def gameStart(self):
@@ -22,9 +23,11 @@ class HoldemTable(Table):
         previousPlayerID = playersIDs[-1]
         for playerID in self.players:
             self.numberOfPlayersNotFold += 1
+            self.mainPot += self.ante
             self.players[previousPlayerID]['next'] = playerID
             previousPlayerID = playerID
             self.players[playerID]['fold'] = False
+            self.players[playerID]['tempPot'] = 0
             self.players[playerID]['cards'] = []
             self.players[playerID]['cards'].append(self.poker.getACard())
             self.players[playerID]['cards'].append(self.poker.getACard())
@@ -38,12 +41,36 @@ class HoldemTable(Table):
         Return True if round is over, available for a new public card
         Return False if the rund is not overed yet.
         """
+
         nextPlayerID: int = self.players[self.whosTurn]['next']
+
+        def cleanCurrentPot():
+            self.currentBet = 0
+            self.whoBet = None
+            for playerID in self.players:
+                self.players[playerID]['tempPot'] = 0
+            whosTurn = self.owner.id
+            while self.players[whosTurn]['fold']:
+                whosTurn = self.players[whosTurn]['next']
+            self.whosTurn = whosTurn
+
         while self.players[nextPlayerID]['fold']:
-            nextPlayerID = self.players[nextPlayerID]['next']
-        if self.whoBet is None:
-            self.whosTurn = nextPlayerID
-            return nextPlayerID == self.owner.id
+            nextPlayerID = self.players[nextPlayerID]['next'] # Find the next player
+        self.whosTurn = nextPlayerID
+        if self.whoBet is None: # No one bet, means this round would end til nextPlayerID is back to owner.
+            if nextPlayerID == self.owner.id:
+                cleanCurrentPot()
+                return True
+            else:
+                return False
+        else:
+            if nextPlayerID == self.whoBet:
+                cleanCurrentPot()
+                return True
+            else:
+                return False
+
+
 
 
     def viewCards(self, playerID):
@@ -58,10 +85,19 @@ class HoldemTable(Table):
         self.board.append(self.poker.getACard())
 
     def rise(self, playerID, money):
+        moneyToPot = money + (self.currentBet - self.players[playerID]['tempPot'])
+        self.mainPot += moneyToPot
+        self.currentBet += money
+        self.players[playerID]['tempPot'] = self.currentBet
+        self.whoBet = playerID
+
         return
 
     def callOrCheck(self, playerID):
+        self.mainPot += self.currentBet - self.players[playerID]['tempPot']
+        self.players[playerID]['tempPot'] = self.currentBet
         return
+
 
     def allIn(self, playerID):
         return
@@ -82,11 +118,108 @@ class HoldemTable(Table):
         """
 
 
-def test_():
-    holdemTable = HoldemTable(None, None)
+def test_Store1():
+    class MemberTest:
+        id = 1
+    owner = MemberTest()
+    holdemTable = HoldemTable(None, owner)
     holdemTable.addPlayer(1)
     holdemTable.addPlayer(2)
     holdemTable.addPlayer(3)
     holdemTable.addPlayer(4)
+    holdemTable.addPlayer(5)
     holdemTable.gameStart()
-    print(holdemTable.players)
+    # Game start
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    # pre-flop (round 1) start
+    holdemTable.rise(1, 10000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.callOrCheck(2)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 3
+    holdemTable.rise(3, 20000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.callOrCheck(5)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 1
+    holdemTable.callOrCheck(1)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.callOrCheck(2)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 1
+    assert holdemTable.mainPot == 152500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 5
+    # Round 1 end
+    holdemTable.flop()
+    # Round 2 start
+    holdemTable.rise(1, 20000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.fold(2)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 3
+    holdemTable.fold(3)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.rise(5, 10000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 1
+    holdemTable.fold(1)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.callOrCheck(4)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 2
+
+    # Round 2 end
+
+    holdemTable.turnOrRiver()
+    # Round 3 start
+    holdemTable.rise(4, 1000000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.callOrCheck(5)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 2232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 2
+    # Round 3 end
+
+    holdemTable.turnOrRiver()
+    # Round 3 start
+
+    holdemTable.rise(4, 10000000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.fold(5)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn == 4
+    assert holdemTable.mainPot == 12232500
+    for playerID in holdemTable.players:
+        assert holdemTable.players[playerID]['tempPot'] == 0
+    assert holdemTable.currentBet == 0
+    assert holdemTable.numberOfPlayersNotFold == 1
+    # End
+
+
