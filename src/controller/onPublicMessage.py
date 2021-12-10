@@ -6,6 +6,7 @@ from src.controller.onMessage.checkBalance import checkBalance
 from src.controller.onMessage.getLeaderBoard import getLeaderBoardTop10
 from src.controller.onMessage.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
 from src.controller.onMessage.holdem.newGame import newHoldemGame
+from src.controller.onMessage.holdem.rise import holdemRise
 from src.controller.onMessage.transferMoney import transferMoney
 from src.controller.onMessage.sendGift import sendGift
 
@@ -84,6 +85,8 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
     if re.match(f"^开局德州扑克$", command):
         await newHoldemGame(self, message, db, casino, gamePlayerWaiting)
         return
+    if re.match(f"^加注 [0-9]+$", command):
+        await holdemRise(self, message, db, command, casino, gamePlayerWaiting)
 
     if re.match(f"^加入$", command):
         await joinGame(self, message, db, casino, gamePlayerWaiting)

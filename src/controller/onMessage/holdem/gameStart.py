@@ -25,7 +25,7 @@ async def holdemGameStart(table: HoldemTable, message: Message, self: Client, ga
         await dmChannel.send("点击下面链接回到牌桌")
         invite: Invite = await message.channel.create_invite(max_age=60)
         await dmChannel.send(invite.url)
-    await sendPromptMsg(message.channel, table.whosTurn)
+    await sendPromptMsg(message.channel, table.whosTurn, table.mainPot)
 
 
     logger.info(f"Holdem started in table {table.inviteMessage.channel.id} with players: {playerListStr}")

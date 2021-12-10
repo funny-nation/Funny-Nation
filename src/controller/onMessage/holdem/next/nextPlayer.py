@@ -20,4 +20,4 @@ async def holdemNextPlayer(table: HoldemTable, channel: TextChannel, self: Clien
         if isEnd:
             return
     nextPlayerID = table.whosTurn
-    await sendPromptMsg(channel, nextPlayerID, table.getAmountOfMoneyToCall(nextPlayerID))
+    await sendPromptMsg(channel, nextPlayerID, table.mainPot, table.getAmountOfMoneyToCall(nextPlayerID))
