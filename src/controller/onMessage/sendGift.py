@@ -13,10 +13,10 @@ from src.model.userManagement import addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 
 giftConfig = configparser.ConfigParser()
-giftConfig.read('giftConfig.ini')
+giftConfig.read('giftConfig.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 # img: Dict[str, File] = {}
 #

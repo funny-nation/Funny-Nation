@@ -3,7 +3,7 @@ from discord import Guild, TextChannel
 from typing import List
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config.ini', encoding='utf-8')
 
 
 def fetchGiftAnnouncementChannel(guild: Guild):
