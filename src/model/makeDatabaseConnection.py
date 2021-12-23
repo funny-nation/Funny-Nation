@@ -29,11 +29,3 @@ def makeDatabaseConnection():
         return None
     return db
 
-
-def test_makeDatabaseConnection():
-    db: Connection = makeDatabaseConnection()
-    if db is None:
-        raise Exception("Database Connection Error")
-    cursor: Cursor = db.cursor()
-    cursor.execute('SELECT VERSION()')
-    db.close()
