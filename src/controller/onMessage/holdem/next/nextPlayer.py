@@ -15,9 +15,24 @@ from src.utils.poker.pokerImage import getPokerImage
 
 
 async def holdemNextPlayer(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
+
+
     if table.toNext():
         isEnd = await holdemNextRound(table, channel, self, db, casino, gamePlayerWaiting)
         if isEnd:
             return
     nextPlayerID = table.whosTurn
+    if nextPlayerID is None:
+        await whenEveryoneAllIn(table, channel, self, db, casino, gamePlayerWaiting)
+        return
     await sendPromptMsg(channel, nextPlayerID, table.mainPot, table.getAmountOfMoneyToCall(nextPlayerID))
+
+
+async def whenEveryoneAllIn(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
+
+    isEnd = await holdemNextRound(table, channel, self, db, casino, gamePlayerWaiting)
+    while not isEnd:
+        isEnd = await holdemNextRound(table, channel, self, db, casino, gamePlayerWaiting)
+
+    return
+

@@ -42,7 +42,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
         return
 
     # Holdem all in
-    if emoji.name == '🔺':
+    if emoji.name == '⬆':
         tables: Dict[int, HoldemTable]
         for tableID in tables:
             if tables[tableID].whosTurn == user.id:

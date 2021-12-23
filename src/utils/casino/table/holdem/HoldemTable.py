@@ -46,9 +46,10 @@ class HoldemTable(Table):
         Return True if round is over, available for a new public card
         Return False if the rund is not overed yet.
         """
-
-        nextPlayerID: int = self.players[self.whosTurn]['next']
-
+        if self.whosTurn is None:
+            return True
+        nextPlayerID: int = self.players[self.whosTurn]['next'] + 0
+        currentPlayerID: int = self.whosTurn + 0
         def cleanCurrentPot():
             self.currentBet = 0
             self.whoBet = None
@@ -61,6 +62,9 @@ class HoldemTable(Table):
 
         while self.players[nextPlayerID]['fold'] or self.players[nextPlayerID]['allIn']:
             nextPlayerID = self.players[nextPlayerID]['next'] # Find the next player
+            if nextPlayerID == currentPlayerID:
+                self.whosTurn = None
+                return True
         self.whosTurn = nextPlayerID
         if self.whoBet is None: # No one bet, means this round would end til nextPlayerID is back to owner or player right of the owner.
             startBetID = self.owner.id
@@ -453,3 +457,39 @@ def test_Story3():
     assert holdemTable.toNext() is True
     assert holdemTable.whosTurn == 2
     assert holdemTable.players[2]['moneyInvested'] == holdemTable.ante + 103000
+
+
+
+def test_Story4():
+    class MemberTest:
+        id = 1
+    owner = MemberTest()
+    holdemTable = HoldemTable(None, owner)
+    holdemTable.addPlayer(1)
+    holdemTable.addPlayer(2)
+    holdemTable.addPlayer(3)
+    holdemTable.addPlayer(4)
+    holdemTable.addPlayer(5)
+    holdemTable.gameStart()
+
+    holdemTable.allIn(1, 100000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 2
+    holdemTable.allIn(2, 120000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 3
+    holdemTable.allIn(3, 10000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 4
+    holdemTable.allIn(4, 12000)
+    assert holdemTable.toNext() is False
+    assert holdemTable.whosTurn == 5
+    holdemTable.allIn(5, 20000)
+    assert holdemTable.toNext() is True
+    assert holdemTable.whosTurn is None
+
+    holdemTable.flop()
+
+    holdemTable.turnOrRiver()
+
+    holdemTable.turnOrRiver()
