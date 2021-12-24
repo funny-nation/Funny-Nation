@@ -7,7 +7,6 @@ import re
 from loguru import logger
 import glob
 from pathlib import Path
-
 from src.model.userManagement import getUser
 from src.model.userManagement import addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow

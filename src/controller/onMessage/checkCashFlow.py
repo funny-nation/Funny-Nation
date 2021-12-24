@@ -1,11 +1,19 @@
+import configparser
 import re
 
 from loguru import logger
-
+import configparser
 from src.model.cashFlowManagement import get10RecentCashflowsByUserID
 
 from discord import Client, Message
 from pymysql import Connection
+from pathlib import Path
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read("Cconfig.ini")
 
 
 async def checkCashFlow(self: Client, message: Message, db: Connection):
@@ -13,7 +21,8 @@ async def checkCashFlow(self: Client, message: Message, db: Connection):
     messageSendBack: str = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
-        messageSendBack: str = '系统错误'
+        systemError = str(languageConfig['error']["dbError"])
+        messageSendBack: str = systemError
     else:
         messageSendBack += '最近的记录：\n'
         for cashFlow in cashFlowData:
@@ -28,7 +37,8 @@ async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection
     messageSendBack: str = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
-        messageSendBack = '系统错误'
+        systemError = str(languageConfig['error']["dbError"])
+        messageSendBack: str = systemError
     else:
         if len(cashFlowData) == 0:
             messageSendBack += '未找到关于这个的记录'
