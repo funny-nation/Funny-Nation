@@ -31,6 +31,6 @@ async def checkBalance(message: Message, db: Connection):
         displayFormat = str(languageConfig['balance']['displayFormat'])
         moneyMsg = displayFormat.replace("?@user", f" @{user.display_name} ")
         displayMoney: float = userInfo[1] / 100
-        moneyMsg = moneyMsg.replace("？@displayMoney", f" {displayMoney} ")
+        moneyMsg = moneyMsg.replace("?@displayMoney", f" {displayMoney} ")
         messageSendBack: str = moneyMsg
     await message.channel.send(messageSendBack)
