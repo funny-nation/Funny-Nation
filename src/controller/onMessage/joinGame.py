@@ -47,17 +47,17 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
 async def joinGameByReaction(table: Table, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     if table.hasPlayer(user.id):
         inGame = str(languageConfig['game']["inGame"])
-        inMsg = inGame.replace("?@user", f" @{user.author.display_name} ")
+        inMsg = inGame.replace("?@user", f" @{user.display_name} ")
         await channel.send(inMsg)
         return
     if table.gameStarted:
         overTime1 = str(languageConfig['game']["overTime1"])
-        overMsg = overTime1.replace("?@user", f" @{user.author.display_name} ")
+        overMsg = overTime1.replace("?@user", f" @{user.display_name} ")
         await channel.send(overMsg)
         return
     if table.getPlayerCount() >= table.maxPlayer:
         full = str(languageConfig['game']["full"])
-        fullMsg = full.replace("?@user", f" @{user.author.display_name} ")
+        fullMsg = full.replace("?@user", f" @{user.display_name} ")
         await channel.send(fullMsg)
         return
     if table.game == 'blackJack':

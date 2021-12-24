@@ -21,6 +21,7 @@ config.read('config.ini', encoding='utf-8')
 
 async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: Table = casino.getTable(message.channel.id)
+    systemError = str(languageConfig['error']["dbError"])
     if table is None:
         nobodyInGame = str(languageConfig['game']["nobodyInGame"])
         await message.channel.send(nobodyInGame)
@@ -54,5 +55,4 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
     if removeWait:
         await gamePlayerWaiting.removeWait(message.author.id)
     casino.deleteTable(message.channel.id)
-    systemError = str(languageConfig['error']["dbError"])
     await message.channel.send(systemError)
