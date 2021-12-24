@@ -10,7 +10,7 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.onMessage.blackJack.joinGame import joinBlackJack
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.onMessage.holdem.sendPromptMsg import sendPromptMsg
-
+from src.model.userManagement import getUser
 from src.utils.poker.pokerImage import getPokerImage
 
 
@@ -25,7 +25,11 @@ async def holdemNextPlayer(table: HoldemTable, channel: TextChannel, self: Clien
     if nextPlayerID is None:
         await whenEveryoneAllIn(table, channel, self, db, casino, gamePlayerWaiting)
         return
-    await sendPromptMsg(channel, nextPlayerID, table.mainPot, table.getAmountOfMoneyToCall(nextPlayerID))
+    userInfo: tuple = getUser(db, nextPlayerID)
+    amountOfMoneyToCall: int = table.getAmountOfMoneyToCall(nextPlayerID)
+    allInOnly = userInfo[1] <= amountOfMoneyToCall
+    await sendPromptMsg(channel, nextPlayerID, table.mainPot, table.getAmountOfMoneyToCall(nextPlayerID), allInOnly)
+
 
 
 async def whenEveryoneAllIn(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):

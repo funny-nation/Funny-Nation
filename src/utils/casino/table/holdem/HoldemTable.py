@@ -48,6 +48,9 @@ class HoldemTable(Table):
         """
         if self.whosTurn is None:
             return True
+        if self.numberOfPlayersNotFoldOrAllIn == 1:
+            self.whosTurn = None
+            return True
         nextPlayerID: int = self.players[self.whosTurn]['next'] + 0
         currentPlayerID: int = self.whosTurn + 0
         def cleanCurrentPot():

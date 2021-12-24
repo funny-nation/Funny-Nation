@@ -1,4 +1,6 @@
 from discord import User, DMChannel, Client, Message, Member, Guild, Invite
+
+from src.model.userManagement import getUser
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
@@ -25,7 +27,10 @@ async def holdemGameStart(table: HoldemTable, message: Message, self: Client, ga
         await dmChannel.send("点击下面链接回到牌桌")
         invite: Invite = await message.channel.create_invite(max_age=60)
         await dmChannel.send(invite.url)
-    await sendPromptMsg(message.channel, table.whosTurn, table.mainPot)
+    userInfo: tuple = getUser(db, table.whosTurn)
+    amountOfMoneyToCall: int = table.getAmountOfMoneyToCall(table.whosTurn)
+    allInOnly = userInfo[1] <= amountOfMoneyToCall
+    await sendPromptMsg(message.channel, table.whosTurn, table.mainPot, allInOnly=allInOnly)
 
 
     logger.info(f"Holdem started in table {table.inviteMessage.channel.id} with players: {playerListStr}")

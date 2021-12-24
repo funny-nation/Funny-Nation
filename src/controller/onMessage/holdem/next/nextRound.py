@@ -28,6 +28,8 @@ async def holdemNextRound(table: HoldemTable, channel: TextChannel, self: Client
     async def afterFlopTurnRiver():
         await channel.send("公开牌：")
         await channel.send(file=getPokerImage(table.board))
+        moneyDisplayForPot = table.mainPot / 100
+        await channel.send(f"目前底池有{moneyDisplayForPot}元")
 
     if len(table.board) == 0:
         table.flop()
