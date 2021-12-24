@@ -54,4 +54,5 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
     if removeWait:
         await gamePlayerWaiting.removeWait(message.author.id)
     casino.deleteTable(message.channel.id)
+    systemError = str(languageConfig['error']["dbError"])
     await message.channel.send(systemError)

@@ -24,9 +24,14 @@ async def checkCashFlow(self: Client, message: Message, db: Connection):
         systemError = str(languageConfig['error']["dbError"])
         messageSendBack: str = systemError
     else:
-        messageSendBack += '最近的记录：\n'
+        recentRecord=str(languageConfig["cashFlow"]["recentRecord"])
+        messageSendBack += recentRecord+'\n'
         for cashFlow in cashFlowData:
-            messageSendBack += f"{cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} - {cashFlow[3]} - {cashFlow[2] / 100} 元 \n---------------------\n"
+            cashD=str(languageConfig["cashFlow"]["cashD"])
+            cashMsg=cashD.replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")
+            cashMsg=cashMsg.replace("?@amount1", f" {cashFlow[3]} ")
+            cashMsg=cashMsg.replace("?@amount2", f" {cashFlow[2] / 100}")
+            messageSendBack += cashMsg+"\n---------------------\n"
 
     await message.channel.send(messageSendBack)
 
@@ -41,11 +46,16 @@ async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection
         messageSendBack: str = systemError
     else:
         if len(cashFlowData) == 0:
-            messageSendBack += '未找到关于这个的记录'
+            recordNotFound = str(languageConfig["cashFlow"]["recordNotFound"])
+            messageSendBack += recordNotFound
         else:
-
-            messageSendBack += '找到的记录：\n'
+            recordFound = str(languageConfig["cashFlow"]["recordFound"])
+            messageSendBack += recordFound+'\n'
             for cashFlow in cashFlowData:
-                messageSendBack += f"{cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} - {cashFlow[3]} - {cashFlow[2] / 100} 元 \n---------------------\n"
+                cashD = str(languageConfig["cashFlow"]["cashD"])
+                cashMsg = cashD.replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")
+                cashMsg = cashMsg.replace("?@amount1", f" {cashFlow[3]} ")
+                cashMsg = cashMsg.replace("?@amount2", f" {cashFlow[2] / 100}")
+                messageSendBack += cashMsg + "\n---------------------\n"
 
     await message.channel.send(messageSendBack)

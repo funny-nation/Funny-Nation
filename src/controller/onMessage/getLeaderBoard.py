@@ -25,7 +25,8 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
         systemError = str(languageConfig['error']["dbError"])
         messageSendBack: str = systemError
     else:
-        messageSendBack = "以下为本DC最有钱的大佬：\n"
+        title=str(languageConfig["latter"]["displayName"])
+        messageSendBack = title+"\n"
         for i in range(0, len(leaderBoardData)):
             try:
                 userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
@@ -37,6 +38,9 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
             else:
                 userDisplayName: str = userObj.display_name
             moneyDisplay: float = leaderBoardData[i][1] / 100
-            messageSendBack += f"{i + 1}： {userDisplayName} - {moneyDisplay}元\n"
+            format = str(languageConfig['latter']["format"])
+            forMsg = format.replace("?@user", f" {userDisplayName} ")
+            forMsg = forMsg.replace("?@amount", f"{moneyDisplay}")
+            messageSendBack += f"{i + 1}:"+forMsg+"\n"
 
     await message.channel.send(messageSendBack)
