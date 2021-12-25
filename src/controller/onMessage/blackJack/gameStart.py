@@ -7,7 +7,13 @@ from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection
 from src.model.makeDatabaseConnection import makeDatabaseConnection
+import configparser
 
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read("Cconfig.ini")
 
 async def blackJackGameStart(table: BlackJackTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
     table.gameStart()
