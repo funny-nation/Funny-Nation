@@ -30,11 +30,13 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
         await message.channel.send(moneyNotEnough)
         return
     if playerInfo[0] in casino.onlinePlayer:
-        await message.channel.send("你已经在一局游戏了")
+        inGame = str(languageConfig["blackJack"]["inGame"])
+        await message.channel.send(inGame)
         return
 
     if not casino.createBlackJackTableByID(message.channel.id, money, message):
-        await message.channel.send("这个频道有人用了，你换一个")
+        chanelOwn = str(languageConfig["blackJack"]["chanelOwn"])
+        await message.channel.send(chanelOwn)
         return
     table: Table = casino.getTable(message.channel.id)
     databaseResult = True
@@ -42,24 +44,30 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     databaseResult = databaseResult and addMoneyToUser(db, playerInfo[0], -money)
     databaseResult = databaseResult and cashFlow.addNewCashFlow(db, playerInfo[0], -money, config['cashFlowMessage']['blackJackSpend'])
     if not databaseResult:
-        await message.channel.send("数据库炸了，建议通知一下群主")
+        errorMsg = str(languageConfig["error"]["dbError"])
+        await message.channel.send(errorMsg)
         logger.error("Database error while someone create a new black jack table")
         casino.deleteTable(message.channel.id)
         return
     casino.onlinePlayer.append(playerInfo[0])
     table.addPlayer(message.author.id)
 
+    gameBulid = str(languageConfig["blackJack"]["gameBuild"])
+    gameBulidMsg = gameBulid.replace("?@user", f"{money / 100}")
+
     await message.add_reaction('\N{White Heavy Check Mark}')
-    await message.channel.send(f"21牌局已建立，金额为{money / 100}元，等待玩家加入，想加入的可以点击上面的✅图标")
+    await message.channel.send(gameBulidMsg)
 
     async def timeOutFunction():
         dbTemp = makeDatabaseConnection()
         await pauseGame(self, message, casino, dbTemp, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
-        await message.channel.send("由于时间过长，牌局自动关闭")
+        timeOut = str(languageConfig["blackJack"]["timeOut1"])
+        await message.channel.send(timeOut)
 
     async def timeWarning():
-        await message.channel.send("还有5秒钟牌局将会自动关闭")
+        warning = str(languageConfig["blackJack"]["warning1"])
+        await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(playerInfo[0], timeOutFunction, timeWarning, 100)
     logger.info(f"{message.author.id} create a blackJack Table in channel {message.channel.id}")
