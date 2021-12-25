@@ -17,14 +17,16 @@ config.read("Cconfig.ini")
 
 async def blackJackGameStart(table: BlackJackTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
     table.gameStart()
-    await message.channel.send("开始了，底牌已经私聊你们了，请各位查看自己的牌")
+    gameStart = str(languageConfig["blackJack"]["gameStart"])
+    await message.channel.send(gameStart)
     playerListStr = ""
     myGuild: Guild = self.guilds[0]
     for userID in table.players:
         playerListStr += str(userID) + ", "
         member: Member = await myGuild.fetch_member(userID)
         dmChannel: DMChannel = await member.create_dm()
-        await dmChannel.send("这是你的牌：")
+        ownCard = str(languageConfig["blackJack"]["ownCard"])
+        await dmChannel.send(ownCard)
         cards = table.viewCards(userID)
         await dmChannel.send(file=getPokerImage(cards))
         await dmChannel.send("你还要牌吗，要的话，在这里回复\"要\"或者\"不要\"")
@@ -36,11 +38,15 @@ async def creategamePlayerWaiting(member: Member, message: Message, self: Client
 
     async def timeoutFun():
         dbTemp = makeDatabaseConnection()
-        await message.channel.send(f"玩家{member.display_name}由于长时间没反应，自动开牌")
+        timeOut = str(languageConfig["blackJack"]["timeOut"])
+        timeOut = timeOut.replace("?@user", f" {member.display_name} ")
+        await message.channel.send(timeOut)
         await blackJackStay(self, dbTemp, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
 
     async def warningFun():
-        await message.channel.send(f"玩家{member.display_name}由于长时间没反应，将会在5秒后自动开牌")
+        warning = str(languageConfig["blackJack"]["warning"])
+        warning = warning.replace("?@user", f" {member.display_name} ")
+        await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(member.id, timeoutFun, warningFun)

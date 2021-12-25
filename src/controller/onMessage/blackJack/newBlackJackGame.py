@@ -14,6 +14,9 @@ import src.model.cashFlowManagement as cashFlow
 from src.utils.casino.Casino import Casino
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 import configparser
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
 config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
@@ -23,7 +26,8 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     money: int = int(float(moneyStrings[0]) * 100)
     playerInfo: tuple = getUser(db, message.author.id)
     if playerInfo[1] < money:
-        await message.channel.send("你不够钱")
+        moneyNotEnough = str(languageConfig["transfer"]["moneyNotEnough"])
+        await message.channel.send(moneyNotEnough)
         return
     if playerInfo[0] in casino.onlinePlayer:
         await message.channel.send("你已经在一局游戏了")
