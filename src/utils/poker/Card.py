@@ -6,6 +6,9 @@ class Card:
         self.suit = suit
         self.rank = rank
 
+    def __eq__(self, other):
+        return (self.rank == other.rank) and (self.suit == other.suit)
+
     def getString(self) -> str:
         if self.suit == 0:
             return f"方片{self.convertRankToStr(self.rank)}"
