@@ -29,7 +29,11 @@ async def blackJackGameStart(table: BlackJackTable, message: Message, self: Clie
         await dmChannel.send(ownCard)
         cards = table.viewCards(userID)
         await dmChannel.send(file=getPokerImage(cards))
-        await dmChannel.send("你还要牌吗，要的话，在这里回复\"要\"或者\"不要\"")
+        needCard = str(languageConfig["blackJack"]["needCard"])
+        needCard1 = str(languageConfig["blackJack"]["needCard1"])
+        needCard2 = str(languageConfig["blackJack"]["needCard2"])
+        needCard3 = str(languageConfig["blackJack"]["needCard3"])
+        await dmChannel.send(needCard+"\n"+needCard1+"\n"+needCard2+"\n"+needCard3+"\n")
         await creategamePlayerWaiting(member, message, self, casino, gamePlayerWaiting, db)
     logger.info(f"Black Jack started in table {table.inviteMessage.channel.id} with players: {playerListStr}")
 
