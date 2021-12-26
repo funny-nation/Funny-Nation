@@ -1,10 +1,6 @@
+from itertools import combinations
 
+arr = [1,2,3,4]
 
-def b(arr):
-    arr = arr[:]
-    arr[0] = 2
-
-a = [1,2,3]
-
-b(a)
-print(a)
+for i in combinations(arr, 3):
+    print(list(i))

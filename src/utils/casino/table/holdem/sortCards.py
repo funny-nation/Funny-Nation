@@ -4,6 +4,11 @@ from src.utils.poker.Card import Card
 
 
 def sortCards(cards: List[Card]):
+    """
+    From small to large. Ace is the largest one
+    :param cards:
+    :return:
+    """
     for card in cards:
         if card.rank == 1:
             card.rank = 14

@@ -1,4 +1,4 @@
-from src.utils.casino.table.holdem.checkHandValue import isRoyalFlush, isStraightFlush, isFourOfAKing, isFullHouse, isFlush, isStraight, isThreeOfTheKing, isTwoPair, isPair
+from src.utils.casino.table.holdem.checkHandValue import isRoyalFlush, isStraightFlush, isFourOfAKind, isFullHouse, isFlush, isStraight, isThreeOfAKind, isTwoPair, isPair
 
 from typing import List
 
@@ -35,7 +35,7 @@ flushCards: List[Card] = [
     Card(2, 1)
 ]
 
-fourOfAKingCards: List[Card] = [
+fourOfAKindCards: List[Card] = [
     Card(2, 3),
     Card(2, 2),
     Card(3, 2),
@@ -65,7 +65,7 @@ straightCards2: List[Card] = [
     Card(1, 8)
 ]
 
-threeOfTheKingCard: List[Card] = [
+threeOfAKindCard: List[Card] = [
     Card(3, 4),
     Card(2, 4),
     Card(1, 4),
@@ -109,17 +109,17 @@ def test_isStraightFlush():
     assert isStraightFlush(flushCards) is False
 
 
-def test_isFourOfAKing():
+def test_isFourOfAKind():
 
-    assert isFourOfAKing(fourOfAKingCards) is True
-    assert isFourOfAKing(fullHouseCards) is False
-    assert isFourOfAKing(flushCards2) is False
+    assert isFourOfAKind(fourOfAKindCards) is True
+    assert isFourOfAKind(fullHouseCards) is False
+    assert isFourOfAKind(flushCards2) is False
 
 
 def test_isFullHouse():
     assert isFullHouse(fullHouseCards) is True
     assert isFullHouse(flushCards) is False
-    assert isFullHouse(threeOfTheKingCard) is False
+    assert isFullHouse(threeOfAKindCard) is False
 
 def test_isFlush():
     assert isFlush(flushCards) is True
@@ -130,10 +130,10 @@ def test_isStraight():
     assert isStraight(straightCards2) is True
     assert isStraight(fullHouseCards) is False
 
-def test_isThreeOfTheKing():
-    assert isThreeOfTheKing(threeOfTheKingCard) is True
-    assert isThreeOfTheKing(fullHouseCards) is True
-    assert isThreeOfTheKing(flushCards) is False
+def test_isThreeOfAKind():
+    assert isThreeOfAKind(threeOfAKindCard) is True
+    assert isThreeOfAKind(fullHouseCards) is True
+    assert isThreeOfAKind(flushCards) is False
 
 def test_isTwoPair():
     assert isTwoPair(twoPairCards) is True
