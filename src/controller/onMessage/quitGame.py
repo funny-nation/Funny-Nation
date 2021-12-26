@@ -53,13 +53,13 @@ async def quitGameByReaction(table: Table, user: User, channel: TextChannel, sel
 
     if not table.hasPlayer(user.id):
         notInGame1 = str(languageConfig['game']["notInGame1"])
-        quitMsg = notInGame1.replace("?@user", f" @{user.display_name} ")
+        quitMsg = notInGame1.replace("?@user", f" {user.display_name} ")
         await channel.send(quitMsg)
         return
 
     if table.owner == user:
         youAreOwner1 = str(languageConfig['game']["youAreOwner1"])
-        quitMsg = youAreOwner1.replace("?@user", f" @{user.display_name} ")
+        quitMsg = youAreOwner1.replace("?@user", f" {user.display_name} ")
         await channel.send(quitMsg)
         return
 

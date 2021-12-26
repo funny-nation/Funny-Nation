@@ -53,7 +53,7 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     table.addPlayer(message.author.id)
 
     gameBulid = str(languageConfig["blackJack"]["gameBuild"])
-    gameBulidMsg = gameBulid.replace("?@user", f"{money / 100}")
+    gameBulidMsg = gameBulid.replace("?@amount", f"{money / 100}")
 
     await message.add_reaction('\N{White Heavy Check Mark}')
     await message.channel.send(gameBulidMsg)
