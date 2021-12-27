@@ -22,8 +22,10 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     else:
         messageSendBack = "以下为本DC最有钱的大佬：\n"
         for i in range(0, len(leaderBoardData)):
-            userObj: Member = await myGuild.fetch_member(leaderBoardData[i][0])
-            userDisplayName = ""
+            try:
+                userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
+            except Exception as err:
+                userObj = None
             if userObj is None:
                 userDisplayName = "不知道是谁"
             else:
