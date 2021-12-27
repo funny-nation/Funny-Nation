@@ -1,4 +1,4 @@
-from discord import Client, Reaction, User, TextChannel
+from discord import Client, Reaction, User, TextChannel, RawReactionActionEvent
 from typing import Dict
 from pymysql import Connection
 
@@ -8,7 +8,7 @@ from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.controller.onMessage.quitGame import quitGameByReaction
 
 
-async def onMessageReactionDelete(self: Client, channel: TextChannel, user: User, casino: Casino, db: Connection):
+async def onMessageReactionDelete(self: Client, channel: TextChannel, user: User, casino: Casino, db: Connection, event: RawReactionActionEvent):
 
     # For game
     tables: Dict[int, Table] = casino.tables

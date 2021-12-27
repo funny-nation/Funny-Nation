@@ -47,6 +47,25 @@ def deleteCashFlow(db: Connection, flowID: int) -> bool:
     return True
 
 
+def deleteCashFlowByUserID(db: Connection, userID: int) -> bool:
+    """
+    Delete existed Cash flow
+    :param db: database object
+    :param userID: userID
+    :return: boolean, true if no error
+    """
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"DELETE FROM `cashFlow` WHERE `userID` = {userID};")
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
+
+
 def getCashflowsByUserID(db: Connection, userID: int) -> tuple or None:
     """
     Get cash flows by user's ID
@@ -92,16 +111,3 @@ def get10RecentCashflowsByUserID(db: Connection, userID: int, msg: str or None) 
     return results
 
 
-def test_addNewCashFlow():
-    from src.model.makeDatabaseConnection import makeDatabaseConnection
-    db = makeDatabaseConnection()
-    assert addNewCashFlow(db, 123123123, 100, "转账") is True
-    assert addNewCashFlow(db, 123123123, -50, "转账") is True
-    cashflow = getCashflowsByUserID(db, 123123123)
-    cashFlow10Result = get10RecentCashflowsByUserID(db, 123123123, "转账")
-    assert len(cashFlow10Result) == 2
-    assert cashflow is not None
-    assert len(cashflow) == 2
-    assert deleteCashFlow(db, cashflow[0][0]) is True
-    assert deleteCashFlow(db, cashflow[1][0]) is True
-    db.close()

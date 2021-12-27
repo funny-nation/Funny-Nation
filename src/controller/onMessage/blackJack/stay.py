@@ -9,6 +9,13 @@ from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member, TextChannel, Invite
 from src.controller.onMessage.blackJack.endGame import blackJackEndGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read('config.ini', encoding='utf-8')
 
 
 async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
@@ -20,7 +27,8 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
             tableInviteMsg = tables[tableID].inviteMessage
             break
     if tableInviteMsg is None:
-        await message.channel.send("你说啥呢")
+        noMsg = str(languageConfig["blackJack"]["noMsg"])
+        await message.channel.send(noMsg)
         return
     member = message.author
     table: BlackJackTable = casino.getTable(tableInviteMsg.channel.id)
@@ -28,7 +36,9 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
         return
     table.stay(playerID)
     tableChannel: TextChannel = tableInviteMsg.channel
-    await tableChannel.send(f"玩家{member.display_name}可以开牌了")
+    startMsg = str(languageConfig["blackJack"]["StartMsg"])
+    startMsg1 = startMsg.replace("?@user", f" {member.display_name} ")
+    await tableChannel.send(startMsg1)
     logger.info(f"Player {playerID} stay in Black Jack")
     invite: Invite = await tableChannel.create_invite(max_age=60)
     await message.channel.send(invite.url)
@@ -41,16 +51,20 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
 async def blackJackStay(self: Client, db: Connection, message: Message, casino: Casino, playerID: int, user: Member, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
-        await message.channel.send("这里没人开游戏")
+        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
+        await message.channel.send(nobodyInGame)
         return
     if not table.hasPlayer(playerID):
-        await message.channel.send("你不在这场牌局里")
+        notInGame = str(languageConfig["game"]["notInGame"])
+        await message.channel.send(notInGame)
         return
     if table.gameOver:
         return
     table.stay(playerID)
     logger.info(f"Player {playerID} stay in Black Jack")
-    await message.channel.send(f"玩家{user.display_name}可以开牌了")
+    startMsg = str(languageConfig["blackJack"]["startMsg"])
+    startMsg = startMsg.replace("?@user", f" {user.display_name} ")
+    await message.channel.send(startMsg)
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():

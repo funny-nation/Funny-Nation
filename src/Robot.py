@@ -66,7 +66,7 @@ class Robot(discord.Client):
         channel: TextChannel = await self.fetch_channel(event.channel_id)
         if user != self.user:
             db: Connection = makeDatabaseConnection()
-            await onMessageReactionDelete(self, channel, user, self.casino, db)
+            await onMessageReactionDelete(self, channel, user, self.casino, db, event)
             db.close()
 
     @tasks.loop(seconds=1)

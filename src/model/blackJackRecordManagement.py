@@ -83,15 +83,3 @@ def setGameStatus(db: Connection, userID: int, tableUUID: str, status: int) -> b
         return False
     return True
 
-
-def test_():
-    db = makeDatabaseConnection()
-    userID = 123456789
-    money = 100
-    tableID = 987654321
-    tableUUID = str(uuid.uuid1())
-    assert newBlackJackRecord(db, userID, money, tableID, tableUUID) is True
-    assert getBlackJackRecord(db, userID, tableUUID) is not None
-    assert getBlackJackRecordsFromATable(db, tableUUID) is not None
-    assert dropBlackJackRecord(db, userID, tableUUID) is True
-    db.close()

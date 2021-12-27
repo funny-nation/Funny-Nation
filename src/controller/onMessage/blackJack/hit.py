@@ -12,20 +12,30 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.onMessage.blackJack.stay import blackJackStay, blackJackStayWithPrivateMsg
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 
+import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read("Cconfig.ini")
 
 async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     table: BlackJackTable = casino.getTable(message.channel.id)
     playerID: int = message.author.id
     user: Member = message.author
     if table is None:
-        await message.channel.send("这里没人开游戏")
+        notInGame = str(languageConfig["game"]["notInGame"])
+        await message.channel.send(notInGame)
         return
     if not table.hasPlayer(playerID):
-        await message.channel.send("你不在这场牌局里")
+        notInGame = str(languageConfig["blackJack"]["notInGame"])
+        await message.channel.send(notInGame)
         return
 
     if table.shouldStopHitting(playerID):
-        await message.channel.send("你不能再要了")
+        noHit = str(languageConfig["blackJack"]["noHit"])
+        await message.channel.send(noHit)
         return
     if table.gameOver:
         return
@@ -34,16 +44,21 @@ async def blackJackHit(self: Client, message: Message, casino: Casino, gamePlaye
     dmChannel: DMChannel = await user.create_dm()
     await dmChannel.send(file=getPokerImage(cards))
     logger.info(f"Player {playerID} hit on black jack")
-    await dmChannel.send("你还要吗")
+    hit = str(languageConfig["blackJack"]["hit"])
+    await dmChannel.send(hit)
 
     async def timeoutFun():
         db = makeDatabaseConnection()
-        await message.channel.send(f"玩家{user.display_name}由于太久没没反应，自动开牌")
+        timeOut = str(languageConfig["blackJack"]["timeOut"])
+        timeOutMsg = timeOut.replace("?@user", f" {user.display_name} ")
+        await message.channel.send(timeOutMsg)
         await blackJackStay(self, db, message, casino, playerID, user, gamePlayerWaiting, removeWait=True)
         db.close()
 
     async def warningFun():
-        await message.channel.send(f"玩家{user.display_name}由于太久没没反应，将会在5秒内自动开牌")
+        warning = str(languageConfig["blackJack"]["warning"])
+        warningMsg = warning.replace("?@user", f" {user.display_name} ")
+        await message.channel.send(warningMsg)
 
     await gamePlayerWaiting.newWait(playerID, timeoutFun, warningFun)
 
@@ -52,26 +67,31 @@ async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino:
     player: Member = message.author
     table: BlackJackTable = casino.getTableByPlayerID(player.id)
     if table is None:
-        await message.channel.send("你好像不在牌局里")
+        notInGame = str(languageConfig["blackJack"]["notInGame"])
+        await message.channel.send(notInGame)
         return
     if table.shouldStopHitting(player.id):
-        await message.channel.send("你不能再要了")
+        noHit = str(languageConfig["blackJack"]["noHit"])
+        await message.channel.send(noHit)
         return
     if table.gameOver:
         return
     table.hit(player.id)
     cards: List[Card] = table.viewCards(player.id)
     await message.channel.send(file=getPokerImage(cards))
-    await message.channel.send("你还要吗")
+    hit = str(languageConfig["blackJack"]["hit"])
+    await message.channel.send(hit)
     logger.info(f"Player {player.id} hit on black jack")
 
     async def timeoutFun():
         db = makeDatabaseConnection()
-        await message.channel.send("由于你太久没没反应，系统自动开牌了")
+        timeOut = str(languageConfig["blackJack"]["timeOut1"])
+        await message.channel.send(timeOut)
         await blackJackStayWithPrivateMsg(self, db, message, casino, gamePlayerWaiting, removeWait=False)
         db.close()
 
     async def warningFun():
-        await message.channel.send("由于你太久没没反应，系统将会在5秒后自动开牌")
+        warning = str(languageConfig["blackJack"]["warning1"])
+        await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(player.id, timeoutFun, warningFun)
