@@ -1,7 +1,8 @@
 from src.utils.casino.table.Table import Table
 from discord import Message, Member
 from src.utils.poker.Poker import Poker
-
+from typing import List
+from src.utils.casino.table.holdem.calculateNumberlizedCardValueForPlayer import calculateNumberlizedCardValueForPlayer
 
 class HoldemTable(Table):
     def __init__(self, inviteMessage: Message or None, owner: Member or None):
@@ -144,16 +145,54 @@ class HoldemTable(Table):
         self.numberOfPlayersNotFoldOrAllIn -= 1
         self.players[playerID]['fold'] = True
 
+
+    def numberlizeTheCardForPlayers(self):
+        for userID in self.players:
+            if not self.players[userID]['fold']:
+                self.players[userID]['cardsNumberlizedValue'] = calculateNumberlizedCardValueForPlayer(self.players[userID]['cards'], self.board)
+
+
+    def getSortedPlayerIDList(self):
+        userIDs: List[int] = list(self.players.keys())
+
+        for i in range(0, len(self.players)):
+            for j in range(i + 1, len(self.players)):
+                if self.players[userIDs[i]]['moneyInvested'] > self.players[userIDs[j]]['moneyInvested']:
+                    temp = userIDs[i]
+                    userIDs[i] = userIDs[j]
+                    userIDs[j] = temp
+
+        return userIDs
+
+
+
+    def getWinner(self) -> List[int]:
+        highestNumberlizedCardsValue = 0
+        winnerPlayers = []
+        for userID in self.players:
+            if not self.players[userID]['fold']:
+                numberlizedCardsValue = calculateNumberlizedCardValueForPlayer(self.players[userID]['cards'], self.board)
+                if numberlizedCardsValue > highestNumberlizedCardsValue:
+                    highestNumberlizedCardsValue = numberlizedCardsValue
+                    winnerPlayers = [userID]
+                elif numberlizedCardsValue == highestNumberlizedCardsValue:
+                    winnerPlayers.append(userID)
+
+        return winnerPlayers
+
+
+
     def end(self):
         """
         get winners,
         calculate money to players
         :return:
-        [
-            [playerID, money],
-            [playerID, money]
-        ]
+        {
+            playerID: money,
+            playerID: money
+        }
         """
+        winners = self.getWinner()
 
 
 

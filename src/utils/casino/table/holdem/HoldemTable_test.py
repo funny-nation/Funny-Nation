@@ -1,4 +1,5 @@
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
+from src.utils.poker.Card import Card
 
 
 def test_Story1():
@@ -320,19 +321,19 @@ def test_Story4():
     holdemTable.addPlayer(5)
     holdemTable.gameStart()
 
-    holdemTable.allIn(1, 100000)
+    holdemTable.allIn(1, 20000)
     assert holdemTable.toNext() is False
     assert holdemTable.whosTurn == 2
     holdemTable.allIn(2, 120000)
     assert holdemTable.toNext() is False
     assert holdemTable.whosTurn == 3
-    holdemTable.allIn(3, 10000)
+    holdemTable.allIn(3, 1300)
     assert holdemTable.toNext() is False
     assert holdemTable.whosTurn == 4
-    holdemTable.allIn(4, 12000)
+    holdemTable.allIn(4, 2000)
     assert holdemTable.toNext() is False
     assert holdemTable.whosTurn == 5
-    holdemTable.allIn(5, 20000)
+    holdemTable.allIn(5, 1500)
     assert holdemTable.toNext() is True
     assert holdemTable.whosTurn is None
 
@@ -341,3 +342,41 @@ def test_Story4():
     holdemTable.turnOrRiver()
 
     holdemTable.turnOrRiver()
+
+    sortedUserIDList = holdemTable.getSortedPlayerIDList()
+    assert sortedUserIDList[0] == 3
+    assert sortedUserIDList[1] == 5
+    assert sortedUserIDList[2] == 4
+    assert sortedUserIDList[3] == 1
+    assert sortedUserIDList[4] == 2
+
+
+def test_getSortedIDList():
+    class MemberTest:
+        id = 1
+    owner = MemberTest()
+    holdemTable = HoldemTable(None, owner)
+    holdemTable.addPlayer(1)
+    holdemTable.addPlayer(2)
+    holdemTable.addPlayer(3)
+    holdemTable.addPlayer(4)
+    holdemTable.addPlayer(5)
+    holdemTable.gameStart()
+
+    holdemTable.players[1]['cards'] = [Card(1, 2), Card(1, 3)]
+    holdemTable.players[2]['cards'] = [Card(3, 5), Card(2, 1)]
+    holdemTable.players[3]['cards'] = [Card(3, 10), Card(3, 11)]
+    holdemTable.players[4]['cards'] = [Card(2, 5), Card(2, 7)]
+    holdemTable.players[5]['cards'] = [Card(3, 5), Card(2, 2)]
+
+    holdemTable.board = [
+        Card(1, 5),
+        Card(1, 7),
+        Card(1, 10),
+        Card(1, 1),
+        Card(2, 3)
+    ]
+
+    winner = holdemTable.getWinner()
+    assert len(winner) == 1
+    assert winner[0] == 1
