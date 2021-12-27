@@ -25,7 +25,7 @@ async def fold(table: HoldemTable, user: Member, channel: TextChannel, self: Cli
         return
 
     if table.numberOfPlayersNotFold == 1:
-        await holdemEndGame(table, channel, self, db, casino, gamePlayerWaiting)
+        await holdemEndGame(table, channel, self, db, casino, gamePlayerWaiting, publicForCards=False)
         return
 
     await holdemNextPlayer(table, channel, self, db, casino, gamePlayerWaiting)

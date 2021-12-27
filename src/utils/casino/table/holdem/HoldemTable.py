@@ -9,7 +9,7 @@ class HoldemTable(Table):
         Table.__init__(self, 'holdem', inviteMessage, 10, owner)
         self.mainPot = 0
         self.poker = Poker()
-        self.sidePots = {}
+        self.sidePots = []
         self.board = []
         self.whoBet: int or None = None
         self.whosTurn: int = owner.id
@@ -180,6 +180,23 @@ class HoldemTable(Table):
 
         return winnerPlayers
 
+    def generateSidePots(self):
+        sortedUserIDs = self.getSortedPlayerIDList()
+        previousPlayerMoneyInvested = 0
+        sortedUserIDLen = len(sortedUserIDs)
+        for i in range(0, sortedUserIDLen):
+            if self.players[sortedUserIDs[i]]['moneyInvested'] > previousPlayerMoneyInvested:
+
+                sidePot = {
+                    'money': (self.players[sortedUserIDs[i]]['moneyInvested'] - previousPlayerMoneyInvested) * (sortedUserIDLen - i),
+                    'players': []
+                }
+                for j in range(i, sortedUserIDLen):
+                    if not self.players[sortedUserIDs[j]]['fold']:
+                        sidePot['players'].append(sortedUserIDs[j])
+                self.sidePots.append(sidePot)
+                previousPlayerMoneyInvested = self.players[sortedUserIDs[i]]['moneyInvested']
+
 
 
     def end(self):
@@ -192,7 +209,31 @@ class HoldemTable(Table):
             playerID: money
         }
         """
-        winners = self.getWinner()
+        result = {}
+        def addMoneyToResult(player: int, money: int):
+            if player in result:
+                result[player] += money
+            else:
+                result[player] = money
+        self.numberlizeTheCardForPlayers()
+        for sidePot in self.sidePots:
+
+            nutHandPlayerIDInPot = [sidePot['players'][0]]
+            highestNumberlizeCardValue = self.players[sidePot['players'][0]]['cardsNumberlizedValue']
+            for player in sidePot['players']:
+                if self.players[player]['cardsNumberlizedValue'] > highestNumberlizeCardValue:
+                    nutHandPlayerIDInPot = [player]
+                    highestNumberlizeCardValue = self.players[player]['cardsNumberlizedValue']
+                elif self.players[player]['cardsNumberlizedValue'] == nutHandPlayerIDInPot:
+                     nutHandPlayerIDInPot.append(player)
+
+            if len(nutHandPlayerIDInPot) == 1:
+                addMoneyToResult(nutHandPlayerIDInPot[0], sidePot['money'])
+            else:
+                moneyForEach = int(sidePot['money'] / len(nutHandPlayerIDInPot))
+                for winedPlayer in nutHandPlayerIDInPot:
+                    addMoneyToResult(winedPlayer, moneyForEach)
+        return result
 
 
 
