@@ -1,8 +1,8 @@
 [private]
-token=xxxxxx
+token=yourToken
 
 [database]
-address=127.0.0.1
+address=yourDatabaseAddress
 username=yourUserName
 password=yourPassword
 database=yourDatabase
@@ -27,6 +27,10 @@ blackJackRefund=21点入场费退款
 blackJackWin=21点奖金
 giftSent=送礼
 giftReceived=收礼
+holdemAnte=德州扑克底注
+holdemAnteRefund=德州扑克底注退款
+holdemSpent=德州扑克消费
+holdemWin=德州扑克胜利
 
 
 [gameWaitForPlayer]
@@ -36,6 +40,9 @@ secondOnWarning = 5
 [log]
 path=log/
 memoryLog=onMemory/
+
+[gift]
+channel=reportingChannel
 
 [img]
 giftImgPath=img/gift/
