@@ -28,6 +28,10 @@ jobs:
       run: |
         cp config.ini.example config.ini
         cp yoyo.ini.example yoyo.ini
+        echo "${{ secrets.MYSQL_DB_ADDR_CI }}"
+        echo "${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}"
+        echo "${{ secrets.MYSQL_DB_PWD_FOR_CI }}"
+        echo "${{ secrets.MYSQL_DB_ADDR_CI }}"
         sed -i -e 's/yourAddresss/${{ secrets.MYSQL_DB_ADDR_CI }}/g' yoyo.ini
         sed -i -e 's/yourUsername/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' yoyo.ini
         sed -i -e 's/yourPassword/${{ secrets.MYSQL_DB_PWD_FOR_CI }}/g' yoyo.ini
