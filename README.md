@@ -3,7 +3,7 @@
 </div>
 <div align="center">
     <a href="https://discord.gg/uhAv4J4F7Z"><img src="https://img.shields.io/badge/Chat-Discord-7289da" alt="Our Discord"></a>
-    <a href=""><img src="actions/workflows/main.yml/badge.svg"></a>
+    <a href="actions"><img src="https://github.com/plbin97/Funny-Nation/actions/workflows/main.yml/badge.svg"></a>
 </div>
 
 <div>
