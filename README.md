@@ -1,14 +1,15 @@
 <div align="center">
-    <h1>Funny Nations</h1>
+    <h1>Funny Nation</h1>
 </div>
 <div align="center">
     <a href="https://discord.gg/uhAv4J4F7Z"><img src="https://img.shields.io/badge/Chat-Discord-7289da" alt="Our Discord"></a>
+    <a href=""><img src="actions/workflows/main.yml/badge.svg"></a>
 </div>
 
 <div>
     <h3>About this</h3>
     <p>
-        "Funny Nations" is a money-centric "Metaverse" within a Discord server. It is a Discord bot. There are games, activities, visual marriage, and virtual estate (channel) trade. 
+        "Funny Nation" is a money-centric "Metaverse" within a Discord server. It is a Discord bot. There are games, activities, visual marriage, and virtual estate (channel) trade. 
     </p>
     <p>
         Anyone inside the Discord server could earn money via playing games, participating in activities, sending messages, speaking in the voice channel, streaming, and using the money they earned to play games and buy virtual estates (channels).
