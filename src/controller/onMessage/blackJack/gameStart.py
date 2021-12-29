@@ -13,7 +13,7 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 async def blackJackGameStart(table: BlackJackTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
     table.gameStart()

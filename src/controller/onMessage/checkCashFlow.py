@@ -13,7 +13,7 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 
 async def checkCashFlow(self: Client, message: Message, db: Connection):
@@ -21,16 +21,14 @@ async def checkCashFlow(self: Client, message: Message, db: Connection):
     messageSendBack: str = ''
     if cashFlowData is None:
         logger.error(f"User {message.author.id} check cash flow failed")
-        systemError = str(languageConfig['error']["dbError"])
-        messageSendBack: str = systemError
+        messageSendBack: str = str(languageConfig['error']["dbError"])
     else:
-        recentRecord=str(languageConfig["cashFlow"]["recentRecord"])
+        recentRecord = str(languageConfig["cashFlow"]["recentRecord"])
         messageSendBack += recentRecord+'\n'
         for cashFlow in cashFlowData:
-            cashD=str(languageConfig["cashFlow"]["cashD"])
-            cashMsg=cashD.replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")
-            cashMsg=cashMsg.replace("?@amount1", f" {cashFlow[3]} ")
-            cashMsg=cashMsg.replace("?@amount2", f" {cashFlow[2] / 100}")
+            cashMsg = str(languageConfig["cashFlow"]["lineDisplayFormat"]).replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")\
+                .replace("?@amount1", f" {cashFlow[3]} ")\
+                .replace("?@amount2", f" {cashFlow[2] / 100}")
             messageSendBack += cashMsg+"\n---------------------\n"
 
     await message.channel.send(messageSendBack)
@@ -52,10 +50,10 @@ async def checkCashFlowWithFilter(self: Client, message: Message, db: Connection
             recordFound = str(languageConfig["cashFlow"]["recordFound"])
             messageSendBack += recordFound+'\n'
             for cashFlow in cashFlowData:
-                cashD = str(languageConfig["cashFlow"]["cashD"])
-                cashMsg = cashD.replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")
-                cashMsg = cashMsg.replace("?@amount1", f" {cashFlow[3]} ")
-                cashMsg = cashMsg.replace("?@amount2", f" {cashFlow[2] / 100}")
+                cashMsg = str(languageConfig["cashFlow"]["lineDisplayFormat"])\
+                    .replace("?@time", f" {cashFlow[4].strftime('%Y-%m-%d %H:%M:%S')} ")\
+                    .replace("?@amount1", f" {cashFlow[3]} ")\
+                    .replace("?@amount2", f" {cashFlow[2] / 100}")
                 messageSendBack += cashMsg + "\n---------------------\n"
 
     await message.channel.send(messageSendBack)

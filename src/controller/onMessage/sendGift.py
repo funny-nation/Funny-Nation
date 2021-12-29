@@ -36,32 +36,37 @@ async def sendGift(self: Client, db: Connection, message: Message, command: str,
     giftName: str = re.findall(f"^送 (.+) \<\@\![0-9]+\>$", command)[0]
     sender: Member = message.author
     if giftName not in giftConfig.sections():
-        notFoundGift=str(languageConfig["gift"]["notFoundGift"])
-        await message.channel.send(notFoundGift)
+        giftNotFound = str(languageConfig["gift"]["giftNotFound"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(giftNotFound)
         return
 
     if len(message.mentions) == 0:
-        notFoundUser = str(languageConfig["gift"]["notFoundUser"])
-        await message.channel.send(notFoundUser)
+        userNotFound = str(languageConfig["gift"]["userNotFound"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(userNotFound)
         return
 
     receiver: Member = message.mentions[0]
     if receiver.id == sender.id:
-        notSelf = str(languageConfig["gift"]["notSelf"])
+        notSelf = str(languageConfig["gift"]["notSelf"]) \
+            .replace('?@user', message.author.display_name)
         await message.channel.send(notSelf)
         return
 
     moneyAmount = int(giftConfig[giftName]['amount'])
     userInfo: tuple = getUser(db, sender.id)
     if userInfo[1] < moneyAmount:
-        moneyNotEnough = str(languageConfig["gift"]["moneyNotEnough"])
-        await message.channel.send(moneyNotEnough)
+        notEnoughMoney = str(languageConfig["gift"]["notEnoughMoney"]) \
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(notEnoughMoney)
         return
 
     receiverInfo = getUser(db, receiver.id)
     if receiverInfo is None:
-        notFoundReceiver = str(languageConfig["gift"]["notFoundReceiver"])
-        await message.channel.send(notFoundReceiver)
+        receiverNotFound = str(languageConfig["gift"]["receiverNotFound"]) \
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(receiverNotFound)
         return
 
     if not addMoneyToUser(db, userInfo[0], -moneyAmount):
@@ -79,11 +84,12 @@ async def sendGift(self: Client, db: Connection, message: Message, command: str,
     if not addNewCashFlow(db, receiver.id, moneyAmount, '收礼'):
         logger.error(f"Cannot create cash flow for user {receiver.id}")
 
-    giftMsgFormat = giftConfig[giftName]['msgFormat']
-    giftMsg = giftMsgFormat.replace("?@sender", f" <@{sender.id}> ")
-    giftMsg = giftMsg.replace("?@receiver", f" <@{receiver.id}> ")
-    sendS = str(languageConfig["gift"]["sendS"])
-    await message.channel.send(sendS)
+    giftMsg = giftConfig[giftName]['msgFormat']\
+        .replace("?@sender", f" <@{sender.id}> ")\
+        .replace("?@receiver", f" <@{receiver.id}> ")
+    sendSuccess = str(languageConfig["gift"]["sendSuccess"])\
+        .replace('?@user', message.author.display_name)
+    await message.channel.send(sendSuccess)
     await giftAnnouncementChannel.send(giftMsg)
 
     path = config['img']['giftImgPath']

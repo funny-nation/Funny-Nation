@@ -12,29 +12,30 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 
 async def joinGame(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     table: Table = casino.getTable(message.channel.id)
     playerID = message.author.id
     if table is None:
-        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
-        await message.channel.send(nobodyInGame)
+        noGameHere = str(languageConfig['game']["noGameHere"])\
+            .replace("?@user", f"{message.author.display_name}")
+        await message.channel.send(noGameHere)
         return
     if table.hasPlayer(playerID):
-        inGame = str(languageConfig['game']["inGame"])
-        await message.channel.send(inGame)
+        youHaveAlreadyJoin = str(languageConfig['game']["youHaveAlreadyJoin"])\
+            .replace("?@user", f"{message.author.display_name}")
+        await message.channel.send(youHaveAlreadyJoin)
         return
     if table.getPlayerCount() >= table.maxPlayer:
-        full = str(languageConfig['game']["full"])
-        fullMsg = full.replace("?@user", f" @{message.author.display_name} ")
-        await message.channel.send(fullMsg)
+        fullMSG = str(languageConfig['game']["full"]).replace("?@user", f"{message.author.display_name}")
+        await message.channel.send(fullMSG)
         return
     if table.gameStarted:
-        overTime1 = str(languageConfig['game']["overTime1"])
-        overMsg = overTime1.replace("?@user", f" @{message.author.display_name} ")
-        await message.channel.send(overMsg)
+        gameHasAlreadyStarted = str(languageConfig['game']["gameHasAlreadyStarted"])\
+            .replace("?@user", f"{message.author.display_name}")
+        await message.channel.send(gameHasAlreadyStarted)
         return
 
     if table.game == 'blackJack':
@@ -46,19 +47,19 @@ async def joinGame(self: Client, message: Message, db: Connection, casino: Casin
 
 async def joinGameByReaction(table: Table, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     if table.hasPlayer(user.id):
-        inGame = str(languageConfig['game']["inGame"])
-        inMsg = inGame.replace("?@user", f" @{user.display_name} ")
-        await channel.send(inMsg)
+        youHaveAlreadyJoin = str(languageConfig['game']["youHaveAlreadyJoin"])\
+            .replace("?@user", f"{user.display_name}")
+        await channel.send(youHaveAlreadyJoin)
         return
     if table.gameStarted:
-        overTime1 = str(languageConfig['game']["overTime1"])
-        overMsg = overTime1.replace("?@user", f" @{user.display_name} ")
-        await channel.send(overMsg)
+        gameHasAlreadyStarted = str(languageConfig['game']["gameHasAlreadyStarted"])\
+            .replace("?@user", f"{user.display_name}")
+        await channel.send(gameHasAlreadyStarted)
         return
     if table.getPlayerCount() >= table.maxPlayer:
-        full = str(languageConfig['game']["full"])
-        fullMsg = full.replace("?@user", f" @{user.display_name} ")
-        await channel.send(fullMsg)
+        gameIsFull = str(languageConfig['game']["gameIsFull"])\
+            .replace("?@user", f"{user.display_name}")
+        await channel.send(gameIsFull)
         return
     if table.game == 'blackJack':
         await joinBlackJack(table, user, channel, self, db, casino, gamePlayerWaiting)
