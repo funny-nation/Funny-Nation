@@ -198,7 +198,6 @@ class HoldemTable(Table):
                 previousPlayerMoneyInvested = self.players[sortedUserIDs[i]]['moneyInvested']
 
 
-
     def end(self):
         """
         get winners,
@@ -234,7 +233,5 @@ class HoldemTable(Table):
                 for winedPlayer in nutHandPlayerIDInPot:
                     addMoneyToResult(winedPlayer, moneyForEach)
         return result
-
-
 
 

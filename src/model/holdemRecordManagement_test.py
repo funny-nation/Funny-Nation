@@ -17,7 +17,6 @@ def test_():
     assert holdemRecord is not None
     assert holdemRecord[2] == 1
     assert holdemRecord[1] == 200
-
     assert removeHoldemRecord(db, 123, tableUUID) is True
     assert getHoldemRecord(db, 123, tableUUID) is None
     db.close()

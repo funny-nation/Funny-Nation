@@ -1,4 +1,6 @@
+
 from discord import Client, Message, Reaction, TextChannel, User, Member, Guild
+
 from pymysql import Connection
 
 from src.controller.onMessage.holdem.checkOutMoneyAndEnd import holdemCheckOutMoneyAndEnd
@@ -48,5 +50,4 @@ async def holdemEndGame(table: HoldemTable, channel: TextChannel, self: Client, 
 
     await channel.send(endingMSG)
     casino.deleteTable(channel.id)
-
     return

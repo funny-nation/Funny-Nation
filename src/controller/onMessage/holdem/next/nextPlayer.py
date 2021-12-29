@@ -31,7 +31,6 @@ async def holdemNextPlayer(table: HoldemTable, channel: TextChannel, self: Clien
     await sendPromptMsg(channel, nextPlayerID, table.mainPot, table.getAmountOfMoneyToCall(nextPlayerID), allInOnly)
 
 
-
 async def whenEveryoneAllIn(table: HoldemTable, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
 
     isEnd = await holdemNextRound(table, channel, self, db, casino, gamePlayerWaiting)

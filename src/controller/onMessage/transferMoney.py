@@ -1,49 +1,63 @@
 import re
 from loguru import logger
 from typing import List
-
+import configparser
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 
 from discord import Client, Message
 from pymysql import Connection
 
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read("Cconfig.ini")
+
 
 async def transferMoney(self: Client, db: Connection, message: Message, command: str):
+    systemError = str(languageConfig['error']["dbError"])
     moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
     if len(moneyStrings) == 0:
-        await message.channel.send("不知道你要转多少钱")
+        amountNotFound = str(languageConfig['transfer']["amountNotFound"])
+        await message.channel.send(amountNotFound)
         return
     if len(message.mentions) == 0:
-        await message.channel.send("不知道你要转给谁")
+        userNotFound = str(languageConfig['transfer']["userNotFound"])
+        await message.channel.send(userNotFound)
         return
 
     moneyTransfer: int = int(float(moneyStrings[0]) * 100)
     if moneyTransfer == 0:
-        await message.channel.send("真抠门")
+        amountLess = str(languageConfig['transfer']["amountLess"])
+        await message.channel.send(amountLess)
         return
     userInfo: tuple = getUser(db, message.author.id)
     if userInfo is None:
-        await message.channel.send("404")
+        await message.channel.send(systemError)
         logger.error(f"Get user info {message.author.id} failed")
         return
 
     if userInfo[1] < moneyTransfer:
-        await message.channel.send("你不够钱")
+        moneyNotEnough = str(languageConfig['transfer']["moneyNotEnough"])
+        await message.channel.send(moneyNotEnough)
         return
 
     if not addMoneyToUser(db, userInfo[0], -moneyTransfer):
         logger.error(f"Cannot reduce money from user {userInfo[0]}")
-        await message.channel.send("404")
+        await message.channel.send(systemError)
         return
     if not addNewCashFlow(db, userInfo[0], -moneyTransfer, '转账'):
         logger.error(f"Cannot create cash flow for user {userInfo[0]}")
     if not addMoneyToUser(db, message.mentions[0].id, moneyTransfer):
         logger.error(f"Cannot add money to user {message.mentions[0].id}")
-        await message.channel.send("404")
+        await message.channel.send(systemError)
         return
     if not addNewCashFlow(db, message.mentions[0].id, moneyTransfer, '转账'):
         logger.error(f"Cannot create cash flow for user {message.mentions[0].id}")
-    await message.channel.send(f"转账成功 <@{message.mentions[0].id}> 你收到了{moneyTransfer / 100} 元")
+    transferSuccess=str(languageConfig["transfer"]["transferSuccess"])
+    scsMsg=transferSuccess.replace("?@user", f" <@{message.mentions[0].id}> ")
+    scsMsg=scsMsg.replace("?@amount", f" {moneyTransfer / 100}")
+    await message.channel.send(scsMsg)
 
 

@@ -10,6 +10,10 @@ from src.model.userManagement import addMoneyToUser
 from src.model.blackJackRecordManagement import setGameStatus
 
 import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
 config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
@@ -20,11 +24,14 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         return
     table.gameOver = True
     databaseResult = True
-    await message.channel.send("牌局结束，正在判断结果")
+    endMsg = str(languageConfig["blackJack"]["end"])
+    await message.channel.send(endMsg)
     logger.info("Sending player cards and working on database")
     for eachPlayerID in table.players:
         eachPlayer = await self.fetch_user(eachPlayerID)
-        await message.channel.send(f"玩家{eachPlayer.display_name}的牌: ")
+        playerCard = str(languageConfig["blackJack"]["playerCard"])
+        playerCard = playerCard.replace("?@card", f" {eachPlayer.display_name} ")
+        await message.channel.send(playerCard)
         cards = table.viewCards(eachPlayerID)
         logger.info(f"Sending poker image for player {eachPlayerID}")
         await message.channel.send(file=getPokerImage(cards))
@@ -40,7 +47,10 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         databaseResult = databaseResult and addMoneyToUser(db, winner.id, totalMoney)
         databaseResult = databaseResult and addNewCashFlow(db, winner.id, totalMoney, config['cashFlowMessage']['blackJackWin'])
         databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
-        await message.channel.send(f"{winner.display_name}胜利，你将获得{totalMoney / 100}元")
+        playerWin = str(languageConfig["blackJack"]["playerWin"])
+        winMsg = playerWin.replace("?@winner", f" {winner.display_name} ")
+        winMsg = winMsg.replace("?@amount", f" {totalMoney / 100} ")
+        await message.channel.send(winMsg)
     else:
         prizeMoney = int(totalMoney / len(winnerList))
         winnersString = ''
@@ -50,9 +60,13 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
             databaseResult = databaseResult and addNewCashFlow(db, winner.id, prizeMoney, config['cashFlowMessage']['blackJackWin'])
             databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
             winnersString += str(winner.display_name) + '、'
-        await message.channel.send(f"{winnersString[:-1]} 玩家牌面一样，将会平分奖金，你们每人获得{prizeMoney / 100}元")
+        chop = str(languageConfig["blackJack"]["chop"])
+        chopMsg = chop.replace("?@user", f"{winnersString[:-1]}")
+        chopMsg = chopMsg.replace("?@amount", f"{prizeMoney / 100}")
+        await message.channel.send(chopMsg)
     if not databaseResult:
-        await message.channel.send(f"数据库炸了，你的奖金可能卡住了，请联系一下群主")
+        error = str(languageConfig["blackJack"]["error"])
+        await message.channel.send(error)
         logger.error(f"Database error while game {table.uuid} is ending")
     casino.deleteTable(message.channel.id)
     logger.info(f"Game ended in table {message.channel.id}")

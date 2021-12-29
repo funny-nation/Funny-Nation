@@ -11,20 +11,28 @@ import src.model.blackJackRecordManagement as bjRecords
 from src.model.cashFlowManagement import addNewCashFlow
 from loguru import logger
 import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
 config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
 
 async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: Table = casino.getTable(message.channel.id)
+    systemError = str(languageConfig['error']["dbError"])
     if table is None:
-        await message.channel.send("这里没人开游戏")
+        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
+        await message.channel.send(nobodyInGame)
         return
     if table.owner != message.author:
-        await message.channel.send("你不是桌主")
+        notOwner = str(languageConfig['game']["notOwner"])
+        await message.channel.send(notOwner)
         return
     if table.gameStarted:
-        await message.channel.send("游戏已经开了，掀个毛")
+        gameStart = str(languageConfig['game']["gameStart"])
+        await message.channel.send(gameStart)
         return
     databaseResult = True
     for playerID in table.players:
@@ -41,9 +49,10 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
 
     if not databaseResult:
         logger.error("Database Error occur while closing a black jack game")
-        await message.channel.send("数据库炸了，麻烦告诉一下群主")
+        systemError = str(languageConfig['error']["dbError"])
+        await message.channel.send(systemError)
 
     if removeWait:
         await gamePlayerWaiting.removeWait(message.author.id)
     casino.deleteTable(message.channel.id)
-    await message.channel.send("游戏关闭")
+    await message.channel.send(systemError)
