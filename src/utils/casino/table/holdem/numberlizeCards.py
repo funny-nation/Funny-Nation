@@ -1,5 +1,5 @@
 from typing import List
-
+import copy
 from src.utils.poker.Card import Card
 import src.utils.casino.table.holdem.checkHandValue as checkHandValue
 from src.utils.casino.table.holdem.sortCards import sortCards
@@ -61,23 +61,33 @@ def getCardValue(card: Card):
     return card.rank
 
 def getHandValue(cards: List[Card]) -> int:
-    if checkHandValue.isRoyalFlush(cards):
+
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isRoyalFlush(cardsForCheck):
         return 9
-    if checkHandValue.isStraightFlush(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isStraightFlush(cardsForCheck):
         return 8
-    if checkHandValue.isFourOfAKind(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isFourOfAKind(cardsForCheck):
         return 7
-    if checkHandValue.isFullHouse(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isFullHouse(cardsForCheck):
         return 6
-    if checkHandValue.isFlush(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isFlush(cardsForCheck):
         return 5
-    if checkHandValue.isStraight(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isStraight(cardsForCheck):
         return 4
-    if checkHandValue.isThreeOfAKind(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isThreeOfAKind(cardsForCheck):
         return 3
-    if checkHandValue.isTwoPair(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isTwoPair(cardsForCheck):
         return 2
-    if checkHandValue.isPair(cards):
+    cardsForCheck = copy.deepcopy(cards)
+    if checkHandValue.isPair(cardsForCheck):
         return 1
     return 0
 
