@@ -8,6 +8,8 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.model.userManagement import addMoneyToUser, getUser
 from src.model.cashFlowManagement import addNewCashFlow
+from src.model.holdemRecordManagement import newHoldemRecord
+
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 import configparser
 config = configparser.ConfigParser()
@@ -31,6 +33,7 @@ async def newHoldemGame(self: Client, message: Message, db: Connection, casino: 
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, owner.id, -table.ante)
     databaseResult = databaseResult and addNewCashFlow(db, owner.id, -table.ante, config['cashFlowMessage']['holdemAnte'])
+    databaseResult = databaseResult and newHoldemRecord(db, userInfo[0], table.ante, channel.id, table.uuid)
 
     if not databaseResult:
         await channel.send(f"炸了，麻烦通知一下群主")

@@ -8,3 +8,4 @@ schedule~=1.1.0
 APScheduler~=3.8.0
 
 yoyo-migrations==7.3.2
+pytest==6.2.5

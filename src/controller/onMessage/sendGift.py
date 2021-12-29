@@ -13,7 +13,6 @@ from src.model.cashFlowManagement import addNewCashFlow
 
 giftConfig = configparser.ConfigParser()
 giftConfig.read('giftConfig.ini', encoding='utf-8')
-
 languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
