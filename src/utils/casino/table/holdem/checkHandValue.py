@@ -27,14 +27,21 @@ def isStraightFlush(cards: List[Card]) -> bool:
     for card in cards:
         if card.rank == 1:
             card.rank = 14
+
+    def restoreRank():
+        for card in cards:
+            if card.rank == 14:
+                card.rank = 1
     previousCard = cards[0]
     for i in range(1, 5):
         if (previousCard.rank + 1) != cards[i].rank:
+            restoreRank()
             return False
         if previousCard.suit != cards[i].suit:
+            restoreRank()
             return False
         previousCard = cards[i]
-
+    restoreRank()
     return True
 
 def tokenizeTheCards(cards: List[Card]) -> List[List[Card]]:
@@ -109,9 +116,16 @@ def isStraight(cards: List[Card]) -> bool:
     for card in cards:
         if card.rank == 1:
             card.rank = 14
+
+    def restoreRank():
+        for card in cards:
+            if card.rank == 14:
+                card.rank = 1
     for i in range(1, 5):
         if (cards[i].rank - 1) != cards[i-1].rank:
+            restoreRank()
             return False
+    restoreRank()
     return True
 
 def isThreeOfAKind(cards: List[Card]) -> bool:

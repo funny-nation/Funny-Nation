@@ -62,32 +62,23 @@ def getCardValue(card: Card):
 
 def getHandValue(cards: List[Card]) -> int:
 
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isRoyalFlush(cardsForCheck):
+    if checkHandValue.isRoyalFlush(cards):
         return 9
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isStraightFlush(cardsForCheck):
+    if checkHandValue.isStraightFlush(cards):
         return 8
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isFourOfAKind(cardsForCheck):
+    if checkHandValue.isFourOfAKind(cards):
         return 7
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isFullHouse(cardsForCheck):
+    if checkHandValue.isFullHouse(cards):
         return 6
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isFlush(cardsForCheck):
+    if checkHandValue.isFlush(cards):
         return 5
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isStraight(cardsForCheck):
+    if checkHandValue.isStraight(cards):
         return 4
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isThreeOfAKind(cardsForCheck):
+    if checkHandValue.isThreeOfAKind(cards):
         return 3
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isTwoPair(cardsForCheck):
+    if checkHandValue.isTwoPair(cards):
         return 2
-    cardsForCheck = copy.deepcopy(cards)
-    if checkHandValue.isPair(cardsForCheck):
+    if checkHandValue.isPair(cards):
         return 1
     return 0
 
