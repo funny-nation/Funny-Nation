@@ -39,9 +39,6 @@ async def creategamePlayerWaiting(member: Member, message: Message, self: Client
 
     async def timeoutFun():
         dbTemp = makeDatabaseConnection()
-        timeOut = str(languageConfig["blackJack"]["timeOutForSeeTheCard"])\
-            .replace("?@user", f" {member.display_name} ")
-        await message.channel.send(timeOut)
         await blackJackStay(self, dbTemp, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
 

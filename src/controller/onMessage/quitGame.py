@@ -62,7 +62,7 @@ async def quitGameByReaction(table: Table, user: User, channel: TextChannel, sel
         return
 
     if table.owner == user:
-        youAreOwner = str(languageConfig['game']["youAreOwner"])\
+        youAreOwner = str(languageConfig['game']["notInGame"])\
             .replace("?@user", user.display_name)
         await channel.send(youAreOwner)
         return
