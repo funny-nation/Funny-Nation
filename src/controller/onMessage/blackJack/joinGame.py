@@ -22,19 +22,20 @@ config.read('config.ini', encoding='utf-8')
 async def joinBlackJack(table: BlackJackTable, player: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
     userInfo: tuple = getUser(db, player.id)
     if userInfo is None:
-        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])
-        moneyNotEnough = moneyNotEnough.replace("?@user", f" {player.display_name} ")
+        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])\
+            .replace("?@user", f" {player.display_name} ")
         await channel.send(moneyNotEnough)
         return
     if userInfo[1] < table.money:
-        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])
-        moneyNotEnough = moneyNotEnough.replace("?@user", f" {player.display_name} ")
+        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])\
+            .replace("?@user", f" {player.display_name} ")
         await channel.send(moneyNotEnough)
         return
 
     if userInfo[0] in casino.onlinePlayer:
-        alreadyIn = str(languageConfig["blackJack"]["alreadyIn"])
-        await channel.send(alreadyIn)
+        youWereInOtherGame = str(languageConfig["blackJack"]["youWereInOtherGame"])\
+            .replace("?@user", f" {player.display_name} ")
+        await channel.send(youWereInOtherGame)
         return
 
     databaseResult = True
@@ -54,8 +55,8 @@ async def joinBlackJack(table: BlackJackTable, player: Member, channel: TextChan
         logger.error("Cannot add player to table")
         return
     casino.onlinePlayer.append(userInfo[0])
-    playerIn = str(languageConfig["blackJack"]["playerIn"])
-    playerIn = playerIn.replace("?@user", f"{player.display_name}")
+    playerIn = str(languageConfig["blackJack"]["playerIn"])\
+        .replace("?@user", f"{player.display_name}")
     await channel.send(playerIn)
     logger.info(f"{player.id} join a blackJack table {channel.id}")
     if table.getPlayerCount() >= table.maxPlayer:

@@ -27,8 +27,8 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
             tableInviteMsg = tables[tableID].inviteMessage
             break
     if tableInviteMsg is None:
-        noMsg = str(languageConfig["blackJack"]["noMsg"])
-        await message.channel.send(noMsg)
+        notInGame = str(languageConfig["blackJack"]["notInGame"])
+        await message.channel.send(notInGame)
         return
     member = message.author
     table: BlackJackTable = casino.getTable(tableInviteMsg.channel.id)
@@ -36,9 +36,9 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
         return
     table.stay(playerID)
     tableChannel: TextChannel = tableInviteMsg.channel
-    startMsg = str(languageConfig["blackJack"]["StartMsg"])
-    startMsg1 = startMsg.replace("?@user", f" {member.display_name} ")
-    await tableChannel.send(startMsg1)
+    playerCouldShowTheCard = str(languageConfig["blackJack"]["playerCouldShowTheCard"])\
+        .replace("?@user", f" {member.display_name} ")
+    await tableChannel.send(playerCouldShowTheCard)
     logger.info(f"Player {playerID} stay in Black Jack")
     invite: Invite = await tableChannel.create_invite(max_age=60)
     await message.channel.send(invite.url)
@@ -51,20 +51,22 @@ async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Mes
 async def blackJackStay(self: Client, db: Connection, message: Message, casino: Casino, playerID: int, user: Member, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
-        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
-        await message.channel.send(nobodyInGame)
+        noGameHere = str(languageConfig['game']["noGameHere"])\
+            .replace("?@user", message.author.display_name)
+        await message.channel.send(noGameHere)
         return
     if not table.hasPlayer(playerID):
-        notInGame = str(languageConfig["game"]["notInGame"])
+        notInGame = str(languageConfig["game"]["notInGame"])\
+            .replace("?@user", message.author.display_name)
         await message.channel.send(notInGame)
         return
     if table.gameOver:
         return
     table.stay(playerID)
     logger.info(f"Player {playerID} stay in Black Jack")
-    startMsg = str(languageConfig["blackJack"]["startMsg"])
-    startMsg = startMsg.replace("?@user", f" {user.display_name} ")
-    await message.channel.send(startMsg)
+    playerCouldShowTheCard = str(languageConfig["blackJack"]["playerCouldShowTheCard"])\
+        .replace("?@user", f" {user.display_name} ")
+    await message.channel.send(playerCouldShowTheCard)
     if removeWait:
         await gamePlayerWaiting.removeWait(playerID)
     if table.isOver():

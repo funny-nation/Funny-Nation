@@ -12,25 +12,29 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 
 async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
-        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
-        await message.channel.send(nobodyInGame)
+        noGameHere = str(languageConfig['game']["noGameHere"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(noGameHere)
         return
     if table.getPlayerCount() == 1:
-        userNotEnough = str(languageConfig['game']["userNotEnough"])
-        await message.channel.send(userNotEnough)
+        playerNotEnough = str(languageConfig['game']["playerNotEnough"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(playerNotEnough)
         return
     if table.owner != message.author:
-        notOwner = str(languageConfig['game']["notOwner"])
+        notOwner = str(languageConfig['game']["notOwner"])\
+            .replace('?@user', message.author.display_name)
         await message.channel.send(notOwner)
         return
     if table.gameStarted:
-        gameStart = str(languageConfig['game']["gameStart"])
+        gameStart = str(languageConfig['game']["gameHasAlreadyStartedForClosingGame"])\
+            .replace('?@user', message.author.display_name)
         await message.channel.send(gameStart)
         return
 

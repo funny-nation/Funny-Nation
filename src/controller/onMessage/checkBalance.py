@@ -11,7 +11,7 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 async def checkBalance(message: Message, db: Connection):
     """
@@ -22,15 +22,13 @@ async def checkBalance(message: Message, db: Connection):
     """
     user: Member = message.author
     userInfo: tuple = getUser(db, user.id)
-    messageSendBack: str = ''
     if userInfo is None:
         logger.error(f"User {user.id} check balance failed")
-        systemError=str(languageConfig['error']["dbError"])
-        messageSendBack: str = systemError
+        messageSendBack: str = str(languageConfig['error']["dbError"])
     else:
-        displayFormat = str(languageConfig['balance']['displayFormat'])
-        moneyMsg = displayFormat.replace("?@user", f" @{user.display_name} ")
+        displayFormat: str = str(languageConfig['balance']['displayFormat'])
         displayMoney: float = userInfo[1] / 100
-        moneyMsg = moneyMsg.replace("?@displayMoney", f" {displayMoney} ")
-        messageSendBack: str = moneyMsg
+        messageSendBack = displayFormat\
+            .replace("?@user", f"{user.display_name}")\
+            .replace("?@displayMoney", f"{displayMoney}")
     await message.channel.send(messageSendBack)

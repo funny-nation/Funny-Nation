@@ -21,18 +21,20 @@ config.read('config.ini', encoding='utf-8')
 
 async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
     table: Table = casino.getTable(message.channel.id)
-    systemError = str(languageConfig['error']["dbError"])
     if table is None:
-        nobodyInGame = str(languageConfig['game']["nobodyInGame"])
-        await message.channel.send(nobodyInGame)
+        notInGame = str(languageConfig['game']['notInGame'])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(notInGame)
         return
     if table.owner != message.author:
-        notOwner = str(languageConfig['game']["notOwner"])
+        notOwner = str(languageConfig['game']['notOwner'])\
+            .replace('?@user', message.author.display_name)
         await message.channel.send(notOwner)
         return
     if table.gameStarted:
-        gameStart = str(languageConfig['game']["gameStart"])
-        await message.channel.send(gameStart)
+        gameHasAlreadyStarted = str(languageConfig['game']['gameHasAlreadyStartedForClosingGame'])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(gameHasAlreadyStarted)
         return
     databaseResult = True
     for playerID in table.players:
@@ -55,4 +57,6 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
     if removeWait:
         await gamePlayerWaiting.removeWait(message.author.id)
     casino.deleteTable(message.channel.id)
-    await message.channel.send(systemError)
+    gameClose = str(languageConfig['game']['gameClose'])\
+        .replace('?@user', message.author.display_name)
+    await message.channel.send(gameClose)

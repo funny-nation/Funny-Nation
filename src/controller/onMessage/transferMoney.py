@@ -12,24 +12,27 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 
 async def transferMoney(self: Client, db: Connection, message: Message, command: str):
     systemError = str(languageConfig['error']["dbError"])
     moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
     if len(moneyStrings) == 0:
-        amountNotFound = str(languageConfig['transfer']["amountNotFound"])
+        amountNotFound = str(languageConfig['transfer']["amountNotFound"])\
+            .replace('?@user', message.author.display_name)
         await message.channel.send(amountNotFound)
         return
     if len(message.mentions) == 0:
-        userNotFound = str(languageConfig['transfer']["userNotFound"])
+        userNotFound = str(languageConfig['transfer']["userNotFound"]) \
+            .replace('?@user', message.author.display_name)
         await message.channel.send(userNotFound)
         return
 
     moneyTransfer: int = int(float(moneyStrings[0]) * 100)
     if moneyTransfer == 0:
-        amountLess = str(languageConfig['transfer']["amountLess"])
+        amountLess = str(languageConfig['transfer']["amountLess"]) \
+            .replace('?@user', message.author.display_name)
         await message.channel.send(amountLess)
         return
     userInfo: tuple = getUser(db, message.author.id)
@@ -39,8 +42,16 @@ async def transferMoney(self: Client, db: Connection, message: Message, command:
         return
 
     if userInfo[1] < moneyTransfer:
-        moneyNotEnough = str(languageConfig['transfer']["moneyNotEnough"])
+        moneyNotEnough = str(languageConfig['transfer']["moneyNotEnough"]) \
+            .replace('?@user', message.author.display_name)
         await message.channel.send(moneyNotEnough)
+        return
+
+    receiverInfo: tuple = getUser(db, message.mentions[0].id)
+    if receiverInfo is None:
+        receiverNotFound = str(languageConfig['transfer']["receiverNotFound"]) \
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(receiverNotFound)
         return
 
     if not addMoneyToUser(db, userInfo[0], -moneyTransfer):
@@ -55,9 +66,10 @@ async def transferMoney(self: Client, db: Connection, message: Message, command:
         return
     if not addNewCashFlow(db, message.mentions[0].id, moneyTransfer, '转账'):
         logger.error(f"Cannot create cash flow for user {message.mentions[0].id}")
-    transferSuccess=str(languageConfig["transfer"]["transferSuccess"])
-    scsMsg=transferSuccess.replace("?@user", f" <@{message.mentions[0].id}> ")
-    scsMsg=scsMsg.replace("?@amount", f" {moneyTransfer / 100}")
-    await message.channel.send(scsMsg)
+
+    transferSuccess = str(languageConfig["transfer"]["transferSuccess"])\
+        .replace("?@receiver", f" <@{message.mentions[0].id}>")\
+        .replace("?@amount", f"{moneyTransfer / 100}")
+    await message.channel.send(transferSuccess)
 
 

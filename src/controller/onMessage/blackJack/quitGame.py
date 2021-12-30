@@ -22,12 +22,11 @@ async def quitBlackJack(table: BlackJackTable, player: User, channel: TextChanne
     databaseResult = databaseResult and setGameStatus(db, player.id, table.uuid, 4)
 
     if not databaseResult:
-        error = str(languageConfig["blackJack"]["error1"])
-        errorMsg = error.replace("?@user", f" <@{player.display_name}> ")
+        errorMsg = str(languageConfig["error"]["dbError"])
         await channel.send(errorMsg)
         logger.error(f"Database error while player {player.id} quiting the game")
     table.dropPlayer(player.id)
     logger.info(f"Player {player.id} quit the table")
-    gameQuit = str(languageConfig["blackJack"]["gameQuit"])
-    quitMsg = gameQuit.replace("?@user", f" <@{player.display_name}> ")
-    await channel.send(quitMsg)
+    gameQuit = str(languageConfig["blackJack"]["gameQuit"])\
+        .replace("?@user", f"{player.display_name}")
+    await channel.send(gameQuit)

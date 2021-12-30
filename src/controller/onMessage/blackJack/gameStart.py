@@ -1,4 +1,4 @@
-from discord import User, DMChannel, Client, Message, Member, Guild
+from discord import DMChannel, Client, Message, Member, Guild
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
@@ -13,7 +13,7 @@ languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini', encoding='utf-8')
 
 config = configparser.ConfigParser()
-config.read("Cconfig.ini")
+config.read("config.ini")
 
 async def blackJackGameStart(table: BlackJackTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):
     table.gameStart()
@@ -25,8 +25,8 @@ async def blackJackGameStart(table: BlackJackTable, message: Message, self: Clie
         playerListStr += str(userID) + ", "
         member: Member = await myGuild.fetch_member(userID)
         dmChannel: DMChannel = await member.create_dm()
-        ownCard = str(languageConfig["blackJack"]["ownCard"])
-        await dmChannel.send(ownCard)
+        thisIsyourCards = str(languageConfig["blackJack"]["thisIsyourCards"])
+        await dmChannel.send(thisIsyourCards)
         cards = table.viewCards(userID)
         await dmChannel.send(file=getPokerImage(cards))
         needCard = str(languageConfig["blackJack"]["needCard"])
@@ -39,15 +39,12 @@ async def creategamePlayerWaiting(member: Member, message: Message, self: Client
 
     async def timeoutFun():
         dbTemp = makeDatabaseConnection()
-        timeOut = str(languageConfig["blackJack"]["timeOut"])
-        timeOut = timeOut.replace("?@user", f" {member.display_name} ")
-        await message.channel.send(timeOut)
         await blackJackStay(self, dbTemp, message, casino, member.id, member, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
 
     async def warningFun():
-        warning = str(languageConfig["blackJack"]["warning"])
-        warning = warning.replace("?@user", f" {member.display_name} ")
+        warning = str(languageConfig["blackJack"]["timeOutWarning"])\
+            .replace("?@user", f" {member.display_name} ")
         await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(member.id, timeoutFun, warningFun)
