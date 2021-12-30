@@ -52,6 +52,7 @@ async def transferMoney(self: Client, db: Connection, message: Message, command:
         receiverNotFound = str(languageConfig['transfer']["receiverNotFound"]) \
             .replace('?@user', message.author.display_name)
         await message.channel.send(receiverNotFound)
+        return
 
     if not addMoneyToUser(db, userInfo[0], -moneyTransfer):
         logger.error(f"Cannot reduce money from user {userInfo[0]}")

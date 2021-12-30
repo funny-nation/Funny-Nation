@@ -11,8 +11,6 @@ from src.controller.onMessage.transferMoney import transferMoney
 from src.controller.onMessage.sendGift import sendGift
 
 from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
-from src.controller.onMessage.blackJack.hit import blackJackHit
-from src.controller.onMessage.blackJack.stay import blackJackStay
 from src.controller.onMessage.startGame import gameStartByTableOwner
 from src.controller.onMessage.pauseGame import pauseGame
 
@@ -73,13 +71,6 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
         await newBlackJackGame(self, message, db, command, casino, gamePlayerWaiting)
-        return
-    if re.match(f"^要牌$", command):
-        await blackJackHit(self, message, casino, gamePlayerWaiting)
-        return
-    if re.match(f"^开牌$", command):
-        member = message.author
-        await blackJackStay(self, db, message, casino, member.id, member, gamePlayerWaiting)
         return
 
     if re.match(f"^开局德州扑克$", command):

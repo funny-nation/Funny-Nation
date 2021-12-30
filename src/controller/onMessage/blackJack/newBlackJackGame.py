@@ -26,34 +26,42 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     money: int = int(float(moneyStrings[0]) * 100)
     playerInfo: tuple = getUser(db, message.author.id)
     if playerInfo[1] < money:
-        moneyNotEnough = str(languageConfig["transfer"]["moneyNotEnough"])
+        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])\
+            .replace('?@user', playerInfo[0])
         await message.channel.send(moneyNotEnough)
         return
+
     if playerInfo[0] in casino.onlinePlayer:
-        inGame = str(languageConfig["blackJack"]["inGame"])
-        await message.channel.send(inGame)
+        youWereInOtherGame = str(languageConfig["blackJack"]["youWereInOtherGame"])\
+            .replace('?@user', playerInfo[0])
+        await message.channel.send(youWereInOtherGame)
         return
 
     if not casino.createBlackJackTableByID(message.channel.id, money, message):
-        chanelOwn = str(languageConfig["blackJack"]["chanelOwn"])
-        await message.channel.send(chanelOwn)
+        channelAlreadyInUse = str(languageConfig["blackJack"]["channelAlreadyInUse"])\
+            .replace('?@user', playerInfo[0])
+        await message.channel.send(channelAlreadyInUse)
         return
+
     table: Table = casino.getTable(message.channel.id)
     databaseResult = True
     databaseResult = databaseResult and bjRecords.newBlackJackRecord(db, playerInfo[0], money, message.channel.id, table.uuid)
     databaseResult = databaseResult and addMoneyToUser(db, playerInfo[0], -money)
     databaseResult = databaseResult and cashFlow.addNewCashFlow(db, playerInfo[0], -money, config['cashFlowMessage']['blackJackSpend'])
+
     if not databaseResult:
         errorMsg = str(languageConfig["error"]["dbError"])
         await message.channel.send(errorMsg)
         logger.error("Database error while someone create a new black jack table")
         casino.deleteTable(message.channel.id)
         return
+
+
     casino.onlinePlayer.append(playerInfo[0])
     table.addPlayer(message.author.id)
 
-    gameBulid = str(languageConfig["blackJack"]["gameBuild"])
-    gameBulidMsg = gameBulid.replace("?@amount", f"{money / 100}")
+    gameBulidMsg = str(languageConfig["blackJack"]["gameHasCreated"])\
+        .replace("?@amount", f"{money / 100}")
 
     await message.add_reaction('\N{White Heavy Check Mark}')
     await message.channel.send(gameBulidMsg)
@@ -62,11 +70,11 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
         dbTemp = makeDatabaseConnection()
         await pauseGame(self, message, casino, dbTemp, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
-        timeOut = str(languageConfig["blackJack"]["timeOut1"])
+        timeOut = str(languageConfig["blackJack"]["timeOutForClosingGame"])
         await message.channel.send(timeOut)
 
     async def timeWarning():
-        warning = str(languageConfig["blackJack"]["warning1"])
+        warning = str(languageConfig["blackJack"]["timeOutWarningForClosingGame"])
         await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(playerInfo[0], timeOutFunction, timeWarning, 100)

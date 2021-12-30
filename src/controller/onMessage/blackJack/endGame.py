@@ -24,13 +24,13 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         return
     table.gameOver = True
     databaseResult = True
-    endMsg = str(languageConfig["blackJack"]["end"])
+    endMsg = str(languageConfig["blackJack"]["endTitle"])
     await message.channel.send(endMsg)
     logger.info("Sending player cards and working on database")
     for eachPlayerID in table.players:
         eachPlayer = await self.fetch_user(eachPlayerID)
-        playerCard = str(languageConfig["blackJack"]["playerCard"])
-        playerCard = playerCard.replace("?@card", f" {eachPlayer.display_name} ")
+        playerCard = str(languageConfig["blackJack"]["playerCard"])\
+            .replace("?@card", f" {eachPlayer.display_name} ")
         await message.channel.send(playerCard)
         cards = table.viewCards(eachPlayerID)
         logger.info(f"Sending poker image for player {eachPlayerID}")
@@ -47,10 +47,10 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         databaseResult = databaseResult and addMoneyToUser(db, winner.id, totalMoney)
         databaseResult = databaseResult and addNewCashFlow(db, winner.id, totalMoney, config['cashFlowMessage']['blackJackWin'])
         databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
-        playerWin = str(languageConfig["blackJack"]["playerWin"])
-        winMsg = playerWin.replace("?@winner", f" {winner.display_name} ")
-        winMsg = winMsg.replace("?@amount", f" {totalMoney / 100} ")
-        await message.channel.send(winMsg)
+        playerWin = str(languageConfig["blackJack"]["playerWin"])\
+            .replace("?@winner", f" {winner.display_name} ")\
+            .replace("?@amount", f" {totalMoney / 100} ")
+        await message.channel.send(playerWin)
     else:
         prizeMoney = int(totalMoney / len(winnerList))
         winnersString = ''
@@ -60,9 +60,9 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
             databaseResult = databaseResult and addNewCashFlow(db, winner.id, prizeMoney, config['cashFlowMessage']['blackJackWin'])
             databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
             winnersString += str(winner.display_name) + '、'
-        chop = str(languageConfig["blackJack"]["chop"])
-        chopMsg = chop.replace("?@user", f"{winnersString[:-1]}")
-        chopMsg = chopMsg.replace("?@amount", f"{prizeMoney / 100}")
+        chopMsg = str(languageConfig["blackJack"]["chop"])\
+            .replace("?@user", f"{winnersString[:-1]}")\
+            .replace("?@amount", f"{prizeMoney / 100}")
         await message.channel.send(chopMsg)
     if not databaseResult:
         error = str(languageConfig["blackJack"]["error"])
