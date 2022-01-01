@@ -20,13 +20,15 @@ from src.utils.poker.pokerImage import getPokerImage
 from src.utils.poker.Card import Card
 from src.utils.poker.Poker import Poker
 import src.utils.fetchChannel as fetchChannel
+from src.utils.getVipRoles import getVipRoles
 
 class Robot(discord.Client):
 
     def __init__(self, **options):
         super().__init__(**options)
         self.boostedRole = None
-        self.giftAnnouncementChannel = None
+        self.announcementChannel = None
+        self.vipRoles = {}
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.runPerSecond.start()
@@ -35,7 +37,8 @@ class Robot(discord.Client):
         logger.info('Logged in as ' + self.user.name)
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
-        self.giftAnnouncementChannel = fetchChannel.fetchGiftAnnouncementChannel(myGuild)
+        self.announcementChannel = fetchChannel.fetchAnnouncementChannel(myGuild)
+        self.vipRoles = await getVipRoles(myGuild)
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()
@@ -48,7 +51,7 @@ class Robot(discord.Client):
         if message.channel != message.author.dm_channel:
             isBooster: bool = checkIfMessagerIsBooster(self.boostedRole, message.author)
             whenSomeoneSendMessage(message.author.id, isBooster, db)
-            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.giftAnnouncementChannel)
+            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.announcementChannel, self.vipRoles)
         else:
             await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()

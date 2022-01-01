@@ -1,5 +1,6 @@
 import configparser
 
 config = configparser.ConfigParser()
-config.read('vipTags.inid')
+config.read('vipTags.ini')
 print(config.sections())
+

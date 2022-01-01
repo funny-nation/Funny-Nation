@@ -68,7 +68,8 @@ def getUser(db: Connection, userID: int) -> tuple or None:
 def editUser(db: Connection, userID: int, *,
              money: int = None,
              lastCheckIn: str = None,
-            lastEarnFromMessage: str = None
+             lastEarnFromMessage: str = None,
+             vipLevel: int = None
              ) -> bool:
     """
     Edit user information
@@ -88,6 +89,8 @@ def editUser(db: Connection, userID: int, *,
         sqlFragment += f" `money` = '{money}',"
     if lastCheckIn is not None:
         sqlFragment += f" `lastCheckIn` = '{lastCheckIn}',"
+    if vipLevel is not None:
+        sqlFragment += f" `vipLevel` = {vipLevel},"
     try:
         cursor: Cursor = db.cursor()
         sql: str = f"UPDATE `user` SET{sqlFragment[:-1]} WHERE `user`.`userID` = '{userID}';"
