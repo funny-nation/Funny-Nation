@@ -6,7 +6,13 @@ vipTagsConfig.read('vipTags.ini')
 languageConfig = configparser.ConfigParser()
 languageConfig.read('Language.ini')
 
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> vip-feature
 majorConfig = configparser.ConfigParser()
 majorConfig.read('config.ini')
 
