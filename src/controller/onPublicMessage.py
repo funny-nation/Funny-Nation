@@ -9,6 +9,7 @@ from src.controller.onMessage.holdem.newGame import newHoldemGame
 from src.controller.onMessage.holdem.rise import holdemRise
 from src.controller.onMessage.transferMoney import transferMoney
 from src.controller.onMessage.sendGift import sendGift
+from src.controller.onMessage.buyVIP import buyVIP
 
 from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.onMessage.startGame import gameStartByTableOwner
@@ -30,7 +31,7 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, giftAnnouncementChannel: TextChannel):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
@@ -66,7 +67,11 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await liveGift(self, db, message, command)
         return
     if re.match(f"^送 .+ \<\@\![0-9]+\>$", command):
-        await sendGift(self, db, message, command, giftAnnouncementChannel)
+        await sendGift(self, db, message, command, announcementChannel)
+        return
+
+    if re.match(f"^买vip$", command):
+        await buyVIP(self, message, db, announcementChannel, vipRoles)
         return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
