@@ -21,6 +21,7 @@ from src.utils.poker.Card import Card
 from src.utils.poker.Poker import Poker
 import src.utils.fetchChannel as fetchChannel
 from src.utils.getVipRoles import getVipRoles
+from src.checkPermissions import checkPermissions
 
 class Robot(discord.Client):
 
@@ -37,8 +38,15 @@ class Robot(discord.Client):
         logger.info('Logged in as ' + self.user.name)
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
+        logger.info('Got boosted role')
         self.announcementChannel = fetchChannel.fetchAnnouncementChannel(myGuild)
+        logger.info('found announcement channel')
         self.vipRoles = await getVipRoles(myGuild)
+        logger.info('Located VIP roles')
+        if not await checkPermissions(self):
+            logger.error('Permission check failed')
+            exit(1)
+        logger.info("Permission checked")
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()

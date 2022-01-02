@@ -1,4 +1,4 @@
-from discord import Client, Message, TextChannel, Member, Guild
+from discord import Client, Message, TextChannel, Member, Guild, File
 from pymysql import Connection
 
 from src.readConfig import getLanguageConfig, getVipTagsConfig, majorConfig
@@ -48,14 +48,24 @@ async def buyVIP(self: Client, message: Message, db: Connection, annocementChann
         return
 
     vipRole = vipRoles[nextVIPLevel]
-    await user.add_roles(vipRole)
+    try:
+        await user.add_roles(vipRole)
+    except Exception as err:
+        msg = str(languageConfig['vip']['askAdminForHelp'])\
+            .replace('?@user', user.display_name)
+        await message.channel.send(msg)
 
     annocementMsg = languageConfig['vip']['announcement']\
-        .replace('?@user', user.display_name)
+        .replace('?@user', user.display_name)\
+        .replace('?@levelName', vipDetails['name'])
     replyMsg = languageConfig['vip']['purchaseSuccess']\
         .replace('?@user', user.display_name)
 
+
     await annocementChannel.send(annocementMsg)
     await message.channel.send(replyMsg)
+
+    if vipConfig.has_option(str(nextVIPLevel), 'img'):
+        await annocementChannel.send(file=File(vipDetails['img']))
 
 
