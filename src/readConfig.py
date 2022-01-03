@@ -22,3 +22,4 @@ def getLanguageConfig():
 
 def getMajorConfig():
     return majorConfig
+

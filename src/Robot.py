@@ -22,6 +22,7 @@ from src.utils.poker.Poker import Poker
 import src.utils.fetchChannel as fetchChannel
 from src.utils.getVipRoles import getVipRoles
 from src.checkPermissions import checkPermissions
+from src.readAdminList import getAdmin
 
 class Robot(discord.Client):
 
@@ -33,6 +34,7 @@ class Robot(discord.Client):
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.runPerSecond.start()
+        self.admin = []
 
     async def on_ready(self):
         logger.info('Logged in as ' + self.user.name)
@@ -47,6 +49,7 @@ class Robot(discord.Client):
             logger.error('Permission check failed')
             exit(1)
         logger.info("Permission checked")
+        self.admin = await getAdmin(self)
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()
@@ -59,7 +62,7 @@ class Robot(discord.Client):
         if message.channel != message.author.dm_channel:
             isBooster: bool = checkIfMessagerIsBooster(self.boostedRole, message.author)
             whenSomeoneSendMessage(message.author.id, isBooster, db)
-            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.announcementChannel, self.vipRoles)
+            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.announcementChannel, self.vipRoles, self.admin)
         else:
             await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()

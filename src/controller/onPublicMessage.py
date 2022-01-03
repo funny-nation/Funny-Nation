@@ -31,7 +31,7 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict, admin: list):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
@@ -61,6 +61,9 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await checkCashFlowWithFilter(self, message, db, command)
         return
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+        await transferMoney(self, db, message, command)
+        return
+    if re.match(f"^管理员 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
