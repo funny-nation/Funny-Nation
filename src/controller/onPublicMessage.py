@@ -20,6 +20,7 @@ from src.controller.onMessage.joinGame import joinGame
 from src.controller.onMessage.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.onMessage.addMoneyAdmin import addMoneyAdmin
+import src.Robot
 
 from discord import Client, Message, TextChannel
 from pymysql import Connection
