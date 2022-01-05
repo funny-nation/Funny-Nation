@@ -19,6 +19,7 @@ from src.controller.onMessage.liveGift import liveGift
 from src.controller.onMessage.joinGame import joinGame
 from src.controller.onMessage.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.controller.onMessage.addMoneyAdmin import addMoneyAdmin
 
 from discord import Client, Message, TextChannel
 from pymysql import Connection
@@ -63,8 +64,8 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)
         return
-    if re.match(f"^管理员 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
-        await transferMoney(self, db, message, command)
+    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+        await addMoneyAdmin(self, db, message, command, admin)
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
