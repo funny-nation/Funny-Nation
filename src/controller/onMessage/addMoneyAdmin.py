@@ -8,11 +8,11 @@ from src.Robot import Robot
 from discord import Client, Message
 from pymysql import Connection
 
-async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, Robot : Robot):
+async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, admin: List):
     adminString = re.findall(f"^管理员加钱 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
     moneyTransfer: int = int(float(adminString[0]) * 100)
     author = message.author.id
-    if author in Robot.admin:
+    if author in admin:
         if not addMoneyToUser(db, message.mentions[0].id, moneyTransfer):
             logger.error(f"Cannot add money to user {message.mentions[0].id}")
             await message.channel.send("error")
