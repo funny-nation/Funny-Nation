@@ -7,7 +7,7 @@ from typing import List, Any
 
 async def getAdmin(self: Client) -> List[List[Any]]:
     admins = []
-    with open("admininList.txt", "r") as fileA:
+    with open("adminList.txt", "r") as fileA:
         for line in fileA:
-            admins.append(list(line.strip()))
+            admins.append(list(line.strip("\n").split(".")))
     return admins

@@ -4,7 +4,6 @@ from typing import List
 import configparser
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
-from src.Robot import Robot
 from discord import Client, Message
 from pymysql import Connection
 

@@ -50,8 +50,8 @@ class Robot(discord.Client):
             exit(1)
         logger.info("Permission checked")
         self.admin = await getAdmin(self)
-        if myGuild.id not in self.admin:
-            logger.error("not admin")
+        logger.info("admin list get")
+        logger.info(self.admin)
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()
