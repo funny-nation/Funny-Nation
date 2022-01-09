@@ -4,7 +4,6 @@ from src.model.userManagement import getUser
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-from src.controller.onMessage.blackJack.stay import blackJackStay
 from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection

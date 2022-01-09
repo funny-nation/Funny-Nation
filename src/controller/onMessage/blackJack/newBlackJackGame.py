@@ -14,6 +14,9 @@ import src.model.cashFlowManagement as cashFlow
 from src.utils.casino.Casino import Casino
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 import configparser
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
 config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
@@ -23,39 +26,56 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     money: int = int(float(moneyStrings[0]) * 100)
     playerInfo: tuple = getUser(db, message.author.id)
     if playerInfo[1] < money:
-        await message.channel.send("你不够钱")
+        moneyNotEnough = str(languageConfig["blackJack"]["moneyNotEnough"])\
+            .replace('?@user', playerInfo[0])
+        await message.channel.send(moneyNotEnough)
         return
+
     if playerInfo[0] in casino.onlinePlayer:
-        await message.channel.send("你已经在一局游戏了")
+        youWereInOtherGame = str(languageConfig["blackJack"]["youWereInOtherGame"])\
+            .replace('?@user', playerInfo[0])
+        await message.channel.send(youWereInOtherGame)
         return
 
     if not casino.createBlackJackTableByID(message.channel.id, money, message):
-        await message.channel.send("这个频道有人用了，你换一个")
+        channelAlreadyInUse = str(languageConfig["blackJack"]["channelAlreadyInUse"])\
+            .replace('?@user', playerInfo[0])
+        await message.channel.send(channelAlreadyInUse)
         return
+
     table: Table = casino.getTable(message.channel.id)
     databaseResult = True
     databaseResult = databaseResult and bjRecords.newBlackJackRecord(db, playerInfo[0], money, message.channel.id, table.uuid)
     databaseResult = databaseResult and addMoneyToUser(db, playerInfo[0], -money)
     databaseResult = databaseResult and cashFlow.addNewCashFlow(db, playerInfo[0], -money, config['cashFlowMessage']['blackJackSpend'])
+
     if not databaseResult:
-        await message.channel.send("数据库炸了，建议通知一下群主")
+        errorMsg = str(languageConfig["error"]["dbError"])
+        await message.channel.send(errorMsg)
         logger.error("Database error while someone create a new black jack table")
         casino.deleteTable(message.channel.id)
         return
+
+
     casino.onlinePlayer.append(playerInfo[0])
     table.addPlayer(message.author.id)
 
+    gameBulidMsg = str(languageConfig["blackJack"]["gameHasCreated"])\
+        .replace("?@amount", f"{money / 100}")
+
     await message.add_reaction('\N{White Heavy Check Mark}')
-    await message.channel.send(f"21牌局已建立，金额为{money / 100}元，等待玩家加入，想加入的可以点击上面的✅图标")
+    await message.channel.send(gameBulidMsg)
 
     async def timeOutFunction():
         dbTemp = makeDatabaseConnection()
         await pauseGame(self, message, casino, dbTemp, gamePlayerWaiting, removeWait=False)
         dbTemp.close()
-        await message.channel.send("由于时间过长，牌局自动关闭")
+        timeOut = str(languageConfig["blackJack"]["timeOutForClosingGame"])
+        await message.channel.send(timeOut)
 
     async def timeWarning():
-        await message.channel.send("还有5秒钟牌局将会自动关闭")
+        warning = str(languageConfig["blackJack"]["timeOutWarningForClosingGame"])
+        await message.channel.send(warning)
 
     await gamePlayerWaiting.newWait(playerInfo[0], timeOutFunction, timeWarning, 100)
     logger.info(f"{message.author.id} create a blackJack Table in channel {message.channel.id}")

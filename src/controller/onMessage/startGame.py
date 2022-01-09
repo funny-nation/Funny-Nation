@@ -6,21 +6,36 @@ from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
 from src.controller.onMessage.holdem.gameStart import holdemGameStart
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from pymysql import Connection
+import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 
 async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):
     table: BlackJackTable = casino.getTable(message.channel.id)
     if table is None:
-        await message.channel.send("没人开游戏")
+        noGameHere = str(languageConfig['game']["noGameHere"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(noGameHere)
         return
     if table.getPlayerCount() == 1:
-        await message.channel.send("人数不够")
+        playerNotEnough = str(languageConfig['game']["playerNotEnough"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(playerNotEnough)
         return
     if table.owner != message.author:
-        await message.channel.send("你不是桌主")
+        notOwner = str(languageConfig['game']["notOwner"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(notOwner)
         return
     if table.gameStarted:
-        await message.channel.send("游戏已经开了")
+        gameStart = str(languageConfig['game']["gameHasAlreadyStartedForClosingGame"])\
+            .replace('?@user', message.author.display_name)
+        await message.channel.send(gameStart)
         return
 
     if table.game == 'blackJack':

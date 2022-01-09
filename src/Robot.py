@@ -20,22 +20,41 @@ from src.utils.poker.pokerImage import getPokerImage
 from src.utils.poker.Card import Card
 from src.utils.poker.Poker import Poker
 import src.utils.fetchChannel as fetchChannel
+from src.utils.getVipRoles import getVipRoles
+from src.checkPermissions import checkPermissions
+from src.readAdminList import getAdmin
 
 class Robot(discord.Client):
 
     def __init__(self, **options):
         super().__init__(**options)
         self.boostedRole = None
-        self.giftAnnouncementChannel = None
+        self.announcementChannel = None
+        self.vipRoles = {}
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.runPerSecond.start()
+        self.admin = []
 
     async def on_ready(self):
         logger.info('Logged in as ' + self.user.name)
         myGuild: Guild = self.guilds[0]
         self.boostedRole: Role = myGuild.premium_subscriber_role
-        self.giftAnnouncementChannel = fetchChannel.fetchGiftAnnouncementChannel(myGuild)
+        logger.info('Got boosted role')
+        self.announcementChannel = fetchChannel.fetchAnnouncementChannel(myGuild)
+        logger.info('found announcement channel')
+        self.vipRoles = await getVipRoles(myGuild)
+        logger.info('Located VIP roles')
+        if not await checkPermissions(self):
+            logger.error('Permission check failed')
+            exit(1)
+        logger.info("Permission checked")
+        self.admin = await getAdmin(self)
+        if len(self.admin) == 0:
+            logger.info("administrators list not found")
+        else:
+            logger.info("Fetched administrators list")
+
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()
@@ -48,7 +67,7 @@ class Robot(discord.Client):
         if message.channel != message.author.dm_channel:
             isBooster: bool = checkIfMessagerIsBooster(self.boostedRole, message.author)
             whenSomeoneSendMessage(message.author.id, isBooster, db)
-            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.giftAnnouncementChannel)
+            await onPublicMessage(self, message, db, self.casino, self.gamePlayerWaiting, self.announcementChannel, self.vipRoles, self.admin)
         else:
             await onPrivateMessage(self, message, db, self.casino, self.gamePlayerWaiting)
         db.close()

@@ -1,4 +1,6 @@
+
 from src.model.holdemRecordManagement import newHoldemRecord
+
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from discord import User, Client, TextChannel, Member

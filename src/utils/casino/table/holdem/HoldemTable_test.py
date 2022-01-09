@@ -433,6 +433,7 @@ def test_Story5():
 
 
     holdemTable.generateSidePots()
+    assert holdemTable.players[2]['cards'][1].rank == 1
     assert len(holdemTable.sidePots) == 4
     assert holdemTable.sidePots[0]['money'] == (1000 + holdemTable.ante) * 5
     assert len(holdemTable.sidePots[0]['players']) == 4
@@ -463,6 +464,9 @@ def test_Story5():
     assert len(result) == 2
     assert result[4] == (holdemTable.ante + 1000) * 5 + 400
     assert result[2] == 303700
+
+    assert holdemTable.players[2]['cards'][1].rank == 1
+
 
 
 

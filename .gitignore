@@ -150,3 +150,5 @@ log/
 
 # System
 .DS_Store
+
+try.py

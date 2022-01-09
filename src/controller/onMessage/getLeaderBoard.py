@@ -2,10 +2,14 @@ import sys
 import os
 
 from src.model.userManagement import getLeaderBoard
-
+import configparser
 from discord import Client, Message, Guild, Member
 from pymysql import Connection
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
 
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     """
@@ -18,19 +22,25 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     leaderBoardData: tuple = getLeaderBoard(db)
     myGuild: Guild = self.guilds[0]
     if leaderBoardData is None:
-        messageSendBack = '系统错误'
+        systemError = str(languageConfig['error']["dbError"])
+        messageSendBack: str = systemError
     else:
-        messageSendBack = "以下为本DC最有钱的大佬：\n"
+        title = str(languageConfig["leaderBoard"]["title"])
+        messageSendBack = title + "\n"
         for i in range(0, len(leaderBoardData)):
             try:
                 userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
             except Exception as err:
                 userObj = None
             if userObj is None:
-                userDisplayName = "不知道是谁"
+                userDisplayName = str(languageConfig['leaderBoard']["alternativeNameForNotFound"])
             else:
                 userDisplayName: str = userObj.display_name
             moneyDisplay: float = leaderBoardData[i][1] / 100
-            messageSendBack += f"{i + 1}： {userDisplayName} - {moneyDisplay}元\n"
+            msg = str(languageConfig['leaderBoard']["formatInLine"])\
+                .replace("?@user", f" {userDisplayName} ")\
+                .replace("?@amount", f"{moneyDisplay}")
+
+            messageSendBack += f"{i + 1}:" + msg + "\n"
 
     await message.channel.send(messageSendBack)

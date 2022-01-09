@@ -17,6 +17,7 @@ config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
 
+
 async def holdemAllIn(table: HoldemTable, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
 
     userInfo: tuple = getUser(db, user.id)

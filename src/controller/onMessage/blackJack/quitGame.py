@@ -7,6 +7,10 @@ from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.blackJackRecordManagement import setGameStatus
 import configparser
+
+languageConfig = configparser.ConfigParser()
+languageConfig.read('Language.ini', encoding='utf-8')
+
 config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
@@ -18,8 +22,11 @@ async def quitBlackJack(table: BlackJackTable, player: User, channel: TextChanne
     databaseResult = databaseResult and setGameStatus(db, player.id, table.uuid, 4)
 
     if not databaseResult:
-        await channel.send(f"{player.display_name}，由于数据库错误，你的钱好像卡在这里了，请私聊一下群主")
+        errorMsg = str(languageConfig["error"]["dbError"])
+        await channel.send(errorMsg)
         logger.error(f"Database error while player {player.id} quiting the game")
     table.dropPlayer(player.id)
     logger.info(f"Player {player.id} quit the table")
-    await channel.send(f"{player.display_name}退出了游戏")
+    gameQuit = str(languageConfig["blackJack"]["gameQuit"])\
+        .replace("?@user", f"{player.display_name}")
+    await channel.send(gameQuit)

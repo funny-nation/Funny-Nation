@@ -1,5 +1,5 @@
 from typing import List
-
+import copy
 from src.utils.poker.Card import Card
 import src.utils.casino.table.holdem.checkHandValue as checkHandValue
 from src.utils.casino.table.holdem.sortCards import sortCards
@@ -61,6 +61,7 @@ def getCardValue(card: Card):
     return card.rank
 
 def getHandValue(cards: List[Card]) -> int:
+
     if checkHandValue.isRoyalFlush(cards):
         return 9
     if checkHandValue.isStraightFlush(cards):
