@@ -50,8 +50,11 @@ class Robot(discord.Client):
             exit(1)
         logger.info("Permission checked")
         self.admin = await getAdmin(self)
-        logger.info("admin list get")
-        logger.info(self.admin)
+        if len(self.admin) == 0:
+            logger.info("administrators list not found")
+        else:
+            logger.info("Fetched administrators list")
+
         addMoneyToUserInVoiceChannels(self)
         printMemoryLog = PrintMemoryLogThread(self.casino, self.gamePlayerWaiting)
         printMemoryLog.start()
