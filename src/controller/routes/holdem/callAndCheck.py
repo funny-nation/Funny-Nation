@@ -1,7 +1,7 @@
 from discord import Client, TextChannel, Member
 from pymysql import Connection
 
-from src.controller.onMessage.holdem.next.nextPlayer import holdemNextPlayer
+from src.controller.routes.holdem.next.nextPlayer import holdemNextPlayer
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.holdemRecordManagement import addMoneyToHoldemRecord
 from src.model.userManagement import addMoneyToUser

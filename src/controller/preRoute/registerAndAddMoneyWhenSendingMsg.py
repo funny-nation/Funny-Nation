@@ -14,7 +14,7 @@ config = configparser.ConfigParser()
 config.read('config.ini', encoding='utf-8')
 
 
-def whenSomeoneSendMessage(userID: int, hasBoosted: bool, db: Connection) -> bool:
+def registerAndAddMoneyWhenSendingMsg(userID: int, hasBoosted: bool, db: Connection) -> bool:
     """
     Call if someone send message
     :param db: Database object
@@ -96,12 +96,12 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
 
 def test_whenSomeoneSendMessage():
     db = makeDatabaseConnection()
-    assert whenSomeoneSendMessage(123, False, db) is True
-    assert whenSomeoneSendMessage(123, False, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
     userinfo = getUser(db, 123)
     assert userinfo[1] == 0  # Check if send message within 1 minute
     assert editUser(db, 123, lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
-    assert whenSomeoneSendMessage(123, False, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
     userinfo = getUser(db, 123)
     moneyShouldBe = int(config['moneyEarning']['perMessage']) + int(config['moneyEarning']['perCheckIn'])
     assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day
@@ -114,12 +114,12 @@ def test_whenSomeoneSendMessage():
 
 def test_whenSomeoneSendMessageForBoostedUser():
     db = makeDatabaseConnection()
-    assert whenSomeoneSendMessage(123, True, db) is True
-    assert whenSomeoneSendMessage(123, True, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
     userinfo = getUser(db, 123)
     assert userinfo[1] == 0  # Check if send message within 1 minute
     assert editUser(db, 123, lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
-    assert whenSomeoneSendMessage(123, True, db) is True
+    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
     userinfo = getUser(db, 123)
     moneyShouldBe = int(config['moneyEarning']['perMessage']) + (int(config['moneyEarning']['perCheckIn']) * 3)
     assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day

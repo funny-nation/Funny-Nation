@@ -8,7 +8,7 @@ from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection
 from src.model.makeDatabaseConnection import makeDatabaseConnection
-from src.controller.onMessage.holdem.sendPromptMsg import sendPromptMsg
+from src.controller.routes.holdem.sendPromptMsg import sendPromptMsg
 
 
 async def holdemGameStart(table: HoldemTable, message: Message, self: Client, gamePlayerWaiting: GamePlayerWaiting, casino: Casino, db: Connection):

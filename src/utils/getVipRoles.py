@@ -1,5 +1,5 @@
 from discord import Guild, Role
-from src.readConfig import getVipTagsConfig
+from src.utils.readConfig import getVipTagsConfig
 from typing import List
 from loguru import logger
 

@@ -2,8 +2,8 @@ from discord import Client, Message, Reaction, TextChannel, User
 from pymysql import Connection
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
-from src.controller.onMessage.blackJack.quitGame import quitBlackJack
-from src.controller.onMessage.holdem.quitGame import quiteHoldemGame
+from src.controller.routes.blackJack.quitGame import quitBlackJack
+from src.controller.routes.holdem.quitGame import quiteHoldemGame
 import configparser
 
 languageConfig = configparser.ConfigParser()

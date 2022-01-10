@@ -1,6 +1,6 @@
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from discord import User, Client, TextChannel, Member
-from src.controller.onMessage.blackJack.gameStart import blackJackGameStart
+from src.controller.routes.blackJack.gameStart import blackJackGameStart
 from pymysql import Connection
 
 from loguru import logger

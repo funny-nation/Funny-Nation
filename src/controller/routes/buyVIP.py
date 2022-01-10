@@ -1,7 +1,7 @@
-from discord import Client, Message, TextChannel, Member, Guild, File
+from discord import Client, Message, TextChannel, Member, File
 from pymysql import Connection
 
-from src.readConfig import getLanguageConfig, getVipTagsConfig, majorConfig
+from src.utils.readConfig import getLanguageConfig, getVipTagsConfig, majorConfig
 
 from src.model.userManagement import getUser, editUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow

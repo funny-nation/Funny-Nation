@@ -1,10 +1,10 @@
 from discord import Client, TextChannel, Member
 from pymysql import Connection
 
-from src.controller.onMessage.holdem.checkOutMoneyAndEnd import holdemCheckOutMoneyAndEnd
-from src.controller.onMessage.holdem.endGame import holdemEndGame
-from src.controller.onMessage.holdem.next.nextPlayer import holdemNextPlayer
-from src.controller.onMessage.holdem.next.nextRound import holdemNextRound
+from src.controller.routes.holdem.checkOutMoneyAndEnd import holdemCheckOutMoneyAndEnd
+from src.controller.routes.holdem.endGame import holdemEndGame
+from src.controller.routes.holdem.next.nextPlayer import holdemNextPlayer
+from src.controller.routes.holdem.next.nextRound import holdemNextRound
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.holdemRecordManagement import addMoneyToHoldemRecord
 from src.utils.casino.Casino import Casino

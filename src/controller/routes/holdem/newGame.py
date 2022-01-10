@@ -2,7 +2,7 @@ from discord import Client, Message, Member, TextChannel
 from pymysql import Connection
 from loguru import logger
 
-from src.controller.onMessage.pauseGame import pauseGame
+from src.controller.routes.pauseGame import pauseGame
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting

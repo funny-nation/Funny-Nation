@@ -1,9 +1,6 @@
-from discord import Client, Guild, Member, Permissions
-from loguru import logger
-from discord import Guild
-import sys
-from typing import List, Any
-from src.readConfig import getAdminListConfig
+from discord import Client
+from typing import List
+from src.utils.readConfig import getAdminListConfig
 
 async def getAdmin(self: Client) -> List[int]:
     adminConfig = getAdminListConfig()
