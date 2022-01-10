@@ -9,7 +9,7 @@ from src.utils.casino import Casino
 from src.utils.poker.Card import Card
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-from src.controller.onMessage.blackJack.stay import blackJackStayWithPrivateMsg
+from src.controller.routes.blackJack.stay import blackJackStayWithPrivateMsg
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 
 import configparser

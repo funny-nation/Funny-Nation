@@ -2,21 +2,22 @@ from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, Tex
 from typing import Dict
 from pymysql import Connection
 
-from src.controller.onMessage.holdem.allIn import holdemAllIn
-from src.controller.onMessage.holdem.callAndCheck import holdemCallAndCheck
-from src.controller.onMessage.holdem.fold import fold
+from src.Storage import Storage
+from src.controller.routes.holdem.allIn import holdemAllIn
+from src.controller.routes.holdem.callAndCheck import holdemCallAndCheck
+from src.controller.routes.holdem.fold import fold
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.controller.onMessage.joinGame import joinGameByReaction
+from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 
-async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting):
+async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
 
     # For game
-    tables: Dict[int, Table] = casino.tables
+    tables: Dict[int, Table] = storage.casino.tables
     myGuild: Guild = self.guilds[0]
     user: Member = event.member
     channel: TextChannel = myGuild.get_channel(event.channel_id)
@@ -28,7 +29,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
         for tableID in tables:
             if tables[tableID].isInviteMessage(msg):
                 table: Table = tables[tableID]
-                await joinGameByReaction(table, user, channel, self, db, casino, gamePlayerWaiting)
+                await joinGameByReaction(table, user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
         return
 
@@ -37,7 +38,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
         tables: Dict[int, HoldemTable]
         for tableID in tables:
             if tables[tableID].whosTurn == user.id:
-                await fold(tables[tableID], user, channel, self, db, casino, gamePlayerWaiting)
+                await fold(tables[tableID], user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
         return
 
@@ -46,7 +47,7 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
         tables: Dict[int, HoldemTable]
         for tableID in tables:
             if tables[tableID].whosTurn == user.id:
-                await holdemAllIn(tables[tableID], user, channel, self, db, casino, gamePlayerWaiting)
+                await holdemAllIn(tables[tableID], user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
         return
 
@@ -55,6 +56,6 @@ async def onMessageReaction(self: Client, event: RawReactionActionEvent, casino:
         tables: Dict[int, HoldemTable]
         for tableID in tables:
             if tables[tableID].whosTurn == user.id:
-                await holdemCallAndCheck(tables[tableID], user, channel, self, db, casino, gamePlayerWaiting)
+                await holdemCallAndCheck(tables[tableID], user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
         return

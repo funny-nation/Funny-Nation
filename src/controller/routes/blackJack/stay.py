@@ -7,7 +7,7 @@ from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member, TextChannel, Invite
-from src.controller.onMessage.blackJack.endGame import blackJackEndGame
+from src.controller.routes.blackJack.endGame import blackJackEndGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 import configparser
 

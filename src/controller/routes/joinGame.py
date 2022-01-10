@@ -1,10 +1,10 @@
 from discord import Client, Message, Reaction, TextChannel, User, Member
 from pymysql import Connection
 
-from src.controller.onMessage.holdem.joinGame import joinHoldemGame
+from src.controller.routes.holdem.joinGame import joinHoldemGame
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
-from src.controller.onMessage.blackJack.joinGame import joinBlackJack
+from src.controller.routes.blackJack.joinGame import joinBlackJack
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 import configparser
 

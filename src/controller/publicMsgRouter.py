@@ -2,24 +2,25 @@ import os
 import configparser
 import re
 
-from src.controller.onMessage.checkBalance import checkBalance
-from src.controller.onMessage.getLeaderBoard import getLeaderBoardTop10
-from src.controller.onMessage.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
-from src.controller.onMessage.holdem.newGame import newHoldemGame
-from src.controller.onMessage.holdem.rise import holdemRise
-from src.controller.onMessage.transferMoney import transferMoney
-from src.controller.onMessage.sendGift import sendGift
-from src.controller.onMessage.buyVIP import buyVIP
+from src.Storage import Storage
+from src.controller.routes.checkBalance import checkBalance
+from src.controller.routes.getLeaderBoard import getLeaderBoardTop10
+from src.controller.routes.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
+from src.controller.routes.holdem.newGame import newHoldemGame
+from src.controller.routes.holdem.rise import holdemRise
+from src.controller.routes.transferMoney import transferMoney
+from src.controller.routes.sendGift import sendGift
+from src.controller.routes.buyVIP import buyVIP
 
-from src.controller.onMessage.blackJack.newBlackJackGame import newBlackJackGame
-from src.controller.onMessage.startGame import gameStartByTableOwner
-from src.controller.onMessage.pauseGame import pauseGame
+from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
+from src.controller.routes.startGame import gameStartByTableOwner
+from src.controller.routes.pauseGame import pauseGame
 
-from src.controller.onMessage.liveGift import liveGift
-from src.controller.onMessage.joinGame import joinGame
-from src.controller.onMessage.quitGame import quitGame
+from src.controller.routes.liveGift import liveGift
+from src.controller.routes.joinGame import joinGame
+from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-from src.controller.onMessage.addMoneyAdmin import addMoneyAdmin
+from src.controller.routes.addMoneyAdmin import addMoneyAdmin
 import src.Robot
 
 from discord import Client, Message, TextChannel
@@ -33,17 +34,17 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict, admin: list):
+async def publicMsgRouter(self: Client, message: Message, db: Connection, storage: Storage):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
-    :param gamePlayerWaiting:
-    :param casino:
+    :param storage:
     :param self: Discord's client object
     :param message: Message obj
     :param db: Database object
     :return: None
     """
+
     if message.content[:commandPrefixLen] != commandPrefix:
         return
     if len(message.content) > 100:
@@ -66,38 +67,38 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         await transferMoney(self, db, message, command)
         return
     if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
-        await addMoneyAdmin(self, db, message, command, admin)
+        await addMoneyAdmin(self, db, message, command, storage.admins)
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
         return
     if re.match(f"^送 .+ \<\@\![0-9]+\>$", command):
-        await sendGift(self, db, message, command, announcementChannel)
+        await sendGift(self, db, message, command, storage.announcementChannel)
         return
 
     if re.match(f"^买vip$", command):
-        await buyVIP(self, message, db, announcementChannel, vipRoles)
+        await buyVIP(self, message, db, storage.announcementChannel, storage.vipRoles)
         return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
-        await newBlackJackGame(self, message, db, command, casino, gamePlayerWaiting)
+        await newBlackJackGame(self, message, db, command, storage.casino, storage.gamePlayerWaiting)
         return
 
     if re.match(f"^开局德州扑克$", command):
-        await newHoldemGame(self, message, db, casino, gamePlayerWaiting)
+        await newHoldemGame(self, message, db, storage.casino, storage.gamePlayerWaiting)
         return
     if re.match(f"^加注 [0-9]+$", command):
-        await holdemRise(self, message, db, command, casino, gamePlayerWaiting)
+        await holdemRise(self, message, db, command, storage.casino, storage.gamePlayerWaiting)
 
     if re.match(f"^加入$", command):
-        await joinGame(self, message, db, casino, gamePlayerWaiting)
+        await joinGame(self, message, db, storage.casino, storage.gamePlayerWaiting)
         return
     if re.match(f"^退出$", command):
-        await quitGame(self, message, db, casino)
+        await quitGame(self, message, db, storage.casino)
         return
     if re.match(f"^开$", command):
-        await gameStartByTableOwner(self, message, casino, gamePlayerWaiting, db)
+        await gameStartByTableOwner(self, message, storage.casino, storage.gamePlayerWaiting, db)
         return
     if re.match(f"^掀桌$", command):
-        await pauseGame(self, message, casino, db, gamePlayerWaiting)
+        await pauseGame(self, message, storage.casino, db, storage.gamePlayerWaiting)
         return

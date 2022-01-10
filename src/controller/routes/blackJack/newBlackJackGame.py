@@ -6,7 +6,7 @@ from loguru import logger
 from src.model.userManagement import getUser, addMoneyToUser
 from discord import Client, Message
 from pymysql import Connection
-from src.controller.onMessage.pauseGame import pauseGame
+from src.controller.routes.pauseGame import pauseGame
 from src.utils.casino.table.Table import Table
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 import src.model.blackJackRecordManagement as bjRecords
