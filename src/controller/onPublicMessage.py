@@ -19,6 +19,8 @@ from src.controller.onMessage.liveGift import liveGift
 from src.controller.onMessage.joinGame import joinGame
 from src.controller.onMessage.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.controller.onMessage.addMoneyAdmin import addMoneyAdmin
+import src.Robot
 
 from discord import Client, Message, TextChannel
 from pymysql import Connection
@@ -31,7 +33,7 @@ commandPrefix = config['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
-async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict):
+async def onPublicMessage(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, announcementChannel: TextChannel, vipRoles: dict, admin: list):
     """
     Parse message
     Identify whether it is a command to this bot, or just a normal message
@@ -62,6 +64,9 @@ async def onPublicMessage(self: Client, message: Message, db: Connection, casino
         return
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
         await transferMoney(self, db, message, command)
+        return
+    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+        await addMoneyAdmin(self, db, message, command, admin)
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
