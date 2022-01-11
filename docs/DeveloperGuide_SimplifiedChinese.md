@@ -1,7 +1,5 @@
 # Funny Nation 开发指南
 
----
-
 ## 关于项目
 
 本项目是一个Discord机器人项目，用于创造一个在Discord server中的metaverse。
@@ -13,7 +11,6 @@
 
 在开发前，一定好好看看官方的例子以及文档。
 
----
 
 ## 开发规范
 
@@ -48,7 +45,6 @@
   ```
   * 并且记得，模版中的变量一定时以```?@xxx```来命名。
 
----
 
 ## 任务布置
 
@@ -58,7 +54,6 @@
 
 如果没有思绪的话，随时找我。
 
----
 
 ## 项目部署
 
@@ -72,7 +67,6 @@
 
 * 本项目有Dockerfile来自动部署，需要把配置文件编辑好，然后就可以用Dockerfile创建镜像，具体也在```README.md```中。
 
----
 
 ## CI/CD
 
@@ -80,7 +74,6 @@
 
 具体文件在```.github/workflows/main.yml```
 
----
 
 ## 架构
 
@@ -102,7 +95,6 @@
 
 同时，系统会每秒钟执行一次GamePlayerWaiting中的countdown()，用于为游戏玩家计时。
 
----
 
 ## 概念
 
@@ -118,8 +110,6 @@
 
 **GamePlayerWaiting** - 位于```/src/utils/gamePlayerWaiting/GamePlayerWaiting.py```，用于给玩家计时的模块，系统每秒会执行countdown()一次，来实现计时功能。如果到时间了，会自动执行"超时"函数，同时会在剩下5秒时执行"warning"函数。
 
-
----
 
 ## 文件目录介绍
 
@@ -148,7 +138,6 @@
 
 * 各种杂七杂八的小工具以及一些helper functions。
 
----
 
 ## 最后
 
