@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-01-13T05:40:40.300Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="DTGP2vhNuO0CSKMTCjAq" version="16.2.6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-01-13T06:47:19.825Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="VAWHR-1AS31FvV2hmnLJ" version="16.2.6" type="github">
   <diagram id="Ee6iltyrOMIBV6x1gp6D" name="Page-1">
-    <mxGraphModel dx="1865" dy="1716" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2424" dy="2011" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -62,6 +62,14 @@
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-96" value="Storage" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-95">
           <mxGeometry x="-0.2497" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;" edge="1" parent="1" source="MCCIj_tEct1RLFeP_CjE-18" target="fYHmSwvg37sIZmICMTV_-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-117" value="Storage" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-116">
+          <mxGeometry x="-0.4054" y="-3" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
@@ -128,7 +136,7 @@
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-42" value="Message" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-39">
           <mxGeometry x="0.245" y="-3" relative="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="-32" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-4" target="fYHmSwvg37sIZmICMTV_-65">
@@ -142,7 +150,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-4" value="src.controller.publicMsgRouter" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1250" y="40" width="330" height="450" as="geometry" />
+          <mxGeometry x="1250" y="35" width="330" height="450" as="geometry" />
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-8" value="src.controller.privateMsgRouter&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
           <mxGeometry x="885" y="230" width="190" height="60" as="geometry" />
@@ -171,6 +179,16 @@
             <mxPoint x="-1" y="12" as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="869" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-120" value="Emoji" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-119">
+          <mxGeometry x="-0.2308" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-16" value="src.controller.msgReactionDeleteRouter" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
           <mxGeometry x="440" y="680" width="220" height="60" as="geometry" />
         </mxCell>
@@ -190,13 +208,13 @@
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-23" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#000000;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="fYHmSwvg37sIZmICMTV_-21">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1440" y="40" as="sourcePoint" />
+            <mxPoint x="1580" y="40" as="sourcePoint" />
             <mxPoint x="1360" y="60" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-24" value="Message" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-23">
           <mxGeometry x="0.202" relative="1" as="geometry">
-            <mxPoint x="52" as="offset" />
+            <mxPoint x="-14" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-29" value="src.controller.routes.getLeaderBoardTop10" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
@@ -299,7 +317,7 @@
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-62" value="Message" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-61">
           <mxGeometry x="-0.5398" y="1" relative="1" as="geometry">
-            <mxPoint y="64" as="offset" />
+            <mxPoint y="10" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-63" value="src.controller.routes.holdem.newGame" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
@@ -373,6 +391,11 @@
             <mxPoint x="1630" y="420" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-121" value="Message" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-82">
+          <mxGeometry x="0.1359" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-86" value="src.controller.routes.blackJack.hit" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
           <mxGeometry x="840" y="420" width="190" height="60" as="geometry" />
         </mxCell>
@@ -413,7 +436,7 @@
         <mxCell id="fYHmSwvg37sIZmICMTV_-103" value="src.controller.routes.joinGame" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
           <mxGeometry x="580" y="1390" width="195" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="fYHmSwvg37sIZmICMTV_-105" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#000000;exitX=0.632;exitY=1.002;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.341;entryY=-0.027;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-11" target="fYHmSwvg37sIZmICMTV_-106">
+        <mxCell id="fYHmSwvg37sIZmICMTV_-105" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#000000;exitX=0.476;exitY=1.007;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.367;entryY=-0.042;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-11" target="fYHmSwvg37sIZmICMTV_-106">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="930" y="1220" as="sourcePoint" />
             <mxPoint x="920" y="1390" as="targetPoint" />
@@ -425,7 +448,38 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-106" value="src.controller.routes.holdem.fold" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
-          <mxGeometry x="860" y="1390" width="180" height="60" as="geometry" />
+          <mxGeometry x="790" y="1390" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-110" value="src.controller.routes.holdem.allIn" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
+          <mxGeometry x="990" y="1390" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-111" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#000000;entryX=0.2;entryY=-0.042;entryDx=0;entryDy=0;exitX=0.886;exitY=1.004;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-11" target="fYHmSwvg37sIZmICMTV_-110">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1080" y="1260" as="sourcePoint" />
+            <mxPoint x="1130" y="1210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-112" value="Emoji" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-111">
+          <mxGeometry x="0.2588" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-113" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#000000;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="1170" as="sourcePoint" />
+            <mxPoint x="480" y="1170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-115" value="Emoji" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#000000;" vertex="1" connectable="0" parent="fYHmSwvg37sIZmICMTV_-113">
+          <mxGeometry x="0.1588" y="3" relative="1" as="geometry">
+            <mxPoint x="-2" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-114" value="src.controller.routes.holdem.callAndCheck" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1140" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fYHmSwvg37sIZmICMTV_-118" value="src.controller.routes.quitGame" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" vertex="1" parent="1">
+          <mxGeometry x="420" y="870" width="180" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
