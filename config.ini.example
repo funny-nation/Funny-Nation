@@ -32,6 +32,7 @@ holdemAnteRefund=德州扑克底注退款
 holdemSpent=德州扑克消费
 holdemWin=德州扑克胜利
 sendLuckMoney=发红包
+getLuckyMoney=红包
 
 
 [gameWaitForPlayer]

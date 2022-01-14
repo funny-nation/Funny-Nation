@@ -12,8 +12,9 @@ def newLuckyMoney(db: Connection, senderID: int, messageID: int, quantity: int, 
     newUUID = str(uuid.uuid1())
 
     try:
+        whoTakeInit = "{}"
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `luckyMoney` (`uuid`, `sender`, `moneyLeft`, `quantityLeft`, `senderMsgID`, `whoTake`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '[]');")
+        cursor.execute(f"INSERT INTO `luckyMoney` (`uuid`, `sender`, `moneyLeft`, `quantityLeft`, `senderMsgID`, `whoTake`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '{whoTakeInit}');")
         db.commit()
     except Exception as err:
         logger.error(err)
