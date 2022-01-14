@@ -44,7 +44,7 @@ async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID:
 
     whoTake: dict = json.loads(luckyMoneyInfo[5])
 
-    if userID in whoTake:
+    if str(userID) in whoTake:
         msg = languageConfig['luckyMoney']['youHaveAlreadyTaken']\
             .replace('?@user', user.display_name)
         await targetChannel.send(msg)
