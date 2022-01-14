@@ -21,6 +21,7 @@ from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.addMoneyAdmin import addMoneyAdmin
+from src.controller.routes.luckyMoney.sendLuckyMoney import sendLuckyMoney
 import src.Robot
 
 from discord import Client, Message, TextChannel
@@ -78,6 +79,12 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
 
     if re.match(f"^买vip$", command):
         await buyVIP(self, message, db, storage.announcementChannel, storage.vipRoles)
+        return
+
+    if re.match(f"^发红包 [0-9]+ [0-9]+$", command):
+        moneyAndQuan: tuple = re.findall(f"^发红包 ([0-9]+) ([0-9]+)$", command)[0]
+
+        await sendLuckyMoney(self, message, db, int(moneyAndQuan[0]) * 100, int(moneyAndQuan[1]))
         return
 
     if re.match(f"^开局21点 [0-9]+\.?[0-9]*$", command):
