@@ -3,20 +3,16 @@ from discord.ext import tasks
 from loguru import logger
 from discord import Message, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
-from typing import List
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.controller.preRoute.registerAndAddMoneyWhenSendingMsg import registerAndAddMoneyWhenSendingMsg
 from src.utils.checkIfMessagerIsBooster import checkIfMessagerIsBooster
-from src.controller.preRoute.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
+from src.utils.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
 from src.controller.publicMsgRouter import publicMsgRouter
 from src.controller.privateMsgRouter import privateMsgRouter
 from src.controller.msgReactionRouter import msgReactionRouter
 from src.controller.msgReactionDeleteRouter import msgReactionDeleteRouter
 from src.utils.printMemoryStatus.main import PrintMemoryLogThread
-from src.utils.poker.pokerImage import getPokerImage
-from src.utils.poker.Card import Card
-from src.utils.poker.Poker import Poker
 from src.Storage import Storage
 
 class Robot(discord.Client):
@@ -40,14 +36,15 @@ class Robot(discord.Client):
         db: Connection = makeDatabaseConnection()
         logger.info(f"{message.author.name} : {message.content}")
         if message.channel != message.author.dm_channel:
+
+            # Pre-route
             isBooster: bool = checkIfMessagerIsBooster(self.storage.boostedRole, message.author)
             registerAndAddMoneyWhenSendingMsg(message.author.id, isBooster, db)
+
             await publicMsgRouter(self, message, db, self.storage)
         else:
             await privateMsgRouter(self, message, db, self.storage)
         db.close()
-        # Test on poker image
-        # await testOnPokerImage(message.channel)
 
     async def on_raw_reaction_add(self, event: RawReactionActionEvent):
         if event.user_id != self.user.id:

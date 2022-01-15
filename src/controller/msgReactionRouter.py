@@ -12,9 +12,15 @@ from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-
+from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
+
+    emoji: PartialEmoji = event.emoji
+
+    if emoji.name == '💰':
+        await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
+        return
 
     # For game
     tables: Dict[int, Table] = storage.casino.tables
@@ -22,7 +28,7 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
     user: Member = event.member
     channel: TextChannel = myGuild.get_channel(event.channel_id)
     msg = await channel.fetch_message(event.message_id)
-    emoji: PartialEmoji = event.emoji
+
 
     # For Finding game
     if emoji.name == '✅':

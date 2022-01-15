@@ -152,3 +152,7 @@ log/
 .DS_Store
 
 try.py
+
+vipTags.ini
+
+admins.ini
