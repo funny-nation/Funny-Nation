@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-01-15T13:15:05.125Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="J7EFgnUoySFO0GGgcdSG" version="16.2.7" type="github">
+<mxfile host="app.diagrams.net" modified="2022-01-15T16:22:05.519Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="7-Hg7bkV1vQ6dcqXCGAy" version="16.2.7" type="github">
   <diagram id="Ee6iltyrOMIBV6x1gp6D" name="Page-1">
-    <mxGraphModel dx="3793" dy="2732" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1865" dy="1716" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -343,6 +343,19 @@
             <mxPoint x="-1" as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="jXell83pXpgd55_lV_3s-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="fYHmSwvg37sIZmICMTV_-55" target="jXell83pXpgd55_lV_3s-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jXell83pXpgd55_lV_3s-5" value="giftMsg" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="jXell83pXpgd55_lV_3s-4">
+          <mxGeometry x="0.4731" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jXell83pXpgd55_lV_3s-6" value="filpath" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="jXell83pXpgd55_lV_3s-4">
+          <mxGeometry x="-0.4855" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-55" value="src.controller.routes.sendGift" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;align=left;" parent="1" vertex="1">
           <mxGeometry x="1930" y="290" width="240" height="60" as="geometry" />
         </mxCell>
@@ -643,6 +656,9 @@
         </mxCell>
         <mxCell id="vMIrl0cqhrf9eDJE_EDK-34" value="src.controller.routes.holdem.gameStart.creategamePlayerWaiting" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="2660" y="390" width="370" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jXell83pXpgd55_lV_3s-3" value="src.controller.routes.sendGift.sendGift" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="2420" y="250" width="230" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
