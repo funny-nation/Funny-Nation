@@ -1,2 +1,4 @@
 i = {'1': 1,'2': 2}
-print(list(i.keys())[0])
+import random
+
+print(random.randint(0, 0))
