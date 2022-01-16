@@ -16,6 +16,7 @@ class Storage:
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.admins = []
+        self.event = []
 
 
     async def initialize(self, client: Client):
@@ -32,4 +33,5 @@ class Storage:
         self.admins = await getAdmin(client)
         if len(self.admins) != 0:
             logger.info("Fetched Administrators")
-
+        if len(self.event) != 0:
+            logger.info("Fetched eventAdministrators")

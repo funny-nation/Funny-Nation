@@ -15,7 +15,6 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
-
     emoji: PartialEmoji = event.emoji
 
     if emoji.name == '💰':

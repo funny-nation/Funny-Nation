@@ -12,6 +12,9 @@ majorConfig.read('config.ini')
 adminListConfig = configparser.ConfigParser()
 adminListConfig.read('admins.ini')
 
+eventListConfig = configparser.ConfigParser()
+eventListConfig.read('eventAdmins.ini')
+
 def getVipTagsConfig():
     if len(vipTagsConfig.sections()) == 0:
         return None
@@ -30,4 +33,8 @@ def getAdminListConfig():
     if len(adminListConfig.sections()) == 0:
         return None
     return adminListConfig
+def getEventAdminListConfig():
+    if len(adminListConfig.sections()) == 0:
+        return None
+    return eventListConfig
 
