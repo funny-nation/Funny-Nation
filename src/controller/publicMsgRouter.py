@@ -64,16 +64,16 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     if re.match(f"^账单 .+", command):
         await checkCashFlowWithFilter(self, message, db, command)
         return
-    if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+    if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await transferMoney(self, db, message, command)
         return
-    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await addMoneyAdmin(self, db, message, command, storage.admins)
         return
-    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
+    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\!?[0-9]+\>$", command):
         await liveGift(self, db, message, command)
         return
-    if re.match(f"^送 .+ \<\@\![0-9]+\>$", command):
+    if re.match(f"^送 .+ \<\@\!?[0-9]+\>$", command):
         await sendGift(self, db, message, command, storage.announcementChannel)
         return
 

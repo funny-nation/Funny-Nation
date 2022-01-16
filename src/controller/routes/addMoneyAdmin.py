@@ -8,7 +8,7 @@ from discord import Client, Message
 from pymysql import Connection
 
 async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, admin: List):
-    adminString = re.findall(f"^管理员加钱 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
+    adminString = re.findall(f"^管理员加钱 ([0-9]+\.?[0-9]*) \<\@\!?[0-9]+\>$", command)
     moneyTransfer: int = int(float(adminString[0]) * 100)
     author = message.author.id
     if author not in admin:

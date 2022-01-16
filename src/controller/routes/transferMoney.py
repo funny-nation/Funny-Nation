@@ -17,7 +17,7 @@ config.read("config.ini")
 
 async def transferMoney(self: Client, db: Connection, message: Message, command: str):
     systemError = str(languageConfig['error']["dbError"])
-    moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
+    moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\!?[0-9]+\>$", command)
     if len(moneyStrings) == 0:
         amountNotFound = str(languageConfig['transfer']["amountNotFound"])\
             .replace('?@user', message.author.display_name)

@@ -33,7 +33,7 @@ config.read('config.ini', encoding='utf-8')
 
 
 async def sendGift(self: Client, db: Connection, message: Message, command: str, giftAnnouncementChannel: TextChannel):
-    giftName: str = re.findall(f"^送 (.+) \<\@\![0-9]+\>$", command)[0]
+    giftName: str = re.findall(f"^送 (.+) \<\@\!?[0-9]+\>$", command)[0]
     sender: Member = message.author
     if giftName not in giftConfig.sections():
         giftNotFound = str(languageConfig["gift"]["giftNotFound"])\
