@@ -10,6 +10,25 @@ async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: 
     majorCOnfig = getMajorConfig()
     memberObject: User = message.author
 
+    if money == 0:
+        msg = languageConfig['luckyMoney']['moneyCannotBeZero']\
+            .replace('?@user', memberObject.display_name)
+        await message.channel.send(msg)
+        return
+
+
+    if quantity == 0:
+        msg = languageConfig['luckyMoney']['quantityCannotBeZero']\
+            .replace('?@user', memberObject.display_name)
+        await message.channel.send(msg)
+        return
+
+    if money < quantity:
+        msg = languageConfig['luckyMoney']['moneyIsTooLow']\
+            .replace('?@user', memberObject.display_name)
+        await message.channel.send(msg)
+        return
+
     userInfo: tuple = getUser(db, memberObject.id)
 
     if userInfo is None:
@@ -23,6 +42,7 @@ async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: 
             .replace('?@user', memberObject.display_name)
         await message.channel.send(msg)
         return
+
 
     databaseResult = True
 

@@ -55,10 +55,9 @@ async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID:
         moneyTakeFromLuckyMoney = luckyMoneyInfo[2]
     else:
         averageMoneyLeft = luckyMoneyInfo[2] / luckyMoneyInfo[3]
-        moneyTakeFromLuckyMoney = random.randint(1, int(averageMoneyLeft * 2))
+        moneyTakeFromLuckyMoney = random.randint(0, int(averageMoneyLeft * 2))
 
     whoTake[userID] = moneyTakeFromLuckyMoney
-
 
     dbResult = True
     dbResult = dbResult and luckyMoneyManagement.takeLuckyMoney(db, messageID, moneyTakeFromLuckyMoney)
@@ -70,11 +69,15 @@ async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID:
         msg = languageConfig['error']['dbError']
         await targetChannel.send(msg)
         return
-
-    msg = languageConfig['luckyMoney']['congratulationYouHaveTake'] \
-        .replace('?@user', user.display_name)\
-        .replace('?@money', str(moneyTakeFromLuckyMoney / 100))
-    await targetChannel.send(msg)
+    if moneyTakeFromLuckyMoney == 0:
+        msg = languageConfig['luckyMoney']['soSorryThatYouHaveTake0'] \
+            .replace('?@user', user.display_name)
+        await targetChannel.send(msg)
+    else:
+        msg = languageConfig['luckyMoney']['congratulationYouHaveTake'] \
+            .replace('?@user', user.display_name) \
+            .replace('?@money', str(moneyTakeFromLuckyMoney / 100))
+        await targetChannel.send(msg)
 
     if lastOne:
         sender: Member = await myGuild.fetch_member(luckyMoneyInfo[1])
@@ -99,6 +102,4 @@ async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID:
             .replace('?@user', mostLuckyMember.display_name) \
             .replace('?@money', str(highestTake / 100))
         await targetChannel.send(msg)
-
-
 
