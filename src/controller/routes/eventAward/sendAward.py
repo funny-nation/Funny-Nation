@@ -6,5 +6,8 @@ from src.model.luckyMoneyManagement import newLuckyMoney
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
 def sendAward(self: Client, message: Message, db: Connection, money: int, quantity: int):
+    languageConfig = getLanguageConfig()
+    majorCOnfig = getMajorConfig()
+    memberObject: User = message.author
 
     return
