@@ -22,7 +22,7 @@ from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.addMoneyAdmin import addMoneyAdmin
 from src.controller.routes.luckyMoney.sendLuckyMoney import sendLuckyMoney
-from src.controller.routes.eventPublish import eventPublish
+from src.controller.routes.eventAward.sendAward import sendAward
 import src.Robot
 
 from discord import Client, Message, TextChannel
@@ -72,7 +72,8 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         await addMoneyAdmin(self, db, message, command, storage.admins)
         return
     if re.match(f"^领奖" +"!活动" +"[0-9]+\.?[0-9]$", command):
-        await eventPublish(self, db, message, command, storage.event)
+        moneyInPot: tuple = re.findall(f"^领奖" +"!活动" +"[0-9]+\.?[0-9]$", command) [0]
+        await sendAward(self, message, db, moneyInPot, storage.eventList)
         return
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)

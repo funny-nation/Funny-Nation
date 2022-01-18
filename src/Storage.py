@@ -4,6 +4,7 @@ from discord import Client, Guild, Role
 from src.utils.fetchChannel import fetchAnnouncementChannel
 from src.utils.getVipRoles import getVipRoles
 from src.utils.readAdminList import getAdmin
+from src.utils.readEventAdminList import getEventAdmin
 from loguru import logger
 
 
@@ -16,7 +17,7 @@ class Storage:
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.admins = []
-        self.event = []
+        self.eventList = []
 
 
     async def initialize(self, client: Client):
@@ -33,5 +34,6 @@ class Storage:
         self.admins = await getAdmin(client)
         if len(self.admins) != 0:
             logger.info("Fetched Administrators")
-        if len(self.event) != 0:
+        self.eventList = await getEventAdmin(client)
+        if len(self.eventList) != 0:
             logger.info("Fetched eventAdministrators")
