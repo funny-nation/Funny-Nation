@@ -18,4 +18,3 @@ def sendAward(self: Client, message: Message, db: Connection, money: int, userID
             .replace('?@user', user.display_name)
         await message.channel.send(msg)
         return
-    return

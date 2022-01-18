@@ -1,4 +1,4 @@
-from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji
+from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji,message
 from typing import Dict
 from pymysql import Connection
 
@@ -13,8 +13,9 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
+from src.controller.routes.eventAward.sendAward import sendAward
 
-async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
+async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage, Message: message):
     emoji: PartialEmoji = event.emoji
 
     if emoji.name == '💰':
@@ -27,6 +28,8 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
     user: Member = event.member
     channel: TextChannel = myGuild.get_channel(event.channel_id)
     msg = await channel.fetch_message(event.message_id)
+
+
 
 
     # For Finding game
