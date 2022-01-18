@@ -14,7 +14,7 @@ def newAward(db: Connection, senderID: int, messageID: int, money: int, quantity
         recipient = "{}"
         cursor: Cursor = db.cursor()
         cursor.execute(
-        f"INSERT INTO `luckyMoney` (`uuid`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '{recipient}');")
+        f"INSERT INTO `luckyMoney` (`uuid`, `eventManagerID`, `eventMessageID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '{recipient}');")
         db.commit()
 
     except Exception as err:
@@ -48,6 +48,18 @@ def takeAward(db: Connection, messageID: int, money: int):
         return False
     return True
 
+def getEventAward(db: Connection, messageID: int):
+    if db is None:
+        return None
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM `eventAward` WHERE `MsgID` = '{messageID}';")
+        result: tuple = cursor.fetchone()
+    except Exception as err:
+        logger.error(err)
+        return None
+    return result
+
 def editRecipient(db: Connection, messageID: int, Recipient: str):
     if db is None:
         return False
@@ -60,5 +72,6 @@ def editRecipient(db: Connection, messageID: int, Recipient: str):
         logger.error(err)
         return False
     return True
+
 
 
