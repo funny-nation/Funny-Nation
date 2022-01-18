@@ -6,18 +6,14 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.model.luckyMoneyManagement import newLuckyMoney
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
-def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int):
+def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: list):
     languageConfig = getLanguageConfig()
     majorCOnfig = getMajorConfig()
-    uuid = newAward()
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(userID)
+    author = message.author.id
 
-    if newAward() is None:
-        deletAward()
-        return
-
-    if deletAward(db, uuid):
+    if author not in eventAdmin:
         msg = languageConfig['eventAward']['closeEvent'] \
             .replace('?@user', user.display_name)
         await message.channel.send(msg)
