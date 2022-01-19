@@ -8,7 +8,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 from src.controller.routes.eventAward.adminProof import adminProof
 
-def getAward(self: Client, messageID: int, db: Connection, channelID: int, userID: int, eventAdmin: list):
+def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int, eventAdmin: list):
     languageConfig = getLanguageConfig()
     majorConfig = getMajorConfig()
 
@@ -32,5 +32,5 @@ def getAward(self: Client, messageID: int, db: Connection, channelID: int, userI
     dbresult = dbresult and eventAwardManagement.editRecipient(db, messageID, json.dumps(invove))
 
     await targetChannel.send("you got it")
-    await adminProof(self, db, AwardInfo[4])
+    await adminProof(self, message, messageID, db, channelID, userID, AwardInfo[4])
 

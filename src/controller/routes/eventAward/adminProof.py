@@ -3,15 +3,10 @@ from typing import List
 from discord import Client, TextChannel, Guild, Member, Message
 from pymysql import Connection
 from loguru import logger
-from src.model.eventAwardManagement import deletAward, newAward, editRecipient, takeAward, getEventAward
-from src.model.userManagement import getUser, addMoneyToUser
-from src.model.cashFlowManagement import addNewCashFlow
-from src.model.luckyMoneyManagement import newLuckyMoney
-from src.utils.readConfig import getLanguageConfig, getMajorConfig
+from src.controller.routes.eventAward.getAward import getAward
 
-def adminProof(self:Client, message: Message, db: Connection, involve: List):
+def adminProof(self:Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int, involve: List):
     for each in range(len(involve)):
         await involve[each]
         await message.add_reaction("alal")
-    logger.error(f"Cannot add money to user {message.mentions[0].id}")
-    
+    await getAward(self, messageID, db, channelID, userID, involve)
