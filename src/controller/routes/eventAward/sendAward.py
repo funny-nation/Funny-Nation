@@ -1,3 +1,5 @@
+import json
+
 from discord import Client, TextChannel, Guild, Member, Message
 from pymysql import Connection
 from src.model.eventAwardManagement import deletAward, newAward, editRecipient, takeAward, getEventAward
