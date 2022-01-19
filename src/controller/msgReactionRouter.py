@@ -1,3 +1,5 @@
+import json
+
 from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji,message
 from typing import Dict
 from pymysql import Connection
@@ -13,10 +15,12 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
-from src.controller.routes.eventAward.sendAward import sendAward
+from src.controller.routes.eventAward.adminProof import adminProof
+import src.model.eventAwardManagement as eventAwardManagement
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage, Message: message):
     emoji: PartialEmoji = event.emoji
+    involve = []
 
     if emoji.name == '💰':
         await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
@@ -66,4 +70,11 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
             if tables[tableID].whosTurn == user.id:
                 await holdemCallAndCheck(tables[tableID], user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
+        return
+
+    # for eventAward
+    if emoji.name == 'alal':
+        AwardInfo = eventAwardManagement.getEventAward(db, event.message_id)
+        involve = json.load(AwardInfo[4])
+        await adminProof(self, Message, event.message_id, db, event.channel_id, event.user_id, involve)
         return

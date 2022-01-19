@@ -8,9 +8,8 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.model.luckyMoneyManagement import newLuckyMoney
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
-def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, quantity: int, eventAdmin: list):
+async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, quantity: int, eventAdmin: list):
     languageConfig = getLanguageConfig()
-    majorCOnfig = getMajorConfig()
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(userID)
     author = message.author.id

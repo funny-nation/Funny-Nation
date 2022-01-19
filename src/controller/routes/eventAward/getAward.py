@@ -31,6 +31,11 @@ def getAward(self: Client, message: Message, messageID: int, db: Connection, cha
     dbresult = dbresult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
     dbresult = dbresult and eventAwardManagement.editRecipient(db, messageID, json.dumps(invove))
 
+    if not dbresult:
+        msg = languageConfig['error']['dbError']
+        await targetChannel.send(msg)
+        return
+
     await targetChannel.send("you got it")
     await adminProof(self, message, messageID, db, channelID, userID, AwardInfo[4])
 
