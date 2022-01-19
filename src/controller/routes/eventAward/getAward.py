@@ -8,7 +8,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 from src.controller.routes.eventAward.adminProof import adminProof
 
-def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int, eventAdmin: list):
+def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int):
     languageConfig = getLanguageConfig()
     majorConfig = getMajorConfig()
 

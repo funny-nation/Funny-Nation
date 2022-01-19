@@ -9,4 +9,4 @@ def adminProof(self:Client, message: Message, messageID: int, db: Connection, ch
     for each in range(len(involve)):
         await involve[each]
         await message.add_reaction("alal")
-    await getAward(self, messageID, db, channelID, userID, involve)
+    await getAward(self, message, messageID, db, channelID, userID)
