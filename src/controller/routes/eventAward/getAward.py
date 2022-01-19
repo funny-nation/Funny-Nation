@@ -6,9 +6,9 @@ import src.model.eventAwardManagement as eventAwardManagement
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
-from src.controller.routes.eventAward.adminProof import adminProof
 
-def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int):
+
+async def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int):
     languageConfig = getLanguageConfig()
     majorConfig = getMajorConfig()
 
@@ -37,5 +37,4 @@ def getAward(self: Client, message: Message, messageID: int, db: Connection, cha
         return
 
     await targetChannel.send("you got it")
-    await adminProof(self, message, messageID, db, channelID, userID, AwardInfo[4])
 
