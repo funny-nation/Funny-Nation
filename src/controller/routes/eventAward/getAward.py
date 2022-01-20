@@ -24,9 +24,9 @@ async def getAward(self: Client, message: Message, messageID: int, db: Connectio
     AwardInfo = eventAwardManagement.getEventAward(db, messageID)
     invove: dict = json.loads(AwardInfo[4])
 
-    moneyAward = eventAwardManagement[3]
+    moneyAward: int = AwardInfo[3]
     dbresult = True
-    dbresult = dbresult and eventAwardManagement.takeAward(db, messageID,moneyAward)
+    dbresult = dbresult and eventAwardManagement.takeAward(db, messageID, moneyAward)
     dbresult = dbresult and addMoneyToUser(db, userID, moneyAward)
     dbresult = dbresult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
     dbresult = dbresult and eventAwardManagement.editRecipient(db, messageID, json.dumps(invove))

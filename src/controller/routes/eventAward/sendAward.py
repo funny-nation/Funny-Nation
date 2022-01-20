@@ -2,22 +2,17 @@ import json
 
 from discord import Client, TextChannel, Guild, Member, Message
 from pymysql import Connection
-from src.model.eventAwardManagement import deletAward, newAward, editRecipient, takeAward, getEventAward
+import src.model.eventAwardManagement as eventAwardManagement
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
-from src.model.luckyMoneyManagement import newLuckyMoney
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
-async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, quantity: int, eventAdmin: list):
+async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: list, quantity: int):
     languageConfig = getLanguageConfig()
-    myGuild: Guild = self.guilds[0]
-    user: Member = await myGuild.fetch_member(userID)
     author = message.author.id
 
     if author not in eventAdmin:
-        msg = languageConfig['eventAward']['closeEvent'] \
-            .replace('?@user', user.display_name)
-        await message.channel.send(msg)
+        await message.channel.send("失败")
         return
 
     database = True
@@ -26,8 +21,7 @@ async def sendAward(self: Client, message: Message, db: Connection, money: int, 
         msg = languageConfig['error']['dbError']
         await message.channel.send(msg)
         return
-
-    uuid = newAward(db, author, message.id, money, quantity)
+    uuid = eventAwardManagement.newAward(db, author, message.id, money, quantity)
 
     if uuid == '':
         msg = languageConfig['error']['dbError']

@@ -14,7 +14,7 @@ def newAward(db: Connection, senderID: int, messageID: int, money: int, quantity
         recipient = "{}"
         cursor: Cursor = db.cursor()
         cursor.execute(
-        f"INSERT INTO `luckyMoney` (`uuid`, `eventManagerID`, `eventMessageID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '{recipient}');")
+        f"INSERT INTO `eventAward` (`uuid`, `eventManagerID`, `eventMessageID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {money}, {quantity}, {messageID}, '{recipient}');")
         db.commit()
 
     except Exception as err:

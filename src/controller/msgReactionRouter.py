@@ -73,7 +73,7 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
         return
 
     # for eventAward
-    if emoji.name == 'alal':
+    if emoji.name == ':game_die:':
         AwardInfo = eventAwardManagement.getEventAward(db, event.message_id)
         involve = json.load(AwardInfo[4])
         await adminProof(self, Message, event.message_id, db, event.channel_id, event.user_id, involve)

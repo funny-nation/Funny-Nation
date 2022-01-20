@@ -10,7 +10,7 @@ majorConfig = configparser.ConfigParser()
 majorConfig.read('config.ini')
 
 adminListConfig = configparser.ConfigParser()
-adminListConfig.read('admins.ini')
+adminListConfig.read('Admins.ini')
 
 eventListConfig = configparser.ConfigParser()
 eventListConfig.read('eventAdmins.ini')
@@ -34,7 +34,7 @@ def getAdminListConfig():
         return None
     return adminListConfig
 def getEventAdminListConfig():
-    if len(adminListConfig.sections()) == 0:
+    if len(eventListConfig.sections()) == 0:
         return None
     return eventListConfig
 
