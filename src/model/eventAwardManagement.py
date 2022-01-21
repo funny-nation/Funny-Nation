@@ -60,7 +60,7 @@ def getEventAward(db: Connection, messageID: int):
         return None
     return result
 
-def editRecipient(db: Connection, messageID: int, Recipient: int):
+def editRecipient(db: Connection, messageID: int, Recipient: str):
     if db is None:
         return False
     try:

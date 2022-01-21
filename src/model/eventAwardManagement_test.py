@@ -7,7 +7,7 @@ def test_():
     eventMsgID = 123456
     money = 100
     eventName = "testing"
-    recipient = 1561516161
+    recipient = "1561516161"
     eventAwardInfo: tuple = getEventAward(db, eventMsgID)
     if eventAwardInfo is not None:
         deletAward(db, eventAwardInfo[0])

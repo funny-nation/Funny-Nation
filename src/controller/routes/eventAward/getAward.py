@@ -22,7 +22,7 @@ async def getAward(self: Client, message: Message, messageID: int, db: Connectio
             break
 
     AwardInfo = eventAwardManagement.getEventAward(db, messageID)
-    invove: dict = json.loads(AwardInfo[4])
+    invove: dict = json.loads(AwardInfo[5])
 
     moneyAward: int = AwardInfo[3]
     dbresult = True
