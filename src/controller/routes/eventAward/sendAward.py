@@ -11,19 +11,13 @@ import re
 async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: list, command: str):
     languageConfig = getLanguageConfig()
     author = message.author.id
-    eventName: str = re.findall(f"^领奖 .+ [0-9]+ [0-9]+$", command)[0]
+    eventName: str = re.findall(f"^领奖 .+ [0-9]+$", command)[0]
 
     if author not in eventAdmin:
         await message.channel.send("失败")
         return
 
-    database = True
-    database = database and addMoneyToUser(db, userID, money)
-    if not database:
-        msg = languageConfig['error']['dbError']
-        await message.channel.send(msg)
-        return
-    uuid = eventAwardManagement.newAward(db, author, message.id, money, eventName)
+    uuid = eventAwardManagement.newAward(db, userID, message.id, money, eventName)
 
     if uuid == '':
         msg = languageConfig['error']['dbError']

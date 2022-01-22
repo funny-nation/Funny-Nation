@@ -2,13 +2,11 @@ import pymysql
 import os
 import configparser
 from loguru import logger
-
+from src.utils.readConfig import getMajorConfig
 
 from pymysql import Connection
 from pymysql.cursors import Cursor
 
-config = configparser.ConfigParser()
-config.read("config.ini", encoding="utf-8")
 
 
 def makeDatabaseConnection():
@@ -17,6 +15,7 @@ def makeDatabaseConnection():
     db.close()
     :return: pymysql connect instance
     """
+    config = getMajorConfig()
     try:
         db: Connection = pymysql.connect(
             host=config['database']['address'],

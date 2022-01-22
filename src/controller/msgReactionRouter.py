@@ -17,6 +17,7 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
 from src.controller.routes.eventAward.adminProof import adminProof
 import src.model.eventAwardManagement as eventAwardManagement
+from src.controller.routes.eventAward.getAward import getAward
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage, Message: message):
     emoji: PartialEmoji = event.emoji
@@ -76,5 +77,9 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
     if emoji.name == ':game_die:':
         AwardInfo = eventAwardManagement.getEventAward(db, event.message_id)
         involve = json.load(AwardInfo[4])
-        await adminProof(self, Message, event.message_id, db, event.channel_id, event.user_id, involve)
+        await adminProof(self, Message, involve)
+        return
+
+    if emoji.name == ':O:':
+        await getAward(self, Message, event.message_id, db, event.channel_id, event.user_id)
         return

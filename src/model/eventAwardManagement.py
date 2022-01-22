@@ -6,15 +6,13 @@ from pymysql.cursors import Cursor
 
 def newAward(db: Connection, senderID: int, messageID: int, money: int, eventName: str) -> str:
     if db is None:
-        return False
+        return ''
 
     newUUID = str(uuid.uuid1())
-
     try:
         recipient = "{}"
         cursor: Cursor = db.cursor()
-        cursor.execute(
-        f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMessageID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, {eventName}, '{recipient}');")
+        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMessageID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, {eventName}, '{recipient}');")
         db.commit()
 
     except Exception as err:
@@ -40,7 +38,7 @@ def takeAward(db: Connection, messageID: int, money: int):
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAward` SET `award` = {money} WHERE `eventAward`.`senderMsgID` = '{messageID}';"
+        sql = f"UPDATE `eventAward` SET `award` = '{money}' WHERE `eventAward`.`eventMessageID` = '{messageID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
