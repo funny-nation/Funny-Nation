@@ -12,7 +12,7 @@ def newAward(db: Connection, senderID: int, messageID: int, money: int, eventNam
     try:
         recipient = "{}"
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, {eventName}, {recipient});")
+        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, '{eventName}', '{recipient}');")
         db.commit()
 
     except Exception as err:
@@ -33,12 +33,24 @@ def deletAward(db: Connection,  uuidForDelete: str) -> bool:
         return False
     return True
 
+def deletAwardByMSGID(db: Connection,  msgID: int) -> bool:
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"DELETE FROM `eventAward` WHERE `eventMsgID` = '{msgID}';")
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
+
 def takeAward(db: Connection, messageID: int, money: int):
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAward` SET `award` = '{money}' WHERE `eventAward`.`eventMsgID` = '{messageID}';"
+        sql = f"UPDATE `eventAward` SET `money` = '{money}' WHERE `eventAward`.`eventMsgID` = '{messageID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
@@ -63,7 +75,7 @@ def editRecipient(db: Connection, messageID: int, Recipient: str):
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAward` SET  `recipient` - {Recipient} WHERE `eventAward` . `senderMsgID` = '{messageID}';"
+        sql = f"UPDATE `eventAward` SET  `recipient` = '{Recipient}' WHERE `eventAward` . `senderMsgID` = '{messageID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:

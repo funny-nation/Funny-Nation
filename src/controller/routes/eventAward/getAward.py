@@ -8,7 +8,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
 
-async def getAward(self: Client, message: Message, messageID: int, db: Connection, channelID: int, userID: int):
+async def getAward(self: Client, messageID: int, db: Connection, channelID: int, userID: int):
     languageConfig = getLanguageConfig()
     majorConfig = getMajorConfig()
 
