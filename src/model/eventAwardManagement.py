@@ -84,7 +84,7 @@ def editRecipient(db: Connection, messageID: int, Recipient: str):
         return False
     return True
 
-def ediApprovedRecipient(db: Connection, messageID: int, approvedRecipient: str):
+def editApprovedRecipient(db: Connection, messageID: int, approvedRecipient: str):
     if db is None:
         return False
     try:

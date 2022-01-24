@@ -1,6 +1,6 @@
 import json
 from typing import List
-from discord import Client, TextChannel, Guild, Member, Message
+from discord import Client, TextChannel, Guild, Member, message
 from pymysql import Connection
 import src.model.eventAwardManagement as eventAwardManagement
 from src.model.userManagement import getUser, addMoneyToUser
@@ -11,7 +11,6 @@ from src.utils.readConfig import getLanguageConfig, getMajorConfig
 async def getAward(self: Client, messageID: int, db: Connection, channelID: int, userID: int):
     languageConfig = getLanguageConfig()
     majorConfig = getMajorConfig()
-
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(userID)
     channels: List[TextChannel] = myGuild.text_channels
@@ -20,22 +19,31 @@ async def getAward(self: Client, messageID: int, db: Connection, channelID: int,
         if channel.id == channelID:
             targetChannel = channel
             break
-
+    Message = await targetChannel.fetch_message(messageID)
     AwardInfo = eventAwardManagement.getEventAward(db, messageID)
-    invove: dict = json.loads(AwardInfo[5])
+    ApprovedRecipient: dict = json.loads(AwardInfo[6])
 
 
+    if AwardInfo is None:
+        msg = languageConfig['eventAward']['AfterClose']
+        await Message.channel.send(msg)
+        return
 
     moneyAward: int = AwardInfo[3]
-    dbresult = True
-    dbresult = dbresult and eventAwardManagement.takeAward(db, messageID, moneyAward)
-    dbresult = dbresult and addMoneyToUser(db, userID, moneyAward)
-    dbresult = dbresult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
-    dbresult = dbresult and eventAwardManagement.editRecipient(db, messageID, json.dumps(invove))
+    dbResult = True
+    dbResult = dbResult and eventAwardManagement.takeAward(db, messageID, moneyAward)
+    dbResult = dbResult and addMoneyToUser(db, userID, moneyAward)
+    dbResult = dbResult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
+    dbResult = dbResult and eventAwardManagement.editApprovedRecipient(db, messageID, json.dumps(ApprovedRecipient))
 
-    if not dbresult:
+    if not dbResult:
         msg = languageConfig['error']['dbError']
         await targetChannel.send(msg)
+        return
+
+    if userID in AwardInfo[6]:
+        msg = languageConfig['eventAward']['alreadySent']
+        await Message.channel.send(msg)
         return
 
     await targetChannel.send("you got it")
