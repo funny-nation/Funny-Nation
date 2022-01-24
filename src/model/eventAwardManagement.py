@@ -11,8 +11,9 @@ def newAward(db: Connection, senderID: int, messageID: int, money: int, eventNam
     newUUID = str(uuid.uuid1())
     try:
         recipient = "{}"
+        approvedRecipient = '{}'
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, '{eventName}', '{recipient}');")
+        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`, `approvedRecipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, '{eventName}', '{recipient}', '{approvedRecipient}');")
         db.commit()
 
     except Exception as err:
@@ -83,5 +84,17 @@ def editRecipient(db: Connection, messageID: int, Recipient: str):
         return False
     return True
 
+def ediApprovedRecipient(db: Connection, messageID: int, approvedRecipient: str):
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        sql = f"UPDATE `eventAward` SET  `approvedRecipient` = '{approvedRecipient}' WHERE `eventAward` . `senderMsgID` = '{messageID}';"
+        cursor.execute(sql)
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
 
 

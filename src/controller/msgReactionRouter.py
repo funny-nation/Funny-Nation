@@ -21,7 +21,6 @@ from src.controller.routes.eventAward.getAward import getAward
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
     emoji: PartialEmoji = event.emoji
-    involve = []
 
     if emoji.name == '💰':
         await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
@@ -74,12 +73,15 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
         return
 
     # for eventAward
-    if emoji.name == ':game_die:':
+    if emoji.name == '🎲':
         AwardInfo = eventAwardManagement.getEventAward(db, event.message_id)
         involve = json.load(AwardInfo[4])
-        await adminProof(self, involve)
+        await adminProof(self, event.message_id, involve)
         return
 
-    if emoji.name == ':O:':
+    if emoji.name == '⭕':
         await getAward(self, event.message_id, db, event.channel_id, event.user_id)
+        return
+
+    if emoji.name == '❌':
         return

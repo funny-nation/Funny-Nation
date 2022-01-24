@@ -10,17 +10,19 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 import re
 
-async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: list, command: str):
+async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: dict, command: str):
     languageConfig = getLanguageConfig()
-    majorCOnfig = getMajorConfig()
     author = message.author.id
     eventName: str = re.findall(f"^领奖 .+ [0-9]+$", command)[0]
     msgSender: Member = message.author
+    myGuild: Guild = self.guilds[0]
+    user: Member = await myGuild.fetch_member(author)
     rolesBelongsToMember: List[Role] = msgSender.roles
-    eventManagerRole = 896546278761189397
-    if eventManagerRole not in rolesBelongsToMember:
+    print(rolesBelongsToMember)
+    print(eventAdmin)
+    if eventAdmin not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
-            .replace('?@user_name', author.display_name)
+            .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
     uuid = eventAwardManagement.newAward(db, userID, message.id, money, eventName)
@@ -32,13 +34,13 @@ async def sendAward(self: Client, message: Message, db: Connection, money: int, 
 
     if eventName in uuid[4]:
         msg = languageConfig['eventAward']['sameEvent'] \
-            .replace('?@user_name', author.display_name)
+            .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
 
     msg = languageConfig['eventAward']['awardPublish'] \
-        .replace('?@user_name', author.display_name) \
+        .replace('?@user_name', user.display_name) \
         .replace('?@event_name', eventName)
     await message.channel.send(msg)
-    await message.add_reaction(':game_die:')
+    await message.add_reaction('🎲')
 
