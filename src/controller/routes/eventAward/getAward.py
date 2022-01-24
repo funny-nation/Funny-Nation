@@ -24,6 +24,8 @@ async def getAward(self: Client, messageID: int, db: Connection, channelID: int,
     AwardInfo = eventAwardManagement.getEventAward(db, messageID)
     invove: dict = json.loads(AwardInfo[5])
 
+
+
     moneyAward: int = AwardInfo[3]
     dbresult = True
     dbresult = dbresult and eventAwardManagement.takeAward(db, messageID, moneyAward)

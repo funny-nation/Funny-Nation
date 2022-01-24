@@ -33,12 +33,12 @@ def deletAward(db: Connection,  uuidForDelete: str) -> bool:
         return False
     return True
 
-def deletAwardByMSGID(db: Connection,  msgID: int) -> bool:
+def deletAwardByEventName(db: Connection,  eventName: str) -> bool:
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"DELETE FROM `eventAward` WHERE `eventMsgID` = '{msgID}';")
+        cursor.execute(f"DELETE FROM `eventAward` WHERE `eventName` = '{eventName}';")
         db.commit()
     except Exception as err:
         logger.error(err)
