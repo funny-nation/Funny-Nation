@@ -1,21 +1,21 @@
 from discord import Guild, Role
-from src.utils.readConfig import getEventAdminListConfig
+from src.utils.readConfig import getAdminListConfig
 from typing import List
 from loguru import logger
 
 async def getEventAdminRole(myGuild: Guild):
-    eventConfig = getEventAdminListConfig()
-    admainType = eventConfig.sections()
-    admainEvent = []
-    admainRoles = {}
+    eventConfig = getAdminListConfig()
+    adminTypes = eventConfig.sections()
+    adminEvent = []
+    adminRoles = {}
 
-    for admainType in admainType:
-        admainEvent.append(int(admainType))
+    for adminType in adminTypes:
+        adminEvent.append(adminType)
     roles: List[Role] = await myGuild.fetch_roles()
     for role in roles:
-        for i in admainType:
+        for i in adminTypes:
             if eventConfig[i]['id'] == str(role.id):
-                admainRoles[int(i)] = role
+                adminRoles[i] = role
 
-    return admainRoles
+    return adminRoles
 

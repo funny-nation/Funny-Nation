@@ -1,4 +1,3 @@
-import json
 from typing import List
 from discord import User, DMChannel, Client, Member, Guild, Invite
 

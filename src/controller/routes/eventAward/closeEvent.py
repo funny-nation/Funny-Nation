@@ -1,10 +1,7 @@
 import src.model.eventAwardManagement as eventAwardManagement
-from discord import Client, TextChannel, Guild, Member, Message
+from discord import Client, Message
 from pymysql import Connection
-from src.model.userManagement import getUser, addMoneyToUser
-from src.model.cashFlowManagement import addNewCashFlow
 import list
-from src.utils.readConfig import getLanguageConfig, getMajorConfig
 import re
 
 async def closeEvent(self: Client, message: Message, db: Connection,eventAdmin: list, command: str):
@@ -16,4 +13,4 @@ async def closeEvent(self: Client, message: Message, db: Connection,eventAdmin: 
         return
 
     eventAwardManagement.deletAward(db, message.id)
-    await message.channel.send("活动关闭")
+    await message.channel.send(eventName + "活动关闭")

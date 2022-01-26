@@ -75,7 +75,7 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
     # for eventAward
     if emoji.name == '🎲':
         AwardInfo = eventAwardManagement.getEventAward(db, event.message_id)
-        involve = json.load(AwardInfo[4])
+        involve = json.load(AwardInfo[5])
         await adminProof(self, event.message_id, involve)
         return
 

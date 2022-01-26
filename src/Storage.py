@@ -35,5 +35,6 @@ class Storage:
         if len(self.admins) != 0:
             logger.info("Fetched Administrators")
         self.eventRoles = await getEventAdminRole(myGuild)
+        logger.info(self.eventRoles)
         if len(self.eventRoles) != 0:
             logger.info("Fetched eventAdministrators")
