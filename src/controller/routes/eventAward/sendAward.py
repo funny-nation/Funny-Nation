@@ -5,8 +5,6 @@ from typing import List
 from discord import Client, TextChannel, Guild, Member, Message, Role
 from pymysql import Connection
 import src.model.eventAwardManagement as eventAwardManagement
-from src.model.userManagement import getUser, addMoneyToUser
-from src.model.cashFlowManagement import addNewCashFlow
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 from loguru import logger
 import re
@@ -19,7 +17,7 @@ async def sendAward(self: Client, message: Message, db: Connection, money: int, 
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(author)
     rolesBelongsToMember: List[Role] = msgSender.roles
-    if eventAdmin['Admin'] not in rolesBelongsToMember:
+    if eventAdmin['admin'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)

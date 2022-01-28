@@ -31,10 +31,9 @@ async def getAward(self: Client, messageID: int, db: Connection, channelID: int,
 
     moneyAward: int = AwardInfo[3]
     dbResult = True
-    dbResult = dbResult and eventAwardManagement.takeAward(db, messageID, moneyAward)
     dbResult = dbResult and addMoneyToUser(db, userID, moneyAward)
     dbResult = dbResult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
-    dbResult = dbResult and eventAwardManagement.editApprovedRecipient(db, messageID, json.dumps(ApprovedRecipient))
+    dbResult = dbResult and eventAwardManagement.editdRecipient(db, messageID, json.dumps(ApprovedRecipient))
 
     if not dbResult:
         msg = languageConfig['error']['dbError']

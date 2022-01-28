@@ -10,7 +10,7 @@ majorConfig = configparser.ConfigParser()
 majorConfig.read('config.ini', encoding='utf-8')
 
 adminListConfig = configparser.ConfigParser()
-adminListConfig.read('Admins.ini', encoding='utf-8')
+adminListConfig.read('admins.ini', encoding='utf-8')
 
 
 def getVipTagsConfig():
