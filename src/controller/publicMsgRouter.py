@@ -76,8 +76,8 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         moneyInPot = re.findall(f"^领奖 (.+) ([0-9]+)$", command)[0][1]
         await sendAward(self, message, db, int(moneyInPot), message.id, storage.eventRoles, command)
         return
-    if re.match(f"^关闭活动$", command):
-        await closeEvent(self, message, db, message.id, storage.eventRoles)
+    if re.match(f"^关闭活动 .+$", command):
+        await closeEvent(self, message, db, message.id, storage.eventRoles, command)
     if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
         await liveGift(self, db, message, command)
         return

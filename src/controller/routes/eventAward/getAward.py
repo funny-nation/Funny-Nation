@@ -21,7 +21,7 @@ async def getAward(self: Client, messageID: int, db: Connection, channelID: int,
             break
     Message = await targetChannel.fetch_message(messageID)
     AwardInfo = eventAwardManagement.getEventAward(db, messageID)
-    ApprovedRecipient: dict = json.loads(AwardInfo[6])
+    ApprovedRecipient: dict = json.loads(AwardInfo[5])
 
 
     if AwardInfo is None:
@@ -33,7 +33,7 @@ async def getAward(self: Client, messageID: int, db: Connection, channelID: int,
     dbResult = True
     dbResult = dbResult and addMoneyToUser(db, userID, moneyAward)
     dbResult = dbResult and addNewCashFlow(db, userID, moneyAward, majorConfig['cashFlowMessage']['getAward'])
-    dbResult = dbResult and eventAwardManagement.editdRecipient(db, messageID, json.dumps(ApprovedRecipient))
+    dbResult = dbResult and eventAwardManagement.editRecipient(db, messageID, json.dumps(ApprovedRecipient))
 
     if not dbResult:
         msg = languageConfig['error']['dbError']
