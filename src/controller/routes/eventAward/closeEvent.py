@@ -9,7 +9,7 @@ import re
 async def closeEvent(self: Client, message: Message, db: Connection, messageID: int, eventAdmin: dict, command: str):
     languageConfig = getLanguageConfig()
     author = message.author.id
-    eventName: str = re.findall(f"^关闭活动 (.+)$", command)[0]
+    eventName: str = re.findall(f"^关闭领奖 (.+)$", command)[0]
     msgSender: Member = message.author
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(author)
@@ -22,4 +22,6 @@ async def closeEvent(self: Client, message: Message, db: Connection, messageID: 
 
 
     eventAwardManagement.deletAwardByEventName(db, eventName)
-    await message.channel.send(eventName + "活动关闭")
+    msg = languageConfig['eventAward']['closeEvent'] \
+        .replace('?@user_name', user.display_name)
+    await message.channel.send(msg)

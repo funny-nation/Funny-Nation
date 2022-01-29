@@ -74,7 +74,7 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
 
     # for eventAward
     if emoji.name == '🎲':
-        await adminProof(self, db, event.message_id, event.user_id)
+        await adminProof(self, db, event.message_id, event.user_id, event.channel_id)
         return
 
     if emoji.name == '⭕':
