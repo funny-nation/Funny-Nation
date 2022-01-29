@@ -15,6 +15,7 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
+from src.controller.routes.eventAward.rejectionAward import rejectAward
 from src.controller.routes.eventAward.adminProof import adminProof
 import src.model.eventAwardManagement as eventAwardManagement
 from src.controller.routes.eventAward.getAward import getAward
@@ -82,4 +83,5 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
         return
 
     if emoji.name == '❌':
+        await rejectAward(self, event.message_id, db, event.channel_id, event.user_id)
         return
