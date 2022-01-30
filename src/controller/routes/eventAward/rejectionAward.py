@@ -7,7 +7,7 @@ import list
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 import re
 
-async def rejectAward(self: Client, messageID: int, db: Connection, channelID: int, userID: int):
+async def rejectAward(self: Client, messageID: int, db: Connection):
 
     db.close()
     return

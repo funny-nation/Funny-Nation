@@ -79,7 +79,8 @@ def applyForAward(db: Connection, messageID: int, recipientID: int) -> bool:
 
     recepients.append({
         'id': recipientID,
-        'status': 0
+        'status': 0,
+        'msg.id': 0
     })
 
 
