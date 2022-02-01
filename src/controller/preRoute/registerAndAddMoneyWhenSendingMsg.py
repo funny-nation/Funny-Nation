@@ -9,9 +9,10 @@ from src.model.userManagement import getUser, addNewUser, editUser, deleteUser
 from src.model.cashFlowManagement import addNewCashFlow
 from datetime import datetime
 import configparser
+from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+generalConfig = getGeneralConfig()
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 def registerAndAddMoneyWhenSendingMsg(userID: int, hasBoosted: bool, db: Connection) -> bool:
@@ -53,12 +54,12 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     now: datetime = datetime.utcnow()
     nowTimeStamp: float = datetime.timestamp(now)
     lastEarnFromMessageTimeStamp: float = datetime.timestamp(userInfo[2])
-    moneyAdded: int = int(userInfo[1]) + int(config['moneyEarning']['perMessage'])
+    moneyAdded: int = int(userInfo[1]) + int(generalConfig['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
         editUserResult: bool = editUser(db, userInfo[0], money=moneyAdded, lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
         if editUserResult:
-            logger.info(f"Added {config['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
-            if not addNewCashFlow(db, userInfo[0], config['moneyEarning']['perMessage'], config['cashFlowMessage']['earnMoneyFromMessage']):
+            logger.info(f"Added {generalConfig['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
+            if not addNewCashFlow(db, userInfo[0], generalConfig['moneyEarning']['perMessage'], cashFlowMsgConfig['dailyMoneyEarning']['earnMoneyFromMessage']):
                 logger.error(f"Cannot add to cash flow for {userInfo[0]}")
             return True
         else:
@@ -77,15 +78,15 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
     """
     now: datetime = datetime.utcnow()
     if now.day != userInfo[3].day:
-        moneyAdded: int = userInfo[1] + int(config['moneyEarning']['perCheckIn'])
-        moneyDelta: int = int(config['moneyEarning']['perCheckIn'])
+        moneyAdded: int = userInfo[1] + int(generalConfig['moneyEarning']['perCheckIn'])
+        moneyDelta: int = int(generalConfig['moneyEarning']['perCheckIn'])
         if hasBoosted:
-            moneyAdded += 2 * int(config['moneyEarning']['perCheckIn'])
+            moneyAdded += 2 * int(generalConfig['moneyEarning']['perCheckIn'])
             moneyDelta *= 3
         editResult: bool = editUser(db, userInfo[0], money=moneyAdded, lastCheckIn=now.strftime("%Y-%m-%d %H:%M:%S"))
         if editResult:
             logger.info(f"Added {moneyDelta} to user {str(userInfo[0])}")
-            if not addNewCashFlow(db, userInfo[0], moneyDelta,config['cashFlowMessage']['earnFromCheckIn']):
+            if not addNewCashFlow(db, userInfo[0], moneyDelta, cashFlowMsgConfig['dailyMoneyEarning']['earnFromCheckIn']):
                 logger.error(f"Cannot add to cash flow for {userInfo[0]}")
             return True
         else:
@@ -93,38 +94,3 @@ def addMoneyToUserForCheckIn(db, userInfo, hasBoosted) -> bool:
 
     return True
 
-
-def test_whenSomeoneSendMessage():
-    db = makeDatabaseConnection()
-    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
-    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
-    userinfo = getUser(db, 123)
-    assert userinfo[1] == 0  # Check if send message within 1 minute
-    assert editUser(db, 123, lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
-    assert registerAndAddMoneyWhenSendingMsg(123, False, db) is True
-    userinfo = getUser(db, 123)
-    moneyShouldBe = int(config['moneyEarning']['perMessage']) + int(config['moneyEarning']['perCheckIn'])
-    assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day
-    now = datetime.utcnow()
-    assert datetime.timestamp(now) - datetime.timestamp(userinfo[2]) < 10
-    assert datetime.timestamp(now) - datetime.timestamp(userinfo[3]) < 10
-    assert deleteUser(db, 123) is True
-    db.close()
-
-
-def test_whenSomeoneSendMessageForBoostedUser():
-    db = makeDatabaseConnection()
-    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
-    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
-    userinfo = getUser(db, 123)
-    assert userinfo[1] == 0  # Check if send message within 1 minute
-    assert editUser(db, 123, lastEarnFromMessage='2000-1-1 1:1:1', lastCheckIn='2000-1-1 1:1:1') is True
-    assert registerAndAddMoneyWhenSendingMsg(123, True, db) is True
-    userinfo = getUser(db, 123)
-    moneyShouldBe = int(config['moneyEarning']['perMessage']) + (int(config['moneyEarning']['perCheckIn']) * 3)
-    assert userinfo[1] == moneyShouldBe  # Check if message send after more than one day
-    now = datetime.utcnow()
-    assert datetime.timestamp(now) - datetime.timestamp(userinfo[2]) < 10
-    assert datetime.timestamp(now) - datetime.timestamp(userinfo[3]) < 10
-    assert deleteUser(db, 123) is True
-    db.close()

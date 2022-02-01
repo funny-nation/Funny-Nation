@@ -9,13 +9,11 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.model.userManagement import addMoneyToUser
 from src.model.blackJackRecordManagement import setGameStatus
 
-import configparser
+from src.utils.readConfig import getLanguageConfig, getCashFlowMsgConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message, casino: Casino, db: Connection):
@@ -45,7 +43,7 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
     if len(winnerList) == 1:
         winner: User = await self.fetch_user(winnerList[0])
         databaseResult = databaseResult and addMoneyToUser(db, winner.id, totalMoney)
-        databaseResult = databaseResult and addNewCashFlow(db, winner.id, totalMoney, config['cashFlowMessage']['blackJackWin'])
+        databaseResult = databaseResult and addNewCashFlow(db, winner.id, totalMoney, cashFlowMsgConfig['blackJack']['blackJackWin'])
         databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
         playerWin = str(languageConfig["blackJack"]["playerWin"])\
             .replace("?@winner", f" {winner.display_name} ")\
@@ -57,7 +55,7 @@ async def blackJackEndGame(self: Client, table: BlackJackTable, message: Message
         for winnerID in winnerList:
             winner = await self.fetch_user(winnerID)
             databaseResult = databaseResult and addMoneyToUser(db, winner.id, prizeMoney)
-            databaseResult = databaseResult and addNewCashFlow(db, winner.id, prizeMoney, config['cashFlowMessage']['blackJackWin'])
+            databaseResult = databaseResult and addNewCashFlow(db, winner.id, prizeMoney, cashFlowMsgConfig['blackJack']['blackJackWin'])
             databaseResult = databaseResult and setGameStatus(db, winner.id, table.uuid, 2)
             winnersString += str(winner.display_name) + '、'
         chopMsg = str(languageConfig["blackJack"]["chop"])\

@@ -6,6 +6,9 @@ from src.utils.readConfig import getMajorConfig
 
 from pymysql import Connection
 from pymysql.cursors import Cursor
+from src.utils.readConfig import getMajorConfig
+
+config = getMajorConfig()
 
 
 

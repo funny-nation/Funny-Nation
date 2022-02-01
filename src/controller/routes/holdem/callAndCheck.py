@@ -9,9 +9,8 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from loguru import logger
-import configparser
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getCashFlowMsgConfig
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def holdemCallAndCheck(table: HoldemTable, user: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
@@ -19,7 +18,7 @@ async def holdemCallAndCheck(table: HoldemTable, user: Member, channel: TextChan
     if amountOfMoneyToSpend > 0:
         databaseResult = True
         databaseResult = databaseResult and addMoneyToUser(db, user.id, -amountOfMoneyToSpend)
-        databaseResult = databaseResult and addNewCashFlow(db, user.id, -amountOfMoneyToSpend, config['cashFlowMessage']['holdemSpent'])
+        databaseResult = databaseResult and addNewCashFlow(db, user.id, -amountOfMoneyToSpend, cashFlowMsgConfig['holdem']['holdemSpent'])
         databaseResult = databaseResult and addMoneyToHoldemRecord(db, user.id, table.uuid, amountOfMoneyToSpend)
         if not databaseResult:
             await channel.send(f"炸了，麻烦通知一下群主")

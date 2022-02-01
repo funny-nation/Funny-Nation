@@ -8,12 +8,9 @@ from src.model.cashFlowManagement import get10RecentCashflowsByUserID
 from discord import Client, Message
 from pymysql import Connection
 from pathlib import Path
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
+languageConfig = getLanguageConfig()
 
 
 async def checkCashFlow(self: Client, message: Message, db: Connection):

@@ -16,7 +16,6 @@ from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.routes.startGame import gameStartByTableOwner
 from src.controller.routes.pauseGame import pauseGame
 
-from src.controller.routes.liveGift import liveGift
 from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
@@ -31,9 +30,10 @@ from pymysql import Connection
 
 from src.utils.casino.Casino import Casino
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
-commandPrefix = config['command']['prefix'] + ' '
+from src.utils.readConfig import getGeneralConfig
+
+generalConfig = getGeneralConfig()
+commandPrefix = generalConfig['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 
@@ -66,22 +66,23 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     if re.match(f"^账单 .+", command):
         await checkCashFlowWithFilter(self, message, db, command)
         return
-    if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+    if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await transferMoney(self, db, message, command)
         return
-    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\![0-9]+\>$", command):
+    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await addMoneyAdmin(self, db, message, command, storage.admins)
         return
+
+    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\!?[0-9]+\>$", command):
+    
     if re.match(f"^领奖 .+ [0-9]+$", command):
         moneyInPot = re.findall(f"^领奖 (.+) ([0-9]+)$", command)[0][1]
         await sendAward(self, message, db, int(moneyInPot) * 100, message.id, storage.eventRoles, command)
         return
     if re.match(f"^关闭领奖 .+$", command):
         await closeEvent(self, message, db, message.id, storage.eventRoles, command)
-    if re.match(f"^礼物 (.+) [1-9][0-9]* \<\@\![0-9]+\>$", command):
-        await liveGift(self, db, message, command)
-        return
-    if re.match(f"^送 .+ \<\@\![0-9]+\>$", command):
+
+    if re.match(f"^送 .+ \<\@\!?[0-9]+\>$", command):
         await sendGift(self, db, message, command, storage.announcementChannel)
         return
 

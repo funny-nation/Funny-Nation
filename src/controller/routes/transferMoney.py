@@ -7,17 +7,14 @@ from src.model.cashFlowManagement import addNewCashFlow
 
 from discord import Client, Message
 from pymysql import Connection
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
+languageConfig = getLanguageConfig()
 
 
 async def transferMoney(self: Client, db: Connection, message: Message, command: str):
     systemError = str(languageConfig['error']["dbError"])
-    moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\![0-9]+\>$", command)
+    moneyStrings: List[str] = re.findall(f"^转账 ([0-9]+\.?[0-9]*) \<\@\!?[0-9]+\>$", command)
     if len(moneyStrings) == 0:
         amountNotFound = str(languageConfig['transfer']["amountNotFound"])\
             .replace('?@user', message.author.display_name)
