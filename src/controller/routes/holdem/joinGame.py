@@ -14,9 +14,8 @@ from src.model.blackJackRecordManagement import newBlackJackRecord
 from src.utils.casino.Casino import Casino
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
-import configparser
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getCashFlowMsgConfig
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def joinHoldemGame(table: HoldemTable, player: Member, channel: TextChannel, self: Client, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
@@ -34,7 +33,7 @@ async def joinHoldemGame(table: HoldemTable, player: Member, channel: TextChanne
 
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, userInfo[0], -table.ante)
-    databaseResult = databaseResult and addNewCashFlow(db, userInfo[0], -table.ante, config['cashFlowMessage']['holdemAnte'])
+    databaseResult = databaseResult and addNewCashFlow(db, userInfo[0], -table.ante, cashFlowMsgConfig['holdem']['holdemAnte'])
     databaseResult = databaseResult and newHoldemRecord(db, userInfo[0], table.ante, channel.id, table.uuid)
 
     if not databaseResult:

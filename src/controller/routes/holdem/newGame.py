@@ -11,9 +11,8 @@ from src.model.cashFlowManagement import addNewCashFlow
 from src.model.holdemRecordManagement import newHoldemRecord
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
-import configparser
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getCashFlowMsgConfig
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 
@@ -32,7 +31,7 @@ async def newHoldemGame(self: Client, message: Message, db: Connection, casino: 
     table: HoldemTable = casino.getTable(channel.id)
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, owner.id, -table.ante)
-    databaseResult = databaseResult and addNewCashFlow(db, owner.id, -table.ante, config['cashFlowMessage']['holdemAnte'])
+    databaseResult = databaseResult and addNewCashFlow(db, owner.id, -table.ante, cashFlowMsgConfig['holdem']['holdemAnte'])
     databaseResult = databaseResult and newHoldemRecord(db, userInfo[0], table.ante, channel.id, table.uuid)
 
     if not databaseResult:

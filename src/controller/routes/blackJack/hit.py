@@ -12,13 +12,10 @@ from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.blackJack.stay import blackJackStayWithPrivateMsg
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 
-import configparser
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 
 async def blackJackHitWithPrivateMessage(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
