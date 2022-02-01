@@ -34,7 +34,7 @@ def deletAward(db: Connection,  messageID: int) -> bool:
         return False
     return True
 
-def getEventAwardByName(db: Connection,  eventName: str) -> bool:
+def getEventAwardByName(db: Connection,  eventName: str):
     if db is None:
         return None
     try:
@@ -84,7 +84,7 @@ def removeRecipient(db: Connection, messageID: int) -> bool:
         return False
     return True
 
-def searchRecipientsByPrivateMSGID(db: Connection, recipientMSGID: int):
+def searchRecipientsByPrivateMSGID(db: Connection, recipientMSGID: int) -> tuple or None:
     if db is None:
         return None
     try:
@@ -121,6 +121,18 @@ def rejectRecipients(db: Connection, recipientMSGID: int) -> bool:
         logger.error(err)
         return False
     return True
+
+def searchRecipientByEventIDandRecipientID(db: Connection, eventMSGID: int, recipientID: int) -> tuple or None:
+    if db is None:
+        return None
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM `eventAwardRecipients` WHERE `eventMsgID` = {eventMSGID} AND `recipientID` = {recipientID};")
+        result: tuple = cursor.fetchone()
+    except Exception as err:
+        logger.error(err)
+        return None
+    return result
 
 def closeEvent(db: Connection, messageID: int) -> bool:
     if db is None:
