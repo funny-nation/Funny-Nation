@@ -10,10 +10,9 @@ from typing import Dict, List
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.model.userManagement import getUser, addNewUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
-import configparser
-
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
+generalConfig = getGeneralConfig()
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 def addMoneyToUserInVoiceChannels(self: Client):
@@ -45,16 +44,16 @@ def helperThreat(self: Client):
                 if voiceStates[userID].self_mute:
                     continue
                 if voiceStates[userID].self_stream:
-                    if addMoneyToUser(db, userID, int(config['moneyEarning']['perMinuteInVoiceWithStream'])):
-                        logger.info(f"Added {config['moneyEarning']['perMinuteInVoiceWithStream']} to {userID}")
-                        if not addNewCashFlow(db, userID, int(config['moneyEarning']['perMinuteInVoiceWithStream']), config['cashFlowMessage']['earnFromStream']):
+                    if addMoneyToUser(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoiceWithStream'])):
+                        logger.info(f"Added {generalConfig['moneyEarning']['perMinuteInVoiceWithStream']} to {userID}")
+                        if not addNewCashFlow(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoiceWithStream']), cashFlowMsgConfig['dailyMoneyEarning']['earnFromStream']):
                             logger.error(f"Cannot add to cash flow for {userID}")
                     else:
                         logger.error(f"Cannot add money to user {userID} while streaming")
                 else:
-                    if addMoneyToUser(db, userID, int(config['moneyEarning']['perMinuteInVoice'])):
-                        logger.info(f"Added {config['moneyEarning']['perMinuteInVoice']} to {userID}")
-                        if not addNewCashFlow(db, userID, int(config['moneyEarning']['perMinuteInVoice']), config['cashFlowMessage']['earnFromVoice']):
+                    if addMoneyToUser(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoice'])):
+                        logger.info(f"Added {generalConfig['moneyEarning']['perMinuteInVoice']} to {userID}")
+                        if not addNewCashFlow(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoice']), cashFlowMsgConfig['dailyMoneyEarning']['earnFromVoice']):
                             logger.error(f"Cannot add to cash flow for {userID}")
         db.close()
         time.sleep(60)

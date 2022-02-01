@@ -6,9 +6,9 @@ from loguru import logger
 
 from pymysql import Connection
 from pymysql.cursors import Cursor
+from src.utils.readConfig import getMajorConfig
 
-config = configparser.ConfigParser()
-config.read("config.ini", encoding="utf-8")
+config = getMajorConfig()
 
 
 def makeDatabaseConnection():

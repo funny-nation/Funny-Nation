@@ -5,11 +5,9 @@ from src.model.userManagement import getLeaderBoard
 import configparser
 from discord import Client, Message, Guild, Member
 from pymysql import Connection
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+from src.utils.readConfig import getLanguageConfig
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     """

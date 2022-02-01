@@ -6,12 +6,9 @@ from src.model.userManagement import getUser
 from discord import Message, Member
 from pymysql import Connection
 from pathlib import Path
+from src.utils.readConfig import getLanguageConfig
+languageConfig = getLanguageConfig()
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 async def checkBalance(message: Message, db: Connection):
     """

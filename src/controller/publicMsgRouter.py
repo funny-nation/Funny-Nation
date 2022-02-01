@@ -16,7 +16,6 @@ from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.routes.startGame import gameStartByTableOwner
 from src.controller.routes.pauseGame import pauseGame
 
-from src.controller.routes.liveGift import liveGift
 from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
@@ -29,9 +28,10 @@ from pymysql import Connection
 
 from src.utils.casino.Casino import Casino
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
-commandPrefix = config['command']['prefix'] + ' '
+from src.utils.readConfig import getGeneralConfig
+
+generalConfig = getGeneralConfig()
+commandPrefix = generalConfig['command']['prefix'] + ' '
 commandPrefixLen = len(commandPrefix)
 
 

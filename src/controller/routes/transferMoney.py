@@ -7,12 +7,9 @@ from src.model.cashFlowManagement import addNewCashFlow
 
 from discord import Client, Message
 from pymysql import Connection
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
+languageConfig = getLanguageConfig()
 
 
 async def transferMoney(self: Client, db: Connection, message: Message, command: str):

@@ -10,13 +10,10 @@ from src.model.userManagement import addMoneyToUser
 import src.model.blackJackRecordManagement as bjRecords
 from src.model.cashFlowManagement import addNewCashFlow
 from loguru import logger
-import configparser
+from src.utils.readConfig import getLanguageConfig, getCashFlowMsgConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def pauseGame(self: Client, message: Message, casino: Casino, db: Connection, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):
@@ -41,12 +38,12 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
         if table.game == 'blackJack':
             table: BlackJackTable
             databaseResult = databaseResult and addMoneyToUser(db, playerID, table.money)
-            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.money, config['cashFlowMessage']['blackJackRefund'])
+            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.money, cashFlowMsgConfig['blackJack']['blackJackRefund'])
             databaseResult = databaseResult and bjRecords.setGameStatus(db, playerID, table.uuid, 4)
         if table.game == 'holdem':
             table: HoldemTable
             databaseResult = databaseResult and addMoneyToUser(db, playerID, table.ante)
-            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.ante, config['cashFlowMessage']['holdemAnteRefund'])
+            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.ante, cashFlowMsgConfig['blackJack']['holdemAnteRefund'])
         casino.onlinePlayer.remove(playerID)
 
     if not databaseResult:
