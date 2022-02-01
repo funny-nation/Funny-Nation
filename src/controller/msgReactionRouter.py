@@ -1,4 +1,6 @@
-from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji
+import json
+
+from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji,message
 from typing import Dict
 from pymysql import Connection
 
@@ -13,9 +15,12 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
+from src.controller.routes.eventAward.rejectionAward import rejectAward
+from src.controller.routes.eventAward.adminProof import adminProof
+import src.model.eventAwardManagement as eventAwardManagement
+from src.controller.routes.eventAward.getAward import getAward
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
-
     emoji: PartialEmoji = event.emoji
 
     if emoji.name == '💰':
@@ -28,6 +33,8 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
     user: Member = event.member
     channel: TextChannel = myGuild.get_channel(event.channel_id)
     msg = await channel.fetch_message(event.message_id)
+
+
 
 
     # For Finding game
@@ -64,4 +71,17 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
             if tables[tableID].whosTurn == user.id:
                 await holdemCallAndCheck(tables[tableID], user, channel, self, db, storage.casino, storage.gamePlayerWaiting)
                 return
+        return
+
+    # for eventAward
+    if emoji.name == '🎲':
+        await adminProof(self, db, event)
+        return
+
+    if emoji.name == '⭕':
+        await getAward(self, event, db, channel.id)
+        return
+
+    if emoji.name == '🚫':
+        await rejectAward(self, event, db)
         return

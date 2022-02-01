@@ -21,6 +21,7 @@ generalConfig.read('generalConfig.ini', encoding='utf-8')
 adminListConfig = configparser.ConfigParser()
 adminListConfig.read('admins.ini', encoding='utf-8')
 
+
 def getVipTagsConfig():
     if len(vipTagsConfig.sections()) == 0:
         return None
@@ -46,5 +47,7 @@ def getAdminListConfig():
         return None
     return adminListConfig
 
+
 def getGiftConfig():
     return giftConfig
+
