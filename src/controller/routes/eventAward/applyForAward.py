@@ -5,7 +5,7 @@ import json
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
 
-async def adminProof(self: Client, db, event: RawReactionActionEvent):
+async def applyForAward(self: Client, db, event: RawReactionActionEvent):
     '''
 
     :param event:
@@ -36,15 +36,14 @@ async def adminProof(self: Client, db, event: RawReactionActionEvent):
 
     dmChannel: DMChannel = await user.create_dm()
     msg = languageConfig['eventAward']['Apply']
-    privateMsg: Message = await dmChannel.send(msg)
-    privateMsgID: int = privateMsg.id
-    if eventAwardManagement.addRecipient(db, messageID, privateMsgID, userID) is False:
-        msg = languageConfig['error']['dbError']
-        await targetChannel.send(msg)
-        return
+    await dmChannel.send(msg)
 
     authorDM: DMChannel = await author.create_dm()
     authorPrivateMessage: Message = await authorDM.send(user.display_name)
+    if eventAwardManagement.addRecipient(db, messageID, authorPrivateMessage.id, userID) is False:
+        msg = languageConfig['error']['dbError']
+        await targetChannel.send(msg)
+        return
     await authorPrivateMessage.add_reaction('⭕')
     await authorPrivateMessage.add_reaction('🚫')
 

@@ -9,7 +9,7 @@ from src.utils.readConfig import getLanguageConfig, getMajorConfig
 from loguru import logger
 import re
 
-async def sendAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: dict, command: str):
+async def publishAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: dict, command: str):
     languageConfig = getLanguageConfig()
     author = message.author.id
     eventName: str = re.findall(f"^领奖 (.+) [0-9]+$", command)[0]
