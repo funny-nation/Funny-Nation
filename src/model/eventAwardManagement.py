@@ -7,47 +7,44 @@ from pymysql import Connection
 from pymysql.cursors import Cursor
 from typing import List
 
-def newAward(db: Connection, senderID: int, messageID: int, money: int, eventName: str) -> str:
+def newAward(db: Connection, senderID: int, messageID: int, money: int, eventName: str) -> bool:
     if db is None:
-        return ''
+        return False
 
-    newUUID = str(uuid.uuid1())
     try:
-        recipient = []
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `eventAward` (`eventID`, `eventManagerID`, `eventMsgID`, `money`, `eventName`, `recipient`) VALUES ('{newUUID}', {senderID}, {messageID}, {money}, '{eventName}', '{recipient}');")
+        cursor.execute(f"INSERT INTO `eventAward` (`eventManagerID`, `eventMsgID`, `money`, `eventName`, `status`) VALUES ({senderID}, {messageID}, {money}, '{eventName}', 0);")
         db.commit()
 
     except Exception as err:
         logger.error(err)
-        return ''
+        return False
+    return True
 
-    return newUUID
 
-def deletAward(db: Connection,  uuidForDelete: str) -> bool:
+def deletAward(db: Connection,  messageID: int) -> bool:
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"DELETE FROM `eventAward` WHERE `uuid` = '{uuidForDelete}';")
+        cursor.execute(f"DELETE FROM `eventAward` WHERE `eventMsgID` = '{messageID}';")
         db.commit()
     except Exception as err:
         logger.error(err)
         return False
     return True
 
-def deletAwardByEventName(db: Connection,  eventName: str) -> bool:
+def getEventAwardByName(db: Connection,  eventName: str) -> bool:
     if db is None:
-        return False
+        return None
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"DELETE FROM `eventAward` WHERE `eventName` = '{eventName}';")
-        db.commit()
+        cursor.execute(f"SELECT * FROM `eventAward` WHERE `eventName` = '{eventName}' AND `status` = 0;")
+        result: tuple = cursor.fetchone()
     except Exception as err:
         logger.error(err)
-        return False
-    return True
-
+        return None
+    return result
 
 def getEventAward(db: Connection, messageID: int):
     if db is None:
@@ -61,38 +58,76 @@ def getEventAward(db: Connection, messageID: int):
         return None
     return result
 
-def applyForAward(db: Connection, messageID: int, recipientID: int) -> bool:
-    """
-
-    :param db:
-    :param messageID:
-    :param recipientID:
-    :return:
-    """
-    getAwardResult = getEventAward(db, messageID)
-    if getAwardResult is None:
+def addRecipient(db: Connection, messageID: int, recipientMSGID: int, recipientID: int) -> bool:
+    if db is None:
         return False
-    recepients: List[dict] = json.loads(getAwardResult[5])
-    for recipient in recepients:
-        if recipient['id'] == recipientID:
-            return False
 
-    recepients.append({
-        'id': recipientID,
-        'status': 0,
-        'msg.id': 0
-    })
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"INSERT INTO `eventAwardRecipients` (`eventMsgID`, `recipientID`, `approvePrivateMSGID`, `status`) VALUES ({messageID}, {recipientID}, {recipientMSGID}, 0);")
+        db.commit()
 
-
+    except Exception as err:
+        logger.error(err)
+        return False
     return True
 
-
-def editRecipient(db: Connection, messageID: int, Recipient: str):
+def removeRecipient(db: Connection, messageID: int) -> bool:
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAward` SET  `recipient` = '{Recipient}' WHERE `eventAward` . `senderMsgID` = '{messageID}';"
+        cursor.execute(f"DELETE FROM `eventAwardRecipients` WHERE `eventMsgID` = '{messageID}';")
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
+
+def searchRecipientsByPrivateMSGID(db: Connection, recipientMSGID: int):
+    if db is None:
+        return None
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM `eventAwardRecipients` WHERE `approvePrivateMSGID` = {recipientMSGID};")
+        result: tuple = cursor.fetchone()
+    except Exception as err:
+        logger.error(err)
+        return None
+    return result
+
+def approveRecipients(db: Connection, recipientMSGID: int) -> bool:
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 1 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{recipientMSGID}';"
+        cursor.execute(sql)
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
+
+def rejectRecipients(db: Connection, recipientMSGID: int) -> bool:
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 2 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{recipientMSGID}';"
+        cursor.execute(sql)
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True
+
+def closeEvent(db: Connection, messageID: int) -> bool:
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        sql = f"UPDATE `eventAward` SET  `status` = 1 WHERE `eventAward` . `eventMsgID` = '{messageID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:

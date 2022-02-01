@@ -82,6 +82,6 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
         await getAward(self, event, db, channel.id)
         return
 
-    if emoji.name == '❌':
+    if emoji.name == '🚫':
         await rejectAward(self, event, db)
         return

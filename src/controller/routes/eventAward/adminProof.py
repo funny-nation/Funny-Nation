@@ -28,6 +28,6 @@ async def adminProof(self: Client, db, event: RawReactionActionEvent):
     recepients['msgID'] = msg.id
     involve.append(recepients)
     eventAwardManagement.editRecipient(db, awardInfo[2], json.dumps(involve))
-    await msg.add_reaction('❌')
+    await msg.add_reaction('🚫')
     await msg.add_reaction('⭕')
     return

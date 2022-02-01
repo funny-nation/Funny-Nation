@@ -1,5 +1,8 @@
-from src.model.eventAwardManagement import newAward, deletAward, editRecipient, getEventAward
+import json
+
+from src.model.eventAwardManagement import newAward, removeRecipient, getEventAward, addRecipient,deletAward, searchRecipientsByPrivateMSGID, approveRecipients, rejectRecipients, closeEvent, getEventAwardByName
 from src.model.makeDatabaseConnection import makeDatabaseConnection
+from typing import List
 
 def test_():
     db = makeDatabaseConnection()
@@ -8,15 +11,21 @@ def test_():
     eventMsgID = 123456
     money = 300
     eventName = '+testing+'
+    recipientMSGID = 123456
+    recipientID = 123456
     eventAwardInfo: tuple = getEventAward(db, eventMsgID)
     if eventAwardInfo is not None:
-        deletAward(db, eventAwardInfo[0])
-    uuid = newAward(db, eventManagerID, eventMsgID, money, eventName)
-    assert uuid != ""
-    assert editRecipient(db, eventMsgID, recipient)
-    assert eventAwardInfo[5] == recipient
-
-    assert deletAward(db, uuid) is True
+        deletAward(db, eventAwardInfo[1])
+    assert newAward(db, eventManagerID, eventMsgID, money, eventName) is True
+    assert getEventAwardByName(db, eventName) is not None
+    assert addRecipient(db, eventMsgID, recipientMSGID, recipientID) is True
+    assert searchRecipientsByPrivateMSGID(db, recipientMSGID) is not None
+    assert approveRecipients(db, recipientMSGID) is True
+    assert rejectRecipients(db, recipientMSGID) is True
+    assert removeRecipient(db, eventMsgID) is True
+    assert closeEvent(db, eventMsgID) is True
+    assert getEventAwardByName(db, eventName) is None
+    assert deletAward(db, eventMsgID) is True
 
     db.close()
 

@@ -22,16 +22,14 @@ async def sendAward(self: Client, message: Message, db: Connection, money: int, 
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
-    uuid = eventAwardManagement.newAward(db, userID, message.id, money, eventName)
-
-    if uuid == '':
-        msg = languageConfig['error']['dbError']
-        await message.channel.send(msg)
-        return
-
-    if eventName in uuid[4]:
+    awardInfo = eventAwardManagement.getEventAwardByName(db, eventName)
+    if awardInfo is not None:
         msg = languageConfig['eventAward']['sameEvent'] \
             .replace('?@user_name', user.display_name)
+        await message.channel.send(msg)
+        return
+    if not eventAwardManagement.newAward(db, userID, message.id, money, eventName):
+        msg = languageConfig['error']['dbError']
         await message.channel.send(msg)
         return
 

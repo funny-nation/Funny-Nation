@@ -3,7 +3,7 @@ from discord import Client, TextChannel, Guild, Member, Message
 from pymysql import Connection
 from src.model.userManagement import getUser
 from src.model.cashFlowManagement import addNewCashFlow
-import list
+from typing import List
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 import re
 
