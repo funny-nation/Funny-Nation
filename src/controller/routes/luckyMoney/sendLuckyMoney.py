@@ -10,6 +10,7 @@ async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: 
     cashFlowMsgConfig = getCashFlowMsgConfig()
     memberObject: User = message.author
 
+
     if money == 0:
         msg = languageConfig['luckyMoney']['moneyCannotBeZero']\
             .replace('?@user', memberObject.display_name)
