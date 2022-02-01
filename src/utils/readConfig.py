@@ -48,3 +48,4 @@ def getAdminListConfig():
 
 def getGiftConfig():
     return giftConfig
+
