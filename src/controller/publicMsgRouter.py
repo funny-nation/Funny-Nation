@@ -15,7 +15,6 @@ from src.controller.routes.buyVIP import buyVIP
 from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.routes.startGame import gameStartByTableOwner
 from src.controller.routes.pauseGame import pauseGame
-
 from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
@@ -72,6 +71,7 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await addMoneyAdmin(self, db, message, command, storage.admins)
         return
+    
     if re.match(f"^领奖 .+ [0-9]+$", command):
         moneyInPot = re.findall(f"^领奖 (.+) ([0-9]+)$", command)[0][1]
         await sendAward(self, message, db, int(moneyInPot) * 100, message.id, storage.eventRoles, command)
