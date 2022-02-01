@@ -3,11 +3,11 @@ from pymysql import Connection
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.luckyMoneyManagement import newLuckyMoney
-from src.utils.readConfig import getLanguageConfig, getMajorConfig
+from src.utils.readConfig import getLanguageConfig, getMajorConfig, getCashFlowMsgConfig
 
 async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: int, quantity: int):
     languageConfig = getLanguageConfig()
-    majorCOnfig = getMajorConfig()
+    cashFlowMsgConfig = getCashFlowMsgConfig()
     memberObject: User = message.author
 
     if money == 0:
@@ -47,7 +47,7 @@ async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: 
     databaseResult = True
 
     databaseResult = databaseResult and addMoneyToUser(db, memberObject.id, -money)
-    databaseResult = databaseResult and addNewCashFlow(db, memberObject.id, -money, majorCOnfig['cashFlowMessage']['sendLuckMoney'])
+    databaseResult = databaseResult and addNewCashFlow(db, memberObject.id, -money, cashFlowMsgConfig['luckyMoney']['sendLuckMoney'])
 
     if not databaseResult:
         msg = languageConfig['error']['dbError']

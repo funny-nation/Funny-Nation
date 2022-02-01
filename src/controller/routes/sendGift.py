@@ -10,14 +10,12 @@ from pathlib import Path
 from src.model.userManagement import getUser
 from src.model.userManagement import addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
+from src.utils.readConfig import getGiftConfig, getLanguageConfig, getGeneralConfig
 
-giftConfig = configparser.ConfigParser()
-giftConfig.read('giftConfig.ini', encoding='utf-8')
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+giftConfig = getGiftConfig()
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+generalConfig = getGeneralConfig()
 
 # img: Dict[str, File] = {}
 #
@@ -92,7 +90,7 @@ async def sendGift(self: Client, db: Connection, message: Message, command: str,
     await message.channel.send(sendSuccess)
     await giftAnnouncementChannel.send(giftMsg)
 
-    path = config['img']['giftImgPath']
+    path = generalConfig['img']['giftImgPath']
     filePaths = glob.glob(path + '*')
     for filePath in filePaths:
         if Path(filePath).stem == giftName:

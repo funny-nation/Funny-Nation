@@ -1,12 +1,11 @@
 import threading
-import configparser
+from src.utils.readConfig import getGeneralConfig
 
 from typing import Dict
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
-secondWaitingPerPerson = int(config['gameWaitForPlayer']['secondWaitingPerPerson'])
-secondOnWarning = int(config['gameWaitForPlayer']['secondOnWarning'])
+generalConfig = getGeneralConfig()
+secondWaitingPerPerson = int(generalConfig['gameWaitForPlayer']['secondWaitingPerPerson'])
+secondOnWarning = int(generalConfig['gameWaitForPlayer']['secondOnWarning'])
 
 
 class GamePlayerWaiting:

@@ -4,13 +4,9 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
 from src.controller.routes.blackJack.quitGame import quitBlackJack
 from src.controller.routes.holdem.quitGame import quiteHoldemGame
-import configparser
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
+languageConfig = getLanguageConfig()
 
 
 async def quitGame(self: Client, message: Message, db: Connection, casino: Casino):

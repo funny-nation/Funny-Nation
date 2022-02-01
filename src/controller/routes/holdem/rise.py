@@ -14,9 +14,8 @@ from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.holdemRecordManagement import addMoneyToHoldemRecord
 from loguru import logger
-import configparser
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getCashFlowMsgConfig
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def holdemRise(self: Client, message: Message, db: Connection, command: str, casino, gamePlayerWaiting):
@@ -40,7 +39,7 @@ async def holdemRise(self: Client, message: Message, db: Connection, command: st
         return
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, user.id, -moneyInvest)
-    databaseResult = databaseResult and addNewCashFlow(db, user.id, -moneyInvest, config['cashFlowMessage']['holdemSpent'])
+    databaseResult = databaseResult and addNewCashFlow(db, user.id, -moneyInvest, cashFlowMsgConfig['holdem']['holdemSpent'])
     databaseResult = databaseResult and addMoneyToHoldemRecord(db, user.id, table.uuid, moneyInvest)
     if not databaseResult:
         await channel.send(f"炸了，麻烦通知一下群主")
