@@ -20,8 +20,14 @@ async def closeEvent(self: Client, message: Message, db: Connection, messageID: 
         await message.channel.send(msg)
         return
 
+    event = eventAwardManagement.getEventAwardByName(db, eventName)
+    if event[4] == 1:
+        msg = languageConfig['eventAward']['AfterClose'] \
+            .replace('?@event_name', user.display_name)
+        await message.channel.send(msg)
+        return
 
-    eventAwardManagement.deletAwardByEventName(db, eventName)
+    eventAwardManagement.closeEvent(db, event[1])
     msg = languageConfig['eventAward']['closeEvent'] \
         .replace('?@event_name', user.display_name)
     await message.channel.send(msg)

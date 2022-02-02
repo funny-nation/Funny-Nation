@@ -1,6 +1,6 @@
 import json
 
-from src.model.eventAwardManagement import newAward, removeRecipient, getEventAward, addRecipient,deletAward, searchRecipientsByPrivateMSGID, approveRecipients, rejectRecipients, closeEvent, getEventAwardByName
+from src.model.eventAwardManagement import newAward, removeRecipient, getEventAward, addRecipient,deletAward, searchRecipientsByPrivateMSGID, approveRecipients, rejectRecipients, closeEvent, getEventAwardByName, searchRecipientByEventIDandRecipientID
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from typing import List
 
@@ -22,6 +22,7 @@ def test_():
     assert searchRecipientsByPrivateMSGID(db, recipientMSGID) is not None
     assert approveRecipients(db, recipientMSGID) is True
     assert rejectRecipients(db, recipientMSGID) is True
+    assert searchRecipientByEventIDandRecipientID(db, eventMsgID, recipientID) is not None
     assert removeRecipient(db, eventMsgID) is True
     assert closeEvent(db, eventMsgID) is True
     assert getEventAwardByName(db, eventName) is None
