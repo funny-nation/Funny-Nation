@@ -28,7 +28,7 @@ async def publishAward(self: Client, message: Message, db: Connection, money: in
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
-    if not eventAwardManagement.newAward(db, userID, message.id, money, eventName):
+    if not eventAwardManagement.newAward(db, author, message.id, money, eventName):
         msg = languageConfig['error']['dbError']
         await message.channel.send(msg)
         return

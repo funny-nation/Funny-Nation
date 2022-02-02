@@ -26,6 +26,7 @@ async def applyForAward(self: Client, db, event: RawReactionActionEvent):
             break
     authorMSG = await targetChannel.fetch_message(messageID)
     author = authorMSG.author
+    eventInfo = eventAwardManagement.getEventAward(db, messageID)
 
     if eventAwardManagement.searchRecipientByEventIDandRecipientID(db, messageID, userID) is not None:
         msg = languageConfig['eventAward']['alreadyApply'] \
@@ -35,11 +36,23 @@ async def applyForAward(self: Client, db, event: RawReactionActionEvent):
 
 
     dmChannel: DMChannel = await user.create_dm()
+
+    if eventInfo[4] == 1:
+        msg = languageConfig['eventAward']['AfterClose']
+        await dmChannel.send(msg)
+        return
+
     msg = languageConfig['eventAward']['Apply']
     await dmChannel.send(msg)
 
+
+    msgForAuthor = languageConfig['eventAward']['tryGetAward'] \
+        .replace('?@user_name', user.display_name)\
+        .replace('?@event_name', eventInfo[3])\
+        .replace('?@money', str(eventInfo[2] / 100))
+
     authorDM: DMChannel = await author.create_dm()
-    authorPrivateMessage: Message = await authorDM.send(user.display_name)
+    authorPrivateMessage: Message = await authorDM.send(msgForAuthor)
     if eventAwardManagement.addRecipient(db, messageID, authorPrivateMessage.id, userID) is False:
         msg = languageConfig['error']['dbError']
         await targetChannel.send(msg)

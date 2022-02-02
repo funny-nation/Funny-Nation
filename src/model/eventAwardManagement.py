@@ -101,7 +101,7 @@ def approveRecipients(db: Connection, approvePrivateMSGID: int) -> bool:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 1 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 2 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
@@ -114,7 +114,7 @@ def rejectRecipients(db: Connection, approvePrivateMSGID: int) -> bool:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 2 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 1 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
