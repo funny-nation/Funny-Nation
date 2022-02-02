@@ -13,12 +13,10 @@ import src.model.blackJackRecordManagement as bjRecords
 import src.model.cashFlowManagement as cashFlow
 from src.utils.casino.Casino import Casino
 from src.model.makeDatabaseConnection import makeDatabaseConnection
-import configparser
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+from src.utils.readConfig import getLanguageConfig, getCashFlowMsgConfig
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 async def newBlackJackGame(self: Client, message: Message, db: Connection, command: str, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):
@@ -47,7 +45,7 @@ async def newBlackJackGame(self: Client, message: Message, db: Connection, comma
     databaseResult = True
     databaseResult = databaseResult and bjRecords.newBlackJackRecord(db, playerInfo[0], money, message.channel.id, table.uuid)
     databaseResult = databaseResult and addMoneyToUser(db, playerInfo[0], -money)
-    databaseResult = databaseResult and cashFlow.addNewCashFlow(db, playerInfo[0], -money, config['cashFlowMessage']['blackJackSpend'])
+    databaseResult = databaseResult and cashFlow.addNewCashFlow(db, playerInfo[0], -money, cashFlowMsgConfig['blackJack']['blackJackSpend'])
 
     if not databaseResult:
         errorMsg = str(languageConfig["error"]["dbError"])

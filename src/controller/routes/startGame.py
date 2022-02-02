@@ -6,13 +6,9 @@ from src.controller.routes.blackJack.gameStart import blackJackGameStart
 from src.controller.routes.holdem.gameStart import holdemGameStart
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from pymysql import Connection
-import configparser
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read("config.ini")
+languageConfig = getLanguageConfig()
 
 
 async def gameStartByTableOwner(self: Client, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, db: Connection):

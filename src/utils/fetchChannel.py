@@ -1,18 +1,17 @@
-import configparser
+from src.utils.readConfig import getGeneralConfig
 from discord import Guild, TextChannel
 from typing import List
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+generalConfig = getGeneralConfig()
 
 
 def fetchAnnouncementChannel(guild: Guild):
-    if 'channel' not in config['announcement']:
+    if 'channel' not in generalConfig['announcement']:
         return None
 
     allTextChannels: List[TextChannel] = guild.text_channels
     for channel in allTextChannels:
-        if channel.name == config['announcement']['channel']:
+        if channel.name == generalConfig['announcement']['channel']:
             return channel
 
     return None

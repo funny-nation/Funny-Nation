@@ -6,13 +6,10 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
 from src.controller.routes.blackJack.joinGame import joinBlackJack
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-import configparser
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
 
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 
 async def joinGame(self: Client, message: Message, db: Connection, casino: Casino, gamePlayerWaiting: GamePlayerWaiting):

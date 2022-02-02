@@ -6,19 +6,17 @@ from loguru import logger
 from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.blackJackRecordManagement import setGameStatus
-import configparser
+from src.utils.readConfig import getLanguageConfig, getCashFlowMsgConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
 
 
 async def quitBlackJack(table: BlackJackTable, player: User, channel: TextChannel, self: Client, db: Connection):
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, player.id, table.money)
-    databaseResult = databaseResult and addNewCashFlow(db, player.id, table.money, config['cashFlowMessage']['blackJackRefund'])
+    databaseResult = databaseResult and addNewCashFlow(db, player.id, table.money, cashFlowMsgConfig['blackJack']['blackJackRefund'])
     databaseResult = databaseResult and setGameStatus(db, player.id, table.uuid, 4)
 
     if not databaseResult:

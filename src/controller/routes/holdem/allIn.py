@@ -12,9 +12,8 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.model.userManagement import getUser, addMoneyToUser
 from loguru import logger
-import configparser
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+from src.utils.readConfig import getCashFlowMsgConfig
+cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
 
@@ -24,7 +23,7 @@ async def holdemAllIn(table: HoldemTable, user: Member, channel: TextChannel, se
     allInMoney: int = userInfo[1] + 0
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, user.id, -allInMoney)
-    databaseResult = databaseResult and addNewCashFlow(db, user.id, -allInMoney, config['cashFlowMessage']['holdemSpent'])
+    databaseResult = databaseResult and addNewCashFlow(db, user.id, -allInMoney, cashFlowMsgConfig['holdem']['holdemSpent'])
     databaseResult = databaseResult and addMoneyToHoldemRecord(db, user.id, table.uuid, allInMoney)
     if not databaseResult:
         await channel.send(f"炸了，麻烦通知一下群主")

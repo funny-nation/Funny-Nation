@@ -1,7 +1,7 @@
 from discord import Client, Message, TextChannel, Member, File
 from pymysql import Connection
 
-from src.utils.readConfig import getLanguageConfig, getVipTagsConfig, majorConfig
+from src.utils.readConfig import getLanguageConfig, getVipTagsConfig, getCashFlowMsgConfig
 
 from src.model.userManagement import getUser, editUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
@@ -18,7 +18,7 @@ async def buyVIP(self: Client, message: Message, db: Connection, annocementChann
         return
 
     vipConfig = getVipTagsConfig()
-    config = majorConfig
+    cashFlowMsgConfig = getCashFlowMsgConfig()
     nextVIPLevel = userInfo[5] + 1
 
     if nextVIPLevel not in vipRoles:
@@ -39,7 +39,7 @@ async def buyVIP(self: Client, message: Message, db: Connection, annocementChann
 
     databaseResult = True
     databaseResult = databaseResult and addMoneyToUser(db, user.id, -price)
-    databaseResult = databaseResult and addNewCashFlow(db, user.id, -price, config['cashFlowMessage']['buyVIP'])
+    databaseResult = databaseResult and addNewCashFlow(db, user.id, -price, cashFlowMsgConfig['vip']['buyVIP'])
     databaseResult = databaseResult and editUser(db, userID=user.id, vipLevel=nextVIPLevel)
 
     if not databaseResult:
