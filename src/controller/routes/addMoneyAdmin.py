@@ -16,7 +16,7 @@ async def addMoneyAdmin(self: Client, db: Connection, message: Message, command:
     rolesBelongsToMember: List[Role] = msgSender.roles
 
     if eventAdmin['admin'] not in rolesBelongsToMember:
-        msg = languageConfig['eventAward']['notEventAdmin'] \
+        msg = languageConfig['eventAward']['notAdmian'] \
             .replace('?@user_name', msgSender.display_name)
         await message.channel.send(msg)
         return
