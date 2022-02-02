@@ -34,7 +34,7 @@ def deletAward(db: Connection,  messageID: int) -> bool:
         return False
     return True
 
-def getEventAwardByName(db: Connection,  eventName: str) -> bool:
+def getEventAwardByName(db: Connection,  eventName: str):
     if db is None:
         return None
     try:
@@ -46,7 +46,7 @@ def getEventAwardByName(db: Connection,  eventName: str) -> bool:
         return None
     return result
 
-def getEventAward(db: Connection, messageID: int):
+def getEventAward(db: Connection, messageID: int) ->tuple or None:
     if db is None:
         return None
     try:
@@ -58,13 +58,13 @@ def getEventAward(db: Connection, messageID: int):
         return None
     return result
 
-def addRecipient(db: Connection, messageID: int, recipientMSGID: int, recipientID: int) -> bool:
+def addRecipient(db: Connection, messageID: int, approvePrivateMSGID: int, recipientID: int) -> bool:
     if db is None:
         return False
 
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `eventAwardRecipients` (`eventMsgID`, `recipientID`, `approvePrivateMSGID`, `status`) VALUES ({messageID}, {recipientID}, {recipientMSGID}, 0);")
+        cursor.execute(f"INSERT INTO `eventAwardRecipients` (`eventMsgID`, `recipientID`, `approvePrivateMSGID`, `status`) VALUES ({messageID}, {recipientID}, {approvePrivateMSGID}, 0);")
         db.commit()
 
     except Exception as err:
@@ -84,24 +84,24 @@ def removeRecipient(db: Connection, messageID: int) -> bool:
         return False
     return True
 
-def searchRecipientsByPrivateMSGID(db: Connection, recipientMSGID: int):
+def searchRecipientsByPrivateMSGID(db: Connection, approvePrivateMSGID: int) -> tuple or None:
     if db is None:
         return None
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"SELECT * FROM `eventAwardRecipients` WHERE `approvePrivateMSGID` = {recipientMSGID};")
+        cursor.execute(f"SELECT * FROM `eventAwardRecipients` WHERE `approvePrivateMSGID` = {approvePrivateMSGID};")
         result: tuple = cursor.fetchone()
     except Exception as err:
         logger.error(err)
         return None
     return result
 
-def approveRecipients(db: Connection, recipientMSGID: int) -> bool:
+def approveRecipients(db: Connection, approvePrivateMSGID: int) -> bool:
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 1 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{recipientMSGID}';"
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 2 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
@@ -109,18 +109,30 @@ def approveRecipients(db: Connection, recipientMSGID: int) -> bool:
         return False
     return True
 
-def rejectRecipients(db: Connection, recipientMSGID: int) -> bool:
+def rejectRecipients(db: Connection, approvePrivateMSGID: int) -> bool:
     if db is None:
         return False
     try:
         cursor: Cursor = db.cursor()
-        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 2 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{recipientMSGID}';"
+        sql = f"UPDATE `eventAwardRecipients` SET  `status` = 1 WHERE `eventAwardRecipients` . `approvePrivateMSGID` = '{approvePrivateMSGID}';"
         cursor.execute(sql)
         db.commit()
     except Exception as err:
         logger.error(err)
         return False
     return True
+
+def searchRecipientByEventIDandRecipientID(db: Connection, eventMSGID: int, recipientID: int) -> tuple or None:
+    if db is None:
+        return None
+    try:
+        cursor: Cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM `eventAwardRecipients` WHERE `eventMsgID` = {eventMSGID} AND `recipientID` = {recipientID};")
+        result: tuple = cursor.fetchone()
+    except Exception as err:
+        logger.error(err)
+        return None
+    return result
 
 def closeEvent(db: Connection, messageID: int) -> bool:
     if db is None:
