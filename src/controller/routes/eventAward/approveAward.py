@@ -16,7 +16,7 @@ async def approveAward(self: Client, event: RawReactionActionEvent, db: Connecti
     userID: int = event.user_id
     user: Member = await myGuild.fetch_member(userID)
     rolesBelongsToMember: List[Role] = user.roles
-    if eventAdmin['admin'] not in rolesBelongsToMember:
+    if eventAdmin['eventManger'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
             .replace('?@user_name', user.display_name)
         await targetChannel.send(msg)

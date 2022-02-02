@@ -17,7 +17,7 @@ async def publishAward(self: Client, message: Message, db: Connection, money: in
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(author)
     rolesBelongsToMember: List[Role] = msgSender.roles
-    if eventAdmin['admin'] not in rolesBelongsToMember:
+    if eventAdmin['eventManger'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)

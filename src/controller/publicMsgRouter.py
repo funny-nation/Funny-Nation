@@ -68,8 +68,8 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await transferMoney(self, db, message, command)
         return
-    if re.match(f"^管理员加钱 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
-        await addMoneyAdmin(self, db, message, command, storage.admins)
+    if re.match(f"^印钞 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
+        await addMoneyAdmin(self, db, message, command, storage.eventRoles)
         return
     
     if re.match(f"^领奖 .+ [0-9]+$", command):

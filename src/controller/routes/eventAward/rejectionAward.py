@@ -22,7 +22,7 @@ async def rejectAward(self: Client, event: RawReactionActionEvent, db: Connectio
     recipientDMChannel: DMChannel = await recipient.create_dm()
     authorDMChannel: DMChannel = await author.create_dm()
 
-    if eventAdmin['admin'] not in rolesBelongsToMember:
+    if eventAdmin['eventManger'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
             .replace('?@user_name', user.display_name)
         await targetChannel.send(msg)
