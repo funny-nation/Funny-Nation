@@ -143,19 +143,10 @@ config.ini
 # IDE
 .idea/
 
-# Yoyo
-yoyo.ini
-
 log/
 
 # System
 .DS_Store
-
-try.py
-
-vipTags.ini
-
-admins.ini
 
 img/gift
 
@@ -164,3 +155,15 @@ img/vip
 giftConfig.ini
 
 generalConfig.ini
+
+try.py
+
+vipTags.ini
+
+admins.ini
+
+cashFlowMsg.ini
+
+Language.ini
+
+yoyo.ini
