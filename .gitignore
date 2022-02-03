@@ -137,30 +137,32 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Configuration file
-config.ini
-
 # IDE
 .idea/
-
-# Yoyo
-yoyo.ini
 
 log/
 
 # System
 .DS_Store
 
-try.py
-
-vipTags.ini
-
-admins.ini
-
 img/gift
 
 img/vip
 
-giftConfig.ini
+configs/giftConfig.ini
 
-generalConfig.ini
+configs/generalConfig.ini
+
+try.py
+
+configs/vipTags.ini
+
+configs/admins.ini
+
+configs/cashFlowMsg.ini
+
+configs/language.ini
+
+configs/config.ini
+
+yoyo.ini

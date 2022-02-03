@@ -1,25 +1,25 @@
 import configparser
 
 vipTagsConfig = configparser.ConfigParser()
-vipTagsConfig.read('vipTags.ini', encoding='utf-8')
+vipTagsConfig.read('configs/vipTags.ini', encoding='utf-8')
 
 languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
+languageConfig.read('configs/language.ini', encoding='utf-8')
 
 majorConfig = configparser.ConfigParser()
-majorConfig.read('config.ini', encoding='utf-8')
+majorConfig.read('configs/config.ini', encoding='utf-8')
 
 giftConfig = configparser.ConfigParser()
-giftConfig.read('giftConfig.ini', encoding='utf-8')
+giftConfig.read('configs/giftConfig.ini', encoding='utf-8')
 
 cashFlowMsgConfig = configparser.ConfigParser()
-cashFlowMsgConfig.read('cashFlowMsg.ini', encoding='utf-8')
+cashFlowMsgConfig.read('configs/cashFlowMsg.ini', encoding='utf-8')
 
 generalConfig = configparser.ConfigParser()
-generalConfig.read('generalConfig.ini', encoding='utf-8')
+generalConfig.read('configs/generalConfig.ini', encoding='utf-8')
 
 adminListConfig = configparser.ConfigParser()
-adminListConfig.read('admins.ini', encoding='utf-8')
+adminListConfig.read('configs/admins.ini', encoding='utf-8')
 
 def getVipTagsConfig():
     if len(vipTagsConfig.sections()) == 0:
