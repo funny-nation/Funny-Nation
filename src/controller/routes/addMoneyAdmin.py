@@ -8,14 +8,14 @@ from src.model.cashFlowManagement import addNewCashFlow
 from discord import Client, Message
 from pymysql import Connection
 
-async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, eventAdmin: dict):
+async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, Admin: dict):
     languageConfig = getLanguageConfig()
     adminString = re.findall(f"^印钞 ([0-9]+\.?[0-9]*) \<\@\!?[0-9]+\>$", command)
     moneyTransfer: int = int(float(adminString[0]) * 100)
     msgSender: Member = message.author
     rolesBelongsToMember: List[Role] = msgSender.roles
 
-    if eventAdmin['admin'] not in rolesBelongsToMember:
+    if Admin['admin'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notAdmian'] \
             .replace('?@user_name', msgSender.display_name)
         await message.channel.send(msg)

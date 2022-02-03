@@ -27,11 +27,11 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
 
     if channel is None:
         if emoji.name == '⭕':
-            await approveAward(self, event, db, storage.eventRoles)
+            await approveAward(self, event, db, storage.adminRole)
             return
 
         if emoji.name == '🚫':
-            await rejectAward(self, event, db, storage.eventRoles)
+            await rejectAward(self, event, db, storage.adminRole)
             return
 
     # for eventAward
