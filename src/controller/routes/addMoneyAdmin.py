@@ -8,7 +8,7 @@ from src.model.cashFlowManagement import addNewCashFlow
 from discord import Client, Message
 from pymysql import Connection
 
-async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, eventAdmin: dict,):
+async def addMoneyAdmin(self: Client, db: Connection, message: Message, command: str, eventAdmin: dict):
     languageConfig = getLanguageConfig()
     adminString = re.findall(f"^印钞 ([0-9]+\.?[0-9]*) \<\@\!?[0-9]+\>$", command)
     moneyTransfer: int = int(float(adminString[0]) * 100)
