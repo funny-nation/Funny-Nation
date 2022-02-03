@@ -38,11 +38,11 @@ jobs:
         sed -i -e 's/yourUsername/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' yoyo.ini
         sed -i -e 's/yourPassword/${{ secrets.MYSQL_DB_PWD_FOR_CI }}/g' yoyo.ini
         sed -i -e 's/yourDatabase/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' yoyo.ini
-        sed -i -e 's/yourDatabaseAddress/${{ secrets.MYSQL_DB_ADDR_CI }}/g' config.ini
-        sed -i -e 's/yourUserName/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' config.ini
-        sed -i -e 's/yourPassword/${{ secrets.MYSQL_DB_PWD_FOR_CI }}/g' config.ini
-        sed -i -e 's/yourDatabase/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' config.ini
-        sed -i -e 's/yourToken/${{ secrets.TOKEN_FOR_CI }}/g' config.ini
+        sed -i -e 's/yourDatabaseAddress/${{ secrets.MYSQL_DB_ADDR_CI }}/g' configs/config.ini
+        sed -i -e 's/yourUserName/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' configs/config.ini
+        sed -i -e 's/yourPassword/${{ secrets.MYSQL_DB_PWD_FOR_CI }}/g' configs/config.ini
+        sed -i -e 's/yourDatabase/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' configs/config.ini
+        sed -i -e 's/yourToken/${{ secrets.TOKEN_FOR_CI }}/g' configs/config.ini
         cat yoyo.ini
         
     - name: Database migration
