@@ -26,7 +26,13 @@ jobs:
         pip install -r requirements.txt
     - name: Create configuration files
       run: |
-        cp config.ini.example config.ini
+        cp configs/config.ini.example configs/config.ini
+        cp configs/admins.ini.example configs/admins.ini
+        cp configs/cashFlowMsg.ini.example configs/cashFlowMsg.ini
+        cp configs/generalConfig.ini.example configs/generalConfig.ini
+        cp configs/giftConfig.ini.example configs/giftConfig.ini
+        cp configs/language.ini.example configs/language.ini
+        cp configs/vipTags.ini.example configs/vipTags.ini
         cp yoyo.ini.example yoyo.ini
         sed -i -e 's/yourAddresss/${{ secrets.MYSQL_DB_ADDR_CI }}/g' yoyo.ini
         sed -i -e 's/yourUsername/${{ secrets.MYSQL_DB_USERNAME_FOR_CI }}/g' yoyo.ini
