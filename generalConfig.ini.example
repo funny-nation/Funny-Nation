@@ -10,7 +10,7 @@ secondOnWarning = 5
 
 
 [command]
-prefix=老板
+prefix=user
 
 [log]
 path=log/
