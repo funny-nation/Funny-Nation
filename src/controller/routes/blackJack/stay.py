@@ -9,13 +9,9 @@ from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member, TextChannel, Invite
 from src.controller.routes.blackJack.endGame import blackJackEndGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-import configparser
+from src.utils.readConfig import getLanguageConfig
 
-languageConfig = configparser.ConfigParser()
-languageConfig.read('Language.ini', encoding='utf-8')
-
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
+languageConfig = getLanguageConfig()
 
 
 async def blackJackStayWithPrivateMsg(self: Client, db: Connection, message: Message, casino: Casino, gamePlayerWaiting: GamePlayerWaiting, removeWait=True):

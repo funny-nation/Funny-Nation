@@ -6,13 +6,13 @@ from src.model.cashFlowManagement import addNewCashFlow
 from typing import List
 import json
 import random
-from src.utils.readConfig import getLanguageConfig, getMajorConfig
+from src.utils.readConfig import getLanguageConfig, getMajorConfig, getCashFlowMsgConfig
 
 
 
 async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID: int, userID: int):
     languageConfig = getLanguageConfig()
-    majorConfig = getMajorConfig()
+    cashFlowMsgConfig = getCashFlowMsgConfig()
 
 
     myGuild: Guild = self.guilds[0]
@@ -62,7 +62,7 @@ async def getLuckyMoney(self: Client, messageID: int, db: Connection, channelID:
     dbResult = True
     dbResult = dbResult and luckyMoneyManagement.takeLuckyMoney(db, messageID, moneyTakeFromLuckyMoney)
     dbResult = dbResult and addMoneyToUser(db, userID, moneyTakeFromLuckyMoney)
-    dbResult = dbResult and addNewCashFlow(db, userID, moneyTakeFromLuckyMoney, majorConfig['cashFlowMessage']['getLuckyMoney'])
+    dbResult = dbResult and addNewCashFlow(db, userID, moneyTakeFromLuckyMoney, cashFlowMsgConfig['luckyMoney']['getLuckyMoney'])
     dbResult = dbResult and luckyMoneyManagement.editWhoTake(db, messageID, json.dumps(whoTake))
 
     if not dbResult:

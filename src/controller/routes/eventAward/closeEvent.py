@@ -1,0 +1,33 @@
+import json
+from typing import List
+from discord import Client, TextChannel, Guild, Member, Message, Role
+from pymysql import Connection
+import src.model.eventAwardManagement as eventAwardManagement
+from src.utils.readConfig import getLanguageConfig, getMajorConfig
+import re
+
+async def closeEvent(self: Client, message: Message, db: Connection, messageID: int, eventAdmin: dict, command: str):
+    languageConfig = getLanguageConfig()
+    author = message.author.id
+    eventName: str = re.findall(f"^关闭领奖 (.+)$", command)[0]
+    msgSender: Member = message.author
+    myGuild: Guild = self.guilds[0]
+    user: Member = await myGuild.fetch_member(author)
+    rolesBelongsToMember: List[Role] = msgSender.roles
+    if eventAdmin['eventManger'] not in rolesBelongsToMember:
+        msg = languageConfig['eventAward']['notEventAdmin'] \
+            .replace('?@user_name', user.display_name)
+        await message.channel.send(msg)
+        return
+
+    event = eventAwardManagement.getEventAwardByName(db, eventName)
+    if event[4] == 1:
+        msg = languageConfig['eventAward']['AfterClose'] \
+            .replace('?@event_name', user.display_name)
+        await message.channel.send(msg)
+        return
+
+    eventAwardManagement.closeEvent(db, event[1])
+    msg = languageConfig['eventAward']['closeEvent'] \
+        .replace('?@event_name', user.display_name)
+    await message.channel.send(msg)

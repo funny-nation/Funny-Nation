@@ -1,4 +1,6 @@
-from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji
+import json
+
+from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji, Message, DMChannel
 from typing import Dict
 from pymysql import Connection
 
@@ -13,10 +15,30 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
+from src.controller.routes.eventAward.rejectionAward import rejectAward
+from src.controller.routes.eventAward.applyForAward import applyForAward
+import src.model.eventAwardManagement as eventAwardManagement
+from src.controller.routes.eventAward.approveAward import approveAward
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
-
+    myGuild: Guild = self.guilds[0]
+    channel: TextChannel or None = myGuild.get_channel(event.channel_id)
     emoji: PartialEmoji = event.emoji
+
+    if channel is None:
+        if emoji.name == '⭕':
+            await approveAward(self, event, db, storage.eventRoles)
+            return
+
+        if emoji.name == '🚫':
+            await rejectAward(self, event, db, storage.eventRoles)
+            return
+
+    # for eventAward
+    if emoji.name == '🎲':
+        await applyForAward(self, db, event)
+        return
+
 
     if emoji.name == '💰':
         await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
@@ -24,10 +46,10 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
 
     # For game
     tables: Dict[int, Table] = storage.casino.tables
-    myGuild: Guild = self.guilds[0]
     user: Member = event.member
-    channel: TextChannel = myGuild.get_channel(event.channel_id)
     msg = await channel.fetch_message(event.message_id)
+
+
 
 
     # For Finding game

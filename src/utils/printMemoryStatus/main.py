@@ -8,9 +8,9 @@ from src.utils.casino.Casino import Casino
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.printMemoryStatus.printCasinoLog import printCasinoLog
 from src.utils.printMemoryStatus.printGamePlayerWaiting import printGamePlayerWaiting
-config = configparser.ConfigParser()
-config.read('config.ini', encoding='utf-8')
-logPath = config['log']['path'] + config['log']['memoryLog']
+from src.utils.readConfig import getGeneralConfig
+generalConfig = getGeneralConfig()
+logPath = generalConfig['log']['path'] + generalConfig['log']['memoryLog']
 
 
 class PrintMemoryLogThread(threading.Thread):
