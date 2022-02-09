@@ -141,3 +141,22 @@ def addMoneyToUser(db: Connection, userID: int, money: int) -> bool:
         return False
     return True
 
+def minusMoneyToUser(db: Connection, userID: int, money: int) -> bool:
+    """
+    Add money to user
+    :param db: database object instance
+    :param userID: User id
+    :param money: amount that add to user's account
+    :return: True if no error
+    """
+    if db is None:
+        return False
+    try:
+        cursor: Cursor = db.cursor()
+        sql = f"UPDATE `user` SET `money` = `money` - {money} WHERE `user`.`userID` = '{userID}';"
+        cursor.execute(sql)
+        db.commit()
+    except Exception as err:
+        logger.error(err)
+        return False
+    return True

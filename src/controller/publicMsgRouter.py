@@ -19,6 +19,7 @@ from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.addMoneyAdmin import addMoneyAdmin
+from src.controller.routes.minusMoneyAdmin import minusMoneyAdmin
 from src.controller.routes.luckyMoney.sendLuckyMoney import sendLuckyMoney
 from src.controller.routes.eventAward.publishAward import publishAward
 from src.controller.routes.eventAward.closeEvent import closeEvent
@@ -69,14 +70,17 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         await transferMoney(self, db, message, command)
         return
     if re.match(f"^印钞 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
-        await addMoneyAdmin(self, db, message, command, storage.eventRoles)
+        await addMoneyAdmin(self, db, message, command, storage.adminRole)
+        return
+    if re.match(f"^抢劫 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
+        await minusMoneyAdmin(self, db, message, command, storage.adminRole)
         return
     if re.match(f"^领奖 .+ [0-9]+$", command):
         moneyInPot = re.findall(f"^领奖 (.+) ([0-9]+)$", command)[0][1]
-        await publishAward(self, message, db, int(moneyInPot) * 100, message.id, storage.eventRoles, command)
+        await publishAward(self, message, db, int(moneyInPot) * 100, message.id, storage.adminRole, command)
         return
     if re.match(f"^关闭领奖 .+$", command):
-        await closeEvent(self, message, db, message.id, storage.eventRoles, command)
+        await closeEvent(self, message, db, message.id, storage.adminRole, command)
 
     if re.match(f"^送 .+ \<\@\!?[0-9]+\>$", command):
         await sendGift(self, db, message, command, storage.announcementChannel)
