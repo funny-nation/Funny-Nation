@@ -6,6 +6,7 @@ def test_():
     from src.model.makeDatabaseConnection import makeDatabaseConnection
     testingTime1 = '2000-01-01 01:01:01'
     testingTime2 = '2001-02-02 02:02:02'
+    testingTime3 = '2003-03-03 03:03:03'
     db: Connection = makeDatabaseConnection()
     getUserResult = getUser(db, 123)
     if getUserResult is not None:
@@ -16,6 +17,7 @@ def test_():
     assert getUserResult[2].strftime("%Y-%m-%d %H:%M:%S") == testingTime2
     assert getUserResult[3].strftime("%Y-%m-%d %H:%M:%S") == testingTime1
     assert getUserResult[5] == 1
+    assert getUserResult[6].strftime("%Y-%m-%d %H:%M:%S") == testingTime3
     assert addMoneyToUser(db, 123, 10)
     getUserResult = getUser(db, 123)
     assert getUserResult[1] == 1010
