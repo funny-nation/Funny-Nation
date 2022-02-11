@@ -4,6 +4,8 @@
 
 本文档规定了代码的具体风格，在开发Funny Nation时，为了让其他人看得懂你的代码，请认真遵守本文档的规范。
 
+如果你在代码中看到有人未遵守以下规定，记得提醒ta修改
+
 ### 2 命名
 
 #### 2.1 使用英文的驼峰命名法
@@ -85,9 +87,67 @@ def fun(i, j): # ❌
 # Zhe shi yi ge zhu shi ❌
 ```
 
-#### 每一个函数都需要一个注释
+#### 5.2 每一个函数都需要一个注释
 
 ```python
-def fun(i: int, j: int) ->:
+def fun(i: int, j: int) -> int: 
     return i + j
+❌
+```
+
+```python
+def fun(i: int, j: int) -> int: 
+    """
+    This is a function
+    :param i: a number, int
+    :param j: another number, int
+    :return: the result of two parameters add up together. int
+    """
+    return i + j
+✅
+```
+
+### 6 if的使用
+
+#### 6.1 尽可能避免嵌套if
+
+```python
+if i == 0:
+    if j == 0:
+        print(i + j)
+❌
+```
+
+```python
+if i == 0 and j == 0:
+    print(i + j)
+✅
+```
+
+#### 6.2 在controller中，if用于判断异常条件，而不是判断成功条件，且经可能用return来代替else
+
+```python
+if len(moneyStrings) == 0:
+    await message.channel.send("amountNotFound")
+    return
+
+if len(message.mentions) == 0:
+    await message.channel.send("userNotFound")
+    return
+
+await message.channel.send("Done")
+
+✅
+```
+
+```python
+if len(moneyStrings) != 0:
+    if len(message.mentions) != 0:
+        await message.channel.send("Done")
+    else:
+        await message.channel.send("userNotFound")
+else:
+    await message.channel.send("amountNotFound")
+    
+❌
 ```
