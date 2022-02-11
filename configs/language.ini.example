@@ -98,6 +98,7 @@ youGotNothing=?@user，你一分钱都没抢到
 
 [anonymityBoard]
 tooMuchTalk=你太话痨了，明天再来吧！
+noChannelHere=对不起，这个服务器没有匿名频道！
 
 [eventAward]
 awardPublish=?@user_name已发送领奖通知！参加?@event_name的玩家快来点击反应领奖啦！
