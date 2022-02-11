@@ -14,14 +14,20 @@ async def closeEvent(self: Client, message: Message, db: Connection, messageID: 
     myGuild: Guild = self.guilds[0]
     user: Member = await myGuild.fetch_member(author)
     rolesBelongsToMember: List[Role] = msgSender.roles
-    if eventAdmin['admin'] not in rolesBelongsToMember:
+    if eventAdmin['eventManger'] not in rolesBelongsToMember:
         msg = languageConfig['eventAward']['notEventAdmin'] \
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
 
+    event = eventAwardManagement.getEventAwardByName(db, eventName)
+    if event[4] == 1:
+        msg = languageConfig['eventAward']['AfterClose'] \
+            .replace('?@event_name', user.display_name)
+        await message.channel.send(msg)
+        return
 
-    eventAwardManagement.deletAwardByEventName(db, eventName)
+    eventAwardManagement.closeEvent(db, event[1])
     msg = languageConfig['eventAward']['closeEvent'] \
         .replace('?@event_name', user.display_name)
     await message.channel.send(msg)
