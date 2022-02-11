@@ -5,6 +5,7 @@ import json
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
 
 
+
 async def applyForAward(self: Client, db, event: RawReactionActionEvent):
     '''
 
