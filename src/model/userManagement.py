@@ -79,6 +79,7 @@ def editUser(db: Connection, userID: int, *,
     :param money: money
     :param lastCheckIn: last check in time
     :param lastEarnFromMessage: last message that earned money
+    :param llastAnonymousMsg: last anonymous message
     :return: True if no error
     """
     if db is None:
