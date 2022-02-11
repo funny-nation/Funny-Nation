@@ -23,4 +23,5 @@ channel=🌈𝐺𝐻𝑆大喇叭
 giftImgPath=img/gift/
 
 [anonymityBoard]
-channel=894462030663270434
+channelID=894462030663270434
+coolDownTime=86400
