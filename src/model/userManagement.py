@@ -70,7 +70,7 @@ def editUser(db: Connection, userID: int, *,
              lastCheckIn: str = None,
              lastEarnFromMessage: str = None,
              vipLevel: int = None,
-             lastAnonymousMsg: str = None,
+             lastAnonymousMsg: str = None
              ) -> bool:
     """
     Edit user information

@@ -12,7 +12,7 @@ def test_():
     if getUserResult is not None:
         assert deleteUser(db, 123) is True
     assert addNewUser(db, 123) is True
-    assert editUser(db, 123, money=1000, lastCheckIn=testingTime1, lastEarnFromMessage=testingTime2, vipLevel=1) is True
+    assert editUser(db, 123, money=1000, lastCheckIn=testingTime1, lastEarnFromMessage=testingTime2, vipLevel=1, lastAnonymousMsg=testingTime3) is True
     getUserResult = getUser(db, 123)
     assert getUserResult[2].strftime("%Y-%m-%d %H:%M:%S") == testingTime2
     assert getUserResult[3].strftime("%Y-%m-%d %H:%M:%S") == testingTime1
