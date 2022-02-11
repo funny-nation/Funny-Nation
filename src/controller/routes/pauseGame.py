@@ -43,7 +43,7 @@ async def pauseGame(self: Client, message: Message, casino: Casino, db: Connecti
         if table.game == 'holdem':
             table: HoldemTable
             databaseResult = databaseResult and addMoneyToUser(db, playerID, table.ante)
-            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.ante, cashFlowMsgConfig['blackJack']['holdemAnteRefund'])
+            databaseResult = databaseResult and addNewCashFlow(db, playerID, table.ante, cashFlowMsgConfig['holdem']['holdemAnteRefund'])
         casino.onlinePlayer.remove(playerID)
 
     if not databaseResult:
