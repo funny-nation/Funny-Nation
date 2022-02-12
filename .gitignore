@@ -166,3 +166,5 @@ configs/language.ini
 configs/config.ini
 
 yoyo.ini
+
+embedLib/*.py

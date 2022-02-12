@@ -3,6 +3,7 @@
 </div>
 <div align="center">
     <a href="https://discord.gg/uhAv4J4F7Z"><img src="https://img.shields.io/badge/Chat-Discord-7289da" alt="Our Discord"></a>
+    <a href="https://github.com/funny-nation/Funny-Nation/archive/refs/tags/v2.zip"><img src="https://img.shields.io/badge/Current stable vation-v2.0-339c9e" alt="Our Discord"></a>
     <a href="https://github.com/plbin97/Funny-Nation/actions"><img src="https://github.com/plbin97/Funny-Nation/actions/workflows/main.yml/badge.svg"></a>
 </div>
 
@@ -32,7 +33,7 @@
     <p>Require <code>python 3.8+</code> and <code>MySQL 8.0+</code></p>
     <p>Install dependency</p>
     <pre><code>pip install -r requirements.txt</code></pre>
-    <p>Create general configuration file</p>
+    <p>Create major configuration file</p>
     <pre><code>cp config.ini.example config.ini</code></pre>
     <p>Create migration configuration file</p>
     <pre><code>cp yoyo.ini.example yoyo.ini</code></pre>
@@ -41,7 +42,14 @@
     <pre><code>yoyo apply ./migrations</code></pre>
     <p style="font-size: smaller">* Remember to edit the configuration files and do the migrations before use.</p>
     <p>Start application</p>
-    <pre><code>python3.8 main.py</code></pre>
+    <pre><code>python main.py</code></pre>
+    <hr/>
+    <h3>Deploy your bot using Docker</h3>
+    <p>Build container</p>
+    <p style="font-size: smaller">* Remember that you should set up all your configuration files before building your container. </p>
+    <pre><code>docker build -t myBot .</code></pre>
+    <p>Run the container</p>
+    <pre><code>docker run -d myBot</code></pre>
 </div>
 <hr/>
 <div>
