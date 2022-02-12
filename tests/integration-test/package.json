@@ -1,10 +1,11 @@
 {
-  "name": "intergration-test-bot",
+  "name": "integration-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/Bot.ts"
   },
   "author": "JonnyyJ",
   "license": "ISC",
@@ -14,6 +15,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "discord.js": "^13.6.0"
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "ts-node": "^10.5.0"
   }
 }
