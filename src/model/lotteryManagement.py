@@ -129,7 +129,7 @@ def addNewLotteryRecipient(db: Connection, recipientId: int, msgId: int) -> bool
     return True
 
 
-def getLotteryRecipient(db: Connection, msgId: int) -> list or None:
+def getLotteryRecipient(db: Connection, msgId: int) -> list[int] or None:
     """
     Get a collection of recipient information
     :param db: database object instance

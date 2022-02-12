@@ -12,9 +12,9 @@ languageConfig = getLanguageConfig()
 
 async def initiateLottery(self: Client, message: Message, db: Connection, command: str):
     result: tuple = re.findall(f"^抽奖 (.+) ([\\-0-9]+) ([\\-0-9]+)$", command)[0]
-    name = result[0]
-    price = int(result[1])
-    quantity = int(result[2])
+    name: str = result[0]
+    price: int = int(result[1])
+    quantity: int = int(result[2])
     publisher: User = message.author
 
     # Lottery price check
@@ -30,7 +30,7 @@ async def initiateLottery(self: Client, message: Message, db: Connection, comman
     embed_msg = embedLib.lotteryAnnouncement.getEmbed(publisher, name, price, quantity)
     sent_message: Message = await message.channel.send(embed=embed_msg)
 
-    systemError = str(languageConfig['error']["dbError"])
+    systemError: str = str(languageConfig['error']["dbError"])
     response: bool = addNewLottery(db, publisher.id, sent_message.id, name, price * 100, quantity, 0)
 
     if response is False:
