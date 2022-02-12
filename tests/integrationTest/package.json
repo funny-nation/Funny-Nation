@@ -1,0 +1,19 @@
+{
+  "name": "intergration-test-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JonnyyJ",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.17",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
