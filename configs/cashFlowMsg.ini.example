@@ -25,3 +25,7 @@ buyVIP=购买VIP
 [luckyMoney]
 sendLuckMoney=发红包
 getLuckyMoney=红包
+
+[lottery]
+participatedLottery=参与抽奖消费
+withdrawnLottery=抽奖返还
