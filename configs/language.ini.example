@@ -83,7 +83,6 @@ askAdminForHelp=?@user，我好像没权限帮你加Tag，私聊一下管理员�
 
 [luckyMoney]
 notEnoughMoney=?@user，你不够钱
-luckyMoneySent=?@user的红包已发出，大家快来抢
 luckyMoneyDoesNotExist=?@user，红包好像找不到了
 luckyMoneyHasAlreadyBeenTaken=?@user，你来晚了，红包被抢完了
 youHaveAlreadyTaken=?@user，你已经拿过这个红包了

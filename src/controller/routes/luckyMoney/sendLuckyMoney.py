@@ -4,6 +4,7 @@ from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.luckyMoneyManagement import newLuckyMoney
 from src.utils.readConfig import getLanguageConfig, getMajorConfig, getCashFlowMsgConfig
+import embedLib.luckymoney
 
 async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: int, quantity: int):
     languageConfig = getLanguageConfig()
@@ -55,14 +56,15 @@ async def sendLuckyMoney(self: Client, message: Message, db: Connection, money: 
         await message.channel.send(msg)
         return
 
-    uuid = newLuckyMoney(db, memberObject.id, message.id, quantity, money)
+
+    embedMsg = embedLib.luckymoney.getEmbed(memberObject.display_name)
+
+    messageSent = await message.channel.send(embed=embedMsg)
+    uuid = newLuckyMoney(db, memberObject.id, messageSent.id, quantity, money)
     if uuid == '':
         msg = languageConfig['error']['dbError']
         await message.channel.send(msg)
         return
-
-    msg = languageConfig['luckyMoney']['luckyMoneySent'].replace('?@user', memberObject.display_name)
-    await message.channel.send(msg)
-    await message.add_reaction('💰')
+    await messageSent.add_reaction('💰')
 
 
