@@ -6,6 +6,7 @@ import configparser
 from discord import Client, Message, Guild, Member
 from pymysql import Connection
 from src.utils.readConfig import getLanguageConfig
+import embedLib.richList
 languageConfig = getLanguageConfig()
 
 
@@ -35,10 +36,8 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
             else:
                 userDisplayName: str = userObj.display_name
             moneyDisplay: float = leaderBoardData[i][1] / 100
-            msg = str(languageConfig['leaderBoard']["formatInLine"])\
-                .replace("?@user", f" {userDisplayName} ")\
-                .replace("?@amount", f"{moneyDisplay}")
+            embedMsg = embedLib.richList.getEmbed(userDisplayName, moneyDisplay, i+1)
+            messageSendBack += embedMsg
 
-            messageSendBack += f"{i + 1}:" + msg + "\n"
 
-    await message.channel.send(messageSendBack)
+    await message.channel.send(embed = messageSendBack)
