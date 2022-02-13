@@ -1,11 +1,11 @@
 from src.utils.casino.Casino import Casino
 from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-from discord import Client, Guild, Role
+from discord import Client, Guild, Role, TextChannel
 from src.utils.fetchChannel import fetchAnnouncementChannel
 from src.utils.getVipRoles import getVipRoles
-from src.utils.readAdminList import getAdmin
 from src.utils.getEventAdminRole import getEventAdminRole
 from loguru import logger
+from src.utils.getAnonymityBoardChannel import getAnonymityBoardChannel
 
 
 class Storage:
@@ -16,8 +16,8 @@ class Storage:
         self.vipRoles = {}
         self.casino: Casino = Casino()
         self.gamePlayerWaiting = GamePlayerWaiting()
-        self.admins = []
-        self.eventRoles = {}
+        self.adminRole = {}
+        self.anonymityBoardChannel = None
 
 
     async def initialize(self, client: Client):
@@ -31,10 +31,11 @@ class Storage:
         self.vipRoles = await getVipRoles(myGuild)
         if len(self.vipRoles) != 0:
             logger.info("Fetched VIP roles")
-        self.admins = await getAdmin(client)
-        if len(self.admins) != 0:
+        self.adminRole = await getEventAdminRole(myGuild)
+        logger.info(self.adminRole)
+        if len(self.adminRole) != 0:
             logger.info("Fetched Administrators")
-        self.eventRoles = await getEventAdminRole(myGuild)
-        logger.info(self.eventRoles)
-        if len(self.eventRoles) != 0:
-            logger.info("Fetched eventAdministrators")
+        self.anonymityBoardChannel = getAnonymityBoardChannel(client)
+        if self.anonymityBoardChannel is not None:
+            logger.info("Fetched Anonymity Board Channel")
+
