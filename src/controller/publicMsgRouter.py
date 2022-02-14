@@ -11,6 +11,7 @@ from src.controller.routes.holdem.rise import holdemRise
 from src.controller.routes.transferMoney import transferMoney
 from src.controller.routes.sendGift import sendGift
 from src.controller.routes.buyVIP import buyVIP
+from src.controller.routes.lottery.initiateLottery import initiateLottery
 
 from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.routes.startGame import gameStartByTableOwner
@@ -117,4 +118,7 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         return
     if re.match(f"^掀桌$", command):
         await pauseGame(self, message, storage.casino, db, storage.gamePlayerWaiting)
+        return
+    if re.match(f"^抽奖 .+ [\\-0-9]+ [\\-0-9]+$", command):
+        await initiateLottery(self, message, db, command)
         return
