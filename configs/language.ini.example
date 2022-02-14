@@ -116,4 +116,14 @@ alreadyApply=?@user_name，已经收到你的申请啦！稍安勿躁！
 tryGetAward=?@user_name，正在申请?@event_name的领奖，奖金?@money
 notAdmian=?@user_name， 你不是管理员
 
+[lottery]
+priceError=抽奖券金额只能是大于等于0的整数哦！
+quantityError=开奖人数只能是大于等于1的整数哦！
+notEnoughMoney=?@user_name 你的余额不足，无法购买抽奖券~
+alreadyParticipated=?@user_name 你已经参加过抽奖啦，不能重复抽奖哦！
+joinedLottery=?@user_name 已成功参与抽奖！
+onlyPublisherCanOpen=只有发布者才可以开奖哦~
+onlyPublisherCanClose=只有发布者才可以关闭抽奖哦~
+lotteryClosed=抽奖已经关闭啦！
+notEnoughPeople=人数好像不够，等一下吧！
 

@@ -19,6 +19,9 @@ from src.controller.routes.eventAward.rejectionAward import rejectAward
 from src.controller.routes.eventAward.applyForAward import applyForAward
 import src.model.eventAwardManagement as eventAwardManagement
 from src.controller.routes.eventAward.approveAward import approveAward
+from src.controller.routes.lottery.joinLottery import joinLottery
+from src.controller.routes.lottery.openLotteryResult import openLotteryResult
+from src.controller.routes.lottery.closeLottery import closeLottery
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
     myGuild: Guild = self.guilds[0]
@@ -42,6 +45,19 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
 
     if emoji.name == '💰':
         await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
+        return
+
+    # lottery-related
+    if emoji.name == '🎟️':
+        await joinLottery(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
+        return
+
+    if emoji.name == '🟩':
+        await openLotteryResult(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
+        return
+
+    if emoji.name == '🟥':
+        await closeLottery(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
         return
 
     # For game
