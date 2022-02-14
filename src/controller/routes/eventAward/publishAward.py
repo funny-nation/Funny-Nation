@@ -35,9 +35,9 @@ async def publishAward(self: Client, message: Message, db: Connection, money: in
         await message.channel.send(msg)
         return
 
-    msg: Message = languageConfig['eventAward']['awardPublish'] \
+    msg = languageConfig['eventAward']['awardPublish'] \
         .replace('?@user_name', user.display_name) \
         .replace('?@event_name', eventName)
-    await message.channel.send(msg)
-    await msg.add_reaction('🎲')
+    messageSent = await message.channel.send(msg)
+    await messageSent.add_reaction('🎲')
 

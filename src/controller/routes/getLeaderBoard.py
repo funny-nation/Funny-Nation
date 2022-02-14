@@ -24,8 +24,6 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
         systemError = str(languageConfig['error']["dbError"])
         messageSendBack: str = systemError
     else:
-        title = str(languageConfig["leaderBoard"]["title"])
-        messageSendBack = title + "\n"
         for i in range(0, len(leaderBoardData)):
             try:
                 userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
@@ -36,8 +34,5 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
             else:
                 userDisplayName: str = userObj.display_name
             moneyDisplay: float = leaderBoardData[i][1] / 100
-            embedMsg = embedLib.richList.getEmbed(userDisplayName, moneyDisplay, i+1)
-            messageSendBack += embedMsg
-
-
-    await message.channel.send(embed = messageSendBack)
+            embedMsg = embedLib.richList.getEmbed(userDisplayName, moneyDisplay, )
+            await message.channel.send(embed=embedMsg)
