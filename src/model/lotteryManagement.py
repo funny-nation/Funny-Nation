@@ -1,5 +1,6 @@
 from loguru import logger
 from datetime import datetime
+from typing import List
 
 from pymysql import Connection
 from pymysql.cursors import Cursor
@@ -129,7 +130,7 @@ def addNewLotteryRecipient(db: Connection, recipientId: int, msgId: int) -> bool
     return True
 
 
-def getLotteryRecipient(db: Connection, msgId: int) -> list[int] or None:
+def getLotteryRecipient(db: Connection, msgId: int) -> List[int] or None:
     """
     Get a collection of recipient information
     :param db: database object instance
@@ -141,7 +142,7 @@ def getLotteryRecipient(db: Connection, msgId: int) -> list[int] or None:
     try:
         cursor: Cursor = db.cursor()
         cursor.execute(f"SELECT * FROM `lotteryRecipient` WHERE `msgID` = '{msgId}';")
-        result: list = list(cursor.fetchall())
+        result: List[int] = list(cursor.fetchall())
     except Exception as err:
         logger.error(err)
         return None
