@@ -6,9 +6,16 @@ from src.utils.getVipRoles import getVipRoles
 from src.utils.getEventAdminRole import getEventAdminRole
 from loguru import logger
 from src.utils.getAnonymityBoardChannel import getAnonymityBoardChannel
+import random
 
 
 class Storage:
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.instance is None:
+            cls.instance = super(Storage, cls).__new__(cls)
+        return cls.instance
 
     def __init__(self):
         self.boostedRole = None
@@ -18,6 +25,7 @@ class Storage:
         self.gamePlayerWaiting = GamePlayerWaiting()
         self.adminRole = {}
         self.anonymityBoardChannel = None
+        self.ramdomPrivateKeyForAnonymityBoard = random.randint(100000000, 999999999)
 
 
     async def initialize(self, client: Client):
