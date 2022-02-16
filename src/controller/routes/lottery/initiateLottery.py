@@ -27,7 +27,7 @@ async def initiateLottery(self: Client, message: Message, db: Connection, comman
         await publisher.send(languageConfig['lottery']['quantityError'])
         return
 
-    embed_msg = embedLib.lotteryAnnouncement.getEmbed(publisher, name, price, quantity)
+    embed_msg = embedLib.lotteryAnnouncement.getEmbed(publisher.display_name, name, price, quantity)
     sent_message: Message = await message.channel.send(embed=embed_msg)
 
     systemError: str = str(languageConfig['error']["dbError"])
