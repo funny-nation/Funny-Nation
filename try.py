@@ -4,11 +4,10 @@ class Test:
     def __new__(cls):
         if cls.instance is None:
             cls.instance = super(Test, cls).__new__(cls)
+            cls.instance.i = 1
+            cls.instance.j = 2
         return cls.instance
 
-    def __init__(self):
-        self.i = 1
-        self.j = 2
 
 
 object1 = Test()
@@ -19,4 +18,5 @@ print(object1 is obj2)
 print(obj2.j)
 
 obj2.j = 123
-print(object1.j)
+obj3 = Test()
+print(obj3.j)
