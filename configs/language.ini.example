@@ -83,13 +83,6 @@ askAdminForHelp=?@user，我好像没权限帮你加Tag，私聊一下管理员�
 
 [luckyMoney]
 notEnoughMoney=?@user，你不够钱
-luckyMoneyDoesNotExist=?@user，红包好像找不到了
-luckyMoneyHasAlreadyBeenTaken=?@user，你来晚了，红包被抢完了
-youHaveAlreadyTaken=?@user，你已经拿过这个红包了
-congratulationYouHaveTake=?@user，恭喜你，你抢到了?@money元
-soSorryThatYouHaveTake0=?@user，你太可怜了，一分钱都没抢到
-noLuckMoneyLeft=?@sender的红包已经被抢完了
-theMostLuckyGuy=?@user是运气王，ta抢到了?@money元
 moneyCannotBeZero=?@user，记得往红包里塞点钱
 quantityCannotBeZero=?@user，不能是0个红包哦
 moneyIsTooLow=?@user，钱太少了
