@@ -142,6 +142,7 @@ def getLotteryRecipient(db: Connection, msgId: int) -> List[int] or None:
     try:
         cursor: Cursor = db.cursor()
         cursor.execute(f"SELECT * FROM `lotteryRecipient` WHERE `msgID` = '{msgId}';")
+
         result: List[int] = list(cursor.fetchall())
     except Exception as err:
         logger.error(err)

@@ -4,14 +4,17 @@ from discord import Client, Message, Member, PartialEmoji, User
 from pymysql import Connection
 
 import embedLib.lotteryResult
+
 from typing import List
+
 from src.model.lotteryManagement import getLottery, updateLottery, getLotteryRecipient
 from src.utils.readConfig import getLanguageConfig
 
 languageConfig = getLanguageConfig()
 
 
-async def openLotteryResult(self: Client, db: Connection, userId: int, msgId: int, member: Member, channelId: int, emoji: PartialEmoji):
+async def openLotteryResult(self: Client, db: Connection, userId: int, msgId: int, member: Member, channelId: int,
+                            emoji: PartialEmoji):
     recipientIdList: List[int] = list(map(lambda x: x[0], getLotteryRecipient(db, msgId)))
     lotteryInfo: tuple = getLottery(db, msgId)
     reward: str = lotteryInfo[2]
