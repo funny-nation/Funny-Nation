@@ -3,10 +3,18 @@ from discord import Embed
 
 def getEmbed(userName: str) -> Embed:
     embed = Embed()
-    embed.title = "抢红包啦！" #大标题
-    embed.description = f"{userName}的红包已经发出"
-    embed.add_field(name="点击反应抢红包啦！", value="↓", inline=False)
+    embed.title = f"抢红包啦！\n{userName}的红包已经发出!" #大标题
+    embed.description = "点击反应抢红包啦！"
     embed.colour = 0xff2121 #0x留着，后面加颜色编号
     embed.set_thumbnail(url="https://www.funnynation.org/wp-content/uploads/2022/02/红包.png") #右上角的图
 
     return embed
+
+def newPerson(embed: Embed, userName: str, amountOfMoneyForDisplay: str):
+    embed.add_field(name=f"恭喜{userName}！", value=f"你抢到了{amountOfMoneyForDisplay}元", inline=False)
+
+def newPersonWithZero(embed: Embed, userName: str):
+    embed.add_field(name=f"太惨了{userName}！", value=f"你一分钱都没抢到", inline=False)
+
+def addBestLuck(embed: Embed, userName: str, amountOfMoneyForDisplay: str):
+    embed.set_footer(text=f"运气王{userName}！你抢到了最大的红包！{amountOfMoneyForDisplay}元！")
