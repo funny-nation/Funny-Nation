@@ -17,6 +17,14 @@ headRangeInt = headRange['end'] - headRange['start']
 bodyRangeInt = bodyRange['end'] - bodyRange['start']
 
 def getHashedChineseNameAndColorByUserID(userID: int) -> List[str]:
+	"""
+	Get hashed chinese name and hashed color for a user's id
+	:param userID: int
+	:return:
+	list of name and a hex color string.
+	for example:
+	["小黑", "ffa1bb"]
+	"""
 	storage = Storage()
 	hashedUserID: int = int(hashlib.sha256(str(userID).encode('utf-8')).hexdigest(), 16)
 	hashedUserID += storage.randomPrivateShiftForAnonymityBoard
