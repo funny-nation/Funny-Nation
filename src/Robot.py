@@ -12,7 +12,6 @@ from src.controller.publicMsgRouter import publicMsgRouter
 from src.controller.privateMsgRouter import privateMsgRouter
 from src.controller.msgReactionRouter import msgReactionRouter
 from src.controller.msgReactionDeleteRouter import msgReactionDeleteRouter
-from src.utils.printMemoryStatus.main import PrintMemoryLogThread
 from src.Storage import Storage
 
 class Robot(discord.Client):
@@ -27,8 +26,6 @@ class Robot(discord.Client):
         await self.storage.initialize(self)
 
         addMoneyToUserInVoiceChannels(self)
-        printMemoryLog = PrintMemoryLogThread(self.storage.casino, self.storage.gamePlayerWaiting)
-        printMemoryLog.start()
 
     async def on_message(self, message: Message):
         if message.author == self.user:
