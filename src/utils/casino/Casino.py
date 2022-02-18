@@ -6,9 +6,15 @@ from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 
 
 class Casino:
-    def __init__(self):
-        self.tables = {}
-        self.onlinePlayer = []
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.instance is None:
+            cls.instance = super(Casino, cls).__new__(cls)
+            cls.instance.tables = {}
+            cls.instance.onlinePlayer = []
+        return cls.instance
+
 
     def getTableNumber(self) -> int:
         return len(self.tables)
