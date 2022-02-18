@@ -34,9 +34,9 @@ class Robot(discord.Client):
         if message.author == self.user:
             return
         db: Connection = makeDatabaseConnection()
-        logger.info(f"{message.author.name} : {message.content}")
-        if message.channel != message.author.dm_channel:
 
+        if message.channel != message.author.dm_channel:
+            logger.info(f"{message.author.name} : {message.content}")
             # Pre-route
             isBooster: bool = checkIfMessagerIsBooster(self.storage.boostedRole, message.author)
             registerAndAddMoneyWhenSendingMsg(message.author.id, isBooster, db)

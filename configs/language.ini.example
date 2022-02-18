@@ -89,7 +89,7 @@ moneyIsTooLow=?@user，钱太少了
 youGotNothing=?@user，你一分钱都没抢到
 
 [anonymityBoard]
-tooMuchTalk=你太话痨了，明天再来吧！
+messageSent=您的匿名信息已发送
 noChannelHere=对不起，这个服务器没有匿名频道！
 
 [eventAward]

@@ -56,7 +56,8 @@ def addMoneyToUserForMessage(db, userInfo) -> bool:
     lastEarnFromMessageTimeStamp: float = datetime.timestamp(userInfo[2])
     moneyAdded: int = int(userInfo[1]) + int(generalConfig['moneyEarning']['perMessage'])
     if (nowTimeStamp - lastEarnFromMessageTimeStamp) >= 60:
-        editUserResult: bool = editUser(db, userInfo[0], money=moneyAdded, lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
+        editUserResult: bool = editUser(db, userInfo[0], money=moneyAdded,
+                                        lastEarnFromMessage=now.strftime("%Y-%m-%d %H:%M:%S"))
         if editUserResult:
             logger.info(f"Added {generalConfig['moneyEarning']['perMessage']} to user {str(userInfo[0])}")
             if not addNewCashFlow(db, userInfo[0], generalConfig['moneyEarning']['perMessage'], cashFlowMsgConfig['dailyMoneyEarning']['earnMoneyFromMessage']):
