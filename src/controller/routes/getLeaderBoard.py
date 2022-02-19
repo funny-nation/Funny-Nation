@@ -3,10 +3,9 @@ import os
 
 from src.model.userManagement import getLeaderBoard
 import configparser
-from discord import Client, Message, Guild, Member, Embed
+from discord import Client, Message, Guild, Member
 from pymysql import Connection
 from src.utils.readConfig import getLanguageConfig
-import embedLib.leaderBoard as leaderBoardEmbed
 languageConfig = getLanguageConfig()
 
 
@@ -20,25 +19,26 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     """
     leaderBoardData: tuple = getLeaderBoard(db)
     myGuild: Guild = self.guilds[0]
-
     if leaderBoardData is None:
-        await message.channel.send(languageConfig['error']["dbError"])
-        return
+        systemError = str(languageConfig['error']["dbError"])
+        messageSendBack: str = systemError
+    else:
+        title = str(languageConfig["leaderBoard"]["title"])
+        messageSendBack = title + "\n"
+        for i in range(0, len(leaderBoardData)):
+            try:
+                userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
+            except Exception as err:
+                userObj = None
+            if userObj is None:
+                userDisplayName = str(languageConfig['leaderBoard']["alternativeNameForNotFound"])
+            else:
+                userDisplayName: str = userObj.display_name
+            moneyDisplay: float = leaderBoardData[i][1] / 100
+            msg = str(languageConfig['leaderBoard']["formatInLine"])\
+                .replace("?@user", f" {userDisplayName} ")\
+                .replace("?@amount", f"{moneyDisplay}")
 
-    description: str = ""
+            messageSendBack += f"{i + 1}:" + msg + "\n"
 
-    for i in range(0, len(leaderBoardData)):
-        userID: int = leaderBoardData[i][0]
-        money: int = leaderBoardData[i][1]
-        try:
-            member: Member = await myGuild.fetch_member(userID)
-            displayName = member.display_name
-        except Exception:
-            displayName = languageConfig['leaderBoard']['alternativeNameForNotFound']
-        description += f"{i + 1}: {displayName} - {money / 100}\n"
-
-    embed: Embed = leaderBoardEmbed.getEmbed(description)
-    await message.channel.send(embed=embed)
-
-
-
+    await message.channel.send(messageSendBack)
