@@ -1,0 +1,9 @@
+from discord import Embed
+from typing import List
+
+def getEmbed(description: str) -> Embed:
+    embed = Embed()
+    embed.title = "GHS小花园富豪榜" #大标题
+    embed.description = description
+    embed.colour = 0xfff18a #0x留着，后面加颜色编号
+    return embed
