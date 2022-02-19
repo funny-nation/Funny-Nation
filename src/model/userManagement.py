@@ -18,7 +18,7 @@ def addNewUser(db: Connection, userID: int) -> bool:
     currentTime: str = now.strftime("%Y-%m-%d %H:%M:%S")
     try:
         cursor: Cursor = db.cursor()
-        cursor.execute(f"INSERT INTO `user` (`userID`, `money`, `lastEarnFromMessage`, `lastCheckIn`, `robSince`, `vipLevel`, `lastAnonymousMsg`) VALUES ('{userID}', '0', '{currentTime}', '{currentTime}', '{currentTime}', 0, '{currentTime}');")
+        cursor.execute(f"INSERT INTO `user` (`userID`, `money`, `lastEarnFromMessage`, `lastCheckIn`, `robSince`, `vipLevel`) VALUES ('{userID}', '0', '{currentTime}', '{currentTime}', '{currentTime}', 0);")
         db.commit()
     except Exception as err:
         logger.error(err)
@@ -69,8 +69,7 @@ def editUser(db: Connection, userID: int, *,
              money: int = None,
              lastCheckIn: str = None,
              lastEarnFromMessage: str = None,
-             vipLevel: int = None,
-             lastAnonymousMsg: str = None
+             vipLevel: int = None
              ) -> bool:
     """
     Edit user information
@@ -79,7 +78,6 @@ def editUser(db: Connection, userID: int, *,
     :param money: money
     :param lastCheckIn: last check in time
     :param lastEarnFromMessage: last message that earned money
-    :param llastAnonymousMsg: last anonymous message
     :return: True if no error
     """
     if db is None:
@@ -93,8 +91,6 @@ def editUser(db: Connection, userID: int, *,
         sqlFragment += f" `lastCheckIn` = '{lastCheckIn}',"
     if vipLevel is not None:
         sqlFragment += f" `vipLevel` = {vipLevel},"
-    if lastAnonymousMsg is not None:
-        sqlFragment += f" `lastAnonymousMsg` = '{lastAnonymousMsg}',"
 
     try:
         cursor: Cursor = db.cursor()

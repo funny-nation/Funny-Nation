@@ -12,7 +12,6 @@ from src.controller.publicMsgRouter import publicMsgRouter
 from src.controller.privateMsgRouter import privateMsgRouter
 from src.controller.msgReactionRouter import msgReactionRouter
 from src.controller.msgReactionDeleteRouter import msgReactionDeleteRouter
-from src.utils.printMemoryStatus.main import PrintMemoryLogThread
 from src.Storage import Storage
 
 class Robot(discord.Client):
@@ -27,16 +26,14 @@ class Robot(discord.Client):
         await self.storage.initialize(self)
 
         addMoneyToUserInVoiceChannels(self)
-        printMemoryLog = PrintMemoryLogThread(self.storage.casino, self.storage.gamePlayerWaiting)
-        printMemoryLog.start()
 
     async def on_message(self, message: Message):
         if message.author == self.user:
             return
         db: Connection = makeDatabaseConnection()
-        logger.info(f"{message.author.name} : {message.content}")
-        if message.channel != message.author.dm_channel:
 
+        if message.channel != message.author.dm_channel:
+            logger.info(f"{message.author.name} : {message.content}")
             # Pre-route
             isBooster: bool = checkIfMessagerIsBooster(self.storage.boostedRole, message.author)
             registerAndAddMoneyWhenSendingMsg(message.author.id, isBooster, db)
