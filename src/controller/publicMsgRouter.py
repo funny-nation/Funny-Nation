@@ -24,6 +24,7 @@ from src.controller.routes.minusMoneyAdmin import minusMoneyAdmin
 from src.controller.routes.luckyMoney.sendLuckyMoney import sendLuckyMoney
 from src.controller.routes.eventAward.publishAward import publishAward
 from src.controller.routes.eventAward.closeEvent import closeEvent
+from src.controller.routes.test import test
 import src.Robot
 
 from discord import Client, Message, TextChannel
@@ -66,6 +67,9 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         return
     if re.match(f"^账单 .+", command):
         await checkCashFlowWithFilter(self, message, db, command)
+        return
+    if re.match(f"^测试 .+", command):
+        await test(self, message)
         return
     if re.match(f"^转账 [0-9]+\.?[0-9]* \<\@\!?[0-9]+\>$", command):
         await transferMoney(self, db, message, command)
