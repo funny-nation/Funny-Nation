@@ -101,6 +101,7 @@
 ## 概念
 
 **Model** - 对于数据库的操作，路径在```/src/model```。
+* 当使用时，请
 
 **Router** - 路由，类似于HTTP的路由，路由器位于```/src/controller/```下，总共四个路由器（公共消息路由，私聊消息路由，Reaction添加路由，Reaction删除路由），然后这四个路由器分别路由到```src/controller/routes```下面的模块中。
 

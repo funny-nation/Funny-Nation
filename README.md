@@ -33,8 +33,10 @@
     <p>Require <code>python 3.8+</code> and <code>MySQL 8.0+</code></p>
     <p>Install dependency</p>
     <pre><code>pip install -r requirements.txt</code></pre>
-    <p>Create major configuration file</p>
-    <pre><code>cp config.ini.example config.ini</code></pre>
+    <p>Create all configuration files by copying from <code>configs/*.ini.example</code> to <code>configs/*.ini</code></p>
+    <pre><code>cp configs/config.ini.example configs/config.ini<br>cp configs/admins.ini.example configs/admins.ini<br>...</code></pre>
+    <p>Create embed template files by copying from <code>embedLib/*.py.example</code> to <code>embedLib/*.py</code></p>
+    <pre><code>cp embedLib/example.py.example embedLib/example.py<br>cp embedLib/luckymoney.py.example embedLib/luckymoney.py<br>...</code></pre>
     <p>Create migration configuration file</p>
     <pre><code>cp yoyo.ini.example yoyo.ini</code></pre>
     <p style="font-size: smaller">* You might need to manually install yoyo-migrations. </p>
