@@ -19,26 +19,17 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
     """
     leaderBoardData: tuple = getLeaderBoard(db)
     myGuild: Guild = self.guilds[0]
+    description: str = ""
     if leaderBoardData is None:
         systemError = str(languageConfig['error']["dbError"])
-        messageSendBack: str = systemError
-    else:
-        title = str(languageConfig["leaderBoard"]["title"])
-        messageSendBack = title + "\n"
-        for i in range(0, len(leaderBoardData)):
-            try:
-                userObj: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
-            except Exception as err:
-                userObj = None
-            if userObj is None:
-                userDisplayName = str(languageConfig['leaderBoard']["alternativeNameForNotFound"])
-            else:
-                userDisplayName: str = userObj.display_name
-            moneyDisplay: float = leaderBoardData[i][1] / 100
-            msg = str(languageConfig['leaderBoard']["formatInLine"])\
-                .replace("?@user", f" {userDisplayName} ")\
-                .replace("?@amount", f"{moneyDisplay}")
+        await message.channel.send(systemError)
+        return
 
-            messageSendBack += f"{i + 1}:" + msg + "\n"
+    for i in range(0, len(leaderBoardData)):
+        userName: Member = myGuild.get_member(leaderBoardData[i][0])
+        money: float = leaderBoardData[i][1] / 100
+        description += f"{i+1}: {userName} - {money}元\n"
+        
 
-    await message.channel.send(messageSendBack)
+
+        await message.channel.send(description)
