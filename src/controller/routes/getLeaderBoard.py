@@ -2,10 +2,10 @@ import sys
 import os
 
 from src.model.userManagement import getLeaderBoard
-import configparser
 from discord import Client, Message, Guild, Member
 from pymysql import Connection
 from src.utils.readConfig import getLanguageConfig
+import embedLib.leaderBoard as leaderBoard
 languageConfig = getLanguageConfig()
 
 
@@ -26,10 +26,16 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
         return
 
     for i in range(0, len(leaderBoardData)):
-        userName: Member = myGuild.get_member(leaderBoardData[i][0])
+        try:
+            user: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
+        except Exception as err:
+            user = None
+        if user is None:
+            userName = str(languageConfig['leaderBoard']["alternativeNameForNotFound"])
+        else:
+            userName = user.display_name
         money: float = leaderBoardData[i][1] / 100
         description += f"{i+1}: {userName} - {money}元\n"
         
-
-
-        await message.channel.send(description)
+    embed = leaderBoard.getEmbed(description)
+    await message.channel.send(embed=embed)
