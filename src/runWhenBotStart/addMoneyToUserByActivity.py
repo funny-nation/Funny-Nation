@@ -4,7 +4,7 @@ from pymysql import Connection
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
 from src.model.activityStatManagement import getActivityStatByUser, getAllActivityStat, deleteAllActivityStat
-from src.model.serverInfoManagement import getOnlineMinute
+from src.model.serverInfoManagement import getOnlineMinute, addMinuteOnlineMinute
 from loguru import logger
 import math
 from src.model.userManagement import addMoneyToUser
@@ -40,17 +40,19 @@ def __helper():
             logger.error(f"Cannot fetch server online time from database. ")
             continue
 
+        addMinuteOnlineMinute(db, int(generalConfig['moneyEarning']['earningPeriodInMinute']))
 
         totalReducingPeriodPassed = serverOnlineTime // int(generalConfig['moneyEarning']['reducePeriodInMinute'])
         initialPot = int(generalConfig['moneyEarning']['initialPeriodEarning'])
-        reduceFactorBetweenPeriods = int(generalConfig['moneyEarning']['reduceFactorBetweenPeriods'])
-        potInThisPeriod = initialPot * (reduceFactorBetweenPeriods ** (totalReducingPeriodPassed + 1))
+        reduceFactorBetweenPeriods = float(generalConfig['moneyEarning']['reduceFactorBetweenPeriods'])
+        potInThisPeriod = initialPot * (reduceFactorBetweenPeriods ** totalReducingPeriodPassed)
 
         moneyDistribution = {}
 
         activityStats = getAllActivityStat(db)
 
         if len(activityStats) == 0:
+            logger.info(f"One earning period passed; no one earning this")
             continue
 
         distributionSum = 0
@@ -64,11 +66,13 @@ def __helper():
             distributionSum += moneyDistributionForThisUser
 
             moneyDistribution[userID] = moneyDistributionForThisUser
-
+        totalMoneyAdded = 0
         for userID in moneyDistribution:
-            moneyAdd = math.ceil((distributionSum / moneyDistribution[userID]) * potInThisPeriod)
+            moneyAdd = round((moneyDistribution[userID] / distributionSum) * potInThisPeriod)
+            totalMoneyAdded += moneyAdd
             addMoneyToUser(db, userID, moneyAdd)
             addNewCashFlow(db, userID, moneyAdd, cashFlowMsgConfig['dailyMoneyEarning']['onlineEarning'])
 
         deleteAllActivityStat(db)
         db.close()
+        logger.info(f"One earning period passed; there are {len(activityStats)} users totally receive {totalMoneyAdded}")
