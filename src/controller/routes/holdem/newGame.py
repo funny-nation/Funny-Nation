@@ -2,15 +2,13 @@ from discord import Client, Message, Member, TextChannel
 from pymysql import Connection
 from loguru import logger
 
-from src.controller.routes.pauseGame import pauseGame
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.model.userManagement import addMoneyToUser, getUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.holdemRecordManagement import newHoldemRecord
 
-from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.utils.readConfig import getCashFlowMsgConfig
 cashFlowMsgConfig = getCashFlowMsgConfig()
 

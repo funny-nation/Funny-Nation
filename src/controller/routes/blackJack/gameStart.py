@@ -1,7 +1,7 @@
 from discord import DMChannel, Client, Message, Member, Guild
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.casino.table.BlackJackTable import BlackJackTable
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.blackJack.stay import blackJackStay
 from src.utils.casino.Casino import Casino
 from loguru import logger

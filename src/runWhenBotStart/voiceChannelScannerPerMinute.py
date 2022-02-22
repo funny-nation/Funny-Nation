@@ -1,6 +1,7 @@
 import os
 import time
 import _thread
+from threading import Thread
 
 from loguru import logger
 from discord import Client, Guild, VoiceChannel, VoiceState
@@ -9,18 +10,29 @@ from typing import Dict, List
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.model.userManagement import getUser, addNewUser, addMoneyToUser
-from src.model.cashFlowManagement import addNewCashFlow
+from src.model.activityStatManagement import addActivityPointToUser, getActivityStatByUser, newActivityStatForUser
 from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
 generalConfig = getGeneralConfig()
 cashFlowMsgConfig = getCashFlowMsgConfig()
 
+def voiceChannelScannerPerMinute(self: Client):
+    """
+    Called when bot start
+    This function would scan voice channel once per second, and add activity point to whom in voice channel.
+    :param self:
+    :return:
+    """
+    _thread.start_new_thread(__helperThreat, (self, ))
 
-def addMoneyToUserInVoiceChannels(self: Client):
-    _thread.start_new_thread(helperThreat, (self, ))
 
-
-def helperThreat(self: Client):
+def __helperThreat(self: Client):
+    """
+    Thread helper function for addActivityPointWhenUserOnVoiceChannelPerMinute
+    :param self:
+    :return:
+    """
     while True:
+        time.sleep(60)
         myGuild: Guild = self.guilds[0]
         voiceChannels: List[VoiceChannel] = myGuild.voice_channels
         db: Connection = makeDatabaseConnection()
@@ -36,24 +48,27 @@ def helperThreat(self: Client):
                 userInfo: tuple = getUser(db, userID)
                 # Check if user existed
                 if userInfo is None:
-                    # not existed? create a new account
                     if not addNewUser(db, userID):
                         logger.error(f"Cannot create new account to {userID} when sending message. ")
                     else:
                         logger.info(f"New account created for user {userID}")
+
+                if not getActivityStatByUser(db, userID):
+                    if not newActivityStatForUser(db, userID):
+                        logger.error(f"Cannot create new activity stat for user {userID}")
+                        continue
+
+                # Check if user mute
                 if voiceStates[userID].self_mute:
                     continue
+
                 if voiceStates[userID].self_stream:
-                    if addMoneyToUser(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoiceWithStream'])):
-                        logger.info(f"Added {generalConfig['moneyEarning']['perMinuteInVoiceWithStream']} to {userID}")
-                        if not addNewCashFlow(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoiceWithStream']), cashFlowMsgConfig['dailyMoneyEarning']['earnFromStream']):
-                            logger.error(f"Cannot add to cash flow for {userID}")
-                    else:
-                        logger.error(f"Cannot add money to user {userID} while streaming")
+                    if not addActivityPointToUser(db, userID, generalConfig['moneyEarning']['activityPointPerMinuteInStream']):
+                        logger.error(f"Cannot add activity point for user {userID}")
+                    continue
+
                 else:
-                    if addMoneyToUser(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoice'])):
-                        logger.info(f"Added {generalConfig['moneyEarning']['perMinuteInVoice']} to {userID}")
-                        if not addNewCashFlow(db, userID, int(generalConfig['moneyEarning']['perMinuteInVoice']), cashFlowMsgConfig['dailyMoneyEarning']['earnFromVoice']):
-                            logger.error(f"Cannot add to cash flow for {userID}")
+                    if not addActivityPointToUser(db, userID, generalConfig['moneyEarning']['activityPointPerMinuteInChannel']):
+                        logger.error(f"Cannot add activity point for user {userID}")
+                    continue
         db.close()
-        time.sleep(60)

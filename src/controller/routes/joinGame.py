@@ -1,11 +1,11 @@
-from discord import Client, Message, Reaction, TextChannel, User, Member
+from discord import Client, Message, TextChannel, Member
 from pymysql import Connection
 
 from src.controller.routes.holdem.joinGame import joinHoldemGame
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table import Table
 from src.controller.routes.blackJack.joinGame import joinBlackJack
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.readConfig import getLanguageConfig
 
 languageConfig = getLanguageConfig()

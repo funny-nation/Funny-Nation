@@ -8,7 +8,7 @@ from discord import Client, Message
 from pymysql import Connection
 from src.controller.routes.pauseGame import pauseGame
 from src.utils.casino.table.Table import Table
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 import src.model.blackJackRecordManagement as bjRecords
 import src.model.cashFlowManagement as cashFlow
 from src.utils.casino.Casino import Casino
