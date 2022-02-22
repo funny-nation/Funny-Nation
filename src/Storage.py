@@ -1,11 +1,11 @@
 from src.utils.casino.Casino import Casino
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
-from discord import Client, Guild, Role, TextChannel
-from src.utils.fetchChannel import fetchAnnouncementChannel
-from src.utils.getVipRoles import getVipRoles
-from src.utils.getEventAdminRole import getEventAdminRole
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from discord import Client, Guild, Role
+from src.runWhenBotStart.fetchChannel import fetchAnnouncementChannel
+from src.runWhenBotStart.getVipRoles import getVipRoles
+from src.runWhenBotStart.getEventAdminRole import getEventAdminRole
 from loguru import logger
-from src.utils.getAnonymityBoardChannel import getAnonymityBoardChannel
+from src.runWhenBotStart.getAnonymityBoardChannel import getAnonymityBoardChannel
 import random
 
 

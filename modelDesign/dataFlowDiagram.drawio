@@ -76,7 +76,7 @@
         <mxCell id="MCCIj_tEct1RLFeP_CjE-18" value="src.Storage" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="790" y="650" width="120" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="MCCIj_tEct1RLFeP_CjE-22" value="&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/font&gt;&lt;pre style=&quot;font-style: normal ; font-weight: 400 ; letter-spacing: normal ; text-align: left ; text-indent: 0px ; text-transform: none ; word-spacing: 0px ; font-family: &amp;#34;jetbrains mono&amp;#34; , monospace&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;src.controller.preRoute.addMoneyToUsersInVoiceChannels.addMoneyToVoiceChnnels&lt;/font&gt;&lt;/pre&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+        <mxCell id="MCCIj_tEct1RLFeP_CjE-22" value="&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/font&gt;&lt;pre style=&quot;font-style: normal ; font-weight: 400 ; letter-spacing: normal ; text-align: left ; text-indent: 0px ; text-transform: none ; word-spacing: 0px ; font-family: &amp;#34;jetbrains mono&amp;#34; , monospace&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;src.controller.preRouter.addMoneyToUsersInVoiceChannels.addMoneyToVoiceChnnels&lt;/font&gt;&lt;/pre&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="80" width="580" height="80" as="geometry" />
         </mxCell>
         <mxCell id="MCCIj_tEct1RLFeP_CjE-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.155;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="MCCIj_tEct1RLFeP_CjE-26" target="MCCIj_tEct1RLFeP_CjE-13" edge="1">
@@ -110,7 +110,7 @@
             <mxPoint x="26" y="1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="54Qqrou3z5WnFFPdxFxg-7" value="src.controller.preRoute.registerAndAddMoneyWhenSendingMsg" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="54Qqrou3z5WnFFPdxFxg-7" value="src.controller.preRouter.registerAndAddMoneyWhenSendingMsg" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-720" y="340" width="430" height="50" as="geometry" />
         </mxCell>
         <mxCell id="fYHmSwvg37sIZmICMTV_-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="fYHmSwvg37sIZmICMTV_-4" target="fYHmSwvg37sIZmICMTV_-29" edge="1">

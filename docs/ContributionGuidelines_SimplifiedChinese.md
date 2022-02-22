@@ -81,7 +81,7 @@
 
 这个的整体结构类似于HTTP后端处理的路由结构，用户所发送的消息会被正则表达式匹配解析。如果这个消息是一条命令，那么它会被根据路由，传到特定的地方来进行解析并且处理。
 
-用户在公共频道发送任意消息之后，会调用pre-route中的函数```/src/controller/preRoute```，类似于给用户以每条消息1元加钱就是在这里实现的。
+用户在公共频道发送任意消息之后，会调用pre-route中的函数```/src/controller/preRouter```，类似于给用户以每条消息1元加钱就是在这里实现的。
 
 之后，会调用到router，位于```/src/controller/```下的四个router，分别处理四种不同的消息。如果router解析出该消息是一条指令，那么会调用```src/controller/routes```底下的函数。
 
@@ -102,7 +102,7 @@
 
 **Router** - 路由，类似于HTTP的路由，路由器位于```/src/controller/```下，总共四个路由器（公共消息路由，私聊消息路由，Reaction添加路由，Reaction删除路由），然后这四个路由器分别路由到```src/controller/routes```下面的模块中。
 
-**pre-route** - 在执行Router之前所做的事情，例如为用户所发的每条消息加1块钱，位于```/src/controller/preRoute```下，在```/src/Robot.py```执行。
+**pre-route** - 在执行Router之前所做的事情，例如为用户所发的每条消息加1块钱，位于```/src/controller/preRouter```下，在```/src/Robot.py```执行。
 
 **Storage** - 位于```/src/Storage.py```，运行在```/src/Robot.py```，所有常驻内存数据都会常驻在此，储存这个Bot的状态信息，例如所有游戏的当前状态casino，正在等待的游戏玩家gamePlayerWaiting，用于公告的Channel，等等，相比于存入数据库，这里读取更快一些。
 
