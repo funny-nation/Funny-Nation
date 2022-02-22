@@ -1,8 +1,12 @@
 [moneyEarning]
-perMessage=100
-perCheckIn=1000
-perMinuteInVoice=50
-perMinuteInVoiceWithStream=80
+activityPointPerMessage=5
+activityPointPerMinuteInChannel=8
+activityPointPerMinuteInStream=10
+earningPeriodInMinute=30
+initialPeriodEarning=40000
+reducePeriodInMinute=10080
+reduceFactorBetweenPeriods=0.9
+antiInvolutionFactor=2
 
 [gameWaitForPlayer]
 secondWaitingPerPerson = 30
