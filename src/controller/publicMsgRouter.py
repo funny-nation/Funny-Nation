@@ -2,6 +2,7 @@ import re
 
 from src.Storage import Storage
 from src.controller.routes.checkBalance import checkBalance
+from src.controller.routes.generateRandom import generateRandom
 from src.controller.routes.getLeaderBoard import getLeaderBoardTop10
 from src.controller.routes.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
 from src.controller.routes.holdem.newGame import newHoldemGame
@@ -51,6 +52,9 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     command: str = message.content[commandPrefixLen:]
     if re.match(f"^余额$", command):
         await checkBalance(message, db)
+        return
+    if re.match(f"^随机数字 [0-9]+ [0-9]+$", command):
+        await generateRandom(message, db)
         return
     if re.match(f"^富豪榜$", command):
         await getLeaderBoardTop10(self, message, db)
