@@ -2,13 +2,13 @@ from typing import List
 
 from src.utils.casino.table.BlackJackTable import BlackJackTable
 
-from discord import Client, Message, Member, DMChannel
+from discord import Client, Message, Member
 from loguru import logger
 
 from src.utils.casino import Casino
 from src.utils.poker.Card import Card
 from src.utils.poker.pokerImage import getPokerImage
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.blackJack.stay import blackJackStayWithPrivateMsg
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 

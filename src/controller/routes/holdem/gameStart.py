@@ -1,13 +1,12 @@
-from discord import User, DMChannel, Client, Message, Member, Guild, Invite
+from discord import DMChannel, Client, Message, Member, Guild, Invite
 
 from src.model.userManagement import getUser
 from src.utils.poker.pokerImage import getPokerImage
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.casino.Casino import Casino
 from loguru import logger
 from pymysql import Connection
-from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.controller.routes.holdem.sendPromptMsg import sendPromptMsg
 
 

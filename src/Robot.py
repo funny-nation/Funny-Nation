@@ -5,9 +5,10 @@ from discord import Message, User, RawReactionActionEvent, TextChannel
 from pymysql import Connection
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
-from src.controller.preRoute.registerAndAddMoneyWhenSendingMsg import registerAndAddMoneyWhenSendingMsg
+from src.controller.preRoute.preRouter import preRouter
 from src.utils.checkIfMessagerIsBooster import checkIfMessagerIsBooster
-from src.utils.addMoneyToUsersInVoiceChannels import addMoneyToUserInVoiceChannels
+from src.runWhenBotStart.voiceChannelScannerPerMinute import voiceChannelScannerPerMinute
+from src.runWhenBotStart.addMoneyToUserByActivity import addMoneyToUserByActivity
 from src.controller.publicMsgRouter import publicMsgRouter
 from src.controller.privateMsgRouter import privateMsgRouter
 from src.controller.msgReactionRouter import msgReactionRouter
@@ -25,7 +26,10 @@ class Robot(discord.Client):
         logger.info('Logged in as ' + self.user.name)
         await self.storage.initialize(self)
 
-        addMoneyToUserInVoiceChannels(self)
+        voiceChannelScannerPerMinute(self)
+
+        addMoneyToUserByActivity()
+
 
     async def on_message(self, message: Message):
         if message.author == self.user:
@@ -36,7 +40,8 @@ class Robot(discord.Client):
             logger.info(f"{message.author.name} : {message.content}")
             # Pre-route
             isBooster: bool = checkIfMessagerIsBooster(self.storage.boostedRole, message.author)
-            registerAndAddMoneyWhenSendingMsg(message.author.id, isBooster, db)
+
+            preRouter(message, isBooster, db)
 
             await publicMsgRouter(self, message, db, self.storage)
         else:

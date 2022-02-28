@@ -8,3 +8,4 @@ def getEmbed() -> Embed:
     embed.colour = 0xfff18a #0x留着，后面加颜色编号
 
     return embed
+
