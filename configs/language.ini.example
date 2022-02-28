@@ -7,9 +7,12 @@ displayName=余额
 displayFormat=?@user，你还有?@displayMoney元
 
 [randomNumber]
-rangesError=随机数范围不可小于0或大于100哦
-repeatTimeError=重复次数不可小于0哦
-rangesAndRepeatTimeError=由于生成的随机数不可重复，所以随机数范围必须大于等于重复次数哦
+rangesEqualError=随机数范围不能是两个相同的数字哦
+rangesAndRepeatTimeError=由于生成的随机数不可重复，所以随机数范围必须大于重复次数哦
+rangesNonIntegerError=随机数范围必须是整数哦
+rangesMaxLessThanMinError=范围最大值不能小于最小值哦
+reportTimeNonIntegerError=重复次数必须是整数哦
+repeatTimeNegativeError=重复次数不可小于0哦
 randomNumberFormat=?@user,你的随机数为?@displayRandomNumber
 
 [leaderBoard]

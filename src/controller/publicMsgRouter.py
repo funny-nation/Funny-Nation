@@ -53,7 +53,7 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     if re.match(f"^余额$", command):
         await checkBalance(message, db)
         return
-    if re.match(f"^随机数字 [0-9]+ [0-9]+$", command):
+    if re.match(f"^随机数字 (\-|\+)?\d+(\.\d+)? (\-|\+)?\d+(\.\d+)? (\-|\+)?\d+(\.\d+)?$", command):
         await generateRandom(message, db)
         return
     if re.match(f"^富豪榜$", command):
