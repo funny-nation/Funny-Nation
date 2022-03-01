@@ -1,8 +1,5 @@
 [dailyMoneyEarning]
-earnFromStream=直播收益
-earnFromVoice=语音在线收益
-earnMoneyFromMessage=消息收益
-earnFromCheckIn=每日签到收益
+onlineEarning=在线收益
 
 [blackJack]
 blackJackSpend=21点入场费
