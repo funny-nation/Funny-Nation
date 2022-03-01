@@ -1,10 +1,7 @@
 from discord import Embed
-from src.utils.readConfig import getGeneralConfig
 
-def getEmbed(field: str) -> Embed:
+def getEmbed(field: str, prefix: str) -> Embed:
     embed = Embed()
-    generalConfig = getGeneralConfig()
-    prefix = generalConfig['command']['prefix']
     embed.title = "4 - 用户可以用货币购买服务器VIP"
     embed.description = f"指令：{prefix} 买vip （默认从V1开始买）"
     embed.add_field(name="服务器VIP福利如下：", value="1. 单独tag分类，VIP播报"

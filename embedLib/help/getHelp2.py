@@ -1,9 +1,6 @@
 from discord import Embed
-from src.utils.readConfig import getGeneralConfig
 
-def getEmbed( ) -> Embed:
-    generalConfig = getGeneralConfig()
-    prefix = generalConfig['command']['prefix']
+def getEmbed(prefix: str) -> Embed:
     embed = Embed()
     embed.title = "2 - 指令一览"
     embed.description = "用户可在服务器内发送指令使用bot"
