@@ -25,9 +25,10 @@ async def applyForAward(self: Client, db, event: RawReactionActionEvent):
         if channel.id == event.channel_id:
             targetChannel = channel
             break
-    authorMSG = await targetChannel.fetch_message(messageID)
-    author = authorMSG.author
+
     eventInfo = eventAwardManagement.getEventAward(db, messageID)
+    authorID = eventInfo[0]
+    author: Member = await myGuild.fetch_member(authorID)
 
     if eventAwardManagement.searchRecipientByEventIDandRecipientID(db, messageID, userID) is not None:
         msg = languageConfig['eventAward']['alreadyApply'] \
