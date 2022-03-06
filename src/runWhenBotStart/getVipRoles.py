@@ -18,6 +18,5 @@ async def getVipRoles(myGuild: Guild):
         for i in vipLevelsFromConfig:
             if vipTagsConfig[i]['id'] == str(role.id):
                 vipRoles[int(i)] = role
-                logger.info(f"Fetched role of {vipTagsConfig[i]['name']}")
 
     return vipRoles

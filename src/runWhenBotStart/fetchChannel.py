@@ -5,13 +5,9 @@ from typing import List
 generalConfig = getGeneralConfig()
 
 
-def fetchAnnouncementChannel(guild: Guild):
-    if 'channel' not in generalConfig['announcement']:
+def fetchAnnouncementChannel(guild: Guild) -> TextChannel or None:
+    if 'channelID' not in generalConfig['announcement']:
         return None
 
-    allTextChannels: List[TextChannel] = guild.text_channels
-    for channel in allTextChannels:
-        if channel.name == generalConfig['announcement']['channel']:
-            return channel
-
-    return None
+    channel: TextChannel = guild.get_channel(int(generalConfig['announcement']['channelID']))
+    return channel

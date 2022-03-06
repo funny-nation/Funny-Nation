@@ -12,9 +12,8 @@ async def getHelpForVIP(self: Client, message: Message):
     for i in range(0, len(VIPConfig.sections())):
         vipNnumber: str = sections[i]
         VIPName = VIPConfig[vipNnumber]['name']
-        giftMoney = VIPConfig[vipNnumber]['price']
-        benifitNumber = VIPConfig[vipNnumber]['benefit']
-        field += f"{VIPName}-{giftMoney}-{benifitNumber}\n"
+        giftMoney = int(VIPConfig[vipNnumber]['price']) / 100
+        field += f"{VIPName}-{giftMoney}\n"
     embed = help.getEmbed(field, prefix)
     await message.channel.send(embed=embed)
 

@@ -47,6 +47,8 @@ def __helper():
         reduceFactorBetweenPeriods = float(generalConfig['moneyEarning']['reduceFactorBetweenPeriods'])
         potInThisPeriod = initialPot * (reduceFactorBetweenPeriods ** totalReducingPeriodPassed)
 
+        logger.info(f"Pot in this period is {potInThisPeriod}")
+
         moneyDistribution = {}
 
         activityStats = getAllActivityStat(db)

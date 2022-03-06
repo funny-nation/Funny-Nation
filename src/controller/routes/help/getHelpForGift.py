@@ -14,7 +14,7 @@ async def getHelpForGift(self: Client, message: Message):
 
     for i in range(0, len(giftConfig.sections())):
         giftName: str = sections[i]
-        giftMoney = giftConfig[giftName]['amount']
+        giftMoney = int(giftConfig[giftName]['amount']) / 100
         description += f"{giftName}: {giftMoney}元\n"
     embed = help.getEmbed(description, prefix)
     await message.channel.send(embed=embed)
