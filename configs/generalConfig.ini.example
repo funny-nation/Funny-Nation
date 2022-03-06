@@ -21,7 +21,7 @@ path=log/
 memoryLog=onMemory/
 
 [announcement]
-channel=🌈𝐺𝐻𝑆大喇叭
+channelID=914308441428873236
 
 [img]
 giftImgPath=img/gift/

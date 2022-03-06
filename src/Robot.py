@@ -29,6 +29,7 @@ class Robot(discord.Client):
         voiceChannelScannerPerMinute(self)
 
         addMoneyToUserByActivity()
+        logger.info("Bot is now running")
 
 
     async def on_message(self, message: Message):

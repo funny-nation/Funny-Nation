@@ -41,7 +41,6 @@ class Storage:
         if len(self.vipRoles) != 0:
             logger.info("Fetched VIP roles")
         self.adminRole = await getEventAdminRole(myGuild)
-        logger.info(self.adminRole)
         if len(self.adminRole) != 0:
             logger.info("Fetched Administrators")
         self.anonymityBoardChannel = getAnonymityBoardChannel(client)
