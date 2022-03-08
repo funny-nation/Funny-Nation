@@ -39,6 +39,7 @@ def __helperThreat(self: Client):
     streamingAddition: int = int(generalConfig['moneyEarning']['streamingAddition'])
     while True:
         time.sleep(60)
+
         myGuild: Guild = self.guilds[0]
         voiceChannels: List[VoiceChannel] = myGuild.voice_channels
         db: Connection = makeDatabaseConnection()
@@ -69,7 +70,6 @@ def __helperThreat(self: Client):
             activityPointEarnByMemberInVoice = activityPointPerMinuteInChannelInit + additionToUserInVoice
 
             for member in membersInVoice:
-                logger.debug(f"{member} earn {activityPointEarnByMemberInVoice}")
                 if not addActivityPointToUser(db, member.id, activityPointEarnByMemberInVoice):
                     logger.error(f"Cannot add activity point for user {member}")
 

@@ -72,7 +72,7 @@ def getAllActivityStat(db: Connection) -> tuple or None:
     return result
 
 
-def addActivityPointToUser(db: Connection, userID: int, adding: int = 1) -> bool:
+def addActivityPointToUser(db: Connection, userID: int, adding = 1) -> bool:
     """
     Add minute to onlineMinute column
     :param userID:

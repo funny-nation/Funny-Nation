@@ -6,7 +6,6 @@ from pymysql import Connection
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.controller.preRoute.preRouter import preRouter
-from src.utils.checkIfMessagerIsBooster import checkIfMessagerIsBooster
 from src.runWhenBotStart.voiceChannelScannerPerMinute import voiceChannelScannerPerMinute
 from src.runWhenBotStart.addMoneyToUserByActivity import addMoneyToUserByActivity
 from src.controller.publicMsgRouter import publicMsgRouter
@@ -40,9 +39,7 @@ class Robot(discord.Client):
         if message.channel != message.author.dm_channel:
             logger.info(f"{message.author.name} : {message.content}")
             # Pre-route
-            isBooster: bool = checkIfMessagerIsBooster(self.storage.boostedRole, message.author)
-
-            preRouter(message, isBooster, db)
+            await preRouter(message, db)
 
             await publicMsgRouter(self, message, db, self.storage)
         else:
