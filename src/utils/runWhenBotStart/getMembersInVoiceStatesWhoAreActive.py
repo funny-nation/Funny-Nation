@@ -40,6 +40,7 @@ def getMembersInVoiceStatesWhoAreActive(voiceStates: Dict[int, VoiceState], db: 
 
         # Check if member is online
         thisMember: Member = myGuild.get_member(userID)
+
         if (thisMember.premium_since is None) and (str(thisMember.desktop_status) != 'online'):
             continue
 
