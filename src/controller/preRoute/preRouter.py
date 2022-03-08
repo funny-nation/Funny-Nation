@@ -2,9 +2,10 @@ from discord import Message
 from pymysql import Connection
 from src.controller.preRoute.registerIfNew import registerIfNew
 from src.controller.preRoute.addActivityPointToUserForMessage import addActivityPointToUserForMessage
+from src.controller.preRoute.checkInEarning import checkInEarning
 
 
-def preRouter(message: Message, isBooster: bool, db: Connection):
+async def preRouter(message: Message, db: Connection):
     """
     Run when bot receive a public message.
     This would execute before getting to router
@@ -15,4 +16,4 @@ def preRouter(message: Message, isBooster: bool, db: Connection):
     """
     registerIfNew(message.author, db)
     addActivityPointToUserForMessage(db, message.author)
-
+    await checkInEarning(message, db)
