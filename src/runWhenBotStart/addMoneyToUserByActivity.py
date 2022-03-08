@@ -4,7 +4,7 @@ from pymysql import Connection
 from src.model.makeDatabaseConnection import makeDatabaseConnection
 from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
 from src.model.activityStatManagement import getActivityStatByUser, getAllActivityStat, deleteAllActivityStat
-from src.model.serverInfoManagement import getOnlineMinute, addMinuteOnlineMinute
+from src.model.serverInfoManagement import getOnlineMinute
 from loguru import logger
 import math
 from src.model.userManagement import addMoneyToUser
@@ -39,8 +39,6 @@ def __helper():
         if serverOnlineTime is None:
             logger.error(f"Cannot fetch server online time from database. ")
             continue
-
-        addMinuteOnlineMinute(db, int(generalConfig['moneyEarning']['earningPeriodInMinute']))
 
         totalReducingPeriodPassed = serverOnlineTime // int(generalConfig['moneyEarning']['reducePeriodInMinute'])
         initialPot = int(generalConfig['moneyEarning']['initialPeriodEarning'])

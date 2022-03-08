@@ -4,14 +4,16 @@ import _thread
 from threading import Thread
 
 from loguru import logger
-from discord import Client, Guild, VoiceChannel, VoiceState
+from discord import Client, Guild, VoiceChannel, VoiceState, Member
 from pymysql import Connection
 from typing import Dict, List
 
 from src.model.makeDatabaseConnection import makeDatabaseConnection
+from src.model.serverInfoManagement import addMinuteOnlineMinute
 from src.model.userManagement import getUser, addNewUser, addMoneyToUser
 from src.model.activityStatManagement import addActivityPointToUser, getActivityStatByUser, newActivityStatForUser
 from src.utils.readConfig import getGeneralConfig, getCashFlowMsgConfig
+from src.utils.runWhenBotStart.getMembersInVoiceStatesWhoAreActive import getMembersInVoiceStatesWhoAreActive
 generalConfig = getGeneralConfig()
 cashFlowMsgConfig = getCashFlowMsgConfig()
 
@@ -31,44 +33,48 @@ def __helperThreat(self: Client):
     :param self:
     :return:
     """
+    activityPointPerMinuteInChannelInit: int = int(generalConfig['moneyEarning']['activityPointPerMinuteInChannelInit'])
+    activityPointPerMinuteInChannelAddition: int = int(generalConfig['moneyEarning']['activityPointPerMinuteInChannelAddition'])
+    maximumPeopleActivityPointPerMinuteInChannelAdd: int = int(generalConfig['moneyEarning']['maximumPeopleActivityPointPerMinuteInChannelAdd'])
+    streamingAddition: int = int(generalConfig['moneyEarning']['streamingAddition'])
     while True:
         time.sleep(60)
         myGuild: Guild = self.guilds[0]
         voiceChannels: List[VoiceChannel] = myGuild.voice_channels
         db: Connection = makeDatabaseConnection()
-        logger.info("Finding who is in voice channel")
+        addMinuteOnlineMinute(db)
+        logger.info("Scanning voice channels")
         for voiceChannel in voiceChannels:
             if myGuild.afk_channel is not None:
                 if voiceChannel == myGuild.afk_channel:
                     continue
             voiceStates: Dict[int, VoiceState] = voiceChannel.voice_states
-            for userID in voiceStates:
 
-                # get user information
-                userInfo: tuple = getUser(db, userID)
-                # Check if user existed
-                if userInfo is None:
-                    if not addNewUser(db, userID):
-                        logger.error(f"Cannot create new account to {userID} when sending message. ")
-                    else:
-                        logger.info(f"New account created for user {userID}")
+            membersInVoice, membersInStream = getMembersInVoiceStatesWhoAreActive(voiceStates, db)
+            membersInVoice: List[Member]
+            membersInStream: List[Member]
 
-                if not getActivityStatByUser(db, userID):
-                    if not newActivityStatForUser(db, userID):
-                        logger.error(f"Cannot create new activity stat for user {userID}")
-                        continue
+            totalNumberOfActiveMember = len(membersInVoice) + len(membersInStream)
 
-                # Check if user mute
-                if voiceStates[userID].self_mute:
-                    continue
+            if totalNumberOfActiveMember == 0:
+                continue
 
-                if voiceStates[userID].self_stream:
-                    if not addActivityPointToUser(db, userID, generalConfig['moneyEarning']['activityPointPerMinuteInStream']):
-                        logger.error(f"Cannot add activity point for user {userID}")
-                    continue
+            if totalNumberOfActiveMember <= maximumPeopleActivityPointPerMinuteInChannelAdd:
+                additionToUserInVoice = (totalNumberOfActiveMember - 1) * activityPointPerMinuteInChannelAddition
+            else:
+                additionToUserInVoice = (maximumPeopleActivityPointPerMinuteInChannelAdd - 1) * activityPointPerMinuteInChannelAddition
 
-                else:
-                    if not addActivityPointToUser(db, userID, generalConfig['moneyEarning']['activityPointPerMinuteInChannel']):
-                        logger.error(f"Cannot add activity point for user {userID}")
-                    continue
+
+
+            activityPointEarnByMemberInVoice = activityPointPerMinuteInChannelInit + additionToUserInVoice
+
+            for member in membersInVoice:
+                logger.debug(f"{member} earn {activityPointEarnByMemberInVoice}")
+                if not addActivityPointToUser(db, member.id, activityPointEarnByMemberInVoice):
+                    logger.error(f"Cannot add activity point for user {member}")
+
+            for member in membersInStream:
+                logger.debug(f"{member} earn {activityPointEarnByMemberInVoice + streamingAddition}")
+                if not addActivityPointToUser(db, member.id, activityPointEarnByMemberInVoice + streamingAddition):
+                    logger.error(f"Cannot add activity point for user {member}")
         db.close()
