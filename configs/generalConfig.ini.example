@@ -1,12 +1,16 @@
 [moneyEarning]
 activityPointPerMessage=5
-activityPointPerMinuteInChannel=8
+activityPointPerMinuteInChannelInit=3
+activityPointPerMinuteInChannelAddition=1
+maximumPeopleActivityPointPerMinuteInChannelAdd=8
 activityPointPerMinuteInStream=10
-earningPeriodInMinute=30
-initialPeriodEarning=40000
+earningPeriodInMinute=1440
+initialPeriodEarning=2000000
 reducePeriodInMinute=10080
 reduceFactorBetweenPeriods=0.9
 antiInvolutionFactor=2
+streamingAddition=1
+
 
 [gameWaitForPlayer]
 secondWaitingPerPerson = 30

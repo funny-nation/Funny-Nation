@@ -24,13 +24,14 @@ class Storage:
             cls.instance.adminRole = {}
             cls.instance.anonymityBoardChannel = None
             cls.instance.randomPrivateShiftForAnonymityBoard = random.randint(100000000, 999999999)
-
+            cls.instance.myGuild = None
         return cls.instance
 
 
 
     async def initialize(self, client: Client):
         myGuild: Guild = client.guilds[0]
+        self.myGuild = myGuild
         self.boostedRole: Role = myGuild.premium_subscriber_role
         if self.boostedRole is not None:
             logger.info("Fetched boosting role")
