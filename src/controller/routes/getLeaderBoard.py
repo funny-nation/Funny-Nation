@@ -27,7 +27,7 @@ async def getLeaderBoardTop10(self: Client, message: Message, db: Connection):
 
     for i in range(0, len(leaderBoardData)):
         try:
-            user: Member or None = await myGuild.fetch_member(leaderBoardData[i][0])
+            user: Member or None = myGuild.get_member(leaderBoardData[i][0])
         except Exception as err:
             user = None
         if user is None:
