@@ -4,7 +4,7 @@ from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.blackJack.gameStart import blackJackGameStart
 from src.controller.routes.holdem.gameStart import holdemGameStart
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from pymysql import Connection
 from src.utils.readConfig import getLanguageConfig
 

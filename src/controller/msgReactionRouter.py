@@ -1,6 +1,4 @@
-import json
-
-from discord import Client, Reaction, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji, Message, DMChannel
+from discord import Client, Member, RawReactionActionEvent, Guild, TextChannel, PartialEmoji
 from typing import Dict
 from pymysql import Connection
 
@@ -8,17 +6,16 @@ from src.Storage import Storage
 from src.controller.routes.holdem.allIn import holdemAllIn
 from src.controller.routes.holdem.callAndCheck import holdemCallAndCheck
 from src.controller.routes.holdem.fold import fold
-from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
-from src.utils.casino.table.BlackJackTable import BlackJackTable
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
 from src.controller.routes.joinGame import joinGameByReaction
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.luckyMoney.getLuckyMoney import getLuckyMoney
 from src.controller.routes.eventAward.rejectionAward import rejectAward
 from src.controller.routes.eventAward.applyForAward import applyForAward
-import src.model.eventAwardManagement as eventAwardManagement
 from src.controller.routes.eventAward.approveAward import approveAward
+from src.controller.routes.lottery.joinLottery import joinLottery
+from src.controller.routes.lottery.openLotteryResult import openLotteryResult
+from src.controller.routes.lottery.closeLottery import closeLottery
 
 async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Connection, storage: Storage):
     myGuild: Guild = self.guilds[0]
@@ -42,6 +39,19 @@ async def msgReactionRouter(self: Client, event: RawReactionActionEvent, db: Con
 
     if emoji.name == '💰':
         await getLuckyMoney(self, event.message_id, db, event.channel_id, event.user_id)
+        return
+
+    # lottery-related
+    if emoji.name == '🎟️':
+        await joinLottery(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
+        return
+
+    if emoji.name == '🟩':
+        await openLotteryResult(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
+        return
+
+    if emoji.name == '🟥':
+        await closeLottery(self, db, event.user_id, event.message_id, event.member, event.channel_id, emoji)
         return
 
     # For game

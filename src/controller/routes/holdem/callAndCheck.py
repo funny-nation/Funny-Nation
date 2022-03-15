@@ -7,7 +7,7 @@ from src.model.holdemRecordManagement import addMoneyToHoldemRecord
 from src.model.userManagement import addMoneyToUser
 from src.utils.casino.Casino import Casino
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from loguru import logger
 from src.utils.readConfig import getCashFlowMsgConfig
 cashFlowMsgConfig = getCashFlowMsgConfig()

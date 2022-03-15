@@ -168,3 +168,4 @@ configs/config.ini
 yoyo.ini
 
 embedLib/*.py
+embedLib/*/*.py

@@ -1,8 +1,17 @@
 [moneyEarning]
-perMessage=100
-perCheckIn=1000
-perMinuteInVoice=50
-perMinuteInVoiceWithStream=80
+activityPointPerMessage=5
+activityPointPerMinuteInChannelInit=5
+activityPointPerMinuteInChannelAddition=1
+maximumPeopleActivityPointPerMinuteInChannelAdd=5
+activityPointPerMinuteInStream=10
+earningPeriodInMinute=1440
+initialPeriodEarning=2000000
+reducePeriodInMinute=10080
+reduceFactorBetweenPeriods=0.9
+antiInvolutionFactor=2
+streamingAddition=1
+boosterCheckinEarning=6000
+
 
 [gameWaitForPlayer]
 secondWaitingPerPerson = 30
@@ -17,11 +26,10 @@ path=log/
 memoryLog=onMemory/
 
 [announcement]
-channel=🌈𝐺𝐻𝑆大喇叭
+channelID=914308441428873236
 
 [img]
 giftImgPath=img/gift/
 
 [anonymityBoard]
 channelID=894462030663270434
-coolDownTime=86400

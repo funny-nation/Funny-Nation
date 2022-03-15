@@ -1,9 +1,8 @@
-import os
-import configparser
 import re
 
 from src.Storage import Storage
 from src.controller.routes.checkBalance import checkBalance
+from src.controller.routes.generateRandom import generateRandom
 from src.controller.routes.getLeaderBoard import getLeaderBoardTop10
 from src.controller.routes.checkCashFlow import checkCashFlow, checkCashFlowWithFilter
 from src.controller.routes.holdem.newGame import newHoldemGame
@@ -11,24 +10,21 @@ from src.controller.routes.holdem.rise import holdemRise
 from src.controller.routes.transferMoney import transferMoney
 from src.controller.routes.sendGift import sendGift
 from src.controller.routes.buyVIP import buyVIP
+from src.controller.routes.lottery.initiateLottery import initiateLottery
 
 from src.controller.routes.blackJack.newBlackJackGame import newBlackJackGame
 from src.controller.routes.startGame import gameStartByTableOwner
 from src.controller.routes.pauseGame import pauseGame
 from src.controller.routes.joinGame import joinGame
 from src.controller.routes.quitGame import quitGame
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.controller.routes.addMoneyAdmin import addMoneyAdmin
 from src.controller.routes.minusMoneyAdmin import minusMoneyAdmin
 from src.controller.routes.luckyMoney.sendLuckyMoney import sendLuckyMoney
 from src.controller.routes.eventAward.publishAward import publishAward
 from src.controller.routes.eventAward.closeEvent import closeEvent
-import src.Robot
 
-from discord import Client, Message, TextChannel
+from discord import Client, Message
 from pymysql import Connection
-
-from src.utils.casino.Casino import Casino
 
 from src.utils.readConfig import getGeneralConfig
 
@@ -56,6 +52,9 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
     command: str = message.content[commandPrefixLen:]
     if re.match(f"^余额$", command):
         await checkBalance(message, db)
+        return
+    if re.match(f"^随机数字 (\-|\+)?\d+(\.\d+)? (\-|\+)?\d+(\.\d+)? (\-|\+)?\d+(\.\d+)?$", command):
+        await generateRandom(message, db)
         return
     if re.match(f"^富豪榜$", command):
         await getLeaderBoardTop10(self, message, db)
@@ -117,4 +116,7 @@ async def publicMsgRouter(self: Client, message: Message, db: Connection, storag
         return
     if re.match(f"^掀桌$", command):
         await pauseGame(self, message, storage.casino, db, storage.gamePlayerWaiting)
+        return
+    if re.match(f"^抽奖 .+ [\\-0-9]+ [\\-0-9]+$", command):
+        await initiateLottery(self, message, db, command)
         return

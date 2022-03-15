@@ -8,7 +8,7 @@ from src.utils.casino.Casino import Casino
 from src.utils.casino.table.Table import Table
 from discord import Client, Message, Member, TextChannel, Invite
 from src.controller.routes.blackJack.endGame import blackJackEndGame
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.utils.readConfig import getLanguageConfig
 
 languageConfig = getLanguageConfig()

@@ -2,15 +2,16 @@ import json
 from typing import List
 
 
-from discord import Client, TextChannel, Guild, Member, Message, Role
+from discord import Client, TextChannel, Guild, Member, Message, Role, Embed
 from pymysql import Connection
 import src.model.eventAwardManagement as eventAwardManagement
 from src.utils.readConfig import getLanguageConfig, getMajorConfig
-from loguru import logger
+from embedLib.reward import getEmbed
 import re
 
 async def publishAward(self: Client, message: Message, db: Connection, money: int, userID: int, eventAdmin: dict, command: str):
     languageConfig = getLanguageConfig()
+    moneyDisplay = money/100
     author = message.author.id
     eventName: str = re.findall(f"^领奖 (.+) [0-9]+$", command)[0]
     msgSender: Member = message.author
@@ -30,14 +31,13 @@ async def publishAward(self: Client, message: Message, db: Connection, money: in
             .replace('?@user_name', user.display_name)
         await message.channel.send(msg)
         return
-    if not eventAwardManagement.newAward(db, author, message.id, money, eventName):
+
+    embed = getEmbed(eventName, str(moneyDisplay))
+    messageSent = await message.channel.send(embed=embed)
+
+    if not eventAwardManagement.newAward(db, author, messageSent.id, money, eventName):
         msg = languageConfig['error']['dbError']
         await message.channel.send(msg)
         return
-
-    msg = languageConfig['eventAward']['awardPublish'] \
-        .replace('?@user_name', user.display_name) \
-        .replace('?@event_name', eventName)
-    await message.channel.send(msg)
-    await message.add_reaction('🎲')
+    await messageSent.add_reaction('🎲')
 

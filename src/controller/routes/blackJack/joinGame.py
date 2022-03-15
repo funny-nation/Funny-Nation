@@ -1,5 +1,5 @@
 from src.utils.casino.table.BlackJackTable import BlackJackTable
-from discord import User, Client, TextChannel, Member
+from discord import Client, TextChannel, Member
 from src.controller.routes.blackJack.gameStart import blackJackGameStart
 from pymysql import Connection
 
@@ -8,7 +8,7 @@ from src.model.userManagement import getUser, addMoneyToUser
 from src.model.cashFlowManagement import addNewCashFlow
 from src.model.blackJackRecordManagement import newBlackJackRecord
 from src.utils.casino.Casino import Casino
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 
 from src.utils.readConfig import getLanguageConfig, getCashFlowMsgConfig
 

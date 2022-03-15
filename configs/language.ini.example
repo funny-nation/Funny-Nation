@@ -6,6 +6,15 @@ dbError=炸了，麻烦告诉一下群主
 displayName=余额
 displayFormat=?@user，你还有?@displayMoney元
 
+[randomNumber]
+rangesEqualError=随机数范围不能是两个相同的数字哦
+rangesAndRepeatTimeError=由于生成的随机数不可重复，所以随机数范围必须大于重复次数哦
+rangesNonIntegerError=随机数范围必须是整数哦
+rangesMaxLessThanMinError=范围最大值不能小于最小值哦
+reportTimeNonIntegerError=重复次数必须是整数哦
+repeatTimeNegativeError=重复次数不可小于0哦
+randomNumberFormat=?@user,你的随机数为?@displayRandomNumber
+
 [leaderBoard]
 title=以下为本DC最有钱的大佬:
 formatInLine=?@user - ?@amount元
@@ -83,21 +92,13 @@ askAdminForHelp=?@user，我好像没权限帮你加Tag，私聊一下管理员�
 
 [luckyMoney]
 notEnoughMoney=?@user，你不够钱
-luckyMoneySent=?@user的红包已发出，大家快来抢
-luckyMoneyDoesNotExist=?@user，红包好像找不到了
-luckyMoneyHasAlreadyBeenTaken=?@user，你来晚了，红包被抢完了
-youHaveAlreadyTaken=?@user，你已经拿过这个红包了
-congratulationYouHaveTake=?@user，恭喜你，你抢到了?@money元
-soSorryThatYouHaveTake0=?@user，你太可怜了，一分钱都没抢到
-noLuckMoneyLeft=?@sender的红包已经被抢完了
-theMostLuckyGuy=?@user是运气王，ta抢到了?@money元
 moneyCannotBeZero=?@user，记得往红包里塞点钱
 quantityCannotBeZero=?@user，不能是0个红包哦
 moneyIsTooLow=?@user，钱太少了
 youGotNothing=?@user，你一分钱都没抢到
 
 [anonymityBoard]
-tooMuchTalk=你太话痨了，明天再来吧！
+messageSent=您的匿名信息已发送
 noChannelHere=对不起，这个服务器没有匿名频道！
 
 [eventAward]
@@ -117,4 +118,14 @@ alreadyApply=?@user_name，已经收到你的申请啦！稍安勿躁！
 tryGetAward=?@user_name，正在申请?@event_name的领奖，奖金?@money
 notAdmian=?@user_name， 你不是管理员
 
+[lottery]
+priceError=抽奖券金额只能是大于等于0的整数哦！
+quantityError=开奖人数只能是大于等于1的整数哦！
+notEnoughMoney=?@user_name 你的余额不足，无法购买抽奖券~
+alreadyParticipated=?@user_name 你已经参加过抽奖啦，不能重复抽奖哦！
+joinedLottery=?@user_name 已成功参与抽奖！
+onlyPublisherCanOpen=只有发布者才可以开奖哦~
+onlyPublisherCanClose=只有发布者才可以关闭抽奖哦~
+lotteryClosed=抽奖已经关闭啦！
+notEnoughPeople=人数好像不够，等一下吧！
 

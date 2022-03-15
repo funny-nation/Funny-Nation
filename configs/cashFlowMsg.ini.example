@@ -1,8 +1,6 @@
 [dailyMoneyEarning]
-earnFromStream=直播收益
-earnFromVoice=语音在线收益
-earnMoneyFromMessage=消息收益
-earnFromCheckIn=每日签到收益
+onlineEarning=在线收益
+checkIn=签到
 
 [blackJack]
 blackJackSpend=21点入场费
@@ -25,3 +23,7 @@ buyVIP=购买VIP
 [luckyMoney]
 sendLuckMoney=发红包
 getLuckyMoney=红包
+
+[lottery]
+participatedLottery=参与抽奖消费
+withdrawnLottery=抽奖返还

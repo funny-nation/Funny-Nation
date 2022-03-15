@@ -5,7 +5,7 @@ from src.utils.casino.table.BlackJackTable import BlackJackTable
 from pymysql import Connection
 
 from src.utils.casino.table.holdem.HoldemTable import HoldemTable
-from src.utils.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
+from src.runWhenBotStart.gamePlayerWaiting.GamePlayerWaiting import GamePlayerWaiting
 from src.model.userManagement import addMoneyToUser
 import src.model.blackJackRecordManagement as bjRecords
 from src.model.cashFlowManagement import addNewCashFlow
