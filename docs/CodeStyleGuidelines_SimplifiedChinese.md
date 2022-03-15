@@ -151,3 +151,15 @@ else:
     
 ❌
 ```
+
+### 7 单元测试
+
+#### 7.1 每一个单元测试需要以```filename_test.py```命名
+
+```
+filename_test.py ✅
+
+filenametest.py ❌
+
+filename.test.py ❌
+```
