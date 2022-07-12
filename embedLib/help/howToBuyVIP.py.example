@@ -1,9 +1,0 @@
-from discord import Embed
-
-def getEmbed(field: str, prefix: str) -> Embed:
-    embed = Embed()
-    embed.title = "4 - 用户可以用货币购买服务器VIP"
-    embed.description = f"指令：{prefix} 买vip （默认从V1开始买）"
-    embed.add_field(name="VIP等级-所需金额", value=f"{field}", inline=False)
-    embed.colour = 0xff9900
-    return embed

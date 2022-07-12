@@ -1,2 +1,0 @@
-[DEFAULT]
-database = mysql://yourUsername:yourPassword@yourAddresss/yourDatabase

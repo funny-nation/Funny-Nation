@@ -1,9 +1,0 @@
-from discord import Embed, Member
-
-
-def getEmbed(money, member: Member) -> Embed:
-    embed = Embed()
-    embed.title = "尊贵的Booster"
-    embed.description = f"<@!{member.id}> ，您已签到，获得{money}货币！"
-    embed.colour = 0xff9900
-    return embed
