@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    id String @unique
+    timeBefore DateTime
+    experience BigInt
+    memberships Member[]
+}
+
+model CoinTransfer {
+    id Int  @id @default(autoincrement())
+    member Member @relation(fields: [userID, guildID], references: [userID, guildID])
+    userID String
+    guildID String
+    amount BigInt
+    time DateTime
+    guild Guild @relation(fields: [guildID], references: [id])
+    detail String
+}
+
+model Member {
+    userOfSelf User @relation(fields: [userID], references: [id])
+    userID String
+    guildBelong Guild @relation(fields: [guildID], references: [id])
+    guildID String
+    experienceInGuild BigInt
+    coinBalanceInGuild BigInt
+    coinTransfers CoinTransfer[]
+    @@unique([userID, guildID])
+}
+
+model Guild {
+    id String @unique
+    announcementChannelID String?
+    languageInGuild String
+    notificationChannelID String?
+    administratorRoleID String?
+    timeZone String
+    coinTransfers CoinTransfer[]
+    members Member[]
+}

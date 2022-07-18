@@ -32,10 +32,12 @@ bower_components
 
 # OS metadata
 .DS_Store
-Thumbs.db
 
 # Ignore built ts files
 dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+
+# ignore sqlite database
+*.db

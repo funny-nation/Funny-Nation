@@ -1,3 +1,4 @@
 import './Bot'
 import './features'
-import './models'
+import './prismaClient'
+import './language'
