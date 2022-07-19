@@ -1,4 +1,4 @@
-import calculateLevelByExp from '../src/features/get-user-member-profile/calculate-level-by-exp'
+import calculateLevelByExp from '../calculate-level-by-exp'
 
 test('Calculate level by exp', () => {
   expect(calculateLevelByExp(0)).toEqual(0)
