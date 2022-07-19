@@ -44,8 +44,8 @@ jobs:
       - run: npm install
       - run: npx prisma migrate dev
         env:
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - run: npm run testOnStart
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORDTOKEN }}
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
