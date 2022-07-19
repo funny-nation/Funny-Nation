@@ -5,11 +5,11 @@ import {
 } from 'discord.js'
 import getLanguage from '../../language'
 import { DBGuild } from '../../models/DBGuild/DBGuild'
-import getFNGuild from '../../models/DBGuild'
+import getDBGuild from '../../models/DBGuild'
 import { DBUser } from '../../models/DBUser/DBUser'
-import getFNUser from '../../models/DBUser'
+import getDBUser from '../../models/DBUser'
 import { DBMember } from '../../models/DBMember/DBMember'
-import getFNMember from '../../models/DBMember'
+import getDBMember from '../../models/DBMember'
 import renderExpBar from './render-exp-bar'
 import calculateLevelByExp from './calculate-level-by-exp'
 import logger from '../../logger'
@@ -18,9 +18,9 @@ client.on('interactionCreate', async function (interaction: Interaction) {
   if (!interaction.isCommand()) return
   if (interaction.guild === null || interaction.member === null) return
   try {
-    const dbUser: DBUser = await getFNUser(interaction.user.id)
-    const dbMember: DBMember = await getFNMember(interaction.user.id, interaction.guild.id)
-    const dbGuild: DBGuild = await getFNGuild(interaction.guild.id)
+    const dbUser: DBUser = await getDBUser(interaction.user.id)
+    const dbMember: DBMember = await getDBMember(interaction.user.id, interaction.guild.id)
+    const dbGuild: DBGuild = await getDBGuild(interaction.guild.id)
     const language = getLanguage(dbGuild.languageInGuild)
     if (interaction.commandName !== language.commands.getMyProfile.name) return
     const embedMsg = new MessageEmbed()
