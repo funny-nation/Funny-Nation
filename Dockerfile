@@ -1,11 +1,21 @@
-FROM python:3.8-slim-buster
+FROM node:16
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY . .
+COPY ./src ./src
 
-RUN pip3 install -r requirements.txt
+COPY ./prisma ./prisma
 
-RUN yoyo apply ./migrations
+COPY ./package.json ./package.json
 
-CMD ["python3", "main.py"]
+COPY ./jest.config.js ./jest.config.js
+
+COPY ./tsconfig.json ./tsconfig.json
+
+RUN npm install
+
+RUN npm run build
+
+CMD npx prisma migrate deploy
+
+CMD npm start

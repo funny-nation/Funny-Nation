@@ -1,9 +1,0 @@
-from discord import Embed
-
-
-def getEmbed(userName: str, randomNumber: str ) -> Embed:
-    embed = Embed()
-    embed.title = f"{userName}的随机数如下!"  #大标题
-    embed.description = f"{randomNumber}"
-    embed.colour = 0xff2121 #0x留着，后面加颜色编号
-    return embed

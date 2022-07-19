@@ -1,8 +1,0 @@
-[private]
-token=yourToken
-
-[database]
-address=yourDatabaseAddress
-username=yourUserName
-password=yourPassword
-database=yourDatabase
