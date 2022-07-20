@@ -21,7 +21,7 @@ There are a lot of features and ideas that are still in development. Let me know
 
 ### Before Deploy your bot
 
-You need to set up a Discord application and get a Discord bot token. If you don't know how to do that, please read the tutorial [at this link](docs/discord-bot-setup-tutorial). 
+You need to set up a Discord application and get a Discord bot token. If you don't know how to do that, please read the tutorial [at this link](docs/discord-bot-setup-tutorial/README.md). 
 
 
 
