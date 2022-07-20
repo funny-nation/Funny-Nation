@@ -12,10 +12,8 @@ COPY ./jest.config.js ./jest.config.js
 
 COPY ./tsconfig.json ./tsconfig.json
 
-RUN npm install
+RUN npm install --omit=dev
 
 RUN npm run build
 
-CMD npx prisma migrate deploy
-
-CMD npm start
+CMD npx prisma migrate deploy && npm start
