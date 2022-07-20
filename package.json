@@ -1,6 +1,6 @@
 {
   "name": "funny-nation",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "A money-centric \"Metaverse\" Discord bot",
   "main": "src/index.ts",
   "scripts": {
