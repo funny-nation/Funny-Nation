@@ -5,6 +5,7 @@ import commandSetup from '../utils/commandSetup'
 
 async function setCommands (guild: DBGuild) {
   const language = getLanguage(guild.languageInGuild)
+  // Put your commands right here in this list
   const commandsList = [
     new SlashCommandBuilder()
       .setName(language.commands.getMyProfile.name)

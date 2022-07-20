@@ -2,7 +2,7 @@ import englishLanguage from './english-language'
 import chineseSimpleLanguage from './chinese-simple-language'
 import { Language } from './Language'
 
-const getLanguage = (language: string): Language => {
+const getLanguage = (language: string = ''): Language => {
   switch (language) {
     case 'ChineseSimple':
       return chineseSimpleLanguage
