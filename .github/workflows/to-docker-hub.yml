@@ -23,9 +23,9 @@ jobs:
         with:
           images: plbin97/funny-nation
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: latest
-          labels: funny-nation
+          tags: plbin97/funny-nation:latest
+          labels: ${{ steps.meta.outputs.labels }}
