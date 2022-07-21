@@ -42,10 +42,15 @@ model Member {
 model Guild {
     id String @unique
     announcementChannelID String?
-    languageInGuild String
+    languageInGuild LanguageEnum @default(English)
     notificationChannelID String?
     administratorRoleID String?
     timeZone String
     coinTransfers CoinTransfer[]
     members Member[]
+}
+
+enum LanguageEnum {
+    ChineseSimple
+    English
 }
