@@ -1,12 +1,11 @@
 # Funny Nation
 
-A money-centric "Metaverse" Discord Bot
+A money-centric "Meta-verse" Discord Bot
 
 [![](https://github.com/funny-nation/Funny-Nation/actions/workflows/eslint.yml/badge.svg)](https://github.com/funny-nation/Funny-Nation/actions/workflows/eslint.yml)
 [![](https://github.com/funny-nation/Funny-Nation/actions/workflows/test.yml/badge.svg)](https://github.com/funny-nation/Funny-Nation/actions/workflows/test.yml)
 [![](https://github.com/funny-nation/Funny-Nation/actions/workflows/test-on-start.yml/badge.svg)](https://github.com/funny-nation/Funny-Nation/actions/workflows/test-on-start.yml)
 [![](https://github.com/funny-nation/Funny-Nation/actions/workflows/to-docker-hub.yml/badge.svg)](https://github.com/funny-nation/Funny-Nation/actions/workflows/to-docker-hub.yml)
-
 [![Our Discord](https://img.shields.io/badge/Chat-Discord-7289da)](https://discord.gg/uhAv4J4F7Z)
 
 ### About this Discord bot
@@ -41,7 +40,7 @@ docker run --name funnynation \
  -d plbin97/funny-nation
 ```
 
-#### Or build your own Docker container
+#### Or build your own Docker Image
 
 ```shell
 docker build -t funnynation .
@@ -90,3 +89,9 @@ npm start
 If you have any questions, or you want to join our team. 
 
 You can talk to us via this [Discord Server](https://discord.gg/uhAv4J4F7Z). 
+
+### Contribution
+
+If you want to contribute to this project, please make sure that you have read:
+* [Contributing Guidelines](CONTRIBUTING.md)
+* [Developer Guide](docs/developer-guides.md)
