@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client'
+import { Member } from '@prisma/client'
 
 export type DBMember = {
     addMemberExperience(): Promise<void>,
     addCoins(): Promise<void>
-} & Prisma.MemberGetPayload<Prisma.validator<Prisma.MemberArgs>>
+} & Member

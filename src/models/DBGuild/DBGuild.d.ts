@@ -1,3 +1,3 @@
-import { Prisma } from '@prisma/client'
+import { Guild } from '@prisma/client'
 
-export type DBGuild = Prisma.GuildGetPayload<Prisma.validator<Prisma.GuildArgs>>
+export type DBGuild = Guild
