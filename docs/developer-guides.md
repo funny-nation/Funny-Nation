@@ -49,6 +49,27 @@ You could try and test the stage bot in [Funny Nation](https://discord.gg/uhAv4J
 
 The name of the stage bot is: Funny Nation (beta)#4122. You can invite this bot to any server; here is the [invite URL](https://discord.com/api/oauth2/authorize?client_id=925297057277820929&permissions=8&scope=bot%20applications.commands). 
 
+### Database for development
+
+I recommend you to run a postgres database in Docker. 
+
+```shell
+docker run -d \
+	--name Postres \
+	-e POSTGRES_USER=theUser \
+	-e POSTGRES_PASSWORD=thePassword \
+	-p 5432:5432
+	postgres
+```
+
+After that, you can use this database with URL: 
+
+```
+postgresql://theUser:thePassword@localhost:5432/theUser
+```
+
+Remember to perform a migration before you start the Bot. 
+
 ### Create your first feature
 
 Before you start coding, I recommend you to look at other features we built. 
