@@ -11,5 +11,9 @@ export type Language = {
             name: string,
             desc: string
         }
+    },
+    mumble: {
+        mumble: string,
+        language(mumbleFrom: string, mumbleObject: string): string
     }
 }

@@ -1,4 +1,4 @@
-import { Language } from './Language'
+import { Language } from '../types/Language/Language'
 
 const chineseSimpleLanguage: Language = {
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
@@ -16,6 +16,14 @@ const chineseSimpleLanguage: Language = {
     getMyProfile: {
       name: 'profile',
       desc: '查看我的信息'
+    }
+  },
+  mumble: {
+    mumble: '骂ta',
+    language (mumbleFrom: string, mumbleObject: string): string {
+      const mubleArr = ['草泥马', '我去年买了个表', '你tm的', '你是不是傻']
+      const ramdomNumber = Math.floor(Math.random() * mubleArr.length)
+      return `${mumbleFrom}对${mumbleObject}说："${mubleArr[ramdomNumber]}"`
     }
   }
 }
