@@ -10,6 +10,7 @@ import { DBGuild } from '../../models/DBGuild/DBGuild'
  * @param interaction
  * @returns null
  */
+
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isUserContextMenu() || interaction.guild === null) return
