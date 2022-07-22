@@ -1,6 +1,6 @@
-import { Language } from '../types/Language/Language'
+import { Language } from '../types/Language'
 
-const englishLanguage: Language = {
+const english: Language = {
   errorMsg: 'Bot went wrong, please notify the server owner',
   coinBalanceDisplay (amount: number | string): string {
     return `${amount} coins`
@@ -28,4 +28,4 @@ const englishLanguage: Language = {
   }
 }
 
-export default englishLanguage
+export default english

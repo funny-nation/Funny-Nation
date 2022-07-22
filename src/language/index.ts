@@ -1,16 +1,16 @@
-import englishLanguage from './english-language'
-import chineseSimpleLanguage from './chinese-simple-language'
-import { Language } from './Language'
+import english from './english'
+import chineseSimple from './chinese-simple'
+import { Language } from '../types/Language'
 import LanguageEnum from '../models/LanguageEnum'
 
 const getLanguage = (languageEnum: LanguageEnum): Language => {
   switch (languageEnum) {
     case LanguageEnum.ChineseSimple:
-      return chineseSimpleLanguage
+      return chineseSimple
     case LanguageEnum.English:
-      return englishLanguage
+      return english
     default:
-      return englishLanguage
+      return english
   }
 }
 

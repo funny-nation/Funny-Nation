@@ -1,4 +1,4 @@
-export type Language = {
+export interface Language {
     errorMsg: string,
     coinBalanceDisplay(amount: number | string): string,
     viewProfile: {

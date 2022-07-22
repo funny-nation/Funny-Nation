@@ -1,6 +1,6 @@
-import { Language } from '../types/Language/Language'
+import { Language } from '../types/Language'
 
-const chineseSimpleLanguage: Language = {
+const chineseSimple: Language = {
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
   coinBalanceDisplay (amount: number | string): string {
     return `金币：${amount}`
@@ -28,4 +28,4 @@ const chineseSimpleLanguage: Language = {
   }
 }
 
-export default chineseSimpleLanguage
+export default chineseSimple
