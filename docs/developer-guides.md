@@ -58,7 +58,7 @@ docker run -d \
 	--name Postres \
 	-e POSTGRES_USER=theUser \
 	-e POSTGRES_PASSWORD=thePassword \
-	-p 5432:5432
+	-p 5432:5432 \
 	postgres
 ```
 
