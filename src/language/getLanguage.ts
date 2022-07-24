@@ -1,6 +1,6 @@
 import english from './english'
 import chineseSimple from './chinese-simple'
-import { Language } from '../types/Language'
+import { Language } from './index'
 import LanguageEnum from '../models/LanguageEnum'
 
 const getLanguage = (languageEnum: LanguageEnum): Language => {

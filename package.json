@@ -8,7 +8,9 @@
     "start": "NODE_ENV=production node dist/index.js",
     "testOnStart": "ISTEST=true ts-node src/index.ts",
     "build": "tsc -p .",
-    "test": "jest"
+    "test": "jest",
+    "migrate-dev": "npx prisma migrate dev",
+    "eslint": "npx eslint ./src --ext .ts"
   },
   "repository": {
     "type": "git",

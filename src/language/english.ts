@@ -1,4 +1,4 @@
-import { Language } from '../types/Language'
+import { Language } from './index'
 
 const english: Language = {
   errorMsg: 'Bot went wrong, please notify the server owner',
@@ -25,6 +25,16 @@ const english: Language = {
       const ramdomNumber = Math.floor(Math.random() * mubleArr.length)
       return `${mumbleFrom} speak to ${mumbleObject} that ${mubleArr[ramdomNumber]}`
     }
+  },
+  setGuildProfile: {
+    command: 'config',
+    commandDesc: 'Configure your bot in this server (Admin only)',
+    title: 'Configure Your Bot',
+    announcementChannelOption: 'Channel for Announcement',
+    administratorRoleOption: 'Role of Administrators',
+    timeZoneOption: 'Your Timezone',
+    notificationChannelOption: 'Channel for Notification',
+    languageOption: 'Language Setting'
   }
 }
 

@@ -1,4 +1,4 @@
-import { Language } from '../types/Language'
+import { Language } from './index'
 
 const chineseSimple: Language = {
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
@@ -25,6 +25,16 @@ const chineseSimple: Language = {
       const ramdomNumber = Math.floor(Math.random() * mubleArr.length)
       return `${mumbleFrom}对${mumbleObject}说："${mubleArr[ramdomNumber]}"`
     }
+  },
+  setGuildProfile: {
+    command: 'config',
+    commandDesc: '设置你的Bot（仅限管理员）',
+    title: '设置',
+    announcementChannelOption: '公告频道',
+    administratorRoleOption: '管理员tag',
+    timeZoneOption: '时区',
+    notificationChannelOption: '消息频道（用于通知）',
+    languageOption: '语言'
   }
 }
 

@@ -1,5 +1,5 @@
 import { Guild } from 'discord.js'
-import getDBGuild from '../../models/DBGuild'
+import getDBGuild from '../../models/DBGuild/getDBGuild'
 import { DBGuild } from '../../models/DBGuild/DBGuild'
 import client from '../../client'
 import setCommands from '../commands'

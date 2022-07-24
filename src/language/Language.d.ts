@@ -15,5 +15,15 @@ export interface Language {
     mumble: {
         mumble: string,
         language(mumbleFrom: string, mumbleObject: string): string
+    },
+    setGuildProfile: {
+        command: string,
+        commandDesc: string,
+        title: string,
+        announcementChannelOption: string,
+        administratorRoleOption: string,
+        timeZoneOption: string,
+        notificationChannelOption: string,
+        languageOption: string
     }
 }

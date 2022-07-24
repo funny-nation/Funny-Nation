@@ -11,7 +11,7 @@ import { DBGuild } from '../models/DBGuild/DBGuild'
  * @param commands
  * @param guild
  */
-async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommandBuilder)[], guild: DBGuild) {
+async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommandBuilder | any)[], guild: DBGuild) {
   if (client.user === null) {
     logger.error('Cannot setup commands because client\'s user does not existed')
     process.exit(2)

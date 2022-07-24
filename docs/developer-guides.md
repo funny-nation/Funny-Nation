@@ -76,7 +76,7 @@ Before you start coding, I recommend you to look at other features we built.
 
 1. Create a folder under the ```/src/features/```. 
 2. Create a ```README.md``` file for describing your new feature in English. 
-3. Create your entry file ```index.ts``` under your folder, then add an ```import``` statement in file ```/src/features/index.ts``` to import your ```index.ts```. 
+3. Create your entry file ```getDBMember.ts``` under your folder, then add an ```import``` statement in file ```/src/features/getDBMember.ts``` to import your ```getDBMember.ts```. 
 4. In your file, you can import the ```client```, and add any listener you want.
 
 ```typescript

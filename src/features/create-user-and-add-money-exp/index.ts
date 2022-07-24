@@ -1,11 +1,11 @@
 import client from '../../client'
 import logger from '../../logger'
 import { Message } from 'discord.js'
-import getDBUser from '../../models/DBUser'
-import getDBMember from '../../models/DBMember'
+import getDBUser from '../../models/DBUser/getDBUser'
+import getDBMember from '../../models/DBMember/getDBMember'
 import moment from 'moment-timezone'
-import { DBUser } from '../../models/DBUser/DBUser'
-import { DBMember } from '../../models/DBMember/DBMember'
+import { DBUser } from '../../models/DBUser'
+import { DBMember } from '../../models/DBMember'
 
 client.on('messageCreate', async function (message: Message) {
   if (message.guild === null) return

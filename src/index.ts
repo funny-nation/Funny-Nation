@@ -1,4 +1,4 @@
 import './Bot'
 import './features'
 import './prismaClient'
-import './language'
+import './language/getLanguage'

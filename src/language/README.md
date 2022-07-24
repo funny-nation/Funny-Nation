@@ -5,7 +5,7 @@ How to use:
 ### If you need to get the language for a word:
 
 ```typescript
-import getLanguage from "./index"
+import getLanguage from "./getLanguage"
 import {Language} from "./Language"
 import {DBGuild} from "./DBGuild";
 
@@ -25,4 +25,4 @@ If you don't know the words in different languages, ask other team members.
 
 1. Open the file ```/prisma/schema.prisma```; you would find ```enum LanguageEnum```. Add the new name of your language there. 
 2. Add a language file such as ```english-language.ts``` under the ```/src/language/``` folder. Make sure that you export the language in that file. 
-3. Edit the file ```/src/language/index.ts```; add a switch statement for your language. 
+3. Edit the file ```/src/language/getDBMember.ts```; add a switch statement for your language. 
