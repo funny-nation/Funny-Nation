@@ -4,7 +4,7 @@ import discordToken from '../discord-token'
 import client from '../client'
 import logger from '../logger'
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
-import { DBGuild } from '../models/DBGuild'
+import { DBGuild } from '../models/db-guild'
 
 /**
  * HTTP request to Discord api for setting up commands for a specific discord

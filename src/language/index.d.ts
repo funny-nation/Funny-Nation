@@ -1,2 +1,2 @@
-export * from './Language'
-export * from './getLanguage'
+export * from './language'
+export * from './get-language'

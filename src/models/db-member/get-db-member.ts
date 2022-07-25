@@ -1,10 +1,10 @@
-import { DBMember } from './DBMember'
-import prismaClient from '../../prismaClient'
+import { DBMember } from './db-member'
+import prismaClient from '../../prisma-client'
 import logger from '../../logger'
 import client from '../../client'
 import { Guild, User } from 'discord.js'
 
-const getDBMember = async function (userID: string, guildID: string): Promise<DBMember> {
+const getDbMember = async function (userID: string, guildID: string): Promise<DBMember> {
   let dbMember = await prismaClient.member.findUnique({
     where: {
       userID_guildID: {
@@ -76,4 +76,4 @@ const getDBMember = async function (userID: string, guildID: string): Promise<DB
   }
 }
 
-export default getDBMember
+export default getDbMember

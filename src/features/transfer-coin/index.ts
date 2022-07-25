@@ -1,6 +1,6 @@
 import client from '../../client'
 import { Guild, GuildMember, Interaction, MessageEmbed } from 'discord.js'
-import getDBMember from '../../models/DBMember/getDBMember'
+import getDbMember from '../../models/db-member/get-db-member'
 import addDbCoinTransfer from '../../models/db-coin-transfer/add-db-coin-transfer'
 import { randomUUID } from 'crypto'
 client.on('interactionCreate', async (interaction:Interaction) => {
@@ -21,8 +21,8 @@ client.on('interactionCreate', async (interaction:Interaction) => {
   const payer :GuildMember = interaction.member
   const guild: Guild = interaction.guild
 
-  const dbMember = await getDBMember(payer.id, guild.id)
-  const payeeDbMember = await getDBMember(payee.id, guild.id)
+  const dbMember = await getDbMember(payer.id, guild.id)
+  const payeeDbMember = await getDbMember(payee.id, guild.id)
 
   if (coin > dbMember.coinBalanceInGuild) {
     await interaction.reply('你没钱')

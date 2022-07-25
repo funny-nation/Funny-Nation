@@ -61,19 +61,28 @@ Requirements:
 
 #### Step1: Install dependency
 ```shell
+# For development
 npm install
+
+# For production
+npm install --omit=dev
 ```
 
 #### Step2: Build
 ```shell
-RUN npm run build
+npm run build
 ```
 
 #### Step3: Database Migration
 
 ```shell
+# For development
 DATABASE_URL="postgresql://your-postgres-database-url" \
-npx prisma migrate deploy
+npm devmigrate
+
+# For production
+DATABASE_URL="postgresql://your-postgres-database-url" \
+npm migrate
 ```
 
 #### Step4: Run

@@ -1,10 +1,10 @@
 import client from '../../../client'
 import { GuildMemberRoleManager, Interaction, Permissions } from 'discord.js'
-import { DBGuild } from '../../../models/DBGuild'
+import { DBGuild } from '../../../models/db-guild'
 import { Language } from '../../../language'
-import getLanguage from '../../../language/getLanguage'
+import getLanguage from '../../../language/get-language'
 import logger from '../../../logger'
-import getDBGuild from '../../../models/DBGuild/getDBGuild'
+import getDbGuild from '../../../models/db-guild/get-db-guild'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -17,7 +17,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       interaction.commandName !== 'config'
     ) return
 
-    const dbGuild: DBGuild = await getDBGuild(interaction.guild.id)
+    const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language: Language = getLanguage(dbGuild.languageInGuild)
     const roleFromOption = interaction.options.getRole('role')
 

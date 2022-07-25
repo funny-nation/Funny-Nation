@@ -9,7 +9,8 @@
     "testOnStart": "ISTEST=true ts-node src/index.ts",
     "build": "tsc -p .",
     "test": "jest",
-    "migrate-dev": "npx prisma migrate dev",
+    "devmigrate": "npx prisma migrate dev",
+    "migrate": "npx prisma migrate deploy",
     "eslint": "npx eslint ./src --ext .ts"
   },
   "repository": {
