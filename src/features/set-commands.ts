@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
 import getLanguage from '../language/getLanguage'
-import { DBGuild } from '../models/DBGuild/DBGuild'
+import { DBGuild } from '../models/DBGuild'
 import commandSetup from '../utils/commandSetup'
 import { ApplicationCommandType } from 'discord-api-types/v10'
 

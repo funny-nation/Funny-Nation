@@ -3,6 +3,7 @@ import prismaClient from '../../prismaClient'
 import logger from '../../logger'
 import { Guild } from 'discord.js'
 import client from '../../client'
+import moment from 'moment-timezone'
 
 const getDBGuild = async function (guildID: string): Promise<DBGuild> {
   let dbGuild = await prismaClient.guild.findUnique({
@@ -15,7 +16,8 @@ const getDBGuild = async function (guildID: string): Promise<DBGuild> {
       data: {
         id: guildID,
         languageInGuild: 'English',
-        timeZone: 'America/New_York'
+        timeZone: 'America/New_York',
+        languageUpdatedAt: moment().utc().toDate()
       }
     })
     const guild: Guild = await client.guilds.fetch(guildID)
@@ -29,7 +31,8 @@ const getDBGuild = async function (guildID: string): Promise<DBGuild> {
           id: guildID
         },
         data: {
-          languageInGuild
+          languageInGuild,
+          languageUpdatedAt: moment().utc().toDate()
         }
       })
     },

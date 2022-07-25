@@ -12,7 +12,7 @@ Make sure that you edit ```/src/features/getDBMember.ts``` for importing your  `
 
 ### If your feature needs commands set up, 
 
-please add your commands into ```commands.ts```
+please add your commands into ```set-commands.ts```
 
 
 ### Something more

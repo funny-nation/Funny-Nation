@@ -4,7 +4,7 @@ import discordToken from '../discord-token'
 import client from '../client'
 import logger from '../logger'
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
-import { DBGuild } from '../models/DBGuild/DBGuild'
+import { DBGuild } from '../models/DBGuild'
 
 /**
  * HTTP request to Discord api for setting up commands for a specific discord
@@ -21,11 +21,9 @@ async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommand
     commandRequestBody.push(command.toJSON())
   }
   const rest = new REST({ version: '9' }).setToken(discordToken)
-  await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: commandRequestBody })
   const discordGuilds = await client.guilds.fetch(guild.id)
-  if (discordGuilds === null) {
-    return
-  }
+  await discordGuilds.commands.set([])
+  await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: commandRequestBody })
   logger.info(`All commands for guild ${discordGuilds.name} have been set`)
 }
 

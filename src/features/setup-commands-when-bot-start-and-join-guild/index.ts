@@ -2,7 +2,7 @@ import { Guild } from 'discord.js'
 import getDBGuild from '../../models/DBGuild/getDBGuild'
 import { DBGuild } from '../../models/DBGuild/DBGuild'
 import client from '../../client'
-import setCommands from '../commands'
+import setCommands from '../set-commands'
 import logger from '../../logger'
 
 client.on('guildCreate', async function (guild: Guild) {
