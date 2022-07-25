@@ -22,7 +22,6 @@ async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommand
   }
   const rest = new REST({ version: '9' }).setToken(discordToken)
   const discordGuilds = await client.guilds.fetch(guild.id)
-  await discordGuilds.commands.set([])
   await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: commandRequestBody })
   logger.info(`All commands for guild ${discordGuilds.name} have been set`)
 }
