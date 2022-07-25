@@ -10,7 +10,10 @@ import getTimeZoneSettingMessageActionRow from './factories/get-time-zone-settin
  * Listener for creating
  */
 client.on('interactionCreate', async (interaction: Interaction) => {
-  if (!interaction.isCommand() || interaction.guild === null) return
+  if (
+    !interaction.isCommand() ||
+    interaction.guild === null
+  ) return
 
   const dbGuild: DBGuild = await getDBGuild(interaction.guild.id)
   const language = getLanguage(dbGuild.languageInGuild)
