@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Guild" ADD COLUMN     "languageUpdatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
