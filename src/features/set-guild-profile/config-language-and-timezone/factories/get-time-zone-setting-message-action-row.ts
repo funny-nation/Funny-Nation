@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData } from 'discord.js'
-import LanguageEnum from '../../../../models/LanguageEnum'
+import { LanguageEnum } from '../../../../models/enum/LanguageEnum'
 import moment from 'moment-timezone'
 
 const timeZones = [

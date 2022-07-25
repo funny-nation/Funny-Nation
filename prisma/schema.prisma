@@ -55,3 +55,9 @@ enum LanguageEnum {
     ChineseSimple
     English
 }
+
+enum TransferCategory {
+    transferIn
+    transferOut
+    issueCoin
+}

@@ -9,6 +9,28 @@ async function setCommands (guild: DBGuild) {
   // Put your commands right here in this list
   const commandsList = [
     new SlashCommandBuilder()
+      .setName('transfer')
+      .setDescription('transfer amount of coins')
+      .addSubcommand(
+        subcommand => subcommand
+          .setName('coin')
+          .setDescription('xxx')
+          .addUserOption(option => option
+            .setName('payee')
+            .setRequired(true)
+            .setDescription('zzz')
+          )
+          .addIntegerOption(option => option
+            .setName('coin')
+            .setRequired(true)
+            .setDescription('amount')
+          )
+          .addStringOption(option => option
+            .setName('detail')
+            .setDescription('transferring detail')
+          )
+      ),
+    new SlashCommandBuilder()
       .setName(language.commands.getMyProfile.name)
       .setDescription(language.commands.getMyProfile.desc),
     new ContextMenuCommandBuilder()
