@@ -25,7 +25,9 @@ model CoinTransfer {
     amount BigInt
     time DateTime
     guild Guild @relation(fields: [guildID], references: [id])
-    detail String
+    detail String?
+    transactionID String
+    category TransferCategory @default(issueCoin)
 }
 
 model Member {
@@ -54,4 +56,10 @@ model Guild {
 enum LanguageEnum {
     ChineseSimple
     English
+}
+
+enum TransferCategory {
+    transferIn
+    transferOut
+    issueCoin
 }

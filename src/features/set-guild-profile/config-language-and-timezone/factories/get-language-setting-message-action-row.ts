@@ -1,5 +1,6 @@
 import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData } from 'discord.js'
-import LanguageEnum from '../../../../models/LanguageEnum'
+import { LanguageEnum } from '@prisma/client'
+
 const getLanguageSettingMessageActionRow = (currentLanguage: LanguageEnum): MessageActionRow => {
   const languageOptions: MessageSelectOptionData[] = []
 

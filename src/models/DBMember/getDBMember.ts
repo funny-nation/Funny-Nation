@@ -57,6 +57,21 @@ const getDBMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
+    },
+    async reduceCoins (coins: number = 1) {
+      await prismaClient.member.update({
+        where: {
+          userID_guildID: {
+            userID,
+            guildID
+          }
+        },
+        data: {
+          coinBalanceInGuild: {
+            decrement: coins
+          }
+        }
+      })
     }
   }
 }
