@@ -1,9 +1,9 @@
 import client from '../../client'
 import { Interaction, User } from 'discord.js'
-import getLanguage from '../../language/getLanguage'
-import getDBGuild from '../../models/DBGuild/getDBGuild'
+import getLanguage from '../../language/get-language'
+import getDbGuild from '../../models/db-guild/get-db-guild'
 import logger from '../../logger'
-import { DBGuild } from '../../models/DBGuild'
+import { DBGuild } from '../../models/db-guild'
 
 /**
  * This function will listen to the contextMenu event
@@ -14,7 +14,7 @@ import { DBGuild } from '../../models/DBGuild'
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isUserContextMenu() || interaction.guild === null) return
-    const dbGuild: DBGuild = await getDBGuild(interaction.guild.id)
+    const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language = getLanguage(dbGuild.languageInGuild)
     if (interaction.commandName !== language.mumble.mumble) return
     const targetUser: User = interaction.targetUser

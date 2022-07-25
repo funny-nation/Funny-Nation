@@ -1,11 +1,11 @@
-import { DBGuild } from './DBGuild'
-import prismaClient from '../../prismaClient'
+import { DBGuild } from './db-guild'
+import prismaClient from '../../prisma-client'
 import logger from '../../logger'
 import { Guild } from 'discord.js'
 import client from '../../client'
 import moment from 'moment-timezone'
 
-const getDBGuild = async function (guildID: string): Promise<DBGuild> {
+const getDbGuild = async function (guildID: string): Promise<DBGuild> {
   let dbGuild = await prismaClient.guild.findUnique({
     where: {
       id: guildID
@@ -79,4 +79,4 @@ const getDBGuild = async function (guildID: string): Promise<DBGuild> {
   }
 }
 
-export default getDBGuild
+export default getDbGuild

@@ -1,6 +1,6 @@
 import client from '../../../client'
 import { GuildMemberRoleManager, Interaction, Message, Permissions } from 'discord.js'
-import getDBGuild from '../../../models/DBGuild/getDBGuild'
+import getDbGuild from '../../../models/db-guild/get-db-guild'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (
@@ -16,7 +16,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     !(interaction.message instanceof Message)
   ) return
 
-  const dbGuild = await getDBGuild(interaction.guild.id)
+  const dbGuild = await getDbGuild(interaction.guild.id)
   let hasPermission = interaction.member.permissions.has('ADMINISTRATOR')
   if (dbGuild.administratorRoleID !== null) {
     hasPermission = hasPermission || interaction.member.roles.cache.has(dbGuild.administratorRoleID)

@@ -6,9 +6,9 @@ then create a new folder here, or put this feature in other's folder here.
 You need to describe your feature in README.md in the folder. 
 
 ### Rule of the folder
-All feature folder must contain a ```README.md``` file and a ```getDBMember.ts```. ```README.md``` describe your features in plain text. ```getDBMember.ts``` file is the entry file of your code. 
+All feature folder must contain a ```README.md``` file and a ```get-db-member.ts```. ```README.md``` describe your features in plain text. ```get-db-member.ts``` file is the entry file of your code. 
 
-Make sure that you edit ```/src/features/getDBMember.ts``` for importing your  ```getDBMember.ts``` file here. 
+Make sure that you edit ```/src/features/get-db-member.ts``` for importing your  ```getDbMember.ts``` file here. 
 
 ### If your feature needs commands set up, 
 
