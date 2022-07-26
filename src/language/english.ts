@@ -35,6 +35,17 @@ const english: Language = {
     timeZoneOption: 'Your Timezone',
     notificationChannelOption: 'Channel for Notification',
     languageOption: 'Language Setting'
+  },
+  transferCoin: {
+    transferCommand: 'transfer',
+    coin: 'coin',
+    payee: 'payee',
+    detail: 'remark',
+    insufficientBalance: 'You have insufficient balance. ',
+    transferCompleteMsg: (payeeID: string, amount: number): string => {
+      return `Transfer completed! <@${payeeID}> You have received ¥${amount} coins yo。`
+    },
+    senderLeavingMsgInfo: 'Sender has leave a message to you. '
   }
 }
 

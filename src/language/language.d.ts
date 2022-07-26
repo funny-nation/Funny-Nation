@@ -25,5 +25,14 @@ export interface Language {
         timeZoneOption: string,
         notificationChannelOption: string,
         languageOption: string
+    },
+    transferCoin: {
+        transferCommand: string,
+        coin: string,
+        payee: string,
+        detail: string,
+        insufficientBalance: string,
+        transferCompleteMsg(payeeID: string, amount: number): string,
+        senderLeavingMsgInfo: string
     }
 }
