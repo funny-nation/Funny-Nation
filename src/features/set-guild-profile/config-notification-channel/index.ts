@@ -16,22 +16,24 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language: Language = getLanguage(dbGuild.languageInGuild)
+
     if (
       interaction.commandName !== language.setGuildProfile.command ||
-      interaction.options.getSubcommand() !== 'admin'
+      interaction.options.getSubcommand() !== 'notification'
     ) return
 
-    const roleFromOption = interaction.options.getRole('role')
-    if (roleFromOption === null) return
+    const notificationChannel = interaction.options.getChannel('channel')
+
+    if (notificationChannel === null) return
 
     if (!await isAdmin(interaction.member)) {
       await interaction.reply('You don\'t have permission')
     }
 
-    await dbGuild.setAdministratorRoleID(roleFromOption.id)
-    await interaction.reply(`Administrator role has changed to ${roleFromOption.name}`)
+    await dbGuild.setNotificationChannelID(notificationChannel.id)
+    await interaction.reply(`Notification channel has changed to "${notificationChannel.name}"`)
   } catch (e) {
     console.log(e)
-    logger.error('Error when someone change the administrator role')
+    logger.error('Error when someone change the notification channel')
   }
 })

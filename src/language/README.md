@@ -5,8 +5,7 @@ How to use:
 ### If you need to get the language for a word:
 
 ```typescript
-import getLanguage from "./get-language"
-import {Language} from "./language"
+import {Language, getLanguage} from "./index"
 import {DBGuild} from "./db-guild";
 
 const languageEnum = guild.languageInGuild
@@ -17,7 +16,7 @@ const aWord = getLanguage(languageEnum).xx.inXXX
 
 First, you need to change the structure of type in ```language.ts```; add anywhere you want. 
 
-Then, you need to edit for each language files such as ```english-language.ts```. 
+Then, you need to edit for each language files such as ```english.ts```. 
 
 If you don't know the words in different languages, ask other team members. 
 

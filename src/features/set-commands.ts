@@ -1,8 +1,9 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
 import { getLanguage } from '../language'
 import { DBGuild } from '../models'
-import { commandSetup } from '../utils'
 import { ApplicationCommandType } from 'discord-api-types/v10'
+import { client } from '../client'
+import { logger } from '../logger'
 
 async function setCommands (guild: DBGuild) {
   const language = getLanguage(guild.languageInGuild)
@@ -41,7 +42,7 @@ async function setCommands (guild: DBGuild) {
       .setDescription(language.setGuildProfile.commandDesc)
       .addSubcommand(
         subcommand => subcommand
-          .setName('lt')
+          .setName('language-time')
           .setDescription('Configure Language and TimeZone')
       )
       .addSubcommand(
@@ -59,7 +60,7 @@ async function setCommands (guild: DBGuild) {
         subcommand => subcommand
           .setName('announcement')
           .setDescription('Configure Announcement Channel')
-          .addRoleOption(
+          .addChannelOption(
             option => option
               .setName('channel')
               .setDescription('Announcement Channel')
@@ -70,7 +71,7 @@ async function setCommands (guild: DBGuild) {
         subcommand => subcommand
           .setName('notification')
           .setDescription('Configure Notification Channel')
-          .addRoleOption(
+          .addChannelOption(
             option => option
               .setName('channel')
               .setDescription('Notification Channel')
@@ -78,7 +79,15 @@ async function setCommands (guild: DBGuild) {
           )
       )
   ]
-  await commandSetup(commandsList, guild)
+
+  const commandRequestBody = []
+  for (const command of commandsList) {
+    commandRequestBody.push(command.toJSON())
+  }
+  const discordGuilds = await client.guilds.fetch(guild.id)
+  await discordGuilds.commands.set([])
+  await discordGuilds.commands.set(commandRequestBody)
+  logger.info(`All commands for guild ${discordGuilds.name} have been set`)
 }
 
 export default setCommands

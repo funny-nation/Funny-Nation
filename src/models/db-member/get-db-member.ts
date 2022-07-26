@@ -42,6 +42,7 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
+      super.experienceInGuild += exp
     },
     async addCoins (coins: number = 1): Promise<void> {
       await prismaClient.member.update({
@@ -57,6 +58,7 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
+      super.coinBalanceInGuild += coins
     },
     async reduceCoins (coins: number = 1) {
       await prismaClient.member.update({
@@ -72,6 +74,7 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
+      super.coinBalanceInGuild -= coins
     }
   }
 }

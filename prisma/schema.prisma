@@ -54,7 +54,7 @@ model Guild {
 }
 
 enum LanguageEnum {
-    ChineseSimple
+    ChineseSimplified
     English
 }
 

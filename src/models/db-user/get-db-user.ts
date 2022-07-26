@@ -26,14 +26,16 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
   return {
     ...dbUser,
     async resetTimeBefore () {
+      const now = moment().utc().toDate()
       await prismaClient.user.update({
         where: {
           id: userID
         },
         data: {
-          timeBefore: moment().utc().toDate()
+          timeBefore: now
         }
       })
+      super.timeBefore = now
     },
     async addExperience (exp: number = 1) {
       await prismaClient.user.update({
@@ -46,6 +48,7 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
           }
         }
       })
+      super.experience += exp
     }
   }
 }

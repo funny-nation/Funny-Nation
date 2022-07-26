@@ -19,6 +19,7 @@ client.on('messageCreate', async function (message: Message) {
     if (timeDeltaInMS < 60000) {
       return
     }
+    await user.resetTimeBefore()
     await user.addExperience()
     logger.verbose(`Add 1 exp to user ${message.author.tag}`)
     await member.addCoins()
