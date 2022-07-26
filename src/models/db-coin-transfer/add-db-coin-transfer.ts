@@ -1,4 +1,4 @@
-import prismaClient from '../../prisma-client'
+import { prismaClient } from '../../prisma-client'
 import moment from 'moment-timezone'
 import { DbCoinTransfer } from './db-coin-transfer'
 import { TransferCategory } from '../enum/transfer-category'

@@ -1,7 +1,7 @@
-import client from '../client'
-import logger from '../logger'
+import { client } from '../client'
+import { logger } from '../logger'
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
-import { DBGuild } from '../models/db-guild'
+import { DBGuild } from '../models'
 
 /**
  * HTTP request to Discord api for setting up commands for a specific discord

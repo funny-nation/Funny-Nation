@@ -1,4 +1,4 @@
-import client from '../../../client'
+import { client } from '../../../client'
 import { GuildMember, Interaction, MessageActionRow, MessageButton } from 'discord.js'
 import { DBGuild } from '../../../models/db-guild'
 import getDbGuild from '../../../models/db-guild/get-db-guild'

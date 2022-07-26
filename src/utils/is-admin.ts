@@ -1,5 +1,5 @@
 import { GuildMember } from 'discord.js'
-import getDbGuild from '../models/db-guild/get-db-guild'
+import { getDbGuild } from '../models'
 
 /**
  * Check if a member is an administrator of that guild or not.

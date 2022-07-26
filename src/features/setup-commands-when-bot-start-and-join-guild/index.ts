@@ -3,7 +3,7 @@ import getDbGuild from '../../models/db-guild/get-db-guild'
 import { DBGuild } from '../../models/db-guild/db-guild'
 import client from '../../client'
 import setCommands from '../set-commands'
-import logger from '../../logger'
+import { logger } from '../../logger'
 
 client.on('guildCreate', async function (guild: Guild) {
   logger.info(`Bot join guild ${guild.name}`)

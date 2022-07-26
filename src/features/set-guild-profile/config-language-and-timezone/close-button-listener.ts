@@ -1,4 +1,4 @@
-import client from '../../../client'
+import { client } from '../../../client'
 import { GuildMember, Interaction, Message } from 'discord.js'
 import isAdmin from '../../../utils/is-admin'
 

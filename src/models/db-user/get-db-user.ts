@@ -1,9 +1,9 @@
 import { DBUser } from './db-user'
-import prismaClient from '../../prisma-client'
+import { prismaClient } from '../../prisma-client'
 import moment from 'moment-timezone'
-import logger from '../../logger'
+import { logger } from '../../logger'
 import { User } from 'discord.js'
-import client from '../../client'
+import { client } from '../../client'
 
 const getDbUser = async function (userID: string): Promise<DBUser> {
   let dbUser = await prismaClient.user.findUnique({

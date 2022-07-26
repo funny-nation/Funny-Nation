@@ -1,5 +1,5 @@
-import client from '../../client'
-import logger from '../../logger'
+import { client } from '../../client'
+import { logger } from '../../logger'
 import { Message } from 'discord.js'
 import getDbUser from '../../models/db-user/get-db-user'
 import getDbMember from '../../models/db-member/get-db-member'

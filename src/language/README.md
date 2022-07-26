@@ -15,7 +15,7 @@ const aWord = getLanguage(languageEnum).xx.inXXX
 
 ### If you need to set a new word, then
 
-First, you need to change the structure of type in ```language.d.ts```; add anywhere you want. 
+First, you need to change the structure of type in ```language.ts```; add anywhere you want. 
 
 Then, you need to edit for each language files such as ```english-language.ts```. 
 

@@ -1,4 +1,4 @@
-import client from '../../client'
+import { client } from '../../client'
 import { Interaction, User } from 'discord.js'
 import getLanguage from '../../language/get-language'
 import getDbGuild from '../../models/db-guild/get-db-guild'

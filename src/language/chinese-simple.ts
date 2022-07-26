@@ -45,7 +45,12 @@ const chineseSimple: Language = {
     transferCompleteMsg: (payeeID: string, amount: number): string => {
       return `转账成功 <@${payeeID}> 你发达了。刚收到了¥${amount}个金币哟。`
     },
-    senderLeavingMsgInfo: '转账人给你留了一条信息。'
+    senderLeavingMsgInfo: '转账人给你留了一条信息。',
+    commandDesc: '给Guild里的其他用户转账',
+    coinDesc: '金币',
+    amountDesc: '金币数额',
+    detailDesc: '给收款人的转账备注',
+    payeeDesc: '在本Guild中的收款人账号'
   }
 }
 
