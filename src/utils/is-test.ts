@@ -1,4 +1,4 @@
 const isTest = () => {
   return process.env.ISTEST !== undefined
 }
-export default isTest
+export { isTest }

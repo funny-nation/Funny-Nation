@@ -1,8 +1,8 @@
 import { DBGuild } from './db-guild'
-import prismaClient from '../../prisma-client'
-import logger from '../../logger'
+import { prismaClient } from '../../prisma-client'
+import { logger } from '../../logger'
 import { Guild } from 'discord.js'
-import client from '../../client'
+import { client } from '../../client'
 import moment from 'moment-timezone'
 
 const getDbGuild = async function (guildID: string): Promise<DBGuild> {
@@ -80,4 +80,4 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
   }
 }
 
-export default getDbGuild
+export { getDbGuild }

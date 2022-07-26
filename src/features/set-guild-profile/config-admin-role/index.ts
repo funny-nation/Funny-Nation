@@ -1,11 +1,9 @@
-import client from '../../../client'
+import { client } from '../../../client'
 import { GuildMember, Interaction } from 'discord.js'
-import { DBGuild } from '../../../models/db-guild'
-import { Language } from '../../../language'
-import getLanguage from '../../../language/get-language'
-import logger from '../../../logger'
-import getDbGuild from '../../../models/db-guild/get-db-guild'
-import isAdmin from '../../../utils/is-admin'
+import { DBGuild, getDbGuild } from '../../../models'
+import { Language, getLanguage } from '../../../language'
+import { logger } from '../../../logger'
+import { isAdmin } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {

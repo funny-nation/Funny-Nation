@@ -8,4 +8,4 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS]
 })
 
-export default client
+export { client }

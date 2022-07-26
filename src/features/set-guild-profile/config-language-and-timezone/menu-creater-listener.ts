@@ -1,11 +1,9 @@
-import client from '../../../client'
+import { client } from '../../../client'
 import { GuildMember, Interaction, MessageActionRow, MessageButton } from 'discord.js'
-import { DBGuild } from '../../../models/db-guild'
-import getDbGuild from '../../../models/db-guild/get-db-guild'
-import getLanguage from '../../../language/get-language'
-import getLanguageSettingMessageActionRow from './factories/get-language-setting-message-action-row'
-import getTimeZoneSettingMessageActionRow from './factories/get-time-zone-setting-message-action-row'
-import isAdmin from '../../../utils/is-admin'
+import { DBGuild, getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
+import { getLanguageSettingMessageActionRow, getTimeZoneSettingMessageActionRow } from './factories'
+import { isAdmin } from '../../../utils'
 
 /**
  * Listener for creating

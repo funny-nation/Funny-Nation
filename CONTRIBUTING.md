@@ -26,7 +26,9 @@ There are a few guidelines you need to follow.
 
 * Do not commit the files that should be ignored, such as ```.idea``` and ```xxx.log```.
 
-* Use English for all documentations and comments (include your git commit comments). 
+* Use English for all documentations and comments (include your git commit comments).
+
+* Do not use ```xxx.d.ts``` in this project. 
 
 * You must test your code before you send a pull request. 
 

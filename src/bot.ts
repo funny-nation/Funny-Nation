@@ -1,7 +1,7 @@
-import client from './client'
-import discordToken from './discord-token'
-import logger from './logger'
-import isTest from './utils/is-test'
+import { client } from './client'
+import { discordToken } from './discord-token'
+import { logger } from './logger'
+import { isTest } from './utils'
 
 client.login(discordToken).catch((reason: string) => {
   logger.error('Bot start failed')

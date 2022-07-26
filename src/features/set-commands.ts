@@ -1,7 +1,7 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
-import getLanguage from '../language/get-language'
-import { DBGuild } from '../models/db-guild'
-import commandSetup from '../utils/command-setup'
+import { getLanguage } from '../language'
+import { DBGuild } from '../models'
+import { commandSetup } from '../utils'
 import { ApplicationCommandType } from 'discord-api-types/v10'
 
 async function setCommands (guild: DBGuild) {
@@ -9,25 +9,25 @@ async function setCommands (guild: DBGuild) {
   // Put your commands right here in this list
   const commandsList = [
     new SlashCommandBuilder()
-      .setName('transfer')
-      .setDescription('transfer amount of coins')
+      .setName(language.transferCoin.transferCommand)
+      .setDescription(language.transferCoin.commandDesc)
       .addSubcommand(
         subcommand => subcommand
-          .setName('coin')
-          .setDescription('xxx')
+          .setName(language.transferCoin.coin)
+          .setDescription(language.transferCoin.coinDesc)
           .addUserOption(option => option
-            .setName('payee')
+            .setName(language.transferCoin.payee)
             .setRequired(true)
-            .setDescription('zzz')
+            .setDescription(language.transferCoin.payeeDesc)
           )
           .addIntegerOption(option => option
-            .setName('coin')
+            .setName(language.transferCoin.coin)
             .setRequired(true)
-            .setDescription('amount')
+            .setDescription(language.transferCoin.amountDesc)
           )
           .addStringOption(option => option
-            .setName('detail')
-            .setDescription('transferring detail')
+            .setName(language.transferCoin.detail)
+            .setDescription(language.transferCoin.detailDesc)
           )
       ),
     new SlashCommandBuilder()

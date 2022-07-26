@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData } from 'discord.js'
-import { LanguageEnum } from '../../../../models/enum/language-enum'
+import { LanguageEnum } from '../../../../models'
 import moment from 'moment-timezone'
 
 const timeZones = [
@@ -33,4 +33,4 @@ const getTimeZoneSettingMessageActionRow = (currentLanguage: LanguageEnum, curre
     ])
 }
 
-export default getTimeZoneSettingMessageActionRow
+export { getTimeZoneSettingMessageActionRow }

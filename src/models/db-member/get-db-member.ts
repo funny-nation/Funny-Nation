@@ -1,7 +1,7 @@
 import { DBMember } from './db-member'
-import prismaClient from '../../prisma-client'
-import logger from '../../logger'
-import client from '../../client'
+import { prismaClient } from '../../prisma-client'
+import { logger } from '../../logger'
+import { client } from '../../client'
 import { Guild, User } from 'discord.js'
 
 const getDbMember = async function (userID: string, guildID: string): Promise<DBMember> {
@@ -76,4 +76,4 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
   }
 }
 
-export default getDbMember
+export { getDbMember }

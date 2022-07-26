@@ -1,7 +1,7 @@
-import client from '../client'
-import logger from '../logger'
+import { client } from '../client'
+import { logger } from '../logger'
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
-import { DBGuild } from '../models/db-guild'
+import { DBGuild } from '../models'
 
 /**
  * HTTP request to Discord api for setting up commands for a specific discord
@@ -18,10 +18,9 @@ async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommand
   for (const command of commands) {
     commandRequestBody.push(command.toJSON())
   }
-  console.log(commandRequestBody)
   const discordGuilds = await client.guilds.fetch(guild.id)
   await discordGuilds.commands.set(commandRequestBody)
   logger.info(`All commands for guild ${discordGuilds.name} have been set`)
 }
 
-export default commandSetup
+export { commandSetup }

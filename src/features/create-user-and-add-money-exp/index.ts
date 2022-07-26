@@ -1,11 +1,8 @@
-import client from '../../client'
-import logger from '../../logger'
+import { client } from '../../client'
+import { logger } from '../../logger'
 import { Message } from 'discord.js'
-import getDbUser from '../../models/db-user/get-db-user'
-import getDbMember from '../../models/db-member/get-db-member'
+import { getDbUser, DBUser, getDbMember, DBMember } from '../../models'
 import moment from 'moment-timezone'
-import { DBUser } from '../../models/db-user'
-import { DBMember } from '../../models/db-member'
 
 client.on('messageCreate', async function (message: Message) {
   if (message.guild === null) return

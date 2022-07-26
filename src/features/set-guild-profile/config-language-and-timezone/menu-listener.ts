@@ -1,9 +1,9 @@
-import client from '../../../client'
+import { client } from '../../../client'
 import { GuildMember, Interaction, Message } from 'discord.js'
-import getDbGuild from '../../../models/db-guild/get-db-guild'
+import { getDbGuild } from '../../../models'
 import setCommands from '../../set-commands'
 import moment from 'moment-timezone'
-import isAdmin from '../../../utils/is-admin'
+import { isAdmin } from '../../../utils'
 
 /**
  * Listen on menu

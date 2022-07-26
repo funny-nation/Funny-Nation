@@ -21,4 +21,4 @@ const getLanguageSettingMessageActionRow = (currentLanguage: LanguageEnum): Mess
     ])
 }
 
-export default getLanguageSettingMessageActionRow
+export { getLanguageSettingMessageActionRow }
