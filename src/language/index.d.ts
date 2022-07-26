@@ -1,2 +1,3 @@
-export * from './language'
-export * from './get-language'
+import getLanguage from './get-language'
+export { Language } from './language'
+export { getLanguage }

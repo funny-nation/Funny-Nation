@@ -1,8 +1,9 @@
 import client from '../../../client'
-import { GuildMemberRoleManager, Interaction, Message, Permissions } from 'discord.js'
+import { GuildMember, Interaction, Message } from 'discord.js'
 import getDbGuild from '../../../models/db-guild/get-db-guild'
 import setCommands from '../../set-commands'
 import moment from 'moment-timezone'
+import isAdmin from '../../../utils/is-admin'
 
 /**
  * Listen on menu
@@ -12,19 +13,12 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     !interaction.isSelectMenu() ||
     interaction.guild === null ||
     interaction.member === null ||
-    !(interaction.member.roles instanceof GuildMemberRoleManager) ||
-    !(interaction.member.permissions instanceof Permissions) ||
+    !(interaction.member instanceof GuildMember) ||
     !(interaction.message instanceof Message)
   ) return
 
   const dbGuild = await getDbGuild(interaction.guild.id)
-  let hasPermission = interaction.member.permissions.has('ADMINISTRATOR')
-  if (dbGuild.administratorRoleID !== null) {
-    hasPermission = hasPermission || interaction.member.roles.cache.has(dbGuild.administratorRoleID)
-  }
-  if (!hasPermission) {
-    await interaction.reply('You don\'t have permission')
-  }
+  if (!await isAdmin(interaction.member)) return
 
   switch (interaction.customId) {
     case 'guildLanguageSettingMenu': {

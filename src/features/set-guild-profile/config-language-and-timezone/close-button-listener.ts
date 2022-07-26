@@ -1,6 +1,6 @@
 import client from '../../../client'
-import { GuildMemberRoleManager, Interaction, Message, Permissions } from 'discord.js'
-import getDbGuild from '../../../models/db-guild/get-db-guild'
+import { GuildMember, Interaction, Message } from 'discord.js'
+import isAdmin from '../../../utils/is-admin'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (
@@ -11,17 +11,11 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   ) return
 
   if (
-    !(interaction.member.roles instanceof GuildMemberRoleManager) ||
-    !(interaction.member.permissions instanceof Permissions) ||
+    !(interaction.member instanceof GuildMember) ||
     !(interaction.message instanceof Message)
   ) return
 
-  const dbGuild = await getDbGuild(interaction.guild.id)
-  let hasPermission = interaction.member.permissions.has('ADMINISTRATOR')
-  if (dbGuild.administratorRoleID !== null) {
-    hasPermission = hasPermission || interaction.member.roles.cache.has(dbGuild.administratorRoleID)
-  }
-  if (!hasPermission) {
+  if (!await isAdmin(interaction.member)) {
     await interaction.reply('You don\'t have permission')
   }
 
