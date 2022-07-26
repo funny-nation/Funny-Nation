@@ -1,9 +1,8 @@
 import { client } from '../../client'
 import { Interaction, User } from 'discord.js'
-import getLanguage from '../../language/get-language'
-import getDbGuild from '../../models/db-guild/get-db-guild'
-import logger from '../../logger'
-import { DBGuild } from '../../models/db-guild'
+import { getLanguage } from '../../language'
+import { getDbGuild, DBGuild } from '../../models'
+import { logger } from '../../logger'
 
 /**
  * This function will listen to the contextMenu event

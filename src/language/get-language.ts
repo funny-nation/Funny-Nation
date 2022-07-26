@@ -1,7 +1,7 @@
 import english from './english'
 import chineseSimple from './chinese-simple'
 import { Language } from './index'
-import { LanguageEnum } from '../models/enum/language-enum'
+import { LanguageEnum } from '../models'
 
 const getLanguage = (languageEnum: LanguageEnum): Language => {
   switch (languageEnum) {
@@ -14,4 +14,4 @@ const getLanguage = (languageEnum: LanguageEnum): Language => {
   }
 }
 
-export default getLanguage
+export { getLanguage }

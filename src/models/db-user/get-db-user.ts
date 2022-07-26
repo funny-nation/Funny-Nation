@@ -50,4 +50,4 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
   }
 }
 
-export default getDbUser
+export { getDbUser }

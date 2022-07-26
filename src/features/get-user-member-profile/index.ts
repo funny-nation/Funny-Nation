@@ -3,16 +3,11 @@ import {
   Interaction,
   MessageEmbed
 } from 'discord.js'
-import getLanguage from '../../language/get-language'
-import { DBGuild } from '../../models/db-guild'
-import getDbGuild from '../../models/db-guild/get-db-guild'
-import { DBUser } from '../../models/db-user'
-import getDbUser from '../../models/db-user/get-db-user'
-import { DBMember } from '../../models/db-member'
-import getDbMember from '../../models/db-member/get-db-member'
+import { getLanguage } from '../../language'
+import { DBGuild, getDbGuild, DBUser, getDbUser, DBMember, getDbMember } from '../../models'
 import renderExpBar from './render-exp-bar'
 import calculateLevelByExp from './calculate-level-by-exp'
-import logger from '../../logger'
+import { logger } from '../../logger'
 
 client.on('interactionCreate', async function (interaction: Interaction) {
   if (!interaction.isCommand()) return

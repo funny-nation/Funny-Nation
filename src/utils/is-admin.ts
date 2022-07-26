@@ -14,4 +14,4 @@ const isAdmin = async (member: GuildMember): Promise<boolean> => {
   return hasPermission
 }
 
-export default isAdmin
+export { isAdmin }

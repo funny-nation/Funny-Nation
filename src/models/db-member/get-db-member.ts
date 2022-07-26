@@ -76,4 +76,4 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
   }
 }
 
-export default getDbMember
+export { getDbMember }

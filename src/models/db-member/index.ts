@@ -1,3 +1,2 @@
-import getDbMember from './get-db-member'
-export { DBMember } from './db-member'
-export { getDbMember }
+export * from './get-db-member'
+export * from './db-member'

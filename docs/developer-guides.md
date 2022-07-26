@@ -49,23 +49,20 @@ There are rules and instructions for each folder. You can find them in README.md
 
 #### Export
 
-* If you export default variable, make sure that your export variable and file name should be matched.
+* Do not use export default
 
 ```typescript
-// language-setting.ts
-export default LanguageSetting // ✅
-
-export default languageSetting // ✅
-
 export default getLanguageSetting // ❌
+
+export { getLanguageSetting } // ✅
 ```
 
-* Do not export default in file ```index.ts```, but you can export from import. 
+* Export your modules in ```index.ts``` if needed
+
 ```typescript
 // index.ts
-export default LanguageSetting // ❌
-
-export * from './xxx' // ✅
+export * from './file1'
+export * from './file2'
 ```
 
 

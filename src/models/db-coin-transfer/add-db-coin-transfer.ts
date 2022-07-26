@@ -1,7 +1,7 @@
 import { prismaClient } from '../../prisma-client'
 import moment from 'moment-timezone'
 import { DbCoinTransfer } from './db-coin-transfer'
-import { TransferCategory } from '../enum/transfer-category'
+import { TransferCategory } from '../enum'
 
 const addDbCoinTransfer = async (userID: string, guildID: string, amount: number, transactionID: string, detail: string, category?: TransferCategory): Promise<DbCoinTransfer> => {
   return await prismaClient.coinTransfer.create({
@@ -17,4 +17,4 @@ const addDbCoinTransfer = async (userID: string, guildID: string, amount: number
   })
 }
 
-export default addDbCoinTransfer
+export { addDbCoinTransfer }

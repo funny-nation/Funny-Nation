@@ -1,6 +1,6 @@
 import { client } from '../../../client'
 import { GuildMember, Interaction, Message } from 'discord.js'
-import isAdmin from '../../../utils/is-admin'
+import { isAdmin } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (

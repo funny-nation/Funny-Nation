@@ -1,5 +1,5 @@
 import { Guild } from '@prisma/client'
-import { LanguageEnum } from '../enum/language-enum'
+import { LanguageEnum } from '../enum'
 
 export type DBGuild = {
   setAnnouncementChannelID(announcementChannelID: string): Promise<void>,

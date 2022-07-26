@@ -80,4 +80,4 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
   }
 }
 
-export default getDbGuild
+export { getDbGuild }

@@ -4,7 +4,7 @@ const myFormat = format.printf((info) => {
   return `${info.timestamp} | ${info.level}: ${info.message}`
 })
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: 'info',
   format: format.combine(
     winston.format.colorize({
@@ -24,4 +24,4 @@ switch (process.env.NODE_ENV) {
     logger.add(new winston.transports.Console())
 }
 
-export default logger
+export default { logger }
