@@ -35,6 +35,17 @@ const chineseSimple: Language = {
     timeZoneOption: '时区',
     notificationChannelOption: '消息频道（用于通知）',
     languageOption: '语言'
+  },
+  transferCoin: {
+    transferCommand: 'transfer',
+    coin: '金币',
+    payee: '收款人',
+    detail: '备注',
+    insufficientBalance: '金币不足',
+    transferCompleteMsg: (payeeID: string, amount: number): string => {
+      return `转账成功 <@${payeeID}> 你发达了。刚收到了¥${amount}个金币哟。`
+    },
+    senderLeavingMsgInfo: '转账人给你留了一条信息。'
   }
 }
 
