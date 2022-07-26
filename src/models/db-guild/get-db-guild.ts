@@ -35,6 +35,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           languageUpdatedAt: moment().utc().toDate()
         }
       })
+      super.languageInGuild = languageInGuild
     },
     async setAdministratorRoleID (administratorRoleID: string): Promise<void> {
       await prismaClient.guild.update({

@@ -1,6 +1,3 @@
-import { REST } from '@discordjs/rest'
-import { Routes } from 'discord-api-types/v9'
-import discordToken from '../discord-token'
 import client from '../client'
 import logger from '../logger'
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
@@ -16,13 +13,14 @@ async function commandSetup (commands: (SlashCommandBuilder | ContextMenuCommand
     logger.error('Cannot setup commands because client\'s user does not existed')
     process.exit(2)
   }
+
   const commandRequestBody = []
   for (const command of commands) {
     commandRequestBody.push(command.toJSON())
   }
-  const rest = new REST({ version: '9' }).setToken(discordToken)
+  console.log(commandRequestBody)
   const discordGuilds = await client.guilds.fetch(guild.id)
-  await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: commandRequestBody })
+  await discordGuilds.commands.set(commandRequestBody)
   logger.info(`All commands for guild ${discordGuilds.name} have been set`)
 }
 

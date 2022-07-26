@@ -1,2 +1,3 @@
-export * from './db-guild'
-export * from './get-db-guild'
+import getDbGuild from './get-db-guild'
+export { DBGuild } from './db-guild'
+export { getDbGuild }

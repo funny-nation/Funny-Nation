@@ -1,2 +1,2 @@
-export * from './language-enum'
-export * from './transfer-category'
+export { LanguageEnum } from './language-enum'
+export { TransferCategory } from './transfer-category'

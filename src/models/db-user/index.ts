@@ -1,2 +1,3 @@
-export * from './db-user'
-export * from './get-db-user'
+import getDbUser from './get-db-user'
+export { DBUser } from './db-user'
+export { getDbUser }
