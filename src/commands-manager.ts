@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@discordjs/builders'
 import { getLanguage, Language } from './language'
-import { Guild, OAuth2Guild } from 'discord.js'
+import { Guild } from 'discord.js'
 import { logger } from './logger'
 import { getDbGuild, LanguageEnum } from './models'
 
