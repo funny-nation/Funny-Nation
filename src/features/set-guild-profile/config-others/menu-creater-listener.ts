@@ -17,7 +17,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
   const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
   const language = getLanguage(dbGuild.languageInGuild)
-  if (interaction.commandName !== language.setGuildProfile.command || interaction.options.getSubcommand() !== 'lt') return
+  if (interaction.commandName !== language.setGuildProfile.command || interaction.options.getSubcommand() !== 'others') return
 
   if (!await isAdmin(interaction.member)) {
     await interaction.reply('You don\'t have permission')

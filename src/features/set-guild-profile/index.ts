@@ -1,4 +1,5 @@
-import './config-language-and-timezone'
+import './config-others'
 import './config-admin-role'
 import './config-announcement-channel'
 import './config-notification-channel'
+import './commands'

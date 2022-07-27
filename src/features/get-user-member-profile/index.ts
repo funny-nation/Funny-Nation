@@ -8,6 +8,7 @@ import { DBGuild, getDbGuild, DBUser, getDbUser, DBMember, getDbMember } from '.
 import renderExpBar from './render-exp-bar'
 import calculateLevelByExp from './calculate-level-by-exp'
 import { logger } from '../../logger'
+import './commands'
 
 client.on('interactionCreate', async function (interaction: Interaction) {
   if (!interaction.isCommand()) return

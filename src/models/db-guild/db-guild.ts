@@ -6,5 +6,6 @@ export type DBGuild = {
   setLanguageInGuild(languageInGuild: LanguageEnum): Promise<void>,
   setNotificationChannelID(notificationChannelID: string): Promise<void>,
   setAdministratorRoleID(administratorRoleID: string): Promise<void>,
-  setTimeZone(timeZone: string): Promise<void>
+  setTimeZone(timeZone: string): Promise<void>,
+  resetCommandsUpdatedAt(): Promise<void>
 } & Guild

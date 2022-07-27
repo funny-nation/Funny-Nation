@@ -3,7 +3,7 @@ import chineseSimplified from './chinese-simplified'
 import { Language } from './index'
 import { LanguageEnum } from '../models'
 
-const getLanguage = (languageEnum: LanguageEnum): Language => {
+const getLanguage = (languageEnum?: LanguageEnum): Language => {
   switch (languageEnum) {
     case 'ChineseSimplified':
       return chineseSimplified

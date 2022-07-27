@@ -1,3 +1,4 @@
+import './commands'
 import { client } from '../../client'
 import { Guild, GuildMember, Interaction, MessageEmbed } from 'discord.js'
 import { getDbMember, addDbCoinTransfer, getDbGuild } from '../../models'

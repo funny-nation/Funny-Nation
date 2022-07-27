@@ -45,7 +45,7 @@ model Guild {
     id String @unique
     announcementChannelID String?
     languageInGuild LanguageEnum @default(English)
-    languageUpdatedAt DateTime
+    commandsUpdatedAt DateTime @default(now())
     notificationChannelID String?
     administratorRoleID String?
     timeZone String

@@ -1,9 +1,9 @@
 import { client } from '../../../client'
 import { GuildMember, Interaction, Message } from 'discord.js'
-import { getDbGuild } from '../../../models'
-import setCommands from '../../set-commands'
+import { getDbGuild, LanguageEnum } from '../../../models'
 import moment from 'moment-timezone'
 import { isAdmin } from '../../../utils'
+import { setUpCommandsForGuild } from '../../../commands-manager'
 
 /**
  * Listen on menu
@@ -17,12 +17,12 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     !(interaction.message instanceof Message)
   ) return
 
-  const dbGuild = await getDbGuild(interaction.guild.id)
   if (!await isAdmin(interaction.member)) return
+  const dbGuild = await getDbGuild(interaction.guild.id)
 
   switch (interaction.customId) {
     case 'guildLanguageSettingMenu': {
-      const languageUpdatedAt = dbGuild.languageUpdatedAt
+      const languageUpdatedAt = dbGuild.commandsUpdatedAt
       const nowTime = moment.utc().toDate()
       const timeDeltaInMS = nowTime.getTime() - languageUpdatedAt.getTime()
       if (timeDeltaInMS < 60000) {
@@ -33,8 +33,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
         return
       }
       const result = interaction.values.toString()
-      await dbGuild.setLanguageInGuild(result as any)
-      await setCommands(dbGuild)
+      await dbGuild.setLanguageInGuild(result as LanguageEnum)
+      await setUpCommandsForGuild(dbGuild.languageInGuild, interaction.guild)
       await interaction.update({
         content: `Server language has been set to ${result}`,
         components: []

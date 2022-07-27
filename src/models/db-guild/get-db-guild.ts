@@ -17,7 +17,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
         id: guildID,
         languageInGuild: 'English',
         timeZone: 'America/New_York',
-        languageUpdatedAt: moment().utc().toDate()
+        commandsUpdatedAt: moment().utc().toDate()
       }
     })
     const guild: Guild = await client.guilds.fetch(guildID)
@@ -32,7 +32,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
         },
         data: {
           languageInGuild,
-          languageUpdatedAt: moment().utc().toDate()
+          commandsUpdatedAt: moment().utc().toDate()
         }
       })
       super.languageInGuild = languageInGuild
@@ -80,6 +80,18 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
         }
       })
       super.announcementChannelID = announcementChannelID
+    },
+    async resetCommandsUpdatedAt () {
+      const now = moment().utc().toDate()
+      await prismaClient.guild.update({
+        where: {
+          id: guildID
+        },
+        data: {
+          commandsUpdatedAt: now
+        }
+      })
+      super.commandsUpdatedAt = now
     }
   }
 }
