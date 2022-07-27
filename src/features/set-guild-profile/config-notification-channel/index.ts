@@ -18,20 +18,20 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const language: Language = getLanguage(dbGuild.languageInGuild)
 
     if (
-      interaction.commandName !== language.setGuildProfile.command ||
-      interaction.options.getSubcommand() !== 'notification'
+      interaction.commandName !== language.setGuildProfile.commands.name ||
+      interaction.options.getSubcommand() !== language.setGuildProfile.commands.subcommand.setNotificationChannel.name
     ) return
 
-    const notificationChannel = interaction.options.getChannel('channel')
+    const notificationChannel = interaction.options.getChannel(language.setGuildProfile.commands.subcommand.setNotificationChannel.optionName)
 
     if (notificationChannel === null) return
 
     if (!await isAdmin(interaction.member)) {
-      await interaction.reply('You don\'t have permission')
+      await interaction.reply(language.setGuildProfile.invalidAccess)
     }
 
     await dbGuild.setNotificationChannelID(notificationChannel.id)
-    await interaction.reply(`Notification channel has changed to "${notificationChannel.name}"`)
+    await interaction.reply(language.setGuildProfile.successMsg.setNotificationChannel(notificationChannel.name))
   } catch (e) {
     console.log(e)
     logger.error('Error when someone change the notification channel')

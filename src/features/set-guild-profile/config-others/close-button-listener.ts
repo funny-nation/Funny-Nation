@@ -15,12 +15,10 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     !(interaction.message instanceof Message)
   ) return
 
-  if (!await isAdmin(interaction.member)) {
-    await interaction.reply('You don\'t have permission')
-  }
+  if (!await isAdmin(interaction.member)) return
 
   await interaction.message.edit({
-    content: 'Closed',
+    content: '^_^',
     components: []
   })
 })

@@ -1,4 +1,5 @@
 import { Language } from './index'
+import { LanguageEnum } from '../models'
 
 const english: Language = {
   errorMsg: 'Bot went wrong, please notify the server owner',
@@ -27,14 +28,63 @@ const english: Language = {
     }
   },
   setGuildProfile: {
-    command: 'config',
-    commandDesc: 'Configure your bot in this server (Admin only)',
-    title: 'Configure Your Bot',
-    announcementChannelOption: 'Channel for Announcement',
-    administratorRoleOption: 'Role of Administrators',
-    timeZoneOption: 'Your Timezone',
-    notificationChannelOption: 'Channel for Notification',
-    languageOption: 'Language Setting'
+    commands: {
+      name: 'config',
+      desc: 'Configure this bot',
+      subcommand: {
+        setAdmin: {
+          name: 'admin',
+          desc: 'Set admin tag',
+          optionName: 'tag',
+          optionDesc: 'Admin tag'
+        },
+        setAnnouncement: {
+          name: 'announcement',
+          desc: 'Set the announcement channel',
+          optionName: 'channel',
+          optionDesc: 'Channel for announcement'
+        },
+        setNotificationChannel: {
+          name: 'notification',
+          desc: 'Set the notification channel',
+          optionName: 'channel',
+          optionDesc: 'Channel for notification'
+        },
+        setOthers: {
+          name: 'others',
+          desc: 'Configure language and timezone'
+        }
+      }
+    },
+    invalidAccess: 'Access denied',
+    successMsg: {
+      setLanguage (language: LanguageEnum) {
+        return `Language has been configure to "${language}"`
+      },
+      setAdminRole (roleName: string) {
+        return `Success, anyone with "${roleName}" tag would has admin permission`
+      },
+      setNotificationChannel (channelName: string) {
+        return `Notification channel has been set to "${channelName}"`
+      },
+      setAnnouncementChannel (channelName: string) {
+        return `Announcement channel has been set to "${channelName}"`
+      },
+      setTimeZone (timeZoneName: string) {
+        return `Time zone has been set to "${timeZoneName}"`
+      }
+    },
+    languageUpdateSoFrequent: 'You need to wait 1 minute for setting the language',
+    otherSettingMenu: {
+      title: 'Setting',
+      languageLabel (language: string) {
+        return `Language: "${language}"`
+      },
+      timeZoneLabel (timeZone: string) {
+        return `Time zone: "${timeZone}"`
+      }
+    },
+    close: 'Close'
   },
   transferCoin: {
     transferCommand: 'transfer',

@@ -17,19 +17,19 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language: Language = getLanguage(dbGuild.languageInGuild)
     if (
-      interaction.commandName !== language.setGuildProfile.command ||
-      interaction.options.getSubcommand() !== 'admin'
+      interaction.commandName !== language.setGuildProfile.commands.name ||
+      interaction.options.getSubcommand() !== language.setGuildProfile.commands.subcommand.setAdmin.name
     ) return
 
-    const roleFromOption = interaction.options.getRole('role')
+    const roleFromOption = interaction.options.getRole(language.setGuildProfile.commands.subcommand.setAdmin.optionName)
     if (roleFromOption === null) return
 
     if (!await isAdmin(interaction.member)) {
-      await interaction.reply('You don\'t have permission')
+      await interaction.reply(language.setGuildProfile.invalidAccess)
     }
 
     await dbGuild.setAdministratorRoleID(roleFromOption.id)
-    await interaction.reply(`Administrator role has changed to ${roleFromOption.name}`)
+    await interaction.reply(language.setGuildProfile.successMsg.setAdminRole(roleFromOption.name))
   } catch (e) {
     console.log(e)
     logger.error('Error when someone change the administrator role')

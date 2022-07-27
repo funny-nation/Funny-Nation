@@ -1,3 +1,5 @@
+import { LanguageEnum } from '../models'
+
 export interface Language {
     errorMsg: string,
     coinBalanceDisplay(amount: number | string): string,
@@ -17,14 +19,49 @@ export interface Language {
         language(mumbleFrom: string, mumbleObject: string): string
     },
     setGuildProfile: {
-        command: string,
-        commandDesc: string,
-        title: string,
-        announcementChannelOption: string,
-        administratorRoleOption: string,
-        timeZoneOption: string,
-        notificationChannelOption: string,
-        languageOption: string
+        commands: {
+            name: string,
+            desc: string,
+            subcommand: {
+                setAdmin: {
+                    name: string,
+                    desc: string,
+                    optionName: string,
+                    optionDesc: string
+                },
+                setAnnouncement: {
+                    name: string,
+                    desc: string,
+                    optionName: string,
+                    optionDesc: string
+                },
+                setNotificationChannel: {
+                    name: string,
+                    desc: string,
+                    optionName: string,
+                    optionDesc: string
+                },
+                setOthers: {
+                    name: string,
+                    desc: string,
+                }
+            }
+        },
+        invalidAccess: string,
+        successMsg: {
+            setLanguage(language: LanguageEnum): string,
+            setAdminRole(roleName: string): string,
+            setNotificationChannel(channelName: string): string,
+            setAnnouncementChannel(channelName: string): string,
+            setTimeZone(timeZoneName: string): string
+        },
+        languageUpdateSoFrequent: string,
+        otherSettingMenu: {
+            title: string,
+            languageLabel(language: string): string,
+            timeZoneLabel(timeZone: string): string
+        },
+        close: string
     },
     transferCoin: {
         transferCommand: string,

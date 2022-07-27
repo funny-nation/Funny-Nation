@@ -1,4 +1,5 @@
 import { Language } from './index'
+import { LanguageEnum } from '../models'
 
 const chineseSimplified: Language = {
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
@@ -27,14 +28,63 @@ const chineseSimplified: Language = {
     }
   },
   setGuildProfile: {
-    command: 'config',
-    commandDesc: '设置你的Bot（仅限管理员）',
-    title: '设置',
-    announcementChannelOption: '公告频道',
-    administratorRoleOption: '管理员tag',
-    timeZoneOption: '时区',
-    notificationChannelOption: '消息频道（用于通知）',
-    languageOption: '语言'
+    commands: {
+      name: 'config',
+      desc: '设置这个Bot',
+      subcommand: {
+        setAdmin: {
+          name: '管理员',
+          desc: '设置管理员Tag',
+          optionName: 'tag',
+          optionDesc: '管理员的Tag'
+        },
+        setAnnouncement: {
+          name: '公告栏',
+          desc: '设置公告文字频道',
+          optionName: '频道',
+          optionDesc: '公告文字频道'
+        },
+        setNotificationChannel: {
+          name: '通知栏',
+          desc: '设置通知文字频道',
+          optionName: '频道',
+          optionDesc: '通知文字频道'
+        },
+        setOthers: {
+          name: '其他',
+          desc: '设置语言与时区'
+        }
+      }
+    },
+    invalidAccess: '无权访问',
+    successMsg: {
+      setLanguage (language: LanguageEnum) {
+        return `语言设置成功，你现在的语言是"${language}"`
+      },
+      setAdminRole (roleName: string) {
+        return `管理员设置成功，任何拥有"${roleName}"Tag的人都有Bot的管理员权限`
+      },
+      setNotificationChannel (channelName: string) {
+        return `通知频道已设置为"${channelName}"`
+      },
+      setAnnouncementChannel (channelName: string) {
+        return `公告频道已设置为"${channelName}"`
+      },
+      setTimeZone (timeZoneName: string) {
+        return `时区已设置为"${timeZoneName}"`
+      }
+    },
+    languageUpdateSoFrequent: '你需要等待一分钟后才能设置语言',
+    otherSettingMenu: {
+      title: '设置',
+      languageLabel (language: string) {
+        return `语言："${language}"`
+      },
+      timeZoneLabel (timeZone: string) {
+        return `时区："${timeZone}"`
+      }
+    },
+    close: '关闭'
   },
   transferCoin: {
     transferCommand: 'transfer',

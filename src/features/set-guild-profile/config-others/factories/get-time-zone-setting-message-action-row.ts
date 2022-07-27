@@ -1,24 +1,17 @@
 import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData } from 'discord.js'
 import { LanguageEnum } from '../../../../models'
 import moment from 'moment-timezone'
-
-const timeZones = [
-  'America/Los_Angeles',
-  'America/New_York',
-  'America/Chicago',
-  'America/Denver',
-  'Asia/Shanghai',
-  'Australia/Sydney',
-  'Europe/London'
-]
+import { getLanguage } from '../../../../language'
+import { timeZonesList } from './time-zones-list'
 
 const getTimeZoneSettingMessageActionRow = (currentLanguage: LanguageEnum, currentTimeZone: string): MessageActionRow => {
   const timeZoneOptions: MessageSelectOptionData[] = []
 
+  const language = getLanguage(currentLanguage)
   const now = moment()
-  for (const timeZone of timeZones) {
+  for (const timeZone of timeZonesList) {
     timeZoneOptions.push({
-      label: `Time Zone: ${timeZone}`,
+      label: language.setGuildProfile.otherSettingMenu.timeZoneLabel(timeZone),
       description: now.tz(timeZone).format('HH: mm'),
       value: timeZone,
       default: currentTimeZone === timeZone

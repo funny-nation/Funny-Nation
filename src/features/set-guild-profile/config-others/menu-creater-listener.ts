@@ -17,10 +17,13 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
   const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
   const language = getLanguage(dbGuild.languageInGuild)
-  if (interaction.commandName !== language.setGuildProfile.command || interaction.options.getSubcommand() !== 'others') return
+  if (
+    interaction.commandName !== language.setGuildProfile.commands.name ||
+    interaction.options.getSubcommand() !== language.setGuildProfile.commands.subcommand.setOthers.name
+  ) return
 
   if (!await isAdmin(interaction.member)) {
-    await interaction.reply('You don\'t have permission')
+    await interaction.reply(language.setGuildProfile.invalidAccess)
   }
 
   const languageSettingRow = getLanguageSettingMessageActionRow(dbGuild.languageInGuild)
@@ -31,12 +34,12 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     .addComponents([
       new MessageButton()
         .setCustomId('LanguageTimeZoneSettingCloseMenuButton')
-        .setLabel('Close')
+        .setLabel(language.setGuildProfile.close)
         .setStyle('SECONDARY')
     ])
 
   await interaction.reply({
-    content: language.setGuildProfile.title,
+    content: language.setGuildProfile.otherSettingMenu.title,
     components: [languageSettingRow, timeZoneSettingRow, closeButton]
   })
 })

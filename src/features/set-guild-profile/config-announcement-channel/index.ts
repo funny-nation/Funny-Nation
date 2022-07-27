@@ -18,20 +18,20 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const language: Language = getLanguage(dbGuild.languageInGuild)
 
     if (
-      interaction.commandName !== language.setGuildProfile.command ||
-      interaction.options.getSubcommand() !== 'announcement'
+      interaction.commandName !== language.setGuildProfile.commands.name ||
+      interaction.options.getSubcommand() !== language.setGuildProfile.commands.subcommand.setAnnouncement.name
     ) return
 
-    const announcementChannel = interaction.options.getChannel('channel')
+    const announcementChannel = interaction.options.getChannel(language.setGuildProfile.commands.subcommand.setAnnouncement.optionName)
 
     if (announcementChannel === null) return
 
     if (!await isAdmin(interaction.member)) {
-      await interaction.reply('You don\'t have permission')
+      await interaction.reply(language.setGuildProfile.invalidAccess)
     }
 
     await dbGuild.setAnnouncementChannelID(announcementChannel.id)
-    await interaction.reply(`Announcement channel has changed to "${announcementChannel.name}"`)
+    await interaction.reply(language.setGuildProfile.successMsg.setAnnouncementChannel(announcementChannel.name))
   } catch (e) {
     console.log(e)
     logger.error('Error when someone change the announcement channel')

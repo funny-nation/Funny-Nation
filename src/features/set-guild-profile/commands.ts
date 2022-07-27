@@ -3,43 +3,43 @@ import { Language } from '../../language'
 import { SlashCommandBuilder } from '@discordjs/builders'
 
 newCommand((language: Language) => new SlashCommandBuilder()
-  .setName(language.setGuildProfile.command)
-  .setDescription(language.setGuildProfile.commandDesc)
+  .setName(language.setGuildProfile.commands.name)
+  .setDescription(language.setGuildProfile.commands.desc)
   .addSubcommand(
     subcommand => subcommand
-      .setName('others')
-      .setDescription('Configure Language and TimeZone')
+      .setName(language.setGuildProfile.commands.subcommand.setOthers.name)
+      .setDescription(language.setGuildProfile.commands.subcommand.setOthers.desc)
   )
   .addSubcommand(
     subcommand => subcommand
-      .setName('admin')
-      .setDescription('Configure Administrator Role')
+      .setName(language.setGuildProfile.commands.subcommand.setAdmin.name)
+      .setDescription(language.setGuildProfile.commands.subcommand.setAdmin.desc)
       .addRoleOption(
         option => option
-          .setName('role')
-          .setDescription('Administrator Role')
+          .setName(language.setGuildProfile.commands.subcommand.setAdmin.optionName)
+          .setDescription(language.setGuildProfile.commands.subcommand.setAdmin.optionDesc)
           .setRequired(true)
       )
   )
   .addSubcommand(
     subcommand => subcommand
-      .setName('announcement')
-      .setDescription('Configure Announcement Channel')
+      .setName(language.setGuildProfile.commands.subcommand.setAnnouncement.name)
+      .setDescription(language.setGuildProfile.commands.subcommand.setAnnouncement.desc)
       .addChannelOption(
         option => option
-          .setName('channel')
-          .setDescription('Announcement Channel')
+          .setName(language.setGuildProfile.commands.subcommand.setAnnouncement.optionName)
+          .setDescription(language.setGuildProfile.commands.subcommand.setAnnouncement.optionDesc)
           .setRequired(true)
       )
   )
   .addSubcommand(
     subcommand => subcommand
-      .setName('notification')
-      .setDescription('Configure Notification Channel')
+      .setName(language.setGuildProfile.commands.subcommand.setNotificationChannel.name)
+      .setDescription(language.setGuildProfile.commands.subcommand.setNotificationChannel.desc)
       .addChannelOption(
         option => option
-          .setName('channel')
-          .setDescription('Notification Channel')
+          .setName(language.setGuildProfile.commands.subcommand.setNotificationChannel.optionName)
+          .setDescription(language.setGuildProfile.commands.subcommand.setNotificationChannel.optionDesc)
           .setRequired(true)
       )
   )

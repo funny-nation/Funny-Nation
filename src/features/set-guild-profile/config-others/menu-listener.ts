@@ -4,6 +4,7 @@ import { getDbGuild, LanguageEnum } from '../../../models'
 import moment from 'moment-timezone'
 import { isAdmin } from '../../../utils'
 import { setUpCommandsForGuild } from '../../../commands-manager'
+import { getLanguage } from '../../../language'
 
 /**
  * Listen on menu
@@ -18,7 +19,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   ) return
 
   if (!await isAdmin(interaction.member)) return
+
   const dbGuild = await getDbGuild(interaction.guild.id)
+  const language = getLanguage(dbGuild.languageInGuild)
 
   switch (interaction.customId) {
     case 'guildLanguageSettingMenu': {
@@ -27,7 +30,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       const timeDeltaInMS = nowTime.getTime() - languageUpdatedAt.getTime()
       if (timeDeltaInMS < 60000) {
         await interaction.message.edit({
-          content: 'You can\'t update so frequently; please update that after 1 minute',
+          content: language.setGuildProfile.languageUpdateSoFrequent,
           components: []
         })
         return
@@ -36,7 +39,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       await dbGuild.setLanguageInGuild(result as LanguageEnum)
       await setUpCommandsForGuild(dbGuild.languageInGuild, interaction.guild)
       await interaction.update({
-        content: `Server language has been set to ${result}`,
+        content: language.setGuildProfile.successMsg.setLanguage(dbGuild.languageInGuild),
         components: []
       })
 
@@ -45,7 +48,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     case 'guildTimeZoneSettingMenu': {
       const result = interaction.values.toString()
       await dbGuild.setTimeZone(result)
-      await interaction.update(`Server time zone has been set to ${result}`)
+      await interaction.update(language.setGuildProfile.successMsg.setTimeZone(result))
     }
   }
 })
