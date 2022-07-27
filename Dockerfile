@@ -2,15 +2,7 @@ FROM node:16
 
 WORKDIR /usr/src/app
 
-COPY ./src ./src
-
-COPY ./prisma ./prisma
-
-COPY ./package.json ./package.json
-
-COPY ./jest.config.js ./jest.config.js
-
-COPY ./tsconfig.json ./tsconfig.json
+COPY . ./
 
 RUN npm install --omit=dev
 
