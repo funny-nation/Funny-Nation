@@ -66,6 +66,7 @@ export interface Language {
     transferCoin: {
         transferCommand: string,
         commandDesc: string,
+        commandLang: string,
         coin: string,
         coinDesc: string,
         amountDesc: string,

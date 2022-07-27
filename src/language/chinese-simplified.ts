@@ -88,6 +88,7 @@ const chineseSimplified: Language = {
   },
   transferCoin: {
     transferCommand: 'transfer',
+    commandLang: '转账',
     coin: '金币',
     payee: '收款人',
     detail: '备注',

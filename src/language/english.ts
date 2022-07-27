@@ -88,6 +88,7 @@ const english: Language = {
   },
   transferCoin: {
     transferCommand: 'transfer',
+    commandLang: 'Transfer',
     coin: 'coin',
     payee: 'payee',
     detail: 'remark',
