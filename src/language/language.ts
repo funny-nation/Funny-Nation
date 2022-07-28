@@ -76,5 +76,8 @@ export interface Language {
         insufficientBalance: string,
         transferCompleteMsg(payeeID: string, amount: number): string,
         senderLeavingMsgInfo: string
+    },
+    addCoinsExpToUserInVoice: {
+        coinTransferMsg(coins: number, totalMinutes: number): string
     }
 }

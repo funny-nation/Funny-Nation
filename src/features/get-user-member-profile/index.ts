@@ -38,7 +38,6 @@ client.on('interactionCreate', async function (interaction: Interaction) {
     }
     await interaction.reply({ embeds: [embedMsg] })
   } catch (e) {
-    await interaction.reply('Error')
     console.log(e)
     logger.error(`Error when ${interaction.user.tag} try to get his profile`)
   }

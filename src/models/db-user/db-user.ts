@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 
 export type DBUser = {
-    addExperience(): Promise<void>,
+    addExperience(exp?: number): Promise<void>,
     resetTimeBefore(): Promise<void>
 } & User

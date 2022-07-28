@@ -101,6 +101,11 @@ const english: Language = {
     commandDesc: 'transfer some coins to other member in the guild',
     detailDesc: 'Remark message for the payee about this transaction',
     payeeDesc: 'The payee\'s account in this guild'
+  },
+  addCoinsExpToUserInVoice: {
+    coinTransferMsg (coins: number, totalMinutes: number) {
+      return `You have earned ${coins} coins by ${totalMinutes} voice chat`
+    }
   }
 }
 
