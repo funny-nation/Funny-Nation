@@ -62,4 +62,5 @@ enum TransferCategory {
     transferIn
     transferOut
     issueCoin
+    earnFromVoice
 }

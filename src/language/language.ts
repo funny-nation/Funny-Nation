@@ -79,5 +79,8 @@ export interface Language {
         senderLeavingMsgInfo: string
         integerOnly: string,
         invalidInt: string
+    },
+    addCoinsExpToUserInVoice: {
+        coinTransferMsg(coins: number, totalMinutes: number): string
     }
 }

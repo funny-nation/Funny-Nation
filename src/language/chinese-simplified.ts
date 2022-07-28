@@ -104,6 +104,11 @@ const chineseSimplified: Language = {
     payeeDesc: '在本Guild中的收款人账号',
     invalidInt: '请在金额框内输入数字',
     integerOnly: '请输入数字'
+  },
+  addCoinsExpToUserInVoice: {
+    coinTransferMsg (coins: number, totalMinutes: number) {
+      return `你在语音频道呆了${totalMinutes}分钟赚了${coins}金币`
+    }
   }
 }
 

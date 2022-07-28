@@ -104,6 +104,11 @@ const english: Language = {
     payeeDesc: 'The payee\'s account in this guild',
     integerOnly: 'Please enter integer only',
     invalidInt: 'Please enter an integer in the box only. '
+  },
+  addCoinsExpToUserInVoice: {
+    coinTransferMsg (coins: number, totalMinutes: number) {
+      return `You have earned ${coins} coins by ${totalMinutes} voice chat`
+    }
   }
 }
 
