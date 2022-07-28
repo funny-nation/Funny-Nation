@@ -15,38 +15,43 @@ import { TransactionStatus } from './transaction-status'
 import { logger } from '../../logger'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
-  if (
-    !interaction.isUserContextMenu() ||
-    interaction.guild === null ||
-    interaction.member === null ||
-    !(interaction.member instanceof GuildMember)
-  ) return
+  try {
+    if (
+      !interaction.isUserContextMenu() ||
+      interaction.guild === null ||
+      interaction.member === null ||
+      !(interaction.member instanceof GuildMember)
+    ) return
 
-  // Fetching user's language
-  const dbGuild = await getDbGuild(interaction.guild.id)
-  const language = getLanguage(dbGuild.languageInGuild).transferCoin
-  if (interaction.commandName !== language.commandLang) return
+    // Fetching user's language
+    const dbGuild = await getDbGuild(interaction.guild.id)
+    const language = getLanguage(dbGuild.languageInGuild).transferCoin
+    if (interaction.commandName !== language.commandLang) return
 
-  const modal = new Modal()
-    .setTitle(language.commandLang)
-    .setCustomId(`transferringModal${interaction.targetUser.id}`)
-  const amountComponent = new TextInputComponent()
-    .setLabel(language.coinDesc)
-    .setRequired(true)
-    .setCustomId('amountInput')
-    .setStyle(TextInputStyles.SHORT)
-    .setPlaceholder(language.integerOnly)
-  const remarksComponent = new TextInputComponent()
-    .setLabel(language.detail)
-    .setCustomId('remarksComponent')
-    .setStyle(TextInputStyles.PARAGRAPH)
-    .setPlaceholder(language.detailDesc)
+    const modal = new Modal()
+      .setTitle(language.commandLang)
+      .setCustomId(`transferringModal${interaction.targetUser.id}`)
+    const amountComponent = new TextInputComponent()
+      .setLabel(language.coinDesc)
+      .setRequired(true)
+      .setCustomId('amountInput')
+      .setStyle(TextInputStyles.SHORT)
+      .setPlaceholder(language.integerOnly)
+    const remarksComponent = new TextInputComponent()
+      .setLabel(language.detail)
+      .setCustomId('remarksComponent')
+      .setStyle(TextInputStyles.PARAGRAPH)
+      .setPlaceholder(language.detailDesc)
 
-  modal.addComponents(
-    new MessageActionRow<ModalActionRowComponent>().addComponents(amountComponent),
-    new MessageActionRow<ModalActionRowComponent>().addComponents(remarksComponent)
-  )
-  await interaction.showModal(modal)
+    modal.addComponents(
+      new MessageActionRow<ModalActionRowComponent>().addComponents(amountComponent),
+      new MessageActionRow<ModalActionRowComponent>().addComponents(remarksComponent)
+    )
+    await interaction.showModal(modal)
+  } catch (e) {
+    console.log(e)
+    logger.error('An error detected in features/transfer-coin/modal-controller')
+  }
 })
 
 client.on('interactionCreate', async (interaction: Interaction) => {
@@ -88,6 +93,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       })
     }
   } catch (e) {
-    logger.error(`An error detected in features/transfer-coin/modal-controller\n${e}`)
+    console.log(e)
+    logger.error('An error detected in features/transfer-coin/modal-controller')
   }
 })

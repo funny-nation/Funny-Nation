@@ -27,6 +27,7 @@ client.on('messageCreate', async function (message: Message) {
     await member.addMemberExperience()
     logger.verbose(`Add 1 exp to member ${message.author.tag} in guild ${message.guild.name}`)
   } catch (e) {
+    console.log(e)
     logger.error('Error on create-and-add-coins-exp')
   }
 })

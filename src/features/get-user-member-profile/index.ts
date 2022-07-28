@@ -11,9 +11,9 @@ import { logger } from '../../logger'
 import './commands'
 
 client.on('interactionCreate', async function (interaction: Interaction) {
-  if (!interaction.isCommand()) return
-  if (interaction.guild === null || interaction.member === null) return
   try {
+    if (!interaction.isCommand()) return
+    if (interaction.guild === null || interaction.member === null) return
     const dbUser: DBUser = await getDbUser(interaction.user.id)
     const dbMember: DBMember = await getDbMember(interaction.user.id, interaction.guild.id)
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
