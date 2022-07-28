@@ -88,19 +88,22 @@ const english: Language = {
   },
   transferCoin: {
     transferCommand: 'transfer',
+    commandLang: 'Transfer',
     coin: 'coin',
     payee: 'payee',
     detail: 'remark',
     insufficientBalance: 'You have insufficient balance. ',
     transferCompleteMsg: (payeeID: string, amount: number): string => {
-      return `Transfer completed! <@${payeeID}> You have received ¥${amount} coins yo。`
+      return `Transfer completed! \n<@${payeeID}> You have received ¥${amount} coins yo。`
     },
     senderLeavingMsgInfo: 'Sender has leave a message to you. ',
     coinDesc: 'Coin',
     amountDesc: 'Coin amount',
     commandDesc: 'transfer some coins to other member in the guild',
     detailDesc: 'Remark message for the payee about this transaction',
-    payeeDesc: 'The payee\'s account in this guild'
+    payeeDesc: 'The payee\'s account in this guild',
+    integerOnly: 'Please enter integer only',
+    invalidInt: 'Please enter an integer in the box only. '
   },
   addCoinsExpToUserInVoice: {
     coinTransferMsg (coins: number, totalMinutes: number) {

@@ -1,6 +1,7 @@
 import { newCommand } from '../../commands-manager'
 import { Language } from '../../language'
-import { SlashCommandBuilder } from '@discordjs/builders'
+import { ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders'
+import { ApplicationCommandType } from 'discord-api-types/v9'
 
 newCommand(
   (language: Language) => new SlashCommandBuilder()
@@ -25,4 +26,9 @@ newCommand(
           .setDescription(language.transferCoin.detailDesc)
         )
     )
+)
+
+newCommand(language => new ContextMenuCommandBuilder()
+  .setName(language.transferCoin.commandLang)
+  .setType(ApplicationCommandType.User)
 )
