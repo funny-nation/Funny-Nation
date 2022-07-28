@@ -28,7 +28,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     // Compulsory arguments checking
     if (!(payee && coinAmount)) {
-      logger.error(`Null payee or coin exception\n${interaction.options}`)
+      logger.error(`Null payee or coin exception\n interaction.options: ${interaction.options}`)
       return
     }
 

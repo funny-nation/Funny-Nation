@@ -77,5 +77,7 @@ export interface Language {
         insufficientBalance: string,
         transferCompleteMsg(payeeID: string, amount: number): string,
         senderLeavingMsgInfo: string
+        integerOnly: string,
+        invalidInt: string
     }
 }

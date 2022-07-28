@@ -2,7 +2,7 @@ import { client } from '../../client'
 import {
   GuildMember,
   Interaction,
-  MessageActionRow,
+  MessageActionRow, MessageEmbed,
   Modal,
   ModalActionRowComponent,
   TextInputComponent
@@ -12,6 +12,7 @@ import { TextInputStyles } from 'discord.js/typings/enums'
 import { getDbGuild } from '../../models'
 import { coinTransferHelper } from './transfer-service'
 import { TransactionStatus } from './transaction-status'
+import { logger } from '../../logger'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (
@@ -34,7 +35,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     .setRequired(true)
     .setCustomId('amountInput')
     .setStyle(TextInputStyles.SHORT)
-    .setPlaceholder('Integer only')
+    .setPlaceholder(language.integerOnly)
   const remarksComponent = new TextInputComponent()
     .setLabel(language.detail)
     .setCustomId('remarksComponent')
@@ -49,27 +50,44 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 })
 
 client.on('interactionCreate', async (interaction: Interaction) => {
-  if (!interaction.isModalSubmit()) return
-  if (interaction.guild === null) return
-  if (!interaction.customId.startsWith('transferringModal')) return
-  // Fetching user's language
-  const dbGuild = await getDbGuild(interaction.guild.id)
-  const language = getLanguage(dbGuild.languageInGuild).transferCoin
+  try {
+    if (!interaction.isModalSubmit()) return
+    if (interaction.guild === null) return
+    if (!interaction.customId.startsWith('transferringModal')) return
+    // Fetching user's language
+    const dbGuild = await getDbGuild(interaction.guild.id)
+    const language = getLanguage(dbGuild.languageInGuild).transferCoin
 
-  const payerID = interaction.user.id
-  const payeeID = interaction.customId.substring(17)
-  const guildID = interaction.guild.id
-  const amount = parseInt(interaction.fields.getField('amountInput').value)
-  const desc: string = interaction.fields.getField('remarksComponent').value
-  if (!amount) {
-    await interaction.reply('invalid amount of coin')
-    return
+    const payerID = interaction.user.id
+    const payeeID = interaction.customId.substring(17)
+    const guildID = interaction.guild.id
+    const amount = parseInt(interaction.fields.getField('amountInput').value)
+    const desc: string = interaction.fields.getField('remarksComponent').value
+    if (!amount) {
+      await interaction.reply(language.invalidInt)
+      return
+    }
+    console.log(`payerID: ${payerID} payeeID: ${payeeID} amount: ${amount}, guild: ${guildID}`)
+    const status = await coinTransferHelper(payerID, payeeID, guildID, amount, desc || null)
+    if (status === TransactionStatus.INSUFFICIENT_BALANCE) {
+      await interaction.reply(language.insufficientBalance)
+      return
+    }
+    if (desc) {
+      await interaction.reply({
+        content: language.transferCompleteMsg(payeeID, amount),
+        embeds: [
+          new MessageEmbed()
+            .setTitle(desc)
+            .setDescription(language.senderLeavingMsgInfo)
+        ]
+      })
+    } else {
+      await interaction.reply({
+        content: language.transferCompleteMsg(payeeID, amount)
+      })
+    }
+  } catch (e) {
+    logger.error(`An error detected in features/transfer-coin/modal-controller\n${e}`)
   }
-  console.log(`payerID: ${payerID} payeeID: ${payeeID} amount: ${amount}, guild: ${guildID}`)
-  const status = await coinTransferHelper(payerID, payeeID, guildID, amount, desc || null)
-  if (status === TransactionStatus.INSUFFICIENT_BALANCE) {
-    await interaction.update(language.insufficientBalance)
-    return
-  }
-  await interaction.reply(language.transferCompleteMsg(payeeID, amount))
 })
