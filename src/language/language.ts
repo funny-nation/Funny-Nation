@@ -66,6 +66,7 @@ export interface Language {
     transferCoin: {
         transferCommand: string,
         commandDesc: string,
+        commandLang: string,
         coin: string,
         coinDesc: string,
         amountDesc: string,
@@ -76,5 +77,7 @@ export interface Language {
         insufficientBalance: string,
         transferCompleteMsg(payeeID: string, amount: number): string,
         senderLeavingMsgInfo: string
+        integerOnly: string,
+        invalidInt: string
     }
 }

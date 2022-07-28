@@ -88,19 +88,22 @@ const chineseSimplified: Language = {
   },
   transferCoin: {
     transferCommand: 'transfer',
+    commandLang: '转账',
     coin: '金币',
     payee: '收款人',
     detail: '备注',
     insufficientBalance: '金币不足',
     transferCompleteMsg: (payeeID: string, amount: number): string => {
-      return `转账成功 <@${payeeID}> 你发达了。刚收到了¥${amount}个金币哟。`
+      return `转账成功 \n<@${payeeID}> 你发达了。刚收到了¥${amount}个金币哟。`
     },
     senderLeavingMsgInfo: '转账人给你留了一条信息。',
     commandDesc: '给Guild里的其他用户转账',
     coinDesc: '金币',
     amountDesc: '金币数额',
     detailDesc: '给收款人的转账备注',
-    payeeDesc: '在本Guild中的收款人账号'
+    payeeDesc: '在本Guild中的收款人账号',
+    invalidInt: '请在金额框内输入数字',
+    integerOnly: '请输入数字'
   }
 }
 
