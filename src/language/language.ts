@@ -14,9 +14,9 @@ export interface Language {
             desc: string
         }
     },
-    mumble: {
-        mumble: string,
-        language(mumbleFrom: string, mumbleObject: string): string
+    curse: {
+        curse: string,
+        language: string[]
     },
     setGuildProfile: {
         commands: {

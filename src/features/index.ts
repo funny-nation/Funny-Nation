@@ -1,7 +1,7 @@
 import './create-user-and-add-coins-exp'
 import './get-user-member-profile'
 import './setup-commands-when-bot-start-and-join-guild'
-import './mumble'
+import './curse'
 import './set-guild-profile'
 import './transfer-coin'
 import './add-coins-exp-to-user-in-voice'

@@ -16,7 +16,7 @@ Make sure you:
 * [Nodejs](https://nodejs.org/en/) - Interpreter
 * [Prisma](https://www.prisma.io/) - Database ORM Tool
 * [Jest](https://jestjs.io/) - Testing Framework
-* [Discordjs](https://discord.js.org/#/) - Discord Bot Framework
+* [DiscordJS](https://discord.js.org/#/) - Discord Bot Framework
 
 ### File Structure
 
@@ -81,6 +81,7 @@ client.on('interactionCreate', async function (interaction: Interaction) {
   if (!interaction.isCommand()) return // Filter
   if (interaction.commandName !== 'your command') return // Filter
   // do something else
+})
 ```
 
 ```typescript
@@ -95,13 +96,13 @@ client.on('interactionCreate', async function (interaction: Interaction) {
     return
   }
   // do something else
-}
+})
 ```
 
 
 ### Testing
 
-Currently, Discordjs does not provide any testing tool so that we cannot create test for this bot. We are working on it now. 
+Currently, DiscordJS does not provide any testing tool so that we cannot create test for this bot. We are working on it now. 
 
 We only can test the bot manually. 
 
