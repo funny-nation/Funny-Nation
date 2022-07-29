@@ -11,4 +11,6 @@ const client = new Client({
   ]
 })
 
+client.setMaxListeners(Infinity)
+
 export { client }

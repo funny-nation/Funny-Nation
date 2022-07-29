@@ -105,7 +105,8 @@ const chineseSimplified: Language = {
     coinTransferMsg (coins: number, totalMinutes: number) {
       return `你在语音频道呆了${totalMinutes}分钟赚了${coins}金币`
     }
-  }
+  },
+  notification: '一个来自异次元的通知'
 }
 
 export default chineseSimplified

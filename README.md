@@ -92,6 +92,17 @@ DISCORD_TOKEN="your-discord-token" \
 npm start
 ```
 
+### Superuser (God)
+
+You can add one more environment variable ```SUPERUSERID``` to claim a super user. 
+
+The value of ```SUPERUSERID``` is the user id. 
+
+```SUPERUSERID``` is optional. 
+```
+SUPERUSERID=123123123
+```
+
 ### Contact Us
 
 If you have any questions, or you want to join our team. 
