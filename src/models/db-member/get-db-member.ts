@@ -3,6 +3,7 @@ import { prismaClient } from '../../prisma-client'
 import { logger } from '../../logger'
 import { client } from '../../client'
 import { Guild, User } from 'discord.js'
+import { getDbUser } from '../db-user'
 
 const getDbMember = async function (userID: string, guildID: string): Promise<DBMember> {
   let dbMember = await prismaClient.member.findUnique({
@@ -14,6 +15,7 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
     }
   })
   if (dbMember === null) {
+    await getDbUser(userID)
     dbMember = await prismaClient.member.create({
       data: {
         userID,
