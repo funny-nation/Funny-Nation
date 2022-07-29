@@ -19,13 +19,9 @@ const chineseSimplified: Language = {
       desc: '查看我的信息'
     }
   },
-  mumble: {
-    mumble: '骂ta',
-    language (mumbleFrom: string, mumbleObject: string): string {
-      const mubleArr = ['草泥马', '我去年买了个表', '你tm的', '你是不是傻']
-      const ramdomNumber = Math.floor(Math.random() * mubleArr.length)
-      return `${mumbleFrom}对${mumbleObject}说："${mubleArr[ramdomNumber]}"`
-    }
+  curse: {
+    curse: '骂ta',
+    language: ['cnm', '你是不是傻', 'SB', '你大爷的']
   },
   setGuildProfile: {
     commands: {

@@ -19,13 +19,9 @@ const english: Language = {
       desc: 'View my profile'
     }
   },
-  mumble: {
-    mumble: 'Fxxk that guy',
-    language (mumbleFrom: string, mumbleObject: string): string {
-      const mubleArr = ['get out of my face', 'stfu', 'u fking asshole']
-      const ramdomNumber = Math.floor(Math.random() * mubleArr.length)
-      return `${mumbleFrom} speak to ${mumbleObject} that ${mubleArr[ramdomNumber]}`
-    }
+  curse: {
+    curse: 'Curse',
+    language: ['get out of my face', 'stfu', 'u fking asshole']
   },
   setGuildProfile: {
     commands: {

@@ -16,9 +16,10 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     if (!interaction.isUserContextMenu() || interaction.guild === null) return
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language = getLanguage(dbGuild.languageInGuild)
-    if (interaction.commandName !== language.mumble.mumble) return
+    if (interaction.commandName !== language.curse.curse) return
     const targetUser: User = interaction.targetUser
-    await interaction.reply(language.mumble.language(`<@${interaction.user.id}>`, `<@${targetUser.id}>`))
+    const curseLanguage = language.curse.language[Math.floor(Math.random() * language.curse.language.length)]
+    await interaction.reply(`<@${targetUser.id}> ${curseLanguage}`)
   } catch (e) {
     console.log(e)
     logger.error('Error when someone interact ContextManu')

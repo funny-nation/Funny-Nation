@@ -5,6 +5,6 @@ import { ApplicationCommandType } from 'discord-api-types/v10'
 
 newCommand(
   (language: Language) => new ContextMenuCommandBuilder()
-    .setName(language.mumble.mumble)
+    .setName(language.curse.curse)
     .setType(ApplicationCommandType.User)
 )
