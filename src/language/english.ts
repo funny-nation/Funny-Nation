@@ -105,7 +105,8 @@ const english: Language = {
     coinTransferMsg (coins: number, totalMinutes: number) {
       return `You have earned ${coins} coins by ${totalMinutes} voice chat`
     }
-  }
+  },
+  notification: 'Notification'
 }
 
 export default english
