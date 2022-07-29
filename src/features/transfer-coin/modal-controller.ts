@@ -84,6 +84,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
         embeds: [
           new MessageEmbed()
             .setTitle(desc)
+            .setColor('#FF99CC')
             .setDescription(language.senderLeavingMsgInfo)
         ]
       })
