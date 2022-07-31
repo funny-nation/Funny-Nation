@@ -2,6 +2,17 @@ import { Language } from './index'
 import { LanguageEnum } from '../models'
 
 const english: Language = {
+  leaderBoard: {
+    coinsDisplay: function (coins: number) {
+      return `$ ${coins}`
+    },
+    coinsLeaderBoard: 'Coins Leader Board',
+    command: {
+      desc: 'Get leader boards',
+      name: 'leaderboard'
+    },
+    expLeaderBoard: 'Level Lever Board'
+  },
   errorMsg: 'Bot went wrong, please notify the server owner',
   coinBalanceDisplay (amount: number | string): string {
     return `${amount} coins`

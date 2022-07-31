@@ -96,5 +96,14 @@ export interface Language {
             title: string,
             label: string
         }
+    },
+    leaderBoard: {
+        command: {
+            name: string,
+            desc: string
+        },
+        coinsLeaderBoard: string,
+        expLeaderBoard: string,
+        coinsDisplay(coins: number): string
     }
 }

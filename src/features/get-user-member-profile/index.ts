@@ -5,8 +5,8 @@ import {
 } from 'discord.js'
 import { getLanguage } from '../../language'
 import { DBGuild, getDbGuild, DBUser, getDbUser, DBMember, getDbMember } from '../../models'
-import renderExpBar from './render-exp-bar'
-import calculateLevelByExp from './calculate-level-by-exp'
+import { renderExpBar } from './render-exp-bar'
+import { calculateLevelByExp } from '../../utils/calculate-level-by-exp'
 import { logger } from '../../logger'
 import './commands'
 

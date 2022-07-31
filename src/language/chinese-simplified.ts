@@ -2,6 +2,17 @@ import { Language } from './index'
 import { LanguageEnum } from '../models'
 
 const chineseSimplified: Language = {
+  leaderBoard: {
+    coinsDisplay: function (coins: number) {
+      return `¥ ${coins}`
+    },
+    coinsLeaderBoard: '金币排行榜',
+    command: {
+      desc: '排行榜查看',
+      name: 'leaderboard'
+    },
+    expLeaderBoard: '等级排行榜'
+  },
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
   coinBalanceDisplay (amount: number | string): string {
     return `金币：${amount}`
