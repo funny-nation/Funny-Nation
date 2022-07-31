@@ -1,4 +1,4 @@
-import calculateLevelByExp from './calculate-level-by-exp'
+import { calculateLevelByExp } from '../../utils/calculate-level-by-exp'
 
 const renderExpBar = (exp: number) => {
   const level = calculateLevelByExp(exp)
