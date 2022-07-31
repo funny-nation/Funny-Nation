@@ -16,4 +16,4 @@ const renderExpBar = (exp: number) => {
   return bar
 }
 
-export default renderExpBar
+export { renderExpBar }
