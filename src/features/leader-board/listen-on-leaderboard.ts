@@ -1,7 +1,7 @@
 import { client } from '../../client'
 import { Interaction, MessageEmbed } from 'discord.js'
 import { getDbGuild, getLeaderBoard } from '../../models'
-import { calculateLevelByExp } from '../../utils'
+import { calculateLevelByExp, getMemberFromGuild } from '../../utils'
 import { logger } from '../../logger'
 import { getLanguage } from '../../language'
 
@@ -22,9 +22,11 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       .setColor('#FF99CC')
     let number = 1
     for (const memberFromDb of leaderboard.coins) {
-      const member = await interaction.guild.members.fetch(memberFromDb.userID)
+      const member = await getMemberFromGuild(interaction.guild, memberFromDb.userID)
+      let memberName = '>_-'
+      memberName = member ? member.displayName : memberName
       coinsEmbed.addFields([{
-        name: `#${number} - ${member ? member.displayName : '>_-'}`,
+        name: `#${number} - ${memberName}`,
         value: language.leaderBoard.coinsDisplay(Number(memberFromDb.coinBalanceInGuild)),
         inline: true
       }])
@@ -37,11 +39,13 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     number = 1
     for (const memberFromDb of leaderboard.exp) {
-      const member = await interaction.guild.members.fetch(memberFromDb.userID)
+      const member = await getMemberFromGuild(interaction.guild, memberFromDb.userID)
+      let memberName = '>_-'
+      memberName = member ? member.displayName : memberName
 
       const level = Math.floor(calculateLevelByExp(Number(memberFromDb.experienceInGuild)))
       expEmbed.addFields([{
-        name: `#${number} - ${member ? member.displayName : '>_-'}`,
+        name: `#${number} - ${memberName}`,
         value: `Lv. ${level}`,
         inline: true
       }])
