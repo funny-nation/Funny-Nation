@@ -110,7 +110,8 @@ const english: Language = {
     detailDesc: 'Remark message for the payee about this transaction',
     payeeDesc: 'The payee\'s account in this guild',
     integerOnly: 'Please enter integer only',
-    invalidInt: 'Please enter an integer in the box only. '
+    invalidInt: 'Please enter an integer in the box only. ',
+    transactionFailed: 'The transaction is failed due to internal error. '
   },
   addCoinsExpToUserInVoice: {
     coinTransferMsg (coins: number, totalMinutes: number) {

@@ -23,13 +23,16 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     // Fetching command arguments
     const payee = interaction.options.getUser(language.payee)
-    const coinAmount = interaction.options.getInteger(language.coin)
+    let coinAmount = interaction.options.getInteger(language.coin)
     const detailMsg = interaction.options.getString(language.detail)
 
     // Compulsory arguments checking
     if (!(payee && coinAmount)) {
       logger.error(`Null payee or coin exception\n interaction.options: ${interaction.options}`)
       return
+    }
+    if (coinAmount < 0) {
+      coinAmount = -coinAmount
     }
 
     const payerID = interaction.member.id
@@ -40,6 +43,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     if (transferStatus === TransactionStatus.INSUFFICIENT_BALANCE) {
       await interaction.reply(language.insufficientBalance)
       return
+    }
+    if (transferStatus !== TransactionStatus.SUCCESS) {
+      await interaction.reply(language.transactionFailed)
     }
 
     if (detailMsg) {

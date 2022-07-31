@@ -78,7 +78,8 @@ export interface Language {
         transferCompleteMsg(payeeID: string, amount: number): string,
         senderLeavingMsgInfo: string
         integerOnly: string,
-        invalidInt: string
+        invalidInt: string,
+        transactionFailed: string
     },
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string

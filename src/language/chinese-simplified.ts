@@ -110,7 +110,8 @@ const chineseSimplified: Language = {
     detailDesc: '给收款人的转账备注',
     payeeDesc: '在本Guild中的收款人账号',
     invalidInt: '请在金额框内输入数字',
-    integerOnly: '请输入数字'
+    integerOnly: '请输入数字',
+    transactionFailed: '转账失败，可能是由于服务器内部错误。'
   },
   addCoinsExpToUserInVoice: {
     coinTransferMsg (coins: number, totalMinutes: number) {
