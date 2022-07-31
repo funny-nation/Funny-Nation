@@ -28,7 +28,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       coinsEmbed.addFields([{
         name: `#${number} - ${memberName}`,
         value: language.leaderBoard.coinsDisplay(Number(memberFromDb.coinBalanceInGuild)),
-        inline: true
+        inline: false
       }])
       number++
     }
@@ -47,7 +47,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       expEmbed.addFields([{
         name: `#${number} - ${memberName}`,
         value: `Lv. ${level}`,
-        inline: true
+        inline: false
       }])
       number++
     }
