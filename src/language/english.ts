@@ -106,7 +106,22 @@ const english: Language = {
       return `You have earned ${coins} coins by ${totalMinutes} voice chat`
     }
   },
-  notification: 'Notification'
+  notification: 'Notification',
+  anonymousMsg: {
+    command: {
+      name: 'anonymous',
+      desc: 'Anonymous Message'
+    },
+    sendFailed: 'Failed',
+    sent: 'Sent',
+    anonymousMsgFrom (nickName: string) {
+      return `Anonymous message from ${nickName}`
+    },
+    modal: {
+      title: 'Anonymous Message',
+      label: 'Input your anonymous message here'
+    }
+  }
 }
 
 export default english
