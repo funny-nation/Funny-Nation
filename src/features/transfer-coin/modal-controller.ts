@@ -72,7 +72,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       await interaction.reply(language.invalidInt)
       return
     }
-    console.log(`payerID: ${payerID} payeeID: ${payeeID} amount: ${amount}, guild: ${guildID}`)
+    logger.info(`payerID: ${payerID} payeeID: ${payeeID} amount: ${amount}, guild: ${guildID}`)
     const status = await coinTransferHelper(payerID, payeeID, guildID, amount, desc || null)
     if (status === TransactionStatus.INSUFFICIENT_BALANCE) {
       await interaction.reply(language.insufficientBalance)

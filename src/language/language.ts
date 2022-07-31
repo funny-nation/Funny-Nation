@@ -83,5 +83,18 @@ export interface Language {
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string
     },
-    notification: string
+    notification: string,
+    anonymousMsg: {
+        command: {
+            name: string,
+            desc: string
+        },
+        sendFailed: string,
+        sent: string,
+        anonymousMsgFrom(nickName: string): string,
+        modal: {
+            title: string,
+            label: string
+        }
+    }
 }

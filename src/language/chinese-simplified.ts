@@ -106,7 +106,22 @@ const chineseSimplified: Language = {
       return `你在语音频道呆了${totalMinutes}分钟赚了${coins}金币`
     }
   },
-  notification: '一个来自异次元的通知'
+  notification: '一个来自异次元的通知',
+  anonymousMsg: {
+    command: {
+      name: 'anonymous',
+      desc: '匿名消息'
+    },
+    sendFailed: '发送失败',
+    sent: '发送成功',
+    anonymousMsgFrom (nickName: string) {
+      return `来自于 ${nickName} 的匿名消息`
+    },
+    modal: {
+      title: '匿名消息',
+      label: '这里输入你的匿名消息'
+    }
+  }
 }
 
 export default chineseSimplified
