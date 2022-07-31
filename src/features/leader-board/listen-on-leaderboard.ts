@@ -1,7 +1,7 @@
 import { client } from '../../client'
 import { Interaction, MessageEmbed } from 'discord.js'
 import { getDbGuild, getLeaderBoard } from '../../models'
-import { calculateLevelByExp } from '../../utils'
+import { calculateLevelByExp, getMemberFromGuild } from '../../utils'
 import { logger } from '../../logger'
 import { getLanguage } from '../../language'
 
@@ -41,7 +41,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
       const level = Math.floor(calculateLevelByExp(Number(memberFromDb.experienceInGuild)))
       expEmbed.addFields([{
-        name: `#${number} - ${member ? member.displayName : '>_-'}`,
+        name: `#${number} - ${memberName}`,
         value: `Lv. ${level}`,
         inline: true
       }])
