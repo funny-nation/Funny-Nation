@@ -74,6 +74,7 @@ enum TransferCategory {
     transferOut
     issueCoin
     earnFromVoice
+    sendGift
 }
 
 enum InventoryCategory {
