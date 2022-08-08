@@ -132,6 +132,23 @@ const english: Language = {
       title: 'Anonymous Message',
       label: 'Input your anonymous message here'
     }
+  },
+  gift: {
+    command: {
+      name: 'gift',
+      desc: 'a gift',
+      subCommand: {
+        name: 'send',
+        desc: 'Send gift to others',
+        stringOptionName: 'sent',
+        stringOptionDesc: 'sentGift',
+        userOptionName: 'receiver',
+        userOptionDesc: 'receiver name'
+      }
+    },
+    embedTitle: 'you received a new gift',
+    embedDesc: 'you received a new gift',
+    hasEnoughMoney: 'you poor'
   }
 }
 

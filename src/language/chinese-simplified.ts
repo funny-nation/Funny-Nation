@@ -132,6 +132,23 @@ const chineseSimplified: Language = {
       title: '匿名消息',
       label: '这里输入你的匿名消息'
     }
+  },
+  gift: {
+    command: {
+      name: '礼物',
+      desc: '一份礼物',
+      subCommand: {
+        name: '发送',
+        desc: '发送礼物给其他人',
+        stringOptionName: '发送的礼物',
+        stringOptionDesc: '发送的礼物',
+        userOptionName: '接收者',
+        userOptionDesc: '接收者名字'
+      }
+    },
+    embedTitle: '你收到一份新的礼物',
+    embedDesc: '你收到一份新的礼物',
+    hasEnoughMoney: '你太穷了'
   }
 }
 

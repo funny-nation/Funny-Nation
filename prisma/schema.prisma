@@ -15,6 +15,7 @@ model User {
     timeBefore DateTime
     experience BigInt
     memberships Member[]
+    inventories Inventory[]
 }
 
 model CoinTransfer {
@@ -53,6 +54,16 @@ model Guild {
     members Member[]
 }
 
+model Inventory {
+    id Int  @id @default(autoincrement())
+    name String
+    category InventoryCategory @default(gift)
+    sourceID String
+    ownerID String
+    owner User @relation(fields: [ownerID], references: [id])
+    createTime DateTime @default(now())
+}
+
 enum LanguageEnum {
     ChineseSimplified
     English
@@ -63,4 +74,8 @@ enum TransferCategory {
     transferOut
     issueCoin
     earnFromVoice
+}
+
+enum InventoryCategory {
+    gift
 }

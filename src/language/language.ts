@@ -105,5 +105,22 @@ export interface Language {
         coinsLeaderBoard: string,
         expLeaderBoard: string,
         coinsDisplay(coins: number): string
+    },
+    gift: {
+        command: {
+            name: string,
+            desc: string,
+            subCommand: {
+                name: string,
+                desc: string,
+                stringOptionName: string,
+                stringOptionDesc: string,
+                userOptionName: string,
+                userOptionDesc: string
+            }
+        },
+        embedTitle: string,
+        embedDesc: string
+        hasEnoughMoney: string
     }
 }
