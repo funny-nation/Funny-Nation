@@ -38,9 +38,18 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   }
   await member.reduceCoins(gift.price)
   await addDbCoinTransfer(member.userID, interaction.guild.id, gift.price, null, '', 'sendGift')
-  await createInventory(gift.name, 'gift', interaction.user.id, receiver.id)
+  await createInventory(gift.name, 'gift', interaction.user.id, receiver.id, interaction.guild.id)
 
-  await interaction.reply(gift.announcement(interaction.user, receiver))
+  await interaction.reply({
+    content: gift.announcement(interaction.user, receiver),
+    embeds: [
+      new MessageEmbed()
+        .setTitle(gift.name)
+        .setDescription(gift.desc)
+        .setColor('#FF99CC')
+        .setThumbnail(gift.pictureURL)
+    ]
+  })
 
   const receverDM = await receiver.createDM()
 
