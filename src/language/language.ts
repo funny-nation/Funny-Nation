@@ -1,8 +1,11 @@
 import { LanguageEnum } from '../models'
+import { Gift } from '../features/gift/gift-type'
 
 export interface Language {
     errorMsg: string,
+
     coinBalanceDisplay(amount: number | string): string,
+
     viewProfile: {
         profile: string,
         inXXX(guildName: string): string,
@@ -125,6 +128,10 @@ export interface Language {
         },
         embedTitle: string,
         embedDesc: string
-        hasEnoughMoney: string
+        hasEnoughMoney: string,
+        presetGifts: {
+            gift1: Gift,
+            gift2: Gift
+        }
     }
 }

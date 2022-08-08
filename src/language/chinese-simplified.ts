@@ -140,7 +140,7 @@ const chineseSimplified: Language = {
       userReply: '你不能送礼物给你自己'
     },
     command: {
-      name: '礼物',
+      name: 'gift',
       desc: '一份礼物',
       subCommand: {
         name: '发送',

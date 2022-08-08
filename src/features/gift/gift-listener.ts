@@ -1,9 +1,9 @@
 import { client } from '../../client'
 import { Interaction, MessageEmbed } from 'discord.js'
 import { addDbCoinTransfer, getDbGuild, getDbMember } from '../../models'
-import { giftInfo } from './gift-info'
 import { createInventory } from '../../models/db-inventory/create-inventory'
 import { getLanguage } from '../../language'
+import { Gift } from './gift-type'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isCommand()) return
@@ -28,15 +28,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   }
 
   const member = await getDbMember(interaction.user.id, interaction.guild.id)
-
-  /**
-   * 1 determine if user has enough coin to send gift
-   * 2 consume coin for a certain gift
-   * 3 create inventory to record the interaction
-   * 4 gift name localization
-   * 4 reply the embed
-   */
-  const gift = giftInfo.get(giftName)
+  const presetGifts = language.gift.presetGifts
+  type PresetGiftKey = keyof typeof presetGifts
+  const gift: Gift | undefined = presetGifts[giftID as PresetGiftKey]
   if (!gift) return
   if (member.coinBalanceInGuild < gift.price) {
     await interaction.reply(language.gift.hasEnoughMoney)

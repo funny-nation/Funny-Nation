@@ -1,10 +1,10 @@
 import { newCommand } from '../../commands-manager'
 import { SlashCommandBuilder } from '@discordjs/builders'
-import { giftInfo } from './gift-info'
+import { Gift } from './gift-type'
 
 newCommand(
   language => new SlashCommandBuilder()
-    .setName('gift')
+    .setName(language.gift.command.name)
     .setDescription(language.gift.command.desc)
     .addSubcommand(
       subcommand => subcommand
@@ -16,7 +16,10 @@ newCommand(
               .setName(language.gift.command.subCommand.stringOptionName)
               .setDescription(language.gift.command.subCommand.stringOptionDesc)
               .setRequired(true)
-            for (const [giftKey, gift] of giftInfo) {
+            const presetGifts = language.gift.presetGifts
+            type PresetGiftKey = keyof typeof presetGifts
+            for (const giftKey in presetGifts) {
+              const gift: Gift = presetGifts[giftKey as PresetGiftKey]
               opts.addChoices({
                 name: gift.name,
                 value: giftKey
