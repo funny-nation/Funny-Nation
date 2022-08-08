@@ -107,6 +107,10 @@ export interface Language {
         coinsDisplay(coins: number): string
     },
     gift: {
+        errorHandler:{
+            botReply: string,
+            userReply: string
+        }
         command: {
             name: string,
             desc: string,

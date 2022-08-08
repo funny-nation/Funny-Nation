@@ -1,5 +1,6 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
+import { User } from 'discord.js'
 
 const english: Language = {
   leaderBoard: {
@@ -134,6 +135,10 @@ const english: Language = {
     }
   },
   gift: {
+    errorHandler: {
+      botReply: 'You cannot send gift to me',
+      userReply: 'You cannot send gift to your self'
+    },
     command: {
       name: 'gift',
       desc: 'a gift',
@@ -148,7 +153,27 @@ const english: Language = {
     },
     embedTitle: 'you received a new gift',
     embedDesc: 'you received a new gift',
-    hasEnoughMoney: 'you poor'
+    hasEnoughMoney: 'you poor',
+    presetGifts: {
+      gift1: {
+        name: 'feiji',
+        pictureURL: '123',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} received feiji from ${sender}`
+        }
+      },
+      gift2: {
+        name: 'feiji',
+        pictureURL: '123',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} received huojian from${sender}`
+        }
+      }
+    }
   }
 }
 

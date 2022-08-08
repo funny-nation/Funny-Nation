@@ -7,19 +7,26 @@ import { getLanguage } from '../../language'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isCommand()) return
-
-  if (interaction.commandName !== 'gift') return
-
   if (!interaction.guild) return
-
-  const giftName = interaction.options.getString('gift')
-  const receiver = interaction.options.getUser('receiver')
-
-  if (!giftName || !receiver) return
   // localization
   const dbGuild = await getDbGuild(interaction.guild.id)
   const language = await getLanguage(dbGuild.languageInGuild)
   if (interaction.commandName !== language.gift.command.name) return
+  const giftID = interaction.options.getString(language.gift.command.subCommand.stringOptionName)
+  const receiver = interaction.options.getUser(language.gift.command.subCommand.userOptionName)
+
+  if (!giftID || !receiver) return
+
+  if (!client.user) return
+  if (receiver.id === client.user.id) {
+    await interaction.reply(language.gift.errorHandler.botReply)
+    return
+  }
+  if (receiver.id === interaction.user.id) {
+    await interaction.reply(language.gift.errorHandler.userReply)
+    return
+  }
+
   const member = await getDbMember(interaction.user.id, interaction.guild.id)
 
   /**
