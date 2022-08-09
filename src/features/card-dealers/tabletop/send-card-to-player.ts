@@ -1,5 +1,5 @@
 import { client } from '../../../client'
-import { GuildMember, Interaction } from 'discord.js'
+import { GuildMember, Interaction, MessageEmbed } from 'discord.js'
 import { getTabletop } from './storage'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
