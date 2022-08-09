@@ -18,7 +18,14 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     return
   }
 
-  if (tabletop.owner.id !== interaction.user.id) return
+  tabletop.destroy()
+
+  if (tabletop.owner !== interaction.member) {
+    if (interaction.channel) {
+      await interaction.channel.send(interaction.user.username + '你不是该游戏拥有者，无法关闭此次游戏')
+    }
+    return
+  }
 
   tabletop.destroy()
 

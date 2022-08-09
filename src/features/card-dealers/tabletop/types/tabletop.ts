@@ -11,10 +11,11 @@ export type Tabletop = {
   cards: Card[],
   players: Map<string, Player>,
   owner: GuildMember,
-  blacklists: Map<string, GuildMember>,
+  blacklists: string[],
   maxNumberPlayer: number,
   destroy(): void,
   addPlayer(member: GuildMember): boolean,
   dropPlayer(memberID: string): boolean,
-  renderComponents(): MessageActionRow[]
+  renderComponents(): MessageActionRow[],
+  addPlayerToBlacklist (memberId: string): boolean
 }

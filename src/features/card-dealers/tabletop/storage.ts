@@ -2,7 +2,6 @@ import { Card } from './types/card'
 import { Player, Tabletop } from './types/tabletop'
 import { GuildMember, MessageActionRow, MessageButton, TextBasedChannel } from 'discord.js'
 import { getProcessControlActionRow } from './get-process-control-action-row'
-
 const tabletops = new Map<string, Tabletop>()
 
 const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMember, maxNumberPlayer: number): Tabletop | null => {
@@ -10,7 +9,7 @@ const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMembe
     return null
   }
   tabletops.set(channel.id, {
-    blacklists: new Map<string, GuildMember>(),
+    blacklists: [],
     channel,
     cards,
     players: new Map<string, Player>(),
@@ -37,9 +36,11 @@ const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMembe
       })
       return true
     },
-    // addPlayerToBlacklist (memberID: string):boolean {
-    //
-    // },
+    addPlayerToBlacklist (memberId: string): boolean {
+      if (this.blacklists.indexOf(memberId) !== -1) return false
+      this.blacklists.push(memberId)
+      return true
+    },
     dropPlayer (memberID: string): boolean {
       if (!this.players.has(memberID)) return false
       this.players.delete(memberID)

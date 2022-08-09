@@ -5,7 +5,7 @@ import { getTabletop } from './storage'
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isButton()) return
 
-  if (interaction.customId !== 'cardDealerJoinButton') return
+  if (interaction.customId !== 'cardDealerStartButton') return
 
   if (!interaction.channel) return
 
@@ -14,12 +14,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   const tabletop = getTabletop(interaction.channel.id)
   if (!tabletop) return
 
-  if (tabletop.blacklists.indexOf(interaction.member.id) !== -1) {
-    await interaction.channel.send(interaction.member.displayName + ' 您已被踢出，无法再次进入')
-    return
-  }
+  // TODO: send card to each player
 
-  tabletop.addPlayer(interaction.member)
+  tabletop.destroy()
 
   const components = tabletop.renderComponents()
 
