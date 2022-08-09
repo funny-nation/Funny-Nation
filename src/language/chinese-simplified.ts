@@ -32,8 +32,8 @@ const chineseSimplified: Language = {
     }
   },
   curse: {
-    curse: '骂ta',
-    language: ['cnm', '你是不是傻', 'SB', '你大爷的']
+    curse: '嘲讽ta',
+    language: ['就这？', '你是不是傻', 'SB', '你大爷的']
   },
   setGuildProfile: {
     commands: {
