@@ -16,8 +16,6 @@ const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMembe
     owner,
     maxNumberPlayer,
     addPlayer (member: GuildMember): boolean {
-      if (this.maxNumberPlayer <= this.players.size) return false
-
       if (this.players.has(member.id)) return false
       this.players.set(member.id, {
         member,

@@ -13,6 +13,10 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
   const tabletop = getTabletop(interaction.channel.id)
   if (!tabletop) return
+  if (tabletop.maxNumberPlayer <= tabletop.players.size) {
+    await interaction.channel.send(interaction.member.displayName + ' 这局人满了，等下一局吧！')
+    return
+  }
 
   if (tabletop.blacklists.indexOf(interaction.member.id) !== -1) {
     await interaction.channel.send(interaction.member.displayName + ' 您已被踢出，无法再次进入')
