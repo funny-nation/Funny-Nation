@@ -1,7 +1,19 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
+import { User } from 'discord.js'
 
 const chineseSimplified: Language = {
+  leaderBoard: {
+    coinsDisplay: function (coins: number) {
+      return `¥ ${coins}`
+    },
+    coinsLeaderBoard: '金币排行榜',
+    command: {
+      desc: '排行榜查看',
+      name: 'leaderboard'
+    },
+    expLeaderBoard: '等级排行榜'
+  },
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
   coinBalanceDisplay (amount: number | string): string {
     return `金币：${amount}`
@@ -106,6 +118,63 @@ const chineseSimplified: Language = {
       return `你在语音频道呆了${totalMinutes}分钟赚了${coins}金币`
     }
   },
+  notification: '一个来自异次元的通知',
+  anonymousMsg: {
+    command: {
+      name: 'anonymous',
+      desc: '匿名消息'
+    },
+    sendFailed: '发送失败',
+    sent: '发送成功',
+    anonymousMsgFrom (nickName: string) {
+      return `来自于 ${nickName} 的匿名消息`
+    },
+    modal: {
+      title: '匿名消息',
+      label: '这里输入你的匿名消息'
+    }
+  },
+  gift: {
+    errorHandler: {
+      botReply: '你不能送礼物给机器人',
+      userReply: '你不能送礼物给你自己'
+    },
+    command: {
+      name: 'gift',
+      desc: '一份礼物',
+      subCommand: {
+        name: '发送',
+        desc: '发送礼物给其他人',
+        stringOptionName: '发送的礼物',
+        stringOptionDesc: '发送的礼物',
+        userOptionName: '接收者',
+        userOptionDesc: '接收者名字'
+      }
+    },
+    embedTitle: '你收到一份新的礼物',
+    embedDesc: '你收到一份新的礼物',
+    hasEnoughMoney: '你太穷了',
+    presetGifts: {
+      gift1: {
+        name: '飞机',
+        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/baoanduizhang.png',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} 收到来自老板${sender}的大飞机`
+        }
+      },
+      gift2: {
+        name: '火箭',
+        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/chuoqi.png',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} 收到来自老板${sender}的大火箭`
+        }
+      }
+    }
+  }
   notification: '一个来自异次元的通知',
   tabletopRoleAssign: {
     cannotCloseGame: ' 你不是该游戏拥有者，无法关闭此次游戏',

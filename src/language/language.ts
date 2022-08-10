@@ -1,8 +1,11 @@
 import { LanguageEnum } from '../models'
+import { Gift } from '../features/gift/gift-type'
 
 export interface Language {
     errorMsg: string,
+
     coinBalanceDisplay(amount: number | string): string,
+
     viewProfile: {
         profile: string,
         inXXX(guildName: string): string,
@@ -83,6 +86,54 @@ export interface Language {
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string
     },
+    notification: string,
+    anonymousMsg: {
+        command: {
+            name: string,
+            desc: string
+        },
+        sendFailed: string,
+        sent: string,
+        anonymousMsgFrom(nickName: string): string,
+        modal: {
+            title: string,
+            label: string
+        }
+    },
+    leaderBoard: {
+        command: {
+            name: string,
+            desc: string
+        },
+        coinsLeaderBoard: string,
+        expLeaderBoard: string,
+        coinsDisplay(coins: number): string
+    },
+    gift: {
+        errorHandler:{
+            botReply: string,
+            userReply: string
+        }
+        command: {
+            name: string,
+            desc: string,
+            subCommand: {
+                name: string,
+                desc: string,
+                stringOptionName: string,
+                stringOptionDesc: string,
+                userOptionName: string,
+                userOptionDesc: string
+            }
+        },
+        embedTitle: string,
+        embedDesc: string
+        hasEnoughMoney: string,
+        presetGifts: {
+            gift1: Gift,
+            gift2: Gift
+        }
+    }
     notification: string,
     tabletopRoleAssign:{
         cannotCloseGame: string,

@@ -1,7 +1,19 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
+import { User } from 'discord.js'
 
 const english: Language = {
+  leaderBoard: {
+    coinsDisplay: function (coins: number) {
+      return `$ ${coins}`
+    },
+    coinsLeaderBoard: 'Coins Leader Board',
+    command: {
+      desc: 'Get leader boards',
+      name: 'leaderboard'
+    },
+    expLeaderBoard: 'Level Lever Board'
+  },
   errorMsg: 'Bot went wrong, please notify the server owner',
   coinBalanceDisplay (amount: number | string): string {
     return `${amount} coins`
@@ -106,6 +118,63 @@ const english: Language = {
       return `You have earned ${coins} coins by ${totalMinutes} voice chat`
     }
   },
+  notification: 'Notification',
+  anonymousMsg: {
+    command: {
+      name: 'anonymous',
+      desc: 'Anonymous Message'
+    },
+    sendFailed: 'Failed',
+    sent: 'Sent',
+    anonymousMsgFrom (nickName: string) {
+      return `Anonymous message from ${nickName}`
+    },
+    modal: {
+      title: 'Anonymous Message',
+      label: 'Input your anonymous message here'
+    }
+  },
+  gift: {
+    errorHandler: {
+      botReply: 'You cannot send gift to me',
+      userReply: 'You cannot send gift to your self'
+    },
+    command: {
+      name: 'gift',
+      desc: 'a gift',
+      subCommand: {
+        name: 'send',
+        desc: 'Send gift to others',
+        stringOptionName: 'sent',
+        stringOptionDesc: 'sentGift',
+        userOptionName: 'receiver',
+        userOptionDesc: 'receiver name'
+      }
+    },
+    embedTitle: 'you received a new gift',
+    embedDesc: 'you received a new gift',
+    hasEnoughMoney: 'you poor',
+    presetGifts: {
+      gift1: {
+        name: 'feiji',
+        pictureURL: '123',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} received feiji from ${sender}`
+        }
+      },
+      gift2: {
+        name: 'feiji',
+        pictureURL: '123',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} received huojian from${sender}`
+        }
+      }
+    }
+  }
   notification: 'Notification',
   tabletopRoleAssign: {
     cannotCloseGame: ' You are not the owner of the game and cannot close this game',

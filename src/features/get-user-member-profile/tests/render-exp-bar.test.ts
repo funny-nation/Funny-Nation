@@ -1,4 +1,4 @@
-import renderExpBar from '../render-exp-bar'
+import { renderExpBar } from '../render-exp-bar'
 
 test('Render exp bar', () => {
   expect(renderExpBar(0)).toEqual('|--------------------|')
