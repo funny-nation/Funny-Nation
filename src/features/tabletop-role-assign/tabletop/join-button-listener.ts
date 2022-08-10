@@ -1,6 +1,9 @@
 import { client } from '../../../client'
 import { GuildMember, Interaction } from 'discord.js'
 import { getTabletop } from './storage'
+import { DBGuild, getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
+import { cleanTable } from './utils/cleanTable'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isButton()) return
@@ -10,16 +13,21 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.channel) return
 
   if (!(interaction.member instanceof GuildMember)) return
+  if (!interaction.guild) return
+  const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
+  const language = getLanguage(dbGuild.languageInGuild)
 
   const tabletop = getTabletop(interaction.channel.id)
-  if (!tabletop) return
-  if (tabletop.maxNumberPlayer <= tabletop.players.size) {
-    await interaction.channel.send(interaction.member.displayName + ' 这局人满了，等下一局吧！')
+  if (!tabletop) {
+    await cleanTable(interaction)
     return
   }
-
   if (tabletop.blacklists.indexOf(interaction.member.id) !== -1) {
-    await interaction.channel.send(interaction.member.displayName + ' 您已被踢出，无法再次进入')
+    await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutByOwner)
+    return
+  }
+  if (tabletop.maxNumberPlayer <= tabletop.players.size) {
+    await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.fullOfPeople)
     return
   }
 

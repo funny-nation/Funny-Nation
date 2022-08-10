@@ -1,6 +1,9 @@
 import { client } from '../../../client'
 import { GuildMember, Interaction, MessageEmbed } from 'discord.js'
 import { getTabletop } from './storage'
+import { DBGuild, getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
+import { cleanTable } from './utils/cleanTable'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isButton()) return
@@ -10,28 +13,34 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.channel) return
 
   if (!(interaction.member instanceof GuildMember)) return
+  if (!interaction.guild) return
+  const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
+  const language = getLanguage(dbGuild.languageInGuild)
 
   const tabletop = getTabletop(interaction.channel.id)
-  if (!tabletop) return
+  if (!tabletop) {
+    await cleanTable(interaction)
+    return
+  }
 
   if (tabletop.owner !== interaction.member) {
-    await interaction.channel.send('只有房主可以开始游戏')
+    await interaction.reply(language.tabletopRoleAssign.onlyOwnerCanStart)
     return
   }
 
   if (tabletop.maxNumberPlayer > tabletop.players.size) {
-    await interaction.channel.send('这局人还没满，再等等等吧！')
+    await interaction.reply(language.tabletopRoleAssign.notEnoughPeople)
     return
   }
-  const cards: string[] = []
-  for (const cds of tabletop.cards) {
-    while (cds.count > 0) {
-      cards.push(cds.cardName)
-      cds.count -= 1
+  const roles: string[] = []
+  for (const role of tabletop.roleGroups) {
+    while (role.count > 0) {
+      roles.push(role.roleName)
+      role.count -= 1
     }
   }
 
-  const shuffledCards: string[] = cards.sort(() => Math.random() - 0.5)
+  const shuffledCards: string[] = roles.sort(() => Math.random() - 0.5)
 
   for (const [, player] of tabletop.players) {
     const cardName = shuffledCards.pop()
@@ -48,7 +57,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   tabletop.destroy()
 
   await interaction.update({
-    content: '发牌结束，祝您玩得开心',
+    content: language.tabletopRoleAssign.endTabletop,
     components: [],
     embeds: []
   })

@@ -106,7 +106,24 @@ const chineseSimplified: Language = {
       return `你在语音频道呆了${totalMinutes}分钟赚了${coins}金币`
     }
   },
-  notification: '一个来自异次元的通知'
+  notification: '一个来自异次元的通知',
+  tabletopRoleAssign: {
+    cannotCloseGame: ' 你不是该游戏拥有者，无法关闭此次游戏',
+    oneTypeRoleError: '只设置一个类型的身份玩不起来啊',
+    fullOfPeople: ' 这局人满了，等下一局吧！',
+    kickOutByOwner: ' 您已被踢出，无法再次进入',
+    kickOutError: ' 您不是房主，无法将别人移除',
+    onlyOwnerCanStart: '只有房主可以开始游戏',
+    notEnoughPeople: '这局人还没满，再等等吧！',
+    endTabletop: '发牌结束，祝您玩得开心',
+    tabletopTitle: '来自',
+    tabletopDescription: '的发牌器',
+    tabletopClose: '关闭',
+    joinTabletop: '加入',
+    tabletopStart: '发牌',
+    leaveTabletop: '踢ta/离开',
+    channelUsed: '该频道已被占用'
+  }
 }
 
 export default chineseSimplified

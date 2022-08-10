@@ -1,20 +1,23 @@
-import { Card } from './types/card'
+import { RoleGroup } from './types/role-group'
 import { Player, Tabletop } from './types/tabletop'
 import { GuildMember, MessageActionRow, MessageButton, TextBasedChannel } from 'discord.js'
 import { getProcessControlActionRow } from './get-process-control-action-row'
+import { Language } from '../../../language'
+
 const tabletops = new Map<string, Tabletop>()
 
-const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMember, maxNumberPlayer: number): Tabletop | null => {
+const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: GuildMember, maxNumberPlayer: number, language: Language): Tabletop | null => {
   if (tabletops.has(channel.id)) {
     return null
   }
   tabletops.set(channel.id, {
     blacklists: [],
     channel,
-    cards,
+    roleGroups,
     players: new Map<string, Player>(),
     owner,
     maxNumberPlayer,
+    language,
     addPlayer (member: GuildMember): boolean {
       if (this.players.has(member.id)) return false
       this.players.set(member.id, {
@@ -27,7 +30,7 @@ const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMembe
               .setStyle('SUCCESS')
               .setDisabled(true),
             new MessageButton()
-              .setLabel('踢ta/离开')
+              .setLabel(language.tabletopRoleAssign.leaveTabletop)
               .setStyle('SUCCESS')
               .setCustomId('tabletopKickPlayerButton' + member.id)
           ])
@@ -48,7 +51,7 @@ const newTabletop = (channel: TextBasedChannel, cards: Card[], owner: GuildMembe
       tabletops.delete(this.channel.id)
     },
     renderComponents (): MessageActionRow[] {
-      const components: MessageActionRow[] = [getProcessControlActionRow()]
+      const components: MessageActionRow[] = [getProcessControlActionRow(language)]
       for (const [, player] of this.players) {
         components.push(player.messageActionRow)
       }

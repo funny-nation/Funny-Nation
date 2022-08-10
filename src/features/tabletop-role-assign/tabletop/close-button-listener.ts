@@ -1,37 +1,28 @@
 import { client } from '../../../client'
 import { Interaction } from 'discord.js'
 import { getTabletop } from './storage'
+import { getLanguage } from '../../../language'
+import { DBGuild, getDbGuild } from '../../../models'
+import { cleanTable } from './utils/cleanTable'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isButton()) return
 
   if (interaction.customId !== 'cardDealerCloseButton') return
-
   const tabletop = getTabletop(interaction.channelId)
-
+  if (!interaction.guild) return
+  const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
+  const language = getLanguage(dbGuild.languageInGuild)
   if (!tabletop) {
-    await interaction.update({
-      content: '^^',
-      components: [],
-      embeds: []
-    })
+    await cleanTable(interaction)
     return
   }
-
-  tabletop.destroy()
-
   if (tabletop.owner !== interaction.member) {
     if (interaction.channel) {
-      await interaction.channel.send(interaction.user.username + '你不是该游戏拥有者，无法关闭此次游戏')
+      await interaction.reply(interaction.user.username + language.tabletopRoleAssign.cannotCloseGame)
     }
     return
   }
-
   tabletop.destroy()
-
-  await interaction.update({
-    content: '^^',
-    components: [],
-    embeds: []
-  })
+  await cleanTable(interaction)
 })

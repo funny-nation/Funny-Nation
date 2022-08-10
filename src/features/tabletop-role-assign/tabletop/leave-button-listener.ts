@@ -1,6 +1,9 @@
 import { client } from '../../../client'
 import { GuildMember, Interaction } from 'discord.js'
 import { getTabletop } from './storage'
+import { DBGuild, getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
+import { cleanTable } from './utils/cleanTable'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isButton()) return
@@ -12,21 +15,28 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.channel) return
 
   if (!(interaction.member instanceof GuildMember)) return
+  if (!interaction.guild) return
 
   const tabletop = getTabletop(interaction.channel.id)
-  if (!tabletop) return
-  const playerId = interaction.customId.slice(24)
-  if (interaction.member.id !== playerId) {
+  if (!tabletop) {
+    await cleanTable(interaction)
+    return
+  }
+
+  const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
+  const language = getLanguage(dbGuild.languageInGuild)
+  const buttonId = interaction.customId.slice(24)
+  if (interaction.member.id !== buttonId) {
     if (tabletop.owner === interaction.member) {
-      tabletop.dropPlayer(playerId)
-      tabletop.addPlayerToBlacklist(playerId)
+      tabletop.dropPlayer(buttonId)
+      tabletop.addPlayerToBlacklist(buttonId)
       const components = tabletop.renderComponents()
 
       await interaction.update({
         components
       })
     } else {
-      await interaction.channel.send(interaction.member.displayName + ' 您不是房主，无法将别人移除')
+      await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutError)
     }
     return
   }

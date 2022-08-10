@@ -1,5 +1,6 @@
 import { TextBasedChannel, GuildMember, MessageActionRow } from 'discord.js'
-import { Card } from './card'
+import { RoleGroup } from './role-group'
+import { Language } from '../../../../language'
 
 export type Player = {
   member: GuildMember,
@@ -8,11 +9,12 @@ export type Player = {
 
 export type Tabletop = {
   channel: TextBasedChannel,
-  cards: Card[],
+  roleGroups: RoleGroup[],
   players: Map<string, Player>,
   owner: GuildMember,
   blacklists: string[],
   maxNumberPlayer: number,
+  language: Language,
   destroy(): void,
   addPlayer(member: GuildMember): boolean,
   dropPlayer(memberID: string): boolean,
