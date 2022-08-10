@@ -6,6 +6,10 @@ import { Language } from '../../../language'
 
 const tabletops = new Map<string, Tabletop>()
 
+setInterval(() => {
+  console.log(tabletops.size)
+}, 1000)
+
 const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: GuildMember, maxNumberPlayer: number, language: Language): Tabletop | null => {
   if (tabletops.has(channel.id)) {
     return null

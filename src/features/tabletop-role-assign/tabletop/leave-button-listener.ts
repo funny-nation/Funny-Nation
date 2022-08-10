@@ -38,14 +38,13 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     } else {
       await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutError)
     }
-    return
+  } else {
+    tabletop.dropPlayer(interaction.member.id)
+
+    const components = tabletop.renderComponents()
+
+    await interaction.update({
+      components
+    })
   }
-
-  tabletop.dropPlayer(interaction.member.id)
-
-  const components = tabletop.renderComponents()
-
-  await interaction.update({
-    components
-  })
 })

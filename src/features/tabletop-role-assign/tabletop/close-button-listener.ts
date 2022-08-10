@@ -1,5 +1,5 @@
 import { client } from '../../../client'
-import { Interaction } from 'discord.js'
+import { ButtonInteraction, Interaction } from 'discord.js'
 import { getTabletop } from './storage'
 import { getLanguage } from '../../../language'
 import { DBGuild, getDbGuild } from '../../../models'
