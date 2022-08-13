@@ -1,5 +1,6 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
+import { User } from 'discord.js'
 
 const chineseSimplified: Language = {
   leaderBoard: {
@@ -131,6 +132,47 @@ const chineseSimplified: Language = {
     modal: {
       title: '匿名消息',
       label: '这里输入你的匿名消息'
+    }
+  },
+  gift: {
+    errorHandler: {
+      botReply: '你不能送礼物给机器人',
+      userReply: '你不能送礼物给你自己'
+    },
+    command: {
+      name: 'gift',
+      desc: '一份礼物',
+      subCommand: {
+        name: '发送',
+        desc: '发送礼物给其他人',
+        stringOptionName: '发送的礼物',
+        stringOptionDesc: '发送的礼物',
+        userOptionName: '接收者',
+        userOptionDesc: '接收者名字'
+      }
+    },
+    embedTitle: '你收到一份新的礼物',
+    embedDesc: '你收到一份新的礼物',
+    hasEnoughMoney: '你太穷了',
+    presetGifts: {
+      gift1: {
+        name: '飞机',
+        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/baoanduizhang.png',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} 收到来自老板${sender}的大飞机`
+        }
+      },
+      gift2: {
+        name: '火箭',
+        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/chuoqi.png',
+        desc: '123123',
+        price: 200,
+        announcement (sender: User, receiver: User): string {
+          return `${receiver} 收到来自老板${sender}的大火箭`
+        }
+      }
     }
   },
   dailyCheckIn: {
