@@ -174,6 +174,12 @@ const chineseSimplified: Language = {
         }
       }
     }
+  },
+  dailyCheckIn: {
+    titleForBooster: '你好呀Booster，今日签到成功',
+    desc (money: number): string {
+      return `你获得了${money}金币`
+    }
   }
 }
 

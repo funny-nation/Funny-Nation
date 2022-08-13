@@ -3,9 +3,7 @@ import { Gift } from '../features/gift/gift-type'
 
 export interface Language {
     errorMsg: string,
-
     coinBalanceDisplay(amount: number | string): string,
-
     viewProfile: {
         profile: string,
         inXXX(guildName: string): string,
@@ -133,5 +131,9 @@ export interface Language {
             gift1: Gift,
             gift2: Gift
         }
+    },
+    dailyCheckIn: {
+        titleForBooster: string,
+        desc(money: number): string
     }
 }

@@ -174,6 +174,12 @@ const english: Language = {
         }
       }
     }
+  },
+  dailyCheckIn: {
+    titleForBooster: 'Hello dear booster, check in success',
+    desc (money: number): string {
+      return `You obtain ${money} coins`
+    }
   }
 }
 
