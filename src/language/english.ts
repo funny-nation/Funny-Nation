@@ -132,6 +132,12 @@ const english: Language = {
       title: 'Anonymous Message',
       label: 'Input your anonymous message here'
     }
+  },
+  dailyCheckIn: {
+    titleForBooster: 'Hello dear booster, check in success',
+    desc (money: number): string {
+      return `You obtain ${money} coins`
+    }
   }
 }
 

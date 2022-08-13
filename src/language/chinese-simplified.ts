@@ -132,6 +132,12 @@ const chineseSimplified: Language = {
       title: '匿名消息',
       label: '这里输入你的匿名消息'
     }
+  },
+  dailyCheckIn: {
+    titleForBooster: '你好呀Booster，今日签到成功',
+    desc (money: number): string {
+      return `你获得了${money}金币`
+    }
   }
 }
 

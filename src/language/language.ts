@@ -105,5 +105,9 @@ export interface Language {
         coinsLeaderBoard: string,
         expLeaderBoard: string,
         coinsDisplay(coins: number): string
+    },
+    dailyCheckIn: {
+        titleForBooster: string,
+        desc(money: number): string
     }
 }
