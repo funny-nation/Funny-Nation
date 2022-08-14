@@ -31,6 +31,19 @@ newCommand((language: Language) => new SlashCommandBuilder()
 )
 ```
 
+As of Aug 14 2022, new commands async function support two parameters: Language and guild ID:
+
+```typescript
+import { newCommand } from '../../commands-manager'
+import { Language } from '../../language'
+import { SlashCommandBuilder } from '@discordjs/builders'
+
+newCommand((language: Language, guildID: string) => new SlashCommandBuilder()
+  .setName(language.commands.getMyProfile.name)
+  .setDescription(language.commands.getMyProfile.desc)
+)
+```
+
 
 ### Something more
 If you need to set up your unit test, please create a new folder ```tests``` under your folder, then put your unit test file under the ```tests``` folder. Make sure your unit test name as ```xxx.test.ts```. Example: ```get-user-member-profile/tests/calculate-level-by-exp.test.ts```
