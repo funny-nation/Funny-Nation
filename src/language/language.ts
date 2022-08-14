@@ -1,5 +1,7 @@
 import { LanguageEnum } from '../models'
 import { Gift } from '../features/gift/gift-type'
+import { CoinTransfer } from '@prisma/client'
+import { EmbedFieldData } from 'discord.js'
 
 export interface Language {
     errorMsg: string,
@@ -136,5 +138,20 @@ export interface Language {
     dailyCheckIn: {
         titleForBooster: string,
         desc(money: number): string
+    },
+    transactionsHistory: {
+        commandName: string,
+        transactionHistoryTitle: string,
+        fieldEntry(transaction: CoinTransfer, tz: string): EmbedFieldData,
+        commandDesc: string
+    },
+    transferCategories: {
+        transferIn: string,
+        transferOut: string,
+        issueCoin: string,
+        earnFromVoice: string,
+        earnFromMessage: string,
+        earnFromCheckIn: string,
+        sendGift: string
     }
 }

@@ -21,8 +21,8 @@ async function coinTransferHelper (payerID: string, payeeID: string, guildID: st
   await payeeDbMember.addCoins(amount)
   logger.info(`coins added to payee: ${payeeID} successfully`)
   const transactionID = randomUUID()
-  await addDbCoinTransfer(payeeID, guildID, amount, transactionID, detail || '', 'transferOut')
-  await addDbCoinTransfer(payerID, guildID, -amount, transactionID, detail || '', 'transferIn')
+  await addDbCoinTransfer(payeeID, guildID, amount, transactionID, detail || '', 'transferIn')
+  await addDbCoinTransfer(payerID, guildID, -amount, transactionID, detail || '', 'transferOut')
   logger.info(`transaction records have been updated to database successfully. ID: ${transactionID}`)
   return TransactionStatus.SUCCESS
 }

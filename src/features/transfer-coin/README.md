@@ -1,4 +1,8 @@
+## transfer-coin feature
+
 This function is for transferring coins. 
+
+The function structure is service-controller-divided. Controller is only for handling requests, parsing information and forwarding to a corresponding banckend service.
 
 The service will increase and decrease coin from payee's and payer's account. 
 

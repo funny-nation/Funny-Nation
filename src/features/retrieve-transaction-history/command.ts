@@ -4,6 +4,6 @@ import { SlashCommandBuilder } from '@discordjs/builders'
 
 newCommand(
   (language: Language) => new SlashCommandBuilder()
-    .setName('retrieveTransactionHistory')
-    .setDescription('retrieve the most recent 10 transactions')
+    .setName(language.transactionsHistory.commandName)
+    .setDescription(language.transactionsHistory.commandDesc)
 )
