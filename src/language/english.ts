@@ -174,8 +174,7 @@ const english: Language = {
         }
       }
     }
-  }
-  notification: 'Notification',
+  },
   tabletopRoleAssign: {
     cannotCloseGame: ' You are not the owner of the game and cannot close this game',
     oneTypeRoleError: 'It is not possible to play with only one type of role',

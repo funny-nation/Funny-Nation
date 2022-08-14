@@ -174,8 +174,7 @@ const chineseSimplified: Language = {
         }
       }
     }
-  }
-  notification: '一个来自异次元的通知',
+  },
   tabletopRoleAssign: {
     cannotCloseGame: ' 你不是该游戏拥有者，无法关闭此次游戏',
     oneTypeRoleError: '只设置一个类型的身份玩不起来啊',

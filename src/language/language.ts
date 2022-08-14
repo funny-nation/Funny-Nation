@@ -86,7 +86,6 @@ export interface Language {
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string
     },
-    notification: string,
     anonymousMsg: {
         command: {
             name: string,
