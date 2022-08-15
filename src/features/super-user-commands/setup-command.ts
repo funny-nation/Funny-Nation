@@ -19,13 +19,13 @@ client.on('ready', async () => {
   slashCommand.addSubcommand(
     subcommand => subcommand
       .setName('demo-notification')
-      .setDescription('Demo notification')
+      .setDescription('Demo notification (Super user only)')
   )
 
   slashCommand.addSubcommand(
     subcommand => subcommand
       .setName('send-notification')
-      .setDescription('Send notification to all guilds')
+      .setDescription('Send notification to all guilds (Super user only)')
       .addStringOption(
         (option: SlashCommandStringOption) => {
           option.setName('language')

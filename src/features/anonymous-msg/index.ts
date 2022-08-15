@@ -1,3 +1,3 @@
 import './commands'
-import './send-modal-by-command'
-import './send-anonymous-msg-from-modal'
+import './set-nick-name'
+import './send-anonymous-msg'

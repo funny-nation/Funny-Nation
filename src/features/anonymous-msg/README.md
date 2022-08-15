@@ -1,7 +1,7 @@
 # Anonymous Message
 
-User use command: /anonymous
+User use command: /anonymous setname, then he/she can set the nike name of anonymous message. 
 
-He/She would have a modal for filling out the anonymous message. 
+If use use command: /anonymous send, then he/she can send anonymous message. 
 
-After filled out, the message would be sent to the recent channel. 
+

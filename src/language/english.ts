@@ -122,19 +122,21 @@ const english: Language = {
   },
   notification: 'Notification',
   anonymousMsg: {
-    command: {
-      name: 'anonymous',
-      desc: 'Anonymous Message'
+    commands: {
+      desc: 'Anonymous Message',
+      setName: {
+        name: 'setnickname',
+        desc: 'Set your nick name in anonymous message',
+        optionName: 'nickname'
+      },
+      send: {
+        name: 'send',
+        desc: 'Send anonymous message',
+        MsgOptionName: 'message',
+        UserOptionName: 'mention'
+      }
     },
-    sendFailed: 'Failed',
-    sent: 'Sent',
-    anonymousMsgFrom (nickName: string) {
-      return `Anonymous message from ${nickName}`
-    },
-    modal: {
-      title: 'Anonymous Message',
-      label: 'Input your anonymous message here'
-    }
+    yourNewNameIs: 'Your new nick name is: '
   },
   gift: {
     errorHandler: {
