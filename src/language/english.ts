@@ -16,15 +16,17 @@ const english: Language = {
     expLeaderBoard: 'Level Lever Board'
   },
   errorMsg: 'Bot went wrong, please notify the server owner',
-  coinBalanceDisplay (amount: number | string): string {
-    return `${amount} coins`
+  coinBalanceDisplay (amount: number | string, ranking: number): string {
+    return `${amount} coins • Ranking: #${ranking}`
   },
   viewProfile: {
     profile: 'Profile',
-    inXXX (guildName: string): string {
-      return `In ${guildName}`
+    expInThisGuild (guildName: string, ranking: number): string {
+      return `In ${guildName}，your ranking: #${ranking}`
     },
-    yourExp: 'Your Exp'
+    expInThisBot (ranking: number): string {
+      return `In this universe, your ranking: #${ranking}`
+    }
   },
   commands: {
     getMyProfile: {
