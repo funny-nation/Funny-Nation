@@ -1,6 +1,7 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
 import { User } from 'discord.js'
+import moment from 'moment-timezone'
 
 const english: Language = {
   leaderBoard: {
@@ -111,7 +112,8 @@ const english: Language = {
     detailDesc: 'Remark message for the payee about this transaction',
     payeeDesc: 'The payee\'s account in this guild',
     integerOnly: 'Please enter integer only',
-    invalidInt: 'Please enter an integer in the box only. '
+    invalidInt: 'Please enter an integer in the box only. ',
+    transactionFailed: 'The transaction is failed due to internal error. '
   },
   addCoinsExpToUserInVoice: {
     coinTransferMsg (coins: number, totalMinutes: number) {
@@ -194,6 +196,33 @@ const english: Language = {
     subcommandDescription: 'Dealers with customizable role contents and number of players, one role per player',
     commandsDescription: 'dealer for tabletop.ts game',
     subcommandName: 'custom-single'
+  },
+  dailyCheckIn: {
+    titleForBooster: 'Hello dear booster, check in success',
+    desc (money: number): string {
+      return `You obtain ${money} coins`
+    }
+  },
+  transactionsHistory: {
+    commandName: 'transactions',
+    transactionHistoryTitle: 'Coin transaction history',
+    commandDesc: 'The most 10 recent coin transaction history',
+    fieldEntry ({ amount, category, detail, time }, tz) {
+      return {
+        name: `${amount > 0 ? `${amount} coins were added` : `${-amount} coins were deducted`} at ${moment(time).tz(tz).format('HH:MM on MMM DD')}`,
+        value: `${english.transferCategories[category]}${detail ? ', ' : ''}${detail}`,
+        inline: false
+      }
+    }
+  },
+  transferCategories: {
+    transferIn: 'Coin transfer in',
+    transferOut: 'Coin transfer out',
+    issueCoin: 'Issued coins by administrators',
+    earnFromVoice: 'Earned coins from voice',
+    earnFromMessage: 'Earned coins from sending message',
+    earnFromCheckIn: 'Earned coins from checking in',
+    sendGift: 'Bonus of sending gift'
   }
 }
 

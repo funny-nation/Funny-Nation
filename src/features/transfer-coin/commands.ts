@@ -20,10 +20,12 @@ newCommand(
           .setName(language.transferCoin.coin)
           .setRequired(true)
           .setDescription(language.transferCoin.amountDesc)
+          .setMinValue(1)
         )
         .addStringOption(option => option
           .setName(language.transferCoin.detail)
           .setDescription(language.transferCoin.detailDesc)
+          .setMaxLength(255)
         )
     )
 )

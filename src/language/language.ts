@@ -1,11 +1,11 @@
 import { LanguageEnum } from '../models'
 import { Gift } from '../features/gift/gift-type'
+import { CoinTransfer } from '@prisma/client'
+import { EmbedFieldData } from 'discord.js'
 
 export interface Language {
     errorMsg: string,
-
     coinBalanceDisplay(amount: number | string): string,
-
     viewProfile: {
         profile: string,
         inXXX(guildName: string): string,
@@ -81,7 +81,8 @@ export interface Language {
         transferCompleteMsg(payeeID: string, amount: number): string,
         senderLeavingMsgInfo: string
         integerOnly: string,
-        invalidInt: string
+        invalidInt: string,
+        transactionFailed: string
     },
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string
@@ -132,6 +133,25 @@ export interface Language {
             gift1: Gift,
             gift2: Gift
         }
+    },
+    dailyCheckIn: {
+        titleForBooster: string,
+        desc(money: number): string
+    },
+    transactionsHistory: {
+        commandName: string,
+        transactionHistoryTitle: string,
+        fieldEntry(transaction: CoinTransfer, tz: string): EmbedFieldData,
+        commandDesc: string
+    },
+    transferCategories: {
+        transferIn: string,
+        transferOut: string,
+        issueCoin: string,
+        earnFromVoice: string,
+        earnFromMessage: string,
+        earnFromCheckIn: string,
+        sendGift: string
     }
     notification: string,
     tabletopRoleAssign:{

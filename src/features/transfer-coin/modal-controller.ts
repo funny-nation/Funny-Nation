@@ -42,6 +42,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       .setCustomId('remarksComponent')
       .setStyle(TextInputStyles.PARAGRAPH)
       .setPlaceholder(language.detailDesc)
+      .setMaxLength(255)
 
     modal.addComponents(
       new MessageActionRow<ModalActionRowComponent>().addComponents(amountComponent),
@@ -66,11 +67,14 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const payerID = interaction.user.id
     const payeeID = interaction.customId.substring(17)
     const guildID = interaction.guild.id
-    const amount = parseInt(interaction.fields.getField('amountInput').value)
+    let amount = parseInt(interaction.fields.getField('amountInput').value)
     const desc: string = interaction.fields.getField('remarksComponent').value
     if (!amount) {
       await interaction.reply(language.invalidInt)
       return
+    }
+    if (amount < 0) {
+      amount = -amount
     }
     logger.info(`payerID: ${payerID} payeeID: ${payeeID} amount: ${amount}, guild: ${guildID}`)
     const status = await coinTransferHelper(payerID, payeeID, guildID, amount, desc || null)
