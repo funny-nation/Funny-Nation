@@ -1,6 +1,7 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
 import { User } from 'discord.js'
+import moment from 'moment-timezone'
 
 const chineseSimplified: Language = {
   leaderBoard: {
@@ -111,7 +112,8 @@ const chineseSimplified: Language = {
     detailDesc: '给收款人的转账备注',
     payeeDesc: '在本Guild中的收款人账号',
     invalidInt: '请在金额框内输入数字',
-    integerOnly: '请输入数字'
+    integerOnly: '请输入数字',
+    transactionFailed: '转账失败，可能是由于服务器内部错误。'
   },
   addCoinsExpToUserInVoice: {
     coinTransferMsg (coins: number, totalMinutes: number) {
@@ -191,7 +193,34 @@ const chineseSimplified: Language = {
     tabletopStart: '发牌',
     leaveTabletop: '踢ta/离开',
     channelUsed: '该频道已被占用'
+  dailyCheckIn: {
+    titleForBooster: '你好呀Booster，今日签到成功',
+    desc (money: number): string {
+      return `你获得了${money}金币`
+    }
+  },
+  transactionsHistory: {
+    commandName: 'transactions',
+    transactionHistoryTitle: '金币交易历史',
+    commandDesc: '近10笔金币交易记录',
+    fieldEntry ({ amount, category, detail, time }, tz) {
+      return {
+        name: `于${moment(time).tz(tz).format('MM月DD日 HH:MM')}${amount > 0 ? `收到${amount}` : `失去${-amount}`}个金币`,
+        value: `交易属于${chineseSimplified.transferCategories[category]}${detail ? '，' : ''}${detail}`,
+        inline: false
+      }
+    }
+  },
+  transferCategories: {
+    transferIn: '转入金币',
+    transferOut: '转出金币',
+    issueCoin: '放水',
+    earnFromVoice: '语音收入',
+    earnFromMessage: '消息收入',
+    earnFromCheckIn: '签到收入',
+    sendGift: '送礼'
   }
+
 }
 
 export default chineseSimplified
