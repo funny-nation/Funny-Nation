@@ -126,7 +126,7 @@ const chineseSimplified: Language = {
     },
     senderLeavingMsgInfo: '转账人给你留了一条信息。',
     commandDesc: '给Guild里的其他用户转账',
-    coinDesc: '金币',
+    coinDesc: '金币转账',
     amountDesc: '金币数额',
     detailDesc: '给收款人的转账备注',
     payeeDesc: '在本Guild中的收款人账号',
