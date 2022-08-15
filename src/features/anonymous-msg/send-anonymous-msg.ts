@@ -1,5 +1,5 @@
 import { client } from '../../client'
-import { Interaction } from 'discord.js'
+import { Interaction, MessageEmbed } from 'discord.js'
 import { getDbGuild, getDbUser } from '../../models'
 import { getLanguage } from '../../language'
 import { names, uniqueNamesGenerator } from 'unique-names-generator'
@@ -27,6 +27,17 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   await interaction.deferReply({ ephemeral: true })
   await interaction.editReply('^ ^')
   const mention = interaction.options.getUser(language.anonymousMsg.commands.send.UserOptionName)
-  const mentionMsg = mention ? '\n' + mention.toString() : ''
-  await interaction.channel.send(`\`${dbUser.anonymousNickName}\`🫣:${mentionMsg}\n\`\`\`${anonymousMsg}\`\`\``)
+  const embed = new MessageEmbed()
+    .setDescription(`${dbUser.anonymousNickName}🫣:\n${anonymousMsg}`)
+    .setColor('#FF99CC')
+  if (mention) {
+    await interaction.channel.send({
+      content: mention.toString(),
+      embeds: [embed]
+    })
+  } else {
+    await interaction.channel.send({
+      embeds: [embed]
+    })
+  }
 })
