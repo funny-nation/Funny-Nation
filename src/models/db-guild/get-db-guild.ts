@@ -6,13 +6,13 @@ import { client } from '../../client'
 import moment from 'moment-timezone'
 
 const getDbGuild = async function (guildID: string): Promise<DBGuild> {
-  let dbGuild = await prismaClient.guild.findUnique({
+  let guildInDB = await prismaClient.guild.findUnique({
     where: {
       id: guildID
     }
   })
-  if (dbGuild === null) {
-    dbGuild = await prismaClient.guild.create({
+  if (guildInDB === null) {
+    guildInDB = await prismaClient.guild.create({
       data: {
         id: guildID,
         languageInGuild: 'English',
@@ -23,8 +23,8 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
     const guild: Guild = await client.guilds.fetch(guildID)
     logger.info(`New Guild ${guild.name} has been created`)
   }
-  return {
-    ...dbGuild,
+  const dbGuild: DBGuild = {
+    ...guildInDB,
     async setLanguageInGuild (languageInGuild): Promise<void> {
       await prismaClient.guild.update({
         where: {
@@ -35,7 +35,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           commandsUpdatedAt: moment().utc().toDate()
         }
       })
-      super.languageInGuild = languageInGuild
+      this.languageInGuild = languageInGuild
     },
     async setAdministratorRoleID (administratorRoleID: string): Promise<void> {
       await prismaClient.guild.update({
@@ -46,7 +46,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           administratorRoleID
         }
       })
-      super.administratorRoleID = administratorRoleID
+      this.administratorRoleID = administratorRoleID
     },
     async setTimeZone (timeZone: string): Promise<void> {
       await prismaClient.guild.update({
@@ -57,7 +57,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           timeZone
         }
       })
-      super.timeZone = timeZone
+      this.timeZone = timeZone
     },
     async setNotificationChannelID (notificationChannelID:string): Promise<void> {
       await prismaClient.guild.update({
@@ -68,7 +68,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           notificationChannelID
         }
       })
-      super.notificationChannelID = notificationChannelID
+      this.notificationChannelID = notificationChannelID
     },
     async setAnnouncementChannelID (announcementChannelID): Promise<void> {
       await prismaClient.guild.update({
@@ -79,7 +79,7 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           announcementChannelID
         }
       })
-      super.announcementChannelID = announcementChannelID
+      this.announcementChannelID = announcementChannelID
     },
     async resetCommandsUpdatedAt () {
       const now = moment().utc().toDate()
@@ -91,9 +91,10 @@ const getDbGuild = async function (guildID: string): Promise<DBGuild> {
           commandsUpdatedAt: now
         }
       })
-      super.commandsUpdatedAt = now
+      this.commandsUpdatedAt = now
     }
   }
+  return dbGuild
 }
 
 export { getDbGuild }
