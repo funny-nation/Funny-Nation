@@ -122,19 +122,21 @@ const chineseSimplified: Language = {
   },
   notification: '一个来自异次元的通知',
   anonymousMsg: {
-    command: {
-      name: 'anonymous',
-      desc: '匿名消息'
+    commands: {
+      desc: '匿名消息',
+      setName: {
+        name: '设置昵称',
+        desc: '设置你的匿名消息的昵称',
+        optionName: '昵称'
+      },
+      send: {
+        name: '发送',
+        desc: '发送匿名消息',
+        MsgOptionName: '消息',
+        UserOptionName: '提到谁'
+      }
     },
-    sendFailed: '发送失败',
-    sent: '发送成功',
-    anonymousMsgFrom (nickName: string) {
-      return `来自于 ${nickName} 的匿名消息`
-    },
-    modal: {
-      title: '匿名消息',
-      label: '这里输入你的匿名消息'
-    }
+    yourNewNameIs: '你的新昵称是：'
   },
   gift: {
     errorHandler: {

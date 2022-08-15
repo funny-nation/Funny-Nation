@@ -89,17 +89,21 @@ export interface Language {
     },
     notification: string,
     anonymousMsg: {
-        command: {
-            name: string,
-            desc: string
+        commands: {
+            desc: string,
+            setName: {
+                name: string,
+                desc: string,
+                optionName: string
+            },
+            send: {
+                name: string,
+                desc: string,
+                MsgOptionName: string,
+                UserOptionName: string
+            }
         },
-        sendFailed: string,
-        sent: string,
-        anonymousMsgFrom(nickName: string): string,
-        modal: {
-            title: string,
-            label: string
-        }
+        yourNewNameIs: string
     },
     leaderBoard: {
         command: {

@@ -16,6 +16,7 @@ model User {
     experience BigInt
     memberships Member[]
     inventories Inventory[]
+    anonymousNickName String?
 }
 
 model CoinTransfer {

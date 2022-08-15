@@ -49,6 +49,17 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
         }
       })
       super.experience += exp
+    },
+    async setAnonymousNickName (anonymousNickName:string) {
+      await prismaClient.user.update({
+        where: {
+          id: userID
+        },
+        data: {
+          anonymousNickName
+        }
+      })
+      super.anonymousNickName = anonymousNickName
     }
   }
 }
