@@ -10,7 +10,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isButton()) return
 
-    if (interaction.customId !== 'cardDealerStartButton') return
+    if (interaction.customId !== 'roleAssignStartButton') return
 
     if (!interaction.channel) return
 

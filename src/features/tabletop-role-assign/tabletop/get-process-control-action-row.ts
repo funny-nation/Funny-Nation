@@ -6,15 +6,15 @@ const getProcessControlActionRow = (language: Language) => {
     .addComponents([
       new MessageButton()
         .setLabel(language.tabletopRoleAssign.tabletopStart)
-        .setCustomId('cardDealerStartButton')
+        .setCustomId('roleAssignStartButton')
         .setStyle('SECONDARY'),
       new MessageButton()
         .setLabel(language.tabletopRoleAssign.tabletopClose)
-        .setCustomId('cardDealerCloseButton')
+        .setCustomId('roleAssignCloseButton')
         .setStyle('SECONDARY'),
       new MessageButton()
         .setLabel(language.tabletopRoleAssign.joinTabletop)
-        .setCustomId('cardDealerJoinButton')
+        .setCustomId('roleAssignJoinButton')
         .setStyle('PRIMARY')
     ])
 }

@@ -11,7 +11,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isModalSubmit()) return
 
-    if (interaction.customId !== 'dealerModalSubmission') return
+    if (interaction.customId !== 'roleAssignModalSubmission') return
 
     const rolesInput = interaction.fields.getTextInputValue('input')
 

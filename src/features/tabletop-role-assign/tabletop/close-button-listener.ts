@@ -10,7 +10,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isButton()) return
 
-    if (interaction.customId !== 'cardDealerCloseButton') return
+    if (interaction.customId !== 'roleAssignCloseButton') return
     const tabletop = getTabletop(interaction.channelId)
     if (!interaction.guild) return
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)

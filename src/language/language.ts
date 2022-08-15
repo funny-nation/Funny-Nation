@@ -150,6 +150,8 @@ export interface Language {
         tabletopStart: string
         leaveTabletop: string,
         channelUsed: string
-
+        commandsDescription:string,
+        subcommandDescription: string,
+        subcommandName: string
     }
 }

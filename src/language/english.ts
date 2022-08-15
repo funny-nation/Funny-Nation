@@ -190,7 +190,10 @@ const english: Language = {
     joinTabletop: 'Join',
     tabletopStart: 'Deal',
     leaveTabletop: 'Kick Player/leave',
-    channelUsed: 'This channel is already occupied'
+    channelUsed: 'This channel is already occupied',
+    subcommandDescription: 'Dealers with customizable role contents and number of players, one role per player',
+    commandsDescription: 'dealer for tabletop.ts game',
+    subcommandName: 'custom-single'
   }
 }
 

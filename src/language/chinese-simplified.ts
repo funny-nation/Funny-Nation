@@ -190,7 +190,10 @@ const chineseSimplified: Language = {
     joinTabletop: '加入',
     tabletopStart: '发牌',
     leaveTabletop: '踢ta/离开',
-    channelUsed: '该频道已被占用'
+    channelUsed: '该频道已被占用',
+    subcommandDescription: '可定制角色内容和玩家数量的发牌器，每个玩家一个角色',
+    commandsDescription: '发牌器',
+    subcommandName: '自定义角色'
   }
 }
 

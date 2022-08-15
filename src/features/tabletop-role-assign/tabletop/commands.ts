@@ -2,12 +2,12 @@ import { newCommand } from '../../../commands-manager'
 import { SlashCommandBuilder } from '@discordjs/builders'
 
 newCommand(
-  () => new SlashCommandBuilder()
-    .setName('dealer')
-    .setDescription('dealer for tabletop.ts game')
+  (language) => new SlashCommandBuilder()
+    .setName('role-assign')
+    .setDescription(language.tabletopRoleAssign.commandsDescription)
     .addSubcommand(
       subcommand => subcommand
-        .setName('custom-single')
-        .setDescription('Dealers with customizable card contents and number of players, one card per player')
+        .setName(language.tabletopRoleAssign.subcommandName)
+        .setDescription(language.tabletopRoleAssign.subcommandDescription)
     )
 )
