@@ -179,6 +179,26 @@ const english: Language = {
       }
     }
   },
+  tabletopRoleAssign: {
+    cannotCloseGame: ' You are not the owner of the game and cannot close this game',
+    oneTypeRoleError: 'It is not possible to play with only one type of role',
+    fullOfPeople: ' This game is full, wait for the next one!',
+    kickOutByOwner: ' You have been kicked out by the owner and cannot re-enter',
+    kickOutError: ' You are not the homeowner and cannot remove others',
+    onlyOwnerCanStart: 'Only the owner can start the game',
+    notEnoughPeople: 'This game is not yet full, wait a little longer.',
+    endTabletop: 'The deal is over, have fun!',
+    tabletopTitle: 'From',
+    tabletopDescription: 'Role Dealer',
+    tabletopClose: 'Close',
+    joinTabletop: 'Join',
+    tabletopStart: 'Deal',
+    leaveTabletop: 'Kick Player/leave',
+    channelUsed: 'This channel is already occupied',
+    subcommandDescription: 'Dealers with customizable role contents and number of players, one role per player',
+    commandsDescription: 'dealer for tabletop.ts game',
+    subcommandName: 'custom-single'
+  },
   dailyCheckIn: {
     titleForBooster: 'Hello dear booster, check in success',
     desc (money: number): string {

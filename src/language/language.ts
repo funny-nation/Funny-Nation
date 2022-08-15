@@ -87,7 +87,6 @@ export interface Language {
     addCoinsExpToUserInVoice: {
         coinTransferMsg(coins: number, totalMinutes: number): string
     },
-    notification: string,
     anonymousMsg: {
         commands: {
             desc: string,
@@ -157,5 +156,26 @@ export interface Language {
         earnFromMessage: string,
         earnFromCheckIn: string,
         sendGift: string
+    }
+    notification: string,
+    tabletopRoleAssign:{
+        cannotCloseGame: string,
+        oneTypeRoleError: string,
+        fullOfPeople: string,
+        kickOutByOwner: string,
+        kickOutError: string,
+        onlyOwnerCanStart: string,
+        notEnoughPeople: string,
+        endTabletop: string,
+        tabletopTitle: string,
+        tabletopDescription: string,
+        tabletopClose: string,
+        joinTabletop: string,
+        tabletopStart: string
+        leaveTabletop: string,
+        channelUsed: string
+        commandsDescription:string,
+        subcommandDescription: string,
+        subcommandName: string
     }
 }
