@@ -18,8 +18,8 @@ const coinExpAdder = async (oldVoiceState: VoiceState) => {
   const dbUser = await getDbUser(userID)
   const dbGuild = await getDbGuild(oldVoiceState.guild.id)
 
-  const coinsAdd = totalMinute > 300 ? 300 : totalMinute
-  const expAdd = totalMinute > 300 ? 300 : totalMinute
+  const coinsAdd = totalMinute
+  const expAdd = totalMinute
 
   const language = getLanguage(dbGuild.languageInGuild)
   await dbMember.addMemberExperience(expAdd)
