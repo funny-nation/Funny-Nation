@@ -6,7 +6,7 @@ import {
 import { getLanguage } from '../../language'
 import { DBGuild, getDbGuild, DBUser, getDbUser, DBMember, getDbMember } from '../../models'
 import { renderExpBar } from './render-exp-bar'
-import { calculateLevelByExp } from '../../utils/calculate-level-by-exp'
+import { calculateLevelByExp } from '../../utils'
 import { logger } from '../../logger'
 import './commands'
 
@@ -19,16 +19,23 @@ client.on('interactionCreate', async function (interaction: Interaction) {
     const dbGuild: DBGuild = await getDbGuild(interaction.guild.id)
     const language = getLanguage(dbGuild.languageInGuild)
     if (interaction.commandName !== language.commands.getMyProfile.name) return
+    const coinRanking = await dbMember.getCoinRanking()
+    const expInGuildRanking = await dbMember.getExpRanking()
+    const expInBotRanking = await dbUser.getExpRanking()
     const embedMsg = new MessageEmbed()
       .setColor('#FF99CC')
-      .setTitle(language.coinBalanceDisplay(Number(dbMember.coinBalanceInGuild)))
+      .setTitle(language.coinBalanceDisplay(Number(dbMember.coinBalanceInGuild), coinRanking))
       .setAuthor({ name: language.viewProfile.profile })
       .addFields(
         {
-          name: `Level ${Math.floor(calculateLevelByExp(Number(dbMember.experienceInGuild)))}        ${renderExpBar(Number(dbMember.experienceInGuild))}`, value: language.viewProfile.inXXX(interaction.guild.name) + '\n.', inline: false
+          name: `Level ${Math.floor(calculateLevelByExp(Number(dbMember.experienceInGuild)))}        ${renderExpBar(Number(dbMember.experienceInGuild))}`,
+          value: language.viewProfile.expInThisGuild(interaction.guild.name, expInGuildRanking) + '\n.',
+          inline: false
         },
         {
-          name: `Level ${Math.floor(calculateLevelByExp(Number(dbUser.experience)))}        ${renderExpBar(Number(dbMember.experienceInGuild))}`, value: language.viewProfile.yourExp, inline: false
+          name: `Level ${Math.floor(calculateLevelByExp(Number(dbUser.experience)))}        ${renderExpBar(Number(dbMember.experienceInGuild))}`,
+          value: language.viewProfile.expInThisBot(expInBotRanking),
+          inline: false
         }
       )
     const avatarUrl = interaction.user.avatarURL()

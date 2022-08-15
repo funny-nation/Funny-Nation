@@ -6,7 +6,7 @@ import { Guild, User } from 'discord.js'
 import { getDbUser } from '../db-user'
 
 const getDbMember = async function (userID: string, guildID: string): Promise<DBMember> {
-  let dbMember = await prismaClient.member.findUnique({
+  let memberInDB = await prismaClient.member.findUnique({
     where: {
       userID_guildID: {
         userID,
@@ -14,9 +14,9 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
       }
     }
   })
-  if (dbMember === null) {
+  if (memberInDB === null) {
     await getDbUser(userID)
-    dbMember = await prismaClient.member.create({
+    memberInDB = await prismaClient.member.create({
       data: {
         userID,
         guildID,
@@ -28,10 +28,10 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
     const guild: Guild = await client.guilds.fetch(guildID)
     logger.info(`New member ${discordUser.tag} has been created associate with guild ${guild.name}`)
   }
-  return {
-    ...dbMember,
+  const dbMember: DBMember = {
+    ...memberInDB,
     async addMemberExperience (exp: number = 1): Promise<void> {
-      await prismaClient.member.update({
+      const newMember = await prismaClient.member.update({
         where: {
           userID_guildID: {
             userID,
@@ -44,10 +44,10 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
-      super.experienceInGuild += exp
+      this.experienceInGuild = newMember.experienceInGuild
     },
     async addCoins (coins: number = 1): Promise<void> {
-      await prismaClient.member.update({
+      const newMember = await prismaClient.member.update({
         where: {
           userID_guildID: {
             userID,
@@ -60,10 +60,10 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
-      super.coinBalanceInGuild += coins
+      this.coinBalanceInGuild = newMember.coinBalanceInGuild
     },
     async reduceCoins (coins: number = 1) {
-      await prismaClient.member.update({
+      const newMember = await prismaClient.member.update({
         where: {
           userID_guildID: {
             userID,
@@ -76,9 +76,34 @@ const getDbMember = async function (userID: string, guildID: string): Promise<DB
           }
         }
       })
-      super.coinBalanceInGuild -= coins
+      this.coinBalanceInGuild = newMember.coinBalanceInGuild
+    },
+    async getExpRanking () {
+      const aggResult = await prismaClient.member.aggregate({
+        where: {
+          guildID,
+          experienceInGuild: {
+            gt: this.experienceInGuild
+          }
+        },
+        _count: true
+      })
+      return aggResult._count + 1
+    },
+    async getCoinRanking () {
+      const aggResult = await prismaClient.member.aggregate({
+        where: {
+          guildID,
+          coinBalanceInGuild: {
+            gt: this.coinBalanceInGuild
+          }
+        },
+        _count: true
+      })
+      return aggResult._count + 1
     }
   }
+  return dbMember
 }
 
 export { getDbMember }

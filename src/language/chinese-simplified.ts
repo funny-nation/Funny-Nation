@@ -16,15 +16,17 @@ const chineseSimplified: Language = {
     expLeaderBoard: '等级排行榜'
   },
   errorMsg: 'Bot莫名其妙炸了，麻烦通知一下群主',
-  coinBalanceDisplay (amount: number | string): string {
-    return `金币：${amount}`
+  coinBalanceDisplay (amount: number | string, ranking: number): string {
+    return `你有${amount}金币 • 目前排名：#${ranking}`
   },
   viewProfile: {
     profile: '档案',
-    inXXX (guildName: string): string {
-      return `在${guildName}`
+    expInThisGuild (guildName: string, ranking: number): string {
+      return `在${guildName}，你排名#${ranking}`
     },
-    yourExp: '你自己的'
+    expInThisBot (ranking: number): string {
+      return `在这个世界，你排名#${ranking}`
+    }
   },
   commands: {
     getMyProfile: {

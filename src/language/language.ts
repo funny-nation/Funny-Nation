@@ -5,11 +5,11 @@ import { EmbedFieldData } from 'discord.js'
 
 export interface Language {
     errorMsg: string,
-    coinBalanceDisplay(amount: number | string): string,
+    coinBalanceDisplay(amount: number | string, ranking: number): string,
     viewProfile: {
         profile: string,
-        inXXX(guildName: string): string,
-        yourExp: string
+        expInThisGuild(guildName: string, ranking: number): string,
+        expInThisBot(ranking: number): string
     }
     commands: {
         getMyProfile: {

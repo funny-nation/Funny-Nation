@@ -6,14 +6,14 @@ import { User } from 'discord.js'
 import { client } from '../../client'
 
 const getDbUser = async function (userID: string): Promise<DBUser> {
-  let dbUser = await prismaClient.user.findUnique({
+  let userInDB = await prismaClient.user.findUnique({
     where: {
       id: userID
     }
   })
 
-  if (dbUser === null) {
-    dbUser = await prismaClient.user.create({
+  if (userInDB === null) {
+    userInDB = await prismaClient.user.create({
       data: {
         id: userID,
         experience: 0,
@@ -23,8 +23,8 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
     const discordUser: User = await client.users.fetch(userID)
     logger.info(`New User ${discordUser.tag} has been created`)
   }
-  return {
-    ...dbUser,
+  const dbUser: DBUser = {
+    ...userInDB,
     async resetTimeBefore () {
       const now = moment().utc().toDate()
       await prismaClient.user.update({
@@ -35,10 +35,10 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
           timeBefore: now
         }
       })
-      super.timeBefore = now
+      this.timeBefore = now
     },
     async addExperience (exp: number = 1) {
-      await prismaClient.user.update({
+      const updatedUser = await prismaClient.user.update({
         where: {
           id: userID
         },
@@ -48,7 +48,7 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
           }
         }
       })
-      super.experience += exp
+      this.experience = updatedUser.experience
     },
     async setAnonymousNickName (anonymousNickName:string) {
       await prismaClient.user.update({
@@ -59,9 +59,21 @@ const getDbUser = async function (userID: string): Promise<DBUser> {
           anonymousNickName
         }
       })
-      super.anonymousNickName = anonymousNickName
+      this.anonymousNickName = anonymousNickName
+    },
+    async getExpRanking () {
+      const aggResult = await prismaClient.user.aggregate({
+        where: {
+          experience: {
+            gt: this.experience
+          }
+        },
+        _count: true
+      })
+      return aggResult._count + 1
     }
   }
+  return dbUser
 }
 
 export { getDbUser }
