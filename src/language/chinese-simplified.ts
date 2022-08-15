@@ -203,6 +203,26 @@ const chineseSimplified: Language = {
     earnFromMessage: '消息收入',
     earnFromCheckIn: '签到收入',
     sendGift: '送礼'
+  },
+  tabletopRoleAssign: {
+    cannotCloseGame: ' 你不是该游戏拥有者，无法关闭此次游戏',
+    oneTypeRoleError: '只设置一个类型的身份玩不起来啊',
+    fullOfPeople: ' 这局人满了，等下一局吧！',
+    kickOutByOwner: ' 您已被踢出，无法再次进入',
+    kickOutError: ' 您不是房主，无法将别人移除',
+    onlyOwnerCanStart: '只有房主可以开始游戏',
+    notEnoughPeople: '这局人还没满，再等等吧！',
+    endTabletop: '发牌结束，祝您玩得开心',
+    tabletopTitle: '来自',
+    tabletopDescription: '的发牌器',
+    tabletopClose: '关闭',
+    joinTabletop: '加入',
+    tabletopStart: '发牌',
+    leaveTabletop: '踢ta/离开',
+    channelUsed: '该频道已被占用',
+    subcommandDescription: '可定制角色内容和玩家数量的发牌器，每个玩家一个角色',
+    commandsDescription: '发牌器',
+    subcommandName: '自定义角色'
   }
 
 }
