@@ -18,6 +18,15 @@ Also, people could play games via interaction with this bot to earn money (somet
 
 There are a lot of features and ideas that are still in development. Let me know if you have any cool ideas.
 
+### Invite "Hummie" to your Discord server
+
+[Click To Invite](http://invite.hummie.funnynation.org)
+
+```Hummie``` is an official Funny Nation bot that is free for everyone to use. 
+
+However, if you want to build your own funny nation bot, please read the instruction below. 
+
+
 ### Before Deploy your bot
 
 You need to set up a Discord application and get a Discord bot token. If you don't know how to do that, please read the tutorial [at this link](docs/discord-bot-setup-tutorial/README.md). 
@@ -108,6 +117,8 @@ SUPERUSERID=123123123
 If you have any questions, or you want to join our team. 
 
 You can talk to us via this [Discord Server](https://discord.gg/uhAv4J4F7Z). 
+
+Also you can send email to [i@teenet.me](mailto:i@teenet.me). 
 
 ### Contribution
 
