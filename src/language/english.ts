@@ -223,10 +223,30 @@ const english: Language = {
     transferIn: 'Coin transfer in',
     transferOut: 'Coin transfer out',
     issueCoin: 'Issued coins by administrators',
+    collectCoin: 'Collected coins by administrators',
     earnFromVoice: 'Earned coins from voice',
     earnFromMessage: 'Earned coins from sending message',
     earnFromCheckIn: 'Earned coins from checking in',
     sendGift: 'Bonus of sending gift'
+  },
+  monetaryControl: {
+    coinCommand: 'coin',
+    coinDesc: 'coinDesc',
+    issueSubcommand: 'issuingcoins',
+    issueDesc: 'Issue coins to a user',
+    collectSubcommand: 'collectcoins',
+    collectDesc: 'Collect coins from a user',
+    amountOption: 'amount',
+    amountDesc: 'amount',
+    targetUserOption: 'user',
+    targetUserDesc: 'user',
+    notAdministratorMsg: 'You are not the administrator',
+    collectedSuccessInfo (targetUser, amount: number): string {
+      return `Collected successfully. \n${targetUser} you lost ${amount} coins`
+    },
+    issuedSuccessInfo (targetUser, amount: number): string {
+      return `Issued successfully. \n${targetUser} you got ${amount} coins`
+    }
   }
 }
 
