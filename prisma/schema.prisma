@@ -75,6 +75,7 @@ enum TransferCategory {
     transferIn
     transferOut
     issueCoin
+    collectCoin
     earnFromVoice
     earnFromMessage
     earnFromCheckIn

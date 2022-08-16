@@ -203,6 +203,7 @@ const chineseSimplified: Language = {
     transferIn: '转入金币',
     transferOut: '转出金币',
     issueCoin: '放水',
+    collectCoin: '收税',
     earnFromVoice: '语音收入',
     earnFromMessage: '消息收入',
     earnFromCheckIn: '签到收入',
@@ -227,8 +228,26 @@ const chineseSimplified: Language = {
     subcommandDescription: '可定制角色内容和玩家数量的发牌器，每个玩家一个角色',
     commandsDescription: '发牌器',
     subcommandName: '自定义角色'
+  },
+  monetaryControl: {
+    coinCommand: 'coin',
+    coinDesc: 'coinDesc',
+    issueSubcommand: '放水',
+    issueDesc: '给指定用户增加指定数量的金币',
+    collectSubcommand: '收税',
+    collectDesc: '从指定用户的账户中扣去指定数量的金币',
+    amountOption: '金额',
+    amountDesc: '指定金币的数量',
+    targetUserOption: '用户',
+    targetUserDesc: '被馅饼砸中的用户',
+    notAdministratorMsg: '你不是管理员。',
+    collectedSuccessInfo (targetUser, amount: number): string {
+      return `${targetUser}自愿上交了${amount}个金币。感谢TA为社区做出的贡献。`
+    },
+    issuedSuccessInfo (targetUser, amount: number): string {
+      return `群主大发慈悲，随手给${targetUser}施舍了${amount}个金币。`
+    }
   }
-
 }
 
 export default chineseSimplified
