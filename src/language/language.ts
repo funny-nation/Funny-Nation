@@ -178,5 +178,20 @@ export interface Language {
         commandsDescription:string,
         subcommandDescription: string,
         subcommandName: string
+    },
+    monetaryControl: {
+        coinCommand: string,
+        coinDesc: string,
+        issueSubcommand: string,
+        issueDesc: string,
+        collectSubcommand: string,
+        collectDesc: string,
+        amountOption: string,
+        amountDesc: string,
+        targetUserOption: string,
+        targetUserDesc: string
+        notAdministratorMsg: string,
+        collectedSuccessInfo(targetUser: User, amount: number): string,
+        issuedSuccessInfo(targetUser: User, amount: number): string
     }
 }
