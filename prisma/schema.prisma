@@ -53,6 +53,7 @@ model Guild {
     timeZone String
     coinTransfers CoinTransfer[]
     members Member[]
+    badges Badge[]
 }
 
 model Inventory {
@@ -64,6 +65,17 @@ model Inventory {
     owner User @relation(fields: [ownerID], references: [id])
     createTime DateTime @default(now())
     guildID String
+}
+
+model Badge {
+    id Int  @id @default(autoincrement())
+    name String
+    emoji String
+    desc String
+    price BigInt
+    roleIDRelated String
+    guildID String
+    guild Guild @relation(fields: [guildID], references: [id])
 }
 
 enum LanguageEnum {
@@ -80,6 +92,7 @@ enum TransferCategory {
     earnFromMessage
     earnFromCheckIn
     sendGift
+    buyBadge
 }
 
 enum InventoryCategory {
