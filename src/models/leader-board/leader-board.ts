@@ -13,7 +13,7 @@ const getLeaderBoard = async (guildID: string): Promise<LeaderBoard> => {
       guildID
     },
     orderBy: [{
-      coinBalanceInGuild: 'desc'
+      experienceInGuild: 'desc'
     }]
   })
   const coins = await prismaClient.member.findMany({
@@ -22,7 +22,7 @@ const getLeaderBoard = async (guildID: string): Promise<LeaderBoard> => {
       guildID
     },
     orderBy: [{
-      experienceInGuild: 'desc'
+      coinBalanceInGuild: 'desc'
     }]
   })
   return {
