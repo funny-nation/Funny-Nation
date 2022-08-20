@@ -33,7 +33,7 @@ client.on('interactionCreate', async function (interaction: Interaction) {
           inline: false
         },
         {
-          name: `Level ${Math.floor(calculateLevelByExp(Number(dbUser.experience)))}        ${renderExpBar(Number(dbMember.experienceInGuild))}`,
+          name: `Level ${Math.floor(calculateLevelByExp(Number(dbUser.experience)))}        ${renderExpBar(Number(dbUser.experience))}`,
           value: language.viewProfile.expInThisBot(expInBotRanking),
           inline: false
         }
