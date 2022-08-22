@@ -145,6 +145,14 @@ const english: Language = {
       botReply: 'You cannot send gift to me',
       userReply: 'You cannot send gift to your self'
     },
+    modal: {
+      titleName: 'titleName',
+      giftLabelName: 'name',
+      emojiLabelName: 'emoji',
+      priceLabelName: 'price',
+      giftDescLabelName: 'gift description',
+      giftAnnounceLabelName: 'gift announcement'
+    },
     command: {
       name: 'gift',
       desc: 'a gift',
@@ -155,6 +163,16 @@ const english: Language = {
         stringOptionDesc: 'sentGift',
         userOptionName: 'receiver',
         userOptionDesc: 'receiver name'
+      },
+      createGift: {
+        name: 'create',
+        desc: 'create a gift in this guild',
+        stringOptionName: 'gift-name',
+        stringOptionDesc: 'the name of the gift',
+        emojiOptionName: 'gift-emoji',
+        emojiOptionDesc: 'emoji',
+        numberOptionName: 'gift-value',
+        numberOptionDesc: 'price'
       }
     },
     embedTitle: 'you received a new gift',

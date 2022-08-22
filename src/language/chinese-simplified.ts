@@ -162,6 +162,14 @@ const chineseSimplified: Language = {
       botReply: '你不能送礼物给机器人',
       userReply: '你不能送礼物给你自己'
     },
+    modal: {
+      titleName: '标题',
+      giftLabelName: '名字',
+      emojiLabelName: '图案',
+      priceLabelName: '价格',
+      giftDescLabelName: '礼物描述',
+      giftAnnounceLabelName: '礼物声明'
+    },
     command: {
       name: 'gift',
       desc: '一份礼物',
@@ -172,6 +180,16 @@ const chineseSimplified: Language = {
         stringOptionDesc: '发送的礼物',
         userOptionName: '接收者',
         userOptionDesc: '接收者名字'
+      },
+      createGift: {
+        name: '创建',
+        desc: '创建一个礼物在这个公会',
+        stringOptionName: '礼物名',
+        stringOptionDesc: '礼物的名字',
+        emojiOptionName: '礼物图案',
+        emojiOptionDesc: '礼物的图案',
+        numberOptionName: '礼物价格',
+        numberOptionDesc: '礼物的价格'
       }
     },
     embedTitle: '你收到一份新的礼物',

@@ -56,14 +56,26 @@ model Guild {
 }
 
 model Inventory {
-    id Int  @id @default(autoincrement())
+    id Int @id @default(autoincrement())
     name String
+    inventoryValue BigInt @default(0)
     category InventoryCategory @default(gift)
-    sourceID String
     ownerID String
     owner User @relation(fields: [ownerID], references: [id])
-    createTime DateTime @default(now())
+    createdAt DateTime @default(now())
     guildID String
+    guild Guild @relation(fields: [guildID], references: [id])
+}
+
+model Gift {
+    name String
+    emoji String
+    price BigInt
+    giftAnnouncement String
+    description String
+    guildID String
+    guild Guild @relation(fields: [guildID], references: [id])
+    @@unique([name, guildID])
 }
 
 enum LanguageEnum {

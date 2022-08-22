@@ -117,6 +117,14 @@ export interface Language {
         errorHandler:{
             botReply: string,
             userReply: string
+        },
+        modal:{
+            titleName: string,
+            giftLabelName: string,
+            emojiLabelName: string,
+            priceLabelName: string,
+            giftDescLabelName: string,
+            giftAnnounceLabelName: string
         }
         command: {
             name: string,
@@ -128,6 +136,16 @@ export interface Language {
                 stringOptionDesc: string,
                 userOptionName: string,
                 userOptionDesc: string
+            },
+            createGift: {
+                name: string,
+                desc: string,
+                stringOptionName: string,
+                stringOptionDesc: string,
+                emojiOptionName: string,
+                emojiOptionDesc: string,
+                numberOptionName: string,
+                numberOptionDesc: string,
             }
         },
         embedTitle: string,
