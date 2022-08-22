@@ -55,6 +55,7 @@ model Guild {
     members Member[]
     inventories Inventory[]
     gifts Gift[]
+    badges Badge[]
 }
 
 model Inventory {
@@ -80,19 +81,32 @@ model Gift {
     @@unique([name, guildID])
 }
 
+model Badge {
+    id Int  @id @default(autoincrement())
+    name String
+    emoji String
+    desc String
+    price BigInt
+    roleIDRelated String
+    guildID String
+    guild Guild @relation(fields: [guildID], references: [id])
+}
+
 enum LanguageEnum {
     ChineseSimplified
     English
 }
 
-enum TransferCategory {
+enum TransferCategory { // Change in TransferCategory need the change in language
     transferIn
     transferOut
     issueCoin
+    collectCoin
     earnFromVoice
     earnFromMessage
     earnFromCheckIn
     sendGift
+    buyBadge
 }
 
 enum InventoryCategory {

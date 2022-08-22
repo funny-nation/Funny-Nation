@@ -1,4 +1,4 @@
-import { calculateLevelByExp } from '../calculate-level-by-exp'
+import { calculateLevelByExp } from '..'
 
 test('Calculate level by exp', () => {
   expect(calculateLevelByExp(0)).toEqual(0)
