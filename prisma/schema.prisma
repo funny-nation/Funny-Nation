@@ -53,6 +53,8 @@ model Guild {
     timeZone String
     coinTransfers CoinTransfer[]
     members Member[]
+    inventories Inventory[]
+    gifts Gift[]
 }
 
 model Inventory {
