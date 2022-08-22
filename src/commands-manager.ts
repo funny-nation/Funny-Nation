@@ -6,14 +6,14 @@ import { getDbGuild, LanguageEnum } from './models'
 
 type CommandType = (SlashCommandBuilder | ContextMenuCommandBuilder | SlashCommandSubcommandsOnlyBuilder)
 
-type CommandCreator = (language: Language, guildID: string) => CommandType
+type CommandCreator = (language: Language, guildID: string) => CommandType | Promise<CommandType>
 
 const commandsCreatorList: (CommandCreator)[] = []
 
 const commandNamesSet = new Set<string>()
 
-const newCommand = (commandCreator: CommandCreator) => {
-  const command: CommandType = commandCreator(getLanguage(), '')
+const newCommand = async (commandCreator: CommandCreator) => {
+  const command: CommandType = await commandCreator(getLanguage(), '')
   if (command.name in commandNamesSet) {
     throw new Error(`Duplicated command name "${command.name}"`)
   }
@@ -26,7 +26,7 @@ const setUpCommandsForGuild = async (languageEnum: LanguageEnum, discordGuild: G
   const dbGuild = await getDbGuild(discordGuild.id)
   const commandsData = []
   for (const commandCreator of commandsCreatorList) {
-    const command: CommandType = commandCreator(language, discordGuild.id)
+    const command: CommandType = await commandCreator(language, discordGuild.id)
     commandsData.push(command.toJSON())
   }
   await discordGuild.commands.set([])
