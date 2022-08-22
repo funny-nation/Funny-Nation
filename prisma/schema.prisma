@@ -83,7 +83,7 @@ enum LanguageEnum {
     English
 }
 
-enum TransferCategory {
+enum TransferCategory { // Change in TransferCategory need the change in language
     transferIn
     transferOut
     issueCoin
