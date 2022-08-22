@@ -227,7 +227,8 @@ const english: Language = {
     earnFromVoice: 'Earned coins from voice',
     earnFromMessage: 'Earned coins from sending message',
     earnFromCheckIn: 'Earned coins from checking in',
-    sendGift: 'Bonus of sending gift'
+    sendGift: 'Bonus of sending gift',
+    buyBadge: 'Buy Badge'
   },
   monetaryControl: {
     coinCommand: 'coin',

@@ -156,7 +156,8 @@ export interface Language {
         earnFromVoice: string,
         earnFromMessage: string,
         earnFromCheckIn: string,
-        sendGift: string
+        sendGift: string,
+        buyBadge: string
     }
     notification: string,
     tabletopRoleAssign:{

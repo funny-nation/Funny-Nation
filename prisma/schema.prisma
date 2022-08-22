@@ -53,6 +53,7 @@ model Guild {
     timeZone String
     coinTransfers CoinTransfer[]
     members Member[]
+    badges Badge[]
 }
 
 model Inventory {
@@ -66,12 +67,23 @@ model Inventory {
     guildID String
 }
 
+model Badge {
+    id Int  @id @default(autoincrement())
+    name String
+    emoji String
+    desc String
+    price BigInt
+    roleIDRelated String
+    guildID String
+    guild Guild @relation(fields: [guildID], references: [id])
+}
+
 enum LanguageEnum {
     ChineseSimplified
     English
 }
 
-enum TransferCategory {
+enum TransferCategory { // Change in TransferCategory need the change in language
     transferIn
     transferOut
     issueCoin
@@ -80,6 +92,7 @@ enum TransferCategory {
     earnFromMessage
     earnFromCheckIn
     sendGift
+    buyBadge
 }
 
 enum InventoryCategory {

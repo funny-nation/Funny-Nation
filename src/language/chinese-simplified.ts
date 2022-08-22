@@ -224,7 +224,8 @@ const chineseSimplified: Language = {
     earnFromVoice: '语音收入',
     earnFromMessage: '消息收入',
     earnFromCheckIn: '签到收入',
-    sendGift: '送礼'
+    sendGift: '送礼',
+    buyBadge: '购买徽章'
   },
   tabletopRoleAssign: {
     cannotCloseGame: ' 你不是该游戏拥有者，无法关闭此次游戏',
