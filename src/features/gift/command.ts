@@ -5,6 +5,7 @@ import { DBGift } from '../../models/db-gift/creat-gift'
 
 newCommand(
   async (language: Language, guildID: string) => {
+    const giftList = await DBGift.getGiftList(guildID)
     return new SlashCommandBuilder()
       .setName(language.gift.command.name)
       .setDescription((language.gift.command.desc))
@@ -13,8 +14,6 @@ newCommand(
           .setName(language.gift.command.subCommand.name)
           .setDescription(language.gift.command.subCommand.desc)
           .addStringOption(option => {
-            const giftList = await DBGift.getGiftList(guildID)
-            console.log('giftList', giftList)
             const opts = option
               .setName(language.gift.command.subCommand.stringOptionName)
               .setDescription(language.gift.command.subCommand.stringOptionDesc)
@@ -22,8 +21,8 @@ newCommand(
               .setRequired(true)
             giftList.forEach((gift) => {
               opts.addChoices({
-                name: gift.name,
-                value: gift.name
+                name: gift.giftData.name,
+                value: gift.giftData.name
               })
             })
             return opts
