@@ -194,5 +194,17 @@ export interface Language {
         notAdministratorMsg: string,
         collectedSuccessInfo(targetUser: User, amount: number): string,
         issuedSuccessInfo(targetUser: User, amount: number): string
+    },
+    randomNumber:{
+        subcommandName: string,
+        subcommandDescription: string,
+        firstNumberOptionName: string,
+        secondNumberOptionName: string,
+        rangeNumberOptionName: string,
+        firstNumberOptionDescription: string,
+        secondNumberOptionDescription: string,
+        rangeNumberOptionDescription: string,
+        embedMessageTitle: string,
+        minNumberIsMaxNumberError: string
     }
 }

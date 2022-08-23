@@ -248,6 +248,18 @@ const english: Language = {
     issuedSuccessInfo (targetUser, amount: number): string {
       return `Issued successfully. \n${targetUser} you got ${amount} coins`
     }
+  },
+  randomNumber: {
+    subcommandName: 'random-number',
+    subcommandDescription: 'Generates a random number for you that corresponds to the setting',
+    firstNumberOptionName: 'the-first-number',
+    secondNumberOptionName: 'the-second-number',
+    rangeNumberOptionName: 'number-of-generated',
+    firstNumberOptionDescription: 'Random number minimum',
+    secondNumberOptionDescription: 'Random number maximum',
+    rangeNumberOptionDescription: 'Number of random numbers generated',
+    embedMessageTitle: 'The random number you generate is：',
+    minNumberIsMaxNumberError: 'Error: Your first number and second number cannot be the same'
   }
 }
 
