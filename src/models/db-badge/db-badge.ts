@@ -31,7 +31,7 @@ class DBBadge {
     return new this(badge)
   }
 
-  public static async fetchByGuild (guildID: string): Promise<DBBadge[]> {
+  public static async fetchManyByGuild (guildID: string): Promise<DBBadge[]> {
     const dbBadges: DBBadge[] = []
     const badges = await prismaClient.badge.findMany({
       where: {
@@ -60,6 +60,16 @@ class DBBadge {
       }
     })
     return new this(newBadge)
+  }
+
+  public static async countBadgesInGuild (guildID: string): Promise<number> {
+    const aggResult = await prismaClient.badge.aggregate({
+      where: {
+        guildID
+      },
+      _count: true
+    })
+    return aggResult._count
   }
 
   async delete () {

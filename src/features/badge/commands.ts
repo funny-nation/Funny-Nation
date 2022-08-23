@@ -3,7 +3,7 @@ import { SlashCommandBuilder } from '@discordjs/builders'
 import { DBBadge } from '../../models/db-badge'
 
 newCommand(async (language, guildID) => {
-  const dbBadges: DBBadge[] = await DBBadge.fetchByGuild(guildID)
+  const dbBadges: DBBadge[] = await DBBadge.fetchManyByGuild(guildID)
   const comm = new SlashCommandBuilder()
     .setName('badge')
     .setDescription('badge')
@@ -52,9 +52,6 @@ newCommand(async (language, guildID) => {
         .setName('my-manage')
         .setDescription('Manage my badge')
     )
-  if (dbBadges.length === 0) {
-    return comm
-  }
   comm.addSubcommand( // Remove
     subcommandGroup => subcommandGroup
       .setName('remove')
@@ -65,6 +62,12 @@ newCommand(async (language, guildID) => {
             .setName('badge')
             .setDescription('badge')
             .setRequired(true)
+          if (dbBadges.length === 0) {
+            op.addChoices({
+              name: 'No gift in this server',
+              value: '0'
+            })
+          }
           for (const dbBadge of dbBadges) {
             op.addChoices({
               name: dbBadge.badgeData.name,
@@ -85,6 +88,12 @@ newCommand(async (language, guildID) => {
             .setName('badge')
             .setDescription('badge')
             .setRequired(true)
+          if (dbBadges.length === 0) {
+            op.addChoices({
+              name: 'Gift is not ready in this server yet',
+              value: '0'
+            })
+          }
           for (const dbBadge of dbBadges) {
             op.addChoices({
               name: dbBadge.badgeData.name,
