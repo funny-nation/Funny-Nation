@@ -265,6 +265,18 @@ const chineseSimplified: Language = {
     issuedSuccessInfo (targetUser, amount: number): string {
       return `群主大发慈悲，随手给${targetUser}施舍了${amount}个金币。`
     }
+  },
+  randomNumber: {
+    subcommandName: '随机数',
+    subcommandDescription: '为您生成对应设置的随机数',
+    firstNumberOptionName: '第一个数',
+    secondNumberOptionName: '第二个数',
+    rangeNumberOptionName: '生成个数',
+    firstNumberOptionDescription: '随机数最小值',
+    secondNumberOptionDescription: '随机数最大值',
+    rangeNumberOptionDescription: '随机数生成个数',
+    embedMessageTitle: '您生成的随机数是：',
+    minNumberIsMaxNumberError: '错误：您的第一个数和第二个数不能一样'
   }
 }
 
