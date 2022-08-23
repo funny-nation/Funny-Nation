@@ -29,8 +29,8 @@ const setUpCommandsForGuild = async (languageEnum: LanguageEnum, discordGuild: G
     const command: CommandType = await commandCreator(language, discordGuild.id)
     commandsData.push(command.toJSON())
   }
-  // await discordGuild.commands.set([])
-  // await discordGuild.commands.set(commandsData)
+  await discordGuild.commands.set([])
+  await discordGuild.commands.set(commandsData)
   await dbGuild.resetCommandsUpdatedAt()
   logger.info(`Commands for guild "${discordGuild.name}" updated`)
 }

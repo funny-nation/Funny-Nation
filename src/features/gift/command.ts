@@ -4,35 +4,6 @@ import { SlashCommandBuilder } from '@discordjs/builders'
 import { DBGift } from '../../models/db-gift/creat-gift'
 
 newCommand(
-  (language: Language) => new SlashCommandBuilder()
-    .setName(language.gift.command.name)
-    .setDescription((language.gift.command.desc))
-    .addSubcommand(
-      subcommand => subcommand
-        .setName(language.gift.command.createGift.name)
-        .setDescription(language.gift.command.createGift.desc)
-        .addStringOption(option => option
-          .setName(language.gift.command.createGift.stringOptionName)
-          .setDescription(language.gift.command.createGift.stringOptionDesc)
-          .setMaxLength(20)
-          .setRequired(true)
-        )
-        .addStringOption(option => option
-          .setName(language.gift.command.createGift.emojiOptionDesc)
-          .setMaxLength(20)
-          .setDescription(language.gift.command.createGift.emojiOptionDesc)
-          .setRequired(true)
-        )
-        .addNumberOption(option => option
-          .setName(language.gift.command.createGift.numberOptionName)
-          .setMinValue(1)
-          .setDescription(language.gift.command.createGift.numberOptionDesc)
-          .setRequired(true)
-        )
-    )
-)
-
-newCommand(
   async (language: Language, guildID: string) => {
     return new SlashCommandBuilder()
       .setName(language.gift.command.name)
@@ -61,6 +32,29 @@ newCommand(
           .addUserOption(option => option
             .setName(language.gift.command.subCommand.userOptionName)
             .setDescription(language.gift.command.subCommand.userOptionDesc)
+            .setRequired(true)
+          )
+      )
+      .addSubcommand(
+        subcommand => subcommand
+          .setName(language.gift.command.createGift.name)
+          .setDescription(language.gift.command.createGift.desc)
+          .addStringOption(option => option
+            .setName(language.gift.command.createGift.stringOptionName)
+            .setDescription(language.gift.command.createGift.stringOptionDesc)
+            .setMaxLength(20)
+            .setRequired(true)
+          )
+          .addStringOption(option => option
+            .setName(language.gift.command.createGift.emojiOptionDesc)
+            .setMaxLength(20)
+            .setDescription(language.gift.command.createGift.emojiOptionDesc)
+            .setRequired(true)
+          )
+          .addNumberOption(option => option
+            .setName(language.gift.command.createGift.numberOptionName)
+            .setMinValue(1)
+            .setDescription(language.gift.command.createGift.numberOptionDesc)
             .setRequired(true)
           )
       )

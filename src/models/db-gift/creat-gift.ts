@@ -2,9 +2,9 @@ import { Gift } from '@prisma/client'
 import { prismaClient } from '../../prisma-client'
 
 class DBGift {
-  private gift: Gift
+  public giftData: Gift
   private constructor (gift: Gift) {
-    this.gift = gift
+    this.giftData = gift
   }
 
   public static async getGift (name: string, guildID: string): Promise<DBGift | null> {
@@ -54,8 +54,8 @@ class DBGift {
   }
 
   public async remove () {
-    const name = this.gift.name
-    const guildID = this.gift.guildID
+    const name = this.giftData.name
+    const guildID = this.giftData.guildID
     await prismaClient.gift.delete({
       where: {
         name_guildID: {
