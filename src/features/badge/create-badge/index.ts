@@ -1,6 +1,14 @@
-import { CommandInteraction, GuildMember, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
+import {
+  CommandInteraction,
+  GuildMember,
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed
+} from 'discord.js'
 import { DBBadge } from '../../../models/db-badge'
-import { getEmojiIDFromStr, isAdmin } from '../../../utils'
+import { getEmojiIDFromStr, isAdmin, replyOnlyInteractorCanSee } from '../../../utils'
+import { resetBadgeChoice } from '../utils/reset-badge-choice'
+import { badgeUpdateLock } from '../badge-update-lock'
 
 const createBadge = async (interaction: CommandInteraction) => {
   const name = interaction.options.getString('name')
@@ -24,29 +32,43 @@ const createBadge = async (interaction: CommandInteraction) => {
   ) return
 
   if (!await isAdmin(member)) {
-    await interaction.reply('You dont have permission')
+    replyOnlyInteractorCanSee(interaction, 'You dont have permission')
+    return
+  }
+
+  if (badgeUpdateLock.isLock(guild.id)) {
+    replyOnlyInteractorCanSee(interaction, 'Please wait for 1 minute then add your gift')
+    return
+  }
+
+  if (await DBBadge.countBadgesInGuild(guild.id) > 19) {
+    replyOnlyInteractorCanSee(interaction, 'Too many badges')
     return
   }
 
   const emojiID = getEmojiIDFromStr(emojiStr)
 
   if (!emojiID) {
-    await interaction.reply('Emoji Invalid')
+    replyOnlyInteractorCanSee(interaction, 'Emoji Invalid')
     return
   }
   let emoji
   try {
     emoji = await guild.emojis.fetch(emojiID)
   } catch (e) {
-    await interaction.reply('Emoji does not existed in this server')
+    replyOnlyInteractorCanSee(interaction, 'Emoji does not existed in this server')
     return
   }
 
   const dbBadge = await DBBadge.create(name, emojiStr, description, price, tag.id, guild.id)
   if (!dbBadge) {
-    await interaction.reply('Badge existed')
+    replyOnlyInteractorCanSee(interaction, 'Badge existed')
     return
   }
+  await resetBadgeChoice(guild)
+
+  badgeUpdateLock.lock(guild.id)
+
   await interaction.reply({
     embeds: [
       new MessageEmbed()
@@ -67,7 +89,7 @@ const createBadge = async (interaction: CommandInteraction) => {
       new MessageActionRow()
         .addComponents(
           new MessageButton()
-            .setCustomId(`badgeOneClickBuyButton${dbBadge.badgeData.id}`)
+            .setCustomId(`badgeOneClickBuyButton_${dbBadge.badgeData.id}`)
             .setLabel('Buy it now')
             .setStyle('SUCCESS')
         )
