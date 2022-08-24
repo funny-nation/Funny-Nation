@@ -49,7 +49,7 @@ newCommand(async (language, guildID) => {
     )
     .addSubcommand(
       subcommandGroup => subcommandGroup
-        .setName('my-manage')
+        .setName('manage-my-badge')
         .setDescription('Manage my badge')
     )
   comm.addSubcommand( // Remove

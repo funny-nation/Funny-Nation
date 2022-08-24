@@ -2,6 +2,7 @@ import { client } from '../../client'
 import { Interaction } from 'discord.js'
 import { createBadge } from './create-badge'
 import { buyFromButton, buyFromCommand } from './buy-badge'
+import { deleteBadge } from './delete-badge'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (interaction.isCommand()) {
@@ -13,6 +14,10 @@ client.on('interactionCreate', async (interaction: Interaction) => {
         return
       case 'buy':
         await buyFromCommand(interaction)
+        return
+      case 'remove':
+        await deleteBadge(interaction)
+        return
     }
   }
   if (interaction.isButton()) {

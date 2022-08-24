@@ -3,12 +3,15 @@ import { prismaClient } from '../../prisma-client'
 
 class DBBadge {
   badgeData: Badge
+  static badgePrisma = prismaClient.badge
+  static memberBadgePrisma = prismaClient.memberBadge
+
   private constructor (badge: Badge) {
     this.badgeData = badge
   }
 
   public static async fetchByID (id: number): Promise<DBBadge | null> {
-    const badge = await prismaClient.badge.findUnique({
+    const badge = await this.badgePrisma.findUnique({
       where: {
         id
       }
@@ -20,7 +23,7 @@ class DBBadge {
   }
 
   public static async fetchByName (name: string): Promise<DBBadge | null> {
-    const badge = await prismaClient.badge.findFirst({
+    const badge = await this.badgePrisma.findFirst({
       where: {
         name
       }
@@ -33,7 +36,7 @@ class DBBadge {
 
   public static async fetchManyByGuild (guildID: string): Promise<DBBadge[]> {
     const dbBadges: DBBadge[] = []
-    const badges = await prismaClient.badge.findMany({
+    const badges = await this.badgePrisma.findMany({
       where: {
         guildID
       }
@@ -49,7 +52,7 @@ class DBBadge {
     if (existedBadge) {
       return null
     }
-    const newBadge = await prismaClient.badge.create({
+    const newBadge = await this.badgePrisma.create({
       data: {
         name,
         emoji,
@@ -63,7 +66,7 @@ class DBBadge {
   }
 
   public static async countBadgesInGuild (guildID: string): Promise<number> {
-    const aggResult = await prismaClient.badge.aggregate({
+    const aggResult = await this.badgePrisma.aggregate({
       where: {
         guildID
       },
@@ -73,7 +76,12 @@ class DBBadge {
   }
 
   async delete () {
-    await prismaClient.badge.delete({
+    await DBBadge.memberBadgePrisma.deleteMany({
+      where: {
+        badgeID: this.badgeData.id
+      }
+    })
+    await DBBadge.badgePrisma.delete({
       where: {
         id: this.badgeData.id
       }

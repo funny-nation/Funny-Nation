@@ -1,9 +1,8 @@
 import { ButtonInteraction, CommandInteraction, GuildMember, MessageEmbed } from 'discord.js'
 import { DBBadge, DBMemberBadge } from '../../../models/db-badge'
-import { getEmojiIDFromStr } from '../../../utils'
+import { getEmojiIDFromStr, replyOnlyInteractorCanSee } from '../../../utils'
 import { addDbCoinTransfer, getDbGuild, getDbMember } from '../../../models'
 import moment from 'moment-timezone'
-import { wait } from '../../../utils/wait'
 
 const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, badgeID: number, autoRenew: boolean) => {
   const user = interaction.user
@@ -17,25 +16,19 @@ const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, b
 
   const dbBadge = await DBBadge.fetchByID(badgeID)
   if (!dbBadge) {
-    await interaction.reply('Badge not found')
-    await wait(20000)
-    await interaction.deleteReply()
+    replyOnlyInteractorCanSee(interaction, 'Badge not found')
     return
   }
   const emojiID = getEmojiIDFromStr(dbBadge.badgeData.emoji)
   if (!emojiID) {
-    await interaction.reply('Badge not found')
-    await wait(20000)
-    await interaction.deleteReply()
+    replyOnlyInteractorCanSee(interaction, 'Badge emoji not found')
     return
   }
   const emoji = await guild.emojis.fetch(emojiID)
 
   const dbMember = await getDbMember(user.id, guild.id)
   if (dbBadge.badgeData.price > dbMember.coinBalanceInGuild) {
-    await interaction.reply('You have not enough money')
-    await wait(20000)
-    await interaction.deleteReply()
+    replyOnlyInteractorCanSee(interaction, 'You have not enough money')
     return
   }
   const price = Number(dbBadge.badgeData.price)
@@ -52,7 +45,7 @@ const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, b
       await msg.delete()
     }, 20000)
   }
-  await interaction.reply({
+  replyOnlyInteractorCanSee(interaction, {
     embeds: [
       new MessageEmbed()
         .setTitle('Purchase success')
@@ -65,8 +58,6 @@ const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, b
         .setThumbnail(emoji.url)
     ]
   })
-  await wait(20000)
-  await interaction.deleteReply()
 }
 
 export { buyHandler }

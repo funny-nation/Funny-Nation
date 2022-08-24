@@ -1,7 +1,7 @@
-const wait = (seconds: number): Promise<void> => new Promise((resolve) => {
+const wait = (millisecond: number): Promise<void> => new Promise((resolve) => {
   setTimeout(() => {
     resolve()
-  }, seconds)
+  }, millisecond)
 })
 
 export { wait }
