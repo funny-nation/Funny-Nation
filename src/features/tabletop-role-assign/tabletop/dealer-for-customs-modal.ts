@@ -27,6 +27,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
               .setLabel('Roles')
               .setRequired(true)
               .setStyle(TextInputStyles.PARAGRAPH)
+              .setPlaceholder(language.tabletopRoleAssign.playIntroduction)
           )
       )
     await interaction.showModal(modal)

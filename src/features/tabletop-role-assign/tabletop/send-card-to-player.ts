@@ -5,6 +5,7 @@ import { DBGuild, getDbGuild } from '../../../models'
 import { getLanguage } from '../../../language'
 import { cleanTable } from './utils/cleanTable'
 import { logger } from '../../../logger'
+import { replyOnlyInteractorCanSee } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -26,12 +27,14 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
 
     if (tabletop.owner !== interaction.member) {
-      await interaction.reply(language.tabletopRoleAssign.onlyOwnerCanStart)
+      replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.onlyOwnerCanStart)
+      // await interaction.reply(language.tabletopRoleAssign.onlyOwnerCanStart)
       return
     }
 
     if (tabletop.maxNumberPlayer > tabletop.players.size) {
-      await interaction.reply(language.tabletopRoleAssign.notEnoughPeople)
+      replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.notEnoughPeople)
+      // await interaction.reply(language.tabletopRoleAssign.notEnoughPeople)
       return
     }
     const roles: string[] = []

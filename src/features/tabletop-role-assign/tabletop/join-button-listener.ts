@@ -5,6 +5,7 @@ import { DBGuild, getDbGuild } from '../../../models'
 import { getLanguage } from '../../../language'
 import { cleanTable } from './utils/cleanTable'
 import { logger } from '../../../logger'
+import { replyOnlyInteractorCanSee } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -25,11 +26,13 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       return
     }
     if (tabletop.blacklists.indexOf(interaction.member.id) !== -1) {
-      await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutByOwner)
+      replyOnlyInteractorCanSee(interaction, interaction.member.displayName + language.tabletopRoleAssign.kickOutByOwner)
+      // await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutByOwner)
       return
     }
     if (tabletop.maxNumberPlayer <= tabletop.players.size) {
-      await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.fullOfPeople)
+      replyOnlyInteractorCanSee(interaction, interaction.member.displayName + language.tabletopRoleAssign.fullOfPeople)
+      // await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.fullOfPeople)
       return
     }
 

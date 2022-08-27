@@ -178,7 +178,11 @@ export interface Language {
         channelUsed: string
         commandsDescription:string,
         subcommandDescription: string,
-        subcommandName: string
+        subcommandName: string,
+        playIntroduction: string,
+        gameClosed:string,
+        noRoleNameError: string,
+        noRoleNumberError: string
     },
     monetaryControl: {
         coinCommand: string,

@@ -11,6 +11,7 @@ const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: 
     return null
   }
   tabletops.set(channel.id, {
+    lastActiveTime: new Date(),
     blacklists: [],
     channel,
     roleGroups,
@@ -35,16 +36,19 @@ const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: 
               .setCustomId('tabletopKickPlayerButton' + member.id)
           ])
       })
+      this.resetLastActiveTime()
       return true
     },
     addPlayerToBlacklist (memberId: string): boolean {
       if (this.blacklists.indexOf(memberId) !== -1) return false
       this.blacklists.push(memberId)
+      this.resetLastActiveTime()
       return true
     },
     dropPlayer (memberID: string): boolean {
       if (!this.players.has(memberID)) return false
       this.players.delete(memberID)
+      this.resetLastActiveTime()
       return true
     },
     destroy () {
@@ -55,6 +59,7 @@ const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: 
       for (const [, player] of this.players) {
         components.push(player.messageActionRow)
       }
+      this.resetLastActiveTime()
       return components
     }
   })
