@@ -1,7 +1,6 @@
-import { ButtonInteraction, ModalSubmitInteraction } from 'discord.js'
+import { ButtonInteraction } from 'discord.js'
 import { DBGuild, getDbGuild } from '../../../../models'
 import { getLanguage } from '../../../../language'
-import { replyOnlyInteractorCanSee } from '../../../../utils'
 
 const cleanTable = async (interaction: ButtonInteraction) => {
   if (!interaction.guild) return
@@ -13,7 +12,4 @@ const cleanTable = async (interaction: ButtonInteraction) => {
     embeds: []
   })
 }
-
-
-
 export { cleanTable }
