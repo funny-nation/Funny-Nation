@@ -1,8 +1,7 @@
 import {
   TextBasedChannel,
   GuildMember,
-  MessageActionRow,
-  ModalSubmitInteraction
+  MessageActionRow
 } from 'discord.js'
 import { RoleGroup } from './role-group'
 import { Language } from '../../../../language'
