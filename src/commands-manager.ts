@@ -12,6 +12,13 @@ const commandsCreatorList: (CommandCreator)[] = []
 
 const commandNamesSet = new Set<string>()
 
+let refreshCommand = true
+if (process.env.REFRESHCOMMAND) {
+  if (process.env.REFRESHCOMMAND === 'false') {
+    refreshCommand = false
+  }
+}
+
 const newCommand = async (commandCreator: CommandCreator) => {
   const command: CommandType = await commandCreator(getLanguage(), '')
   if (command.name in commandNamesSet) {
@@ -29,10 +36,14 @@ const setUpCommandsForGuild = async (languageEnum: LanguageEnum, discordGuild: G
     const command: CommandType = await commandCreator(language, discordGuild.id)
     commandsData.push(command.toJSON())
   }
-  await discordGuild.commands.set([])
-  await discordGuild.commands.set(commandsData)
-  await dbGuild.resetCommandsUpdatedAt()
-  logger.info(`Commands for guild "${discordGuild.name}" updated`)
+  if (refreshCommand) {
+    await discordGuild.commands.set([])
+    await discordGuild.commands.set(commandsData)
+    await dbGuild.resetCommandsUpdatedAt()
+    logger.info(`Commands for guild "${discordGuild.name}" updated`)
+  } else {
+    logger.info('Command refresh has been disabled')
+  }
 }
 
 export { setUpCommandsForGuild, newCommand }
