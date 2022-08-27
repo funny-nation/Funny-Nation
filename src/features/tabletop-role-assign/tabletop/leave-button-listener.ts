@@ -5,6 +5,7 @@ import { DBGuild, getDbGuild } from '../../../models'
 import { getLanguage } from '../../../language'
 import { cleanTable } from './utils/cleanTable'
 import { logger } from '../../../logger'
+import { replyOnlyInteractorCanSee } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -38,7 +39,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
           components
         })
       } else {
-        await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutError)
+        replyOnlyInteractorCanSee(interaction, interaction.member.displayName + language.tabletopRoleAssign.kickOutError)
+        // await interaction.reply(interaction.member.displayName + language.tabletopRoleAssign.kickOutError)
       }
     } else {
       tabletop.dropPlayer(interaction.member.id)

@@ -245,7 +245,12 @@ const chineseSimplified: Language = {
     channelUsed: '该频道已被占用',
     subcommandDescription: '可定制角色内容和玩家数量的发牌器，每个玩家一个角色',
     commandsDescription: '发牌器',
-    subcommandName: '自定义角色'
+    subcommandName: '自定义角色',
+    playIntroduction: '例子：\n 角色A：1 \n角色B：2\n（角色名称：角色数量）',
+    gameClosed: '游戏关闭^ ^',
+    noRoleNameError: '所有角色必须有名称',
+    noRoleNumberError: '所有角色必须有数量',
+    longTimeNoActiveError: '该角色分配器静默时间过长，已自动关闭'
   },
   monetaryControl: {
     coinCommand: 'coin',

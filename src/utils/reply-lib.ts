@@ -1,8 +1,9 @@
 import {
   ButtonInteraction,
   CommandInteraction,
+  MessageOptions,
   ContextMenuInteraction, InteractionReplyOptions, MessagePayload,
-  ModalSubmitInteraction, SelectMenuInteraction
+  ModalSubmitInteraction, SelectMenuInteraction, TextBasedChannel
 } from 'discord.js'
 import { wait } from './wait'
 
@@ -27,4 +28,10 @@ const replyThenDelete = async (interaction: RepliableInteraction, content: Reply
   await interaction.deleteReply()
 }
 
-export { replyThenDelete, replyOnlyInteractorCanSee }
+const sendMsgThenDelete = async (channel: TextBasedChannel, message: string | MessagePayload | MessageOptions, deleteAfterMS = defaultDeleteAfterMS) => {
+  const msg = await channel.send(message)
+  await wait(deleteAfterMS)
+  await msg.delete()
+}
+
+export { replyThenDelete, replyOnlyInteractorCanSee, sendMsgThenDelete }
