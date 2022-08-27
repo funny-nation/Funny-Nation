@@ -5,6 +5,17 @@ import { getProcessControlActionRow } from './get-process-control-action-row'
 import { Language } from '../../../language'
 
 const tabletops = new Map<string, Tabletop>()
+const timeoutInMS = 5000
+
+setInterval(async () => {
+  const now = new Date()
+  for (const [, tableTop] of tabletops) {
+    if (now.getTime() - tableTop.lastActiveTime.getTime() > timeoutInMS) {
+      await tableTop.channel.send('Time out')
+      tableTop.destroy()
+    }
+  }
+}, 60000)
 
 const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: GuildMember, maxNumberPlayer: number, language: Language): Tabletop | null => {
   if (tabletops.has(channel.id)) {
@@ -61,6 +72,9 @@ const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: 
       }
       this.resetLastActiveTime()
       return components
+    },
+    resetLastActiveTime () {
+      this.lastActiveTime = new Date()
     }
   })
   return tabletops.get(channel.id) || null
