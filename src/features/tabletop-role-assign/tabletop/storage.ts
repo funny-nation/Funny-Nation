@@ -17,11 +17,15 @@ const timeoutInMS = 1200000
 setInterval(async () => {
   const now = new Date()
   for (const [, tableTop] of tabletops) {
+    const guild = tableTop.owner.guild
+    const dbGuild = await getDbGuild(guild.id)
+    const language = getLanguage(dbGuild.languageInGuild)
     if (now.getTime() - tableTop.lastActiveTime.getTime() > timeoutInMS) {
       tableTop.destroy()
+      sendMsgThenDelete(tableTop.channel, language.tabletopRoleAssign.longTimeNoActiveError)
     }
   }
-}, 60000)
+}, 300000)
 
 const newTabletop = (channel: TextBasedChannel, roleGroups: RoleGroup[], owner: GuildMember, maxNumberPlayer: number, language: Language): Tabletop | null => {
   if (tabletops.has(channel.id)) {

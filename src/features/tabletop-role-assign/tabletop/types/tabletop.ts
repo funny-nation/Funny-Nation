@@ -1,4 +1,9 @@
-import { TextBasedChannel, GuildMember, MessageActionRow } from 'discord.js'
+import {
+  TextBasedChannel,
+  GuildMember,
+  MessageActionRow,
+  ModalSubmitInteraction
+} from 'discord.js'
 import { RoleGroup } from './role-group'
 import { Language } from '../../../../language'
 
@@ -21,5 +26,5 @@ export type Tabletop = {
   dropPlayer(memberID: string): boolean,
   renderComponents(): MessageActionRow[],
   addPlayerToBlacklist (memberId: string): boolean,
-  resetLastActiveTime(): void
+  resetLastActiveTime(): void,
 }
