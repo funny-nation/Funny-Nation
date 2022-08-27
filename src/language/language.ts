@@ -182,7 +182,8 @@ export interface Language {
         playIntroduction: string,
         gameClosed:string,
         noRoleNameError: string,
-        noRoleNumberError: string
+        noRoleNumberError: string,
+        longTimeNoActiveError: string
     },
     monetaryControl: {
         coinCommand: string,

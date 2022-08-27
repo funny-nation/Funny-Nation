@@ -1,17 +1,23 @@
 import { RoleGroup } from './types/role-group'
 import { Player, Tabletop } from './types/tabletop'
-import { GuildMember, MessageActionRow, MessageButton, TextBasedChannel } from 'discord.js'
+import {
+  GuildMember,
+  MessageActionRow,
+  MessageButton,
+  TextBasedChannel
+} from 'discord.js'
 import { getProcessControlActionRow } from './get-process-control-action-row'
-import { Language } from '../../../language'
+import { getLanguage, Language } from '../../../language'
+import { sendMsgThenDelete } from '../../../utils'
+import { getDbGuild } from '../../../models'
 
 const tabletops = new Map<string, Tabletop>()
-const timeoutInMS = 5000
+const timeoutInMS = 1200000
 
 setInterval(async () => {
   const now = new Date()
   for (const [, tableTop] of tabletops) {
     if (now.getTime() - tableTop.lastActiveTime.getTime() > timeoutInMS) {
-      await tableTop.channel.send('Time out')
       tableTop.destroy()
     }
   }

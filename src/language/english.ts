@@ -201,9 +201,10 @@ const english: Language = {
     commandsDescription: 'dealer for tabletop.ts game',
     subcommandName: 'custom-single',
     playIntroduction: 'Example: \n roleA:1\n roleB:2\n (Role name: Number of Roles) ',
-    gameClosed: 'Game closed successfully ^ ^',
+    gameClosed: 'Game closed ^ ^',
     noRoleNameError: 'All roles must have names',
-    noRoleNumberError: 'All roles must have number'
+    noRoleNumberError: 'All roles must have number',
+    longTimeNoActiveError: 'The role allocator has been silent for too long and has been automatically closed'
   },
   dailyCheckIn: {
     titleForBooster: 'Hello dear booster, check in success',
