@@ -6,6 +6,7 @@ import { getProcessControlActionRow } from './get-process-control-action-row'
 import { DBGuild, getDbGuild } from '../../../models'
 import { getLanguage } from '../../../language'
 import { logger } from '../../../logger'
+import { replyOnlyInteractorCanSee } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -31,9 +32,17 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     for (const role of roles) {
       if (role === '') continue
       const roleNameNumber = role.split(/[：:]/)
+      if (roleNameNumber[0] === '') {
+        replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.noRoleNameError)
+        return
+      }
       if (roleNameNumber.length !== 2) continue
+      if (parseInt(roleNameNumber[1]) <= 0) continue
       const number = parseInt(roleNameNumber[1])
-      if (isNaN(number)) continue
+      if (isNaN(number)) {
+        replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.noRoleNumberError)
+        return
+      }
       roleGroups.push({
         roleName: roleNameNumber[0],
         count: number
@@ -41,13 +50,15 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       totalNumberOfPlayer += number
     }
     if (roleGroups.length < 2) {
-      await interaction.reply(language.tabletopRoleAssign.oneTypeRoleError)
+      replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.oneTypeRoleError)
+      // await interaction.reply(language.tabletopRoleAssign.oneTypeRoleError)
       return
     }
 
     const tabletop = newTabletop(interaction.channel, roleGroups, interaction.member, totalNumberOfPlayer, language)
     if (!tabletop) {
-      await interaction.reply(language.tabletopRoleAssign.channelUsed)
+      replyOnlyInteractorCanSee(interaction, language.tabletopRoleAssign.channelUsed)
+      // await interaction.reply(language.tabletopRoleAssign.channelUsed)
       return
     }
 

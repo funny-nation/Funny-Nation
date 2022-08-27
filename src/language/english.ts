@@ -199,7 +199,12 @@ const english: Language = {
     channelUsed: 'This channel is already occupied',
     subcommandDescription: 'Dealers with customizable role contents and number of players, one role per player',
     commandsDescription: 'dealer for tabletop.ts game',
-    subcommandName: 'custom-single'
+    subcommandName: 'custom-single',
+    playIntroduction: 'Example: \n roleA:1\n roleB:2\n (Role name: Number of Roles) ',
+    gameClosed: 'Game closed ^ ^',
+    noRoleNameError: 'All roles must have names',
+    noRoleNumberError: 'All roles must have number',
+    longTimeNoActiveError: 'The role allocator has been silent for too long and has been automatically closed'
   },
   dailyCheckIn: {
     titleForBooster: 'Hello dear booster, check in success',
@@ -258,7 +263,7 @@ const english: Language = {
     firstNumberOptionDescription: 'Random number minimum',
     secondNumberOptionDescription: 'Random number maximum',
     rangeNumberOptionDescription: 'Number of random numbers generated',
-    embedMessageTitle: 'The random number you generate is：',
+    embedMessageTitle: 'The random numbers you generate are：',
     minNumberIsMaxNumberError: 'Error: Your first number and second number cannot be the same'
   }
 }
