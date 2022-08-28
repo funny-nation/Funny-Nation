@@ -1,11 +1,42 @@
 import { MemberBadge } from '@prisma/client'
 import { prismaClient } from '../../prisma-client'
 import moment from 'moment-timezone'
+import { DBBadge } from './db-badge'
 
 class DBMemberBadge {
   data: MemberBadge
   constructor (memberBadge: MemberBadge) {
     this.data = memberBadge
+  }
+
+  public static async fetchExpiredBadges (): Promise<DBMemberBadge[]> {
+    const now = moment().utc().toDate()
+    const allMemberBadge = await prismaClient.memberBadge.findMany({
+      where: {
+        expiredAt: {
+          lt: now
+        }
+      }
+    })
+    const result: DBMemberBadge[] = []
+    for (const memberBadge of allMemberBadge) {
+      result.push(new this(memberBadge))
+    }
+    return result
+  }
+
+  public static async fetchBadgesByMember (userID: string, guildID: string): Promise<DBMemberBadge[]> {
+    const memberBadges = await prismaClient.memberBadge.findMany({
+      where: {
+        userID,
+        guildID
+      }
+    })
+    const result: DBMemberBadge[] = []
+    for (const memberBadge of memberBadges) {
+      result.push(new this(memberBadge))
+    }
+    return result
   }
 
   public static async fetchBadge (badgeID: number, userID: string, guildID: string): Promise<DBMemberBadge | null> {
@@ -67,6 +98,38 @@ class DBMemberBadge {
       }
     })
     this.data.expiredAt = newExpireAt
+  }
+
+  async remove (): Promise<void> {
+    await prismaClient.memberBadge.delete({
+      where: {
+        badgeID_userID_guildID: {
+          badgeID: this.data.badgeID,
+          userID: this.data.userID,
+          guildID: this.data.guildID
+        }
+      }
+    })
+  }
+
+  async getDBBadge (): Promise<DBBadge | null> {
+    return DBBadge.fetchByID(this.data.badgeID)
+  }
+
+  async toggleAutoRenew (): Promise<void> {
+    await prismaClient.memberBadge.update({
+      where: {
+        badgeID_userID_guildID: {
+          badgeID: this.data.badgeID,
+          userID: this.data.userID,
+          guildID: this.data.guildID
+        }
+      },
+      data: {
+        autoRenew: !this.data.autoRenew
+      }
+    })
+    this.data.autoRenew = !this.data.autoRenew
   }
 }
 

@@ -1,5 +1,8 @@
 import { Badge } from '@prisma/client'
 import { prismaClient } from '../../prisma-client'
+import { Emoji } from 'discord.js'
+import { getEmojiIDFromStr } from '../../utils'
+import { client } from '../../client'
 
 class DBBadge {
   badgeData: Badge
@@ -86,6 +89,21 @@ class DBBadge {
         id: this.badgeData.id
       }
     })
+  }
+
+  async getEmoji (): Promise<Emoji | null> {
+    const emojiID = await this.getEmojiID()
+    if (!emojiID) return null
+    const guild = await client.guilds.fetch(this.badgeData.guildID)
+    return await guild.emojis.fetch(emojiID)
+  }
+
+  async getEmojiID (): Promise<string> {
+    const emojiID = getEmojiIDFromStr(this.badgeData.emoji)
+    if (!emojiID) {
+      throw new Error('Emoji ID disappeared')
+    }
+    return emojiID
   }
 }
 

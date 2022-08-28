@@ -265,6 +265,72 @@ const english: Language = {
     rangeNumberOptionDescription: 'Number of random numbers generated',
     embedMessageTitle: 'The random numbers you generate are：',
     minNumberIsMaxNumberError: 'Error: Your first number and second number cannot be the same'
+  },
+  badge: {
+    commands: {
+      name: 'badge',
+      badge: 'badge',
+      create: {
+        name: 'create',
+        badgeNameOption: 'name',
+        desc: 'Create a new badge for this server (admin only)',
+        emojiOption: 'emoji',
+        descOption: 'description',
+        priceOption: 'price',
+        tagOption: 'tag'
+      },
+      list: {
+        name: 'list',
+        desc: 'List all badges in this server'
+      },
+      manageMyBadge: {
+        name: 'manage-my-badge',
+        desc: 'Manage the badges that belong to you'
+      },
+      remove: {
+        name: 'remove',
+        desc: 'Remove badge from this server (admin only)',
+        noBadgeYet: 'There is no badge in this server yet'
+      },
+      buy: {
+        name: 'buy',
+        desc: 'Buy a badge in this server',
+        autoRenew: 'auto-renew'
+      }
+    },
+    badgeNotFound: 'Badge not found in this server',
+    badgeEmojiNotFound: 'Badge emoji not found in this server',
+    youHaveNoEnoughMoney: 'You don\' have enough money',
+    CannotPubTagOnYouDueToPermission: 'I don\'t have permission to add a badge on you',
+    purchaseSuccess: 'Purchase success',
+    YourBadgeWillBeExpiredIn (badgeName:string, expiredDateStr: string) {
+      return `Your badge "${badgeName}" will be expired in ${expiredDateStr}`
+    },
+    yes: 'Yes',
+    no: 'No',
+    youDontHavePermission: 'You don\'t have permission',
+    waitForOneMinuteForAddBadge: 'Please wait for one minute to add your badge',
+    tooManyBadges: 'There are too many badges in this server',
+    emojiInvalid: 'Emoji invalid',
+    emojiDoesNotExistHere: 'Emoji cannot found in this server',
+    badgeExisted: 'Badge existed',
+    NewBadgeHasBeenCreated (badgeName: string) {
+      return `New badge "${badgeName}" has been created`
+    },
+    priceCoinsPerMonth: 'Price (Coins per month)',
+    buyItNow: 'Buy it now',
+    autoRenew: 'Auto Renew',
+    badgeIsSuccessfullyRemoved (badgeName: string) {
+      return `Badge "${badgeName}" is successfully removed`
+    },
+    badgesInThisServer: 'Badges in this server',
+    hereAreBadgesForYouToBuy: 'Here are badges you can buy',
+    youDontHaveAnyBadgeInThisServer: 'You have no badges in this server',
+    badgeExpireIn (badgeName: string, expireIn: string) {
+      return `${badgeName} - Expire at ${expireIn}`
+    },
+    autoRenewOn: 'Auto-renew - ON',
+    autoRenewOff: 'Auto-renew - OFF'
   }
 }
 

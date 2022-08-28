@@ -211,5 +211,63 @@ export interface Language {
         rangeNumberOptionDescription: string,
         embedMessageTitle: string,
         minNumberIsMaxNumberError: string
+    },
+    badge: {
+        commands: {
+            name: string,
+            badge: string
+            create: {
+                name: string,
+                badgeNameOption: string
+                desc: string,
+                emojiOption: string,
+                descOption: string,
+                priceOption: string,
+                tagOption: string
+            },
+            list: {
+                name: string,
+                desc: string
+            },
+            manageMyBadge: {
+                name: string,
+                desc: string
+            },
+            remove: {
+                name: string,
+                desc: string,
+                noBadgeYet: string
+            },
+            buy: {
+                name: string,
+                desc: string,
+                autoRenew: string
+            }
+        },
+        badgeNotFound: string,
+        badgeEmojiNotFound: string,
+        youHaveNoEnoughMoney: string,
+        CannotPubTagOnYouDueToPermission: string,
+        purchaseSuccess: string,
+        YourBadgeWillBeExpiredIn(badgeName:string, expiredDateStr: string): string,
+        yes: string,
+        no: string,
+        youDontHavePermission: string,
+        waitForOneMinuteForAddBadge: string,
+        tooManyBadges: string,
+        emojiInvalid: string,
+        emojiDoesNotExistHere: string,
+        badgeExisted: string,
+        NewBadgeHasBeenCreated(badgeName: string): string,
+        priceCoinsPerMonth: string,
+        buyItNow: string,
+        autoRenew: string,
+        badgeIsSuccessfullyRemoved(badgeName: string): string,
+        badgesInThisServer: string,
+        hereAreBadgesForYouToBuy: string,
+        youDontHaveAnyBadgeInThisServer: string
+        badgeExpireIn(badgeName: string, expireIn: string): string
+        autoRenewOn: string,
+        autoRenewOff: string
     }
 }
