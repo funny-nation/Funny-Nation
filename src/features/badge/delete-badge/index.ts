@@ -11,7 +11,8 @@ const deleteBadge = async (interaction: CommandInteraction) => {
   if (!guild) return
   const member = interaction.member
   const dbGuild = await getDbGuild(guild.id)
-  const language = getLanguage(dbGuild.languageInGuild).badge
+  const originLanguage = getLanguage(dbGuild.languageInGuild)
+  const language = originLanguage.badge
   const badgeID = Number(interaction.options.getString(language.commands.badge))
   if (!member || isNaN(badgeID)) return
   if (!(member instanceof GuildMember)) return
@@ -31,7 +32,7 @@ const deleteBadge = async (interaction: CommandInteraction) => {
   }
   await dbBadge.delete()
   badgeUpdateLock.lock(guild.id)
-  await resetBadgeChoice(guild)
+  await resetBadgeChoice(guild, originLanguage)
   replyOnlyInteractorCanSee(interaction, language.badgeIsSuccessfullyRemoved(dbBadge.badgeData.name))
 }
 

@@ -309,7 +309,7 @@ const english: Language = {
     yes: 'Yes',
     no: 'No',
     youDontHavePermission: 'You don\'t have permission',
-    waitForOneMinuteForAddBadge: 'Please wait for one minute to add your badge',
+    waitForOneMinuteForAddBadge: 'Please wait for one minute',
     tooManyBadges: 'There are too many badges in this server',
     emojiInvalid: 'Emoji invalid',
     emojiDoesNotExistHere: 'Emoji cannot found in this server',

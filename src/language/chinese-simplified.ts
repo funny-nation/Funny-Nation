@@ -326,7 +326,7 @@ const chineseSimplified: Language = {
     yes: '是',
     no: '否',
     youDontHavePermission: '你没有权限',
-    waitForOneMinuteForAddBadge: '你需要等一分钟之后来添加徽章',
+    waitForOneMinuteForAddBadge: '你需要等一分钟',
     tooManyBadges: '服务器里的徽章太多了',
     emojiInvalid: 'Emoji不对',
     emojiDoesNotExistHere: 'Emoji不在这个服务器里',
