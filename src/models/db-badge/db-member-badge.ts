@@ -8,6 +8,22 @@ class DBMemberBadge {
     this.data = memberBadge
   }
 
+  public static async fetchExpiredBadges (): Promise<DBMemberBadge[]> {
+    const now = moment().utc().toDate()
+    const allMemberBadge = await prismaClient.memberBadge.findMany({
+      where: {
+        expiredAt: {
+          lt: now
+        }
+      }
+    })
+    const result: DBMemberBadge[] = []
+    for (const memberBadge of allMemberBadge) {
+      result.push(new this(memberBadge))
+    }
+    return result
+  }
+
   public static async fetchBadge (badgeID: number, userID: string, guildID: string): Promise<DBMemberBadge | null> {
     const memberBadge = await prismaClient.memberBadge.findUnique({
       where: {
@@ -67,6 +83,18 @@ class DBMemberBadge {
       }
     })
     this.data.expiredAt = newExpireAt
+  }
+
+  async remove (): Promise<void> {
+    await prismaClient.memberBadge.delete({
+      where: {
+        badgeID_userID_guildID: {
+          badgeID: this.data.badgeID,
+          userID: this.data.userID,
+          guildID: this.data.guildID
+        }
+      }
+    })
   }
 }
 
