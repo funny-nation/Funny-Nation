@@ -17,7 +17,8 @@ const createBadge = async (interaction: CommandInteraction) => {
   const member = interaction.member
   if (!guild) return
   const dbGuild = await getDbGuild(guild.id)
-  const language = getLanguage(dbGuild.languageInGuild).badge
+  const originLanguage = getLanguage(dbGuild.languageInGuild)
+  const language = originLanguage.badge
 
   const name = interaction.options.getString(language.commands.create.badgeNameOption)
   const emojiStr = interaction.options.getString(language.commands.create.emojiOption)
@@ -70,7 +71,7 @@ const createBadge = async (interaction: CommandInteraction) => {
     replyOnlyInteractorCanSee(interaction, language.badgeExisted)
     return
   }
-  await resetBadgeChoice(guild)
+  await resetBadgeChoice(guild, originLanguage)
 
   badgeUpdateLock.lock(guild.id)
 
