@@ -13,7 +13,7 @@ client.on('interactionCreate', async (interaction:Interaction) => {
   const language = await getLanguage(dbGuild.languageInGuild)
   const giftName = interaction.options.getString(language.gift.command.removeGift.stringOptionName)
   if (!giftName) return
-  if (interaction.commandName !== language.gift.command.removeGift.name) return
+  if (interaction.commandName !== language.gift.command.name) return
   if (!interaction.member) return
   if (!(interaction.member instanceof GuildMember)) return
   // verify admin user
@@ -22,6 +22,7 @@ client.on('interactionCreate', async (interaction:Interaction) => {
     await interaction.reply({
       content: 'you are not administrator'
     })
+    return
   }
   const gift = await DBGift.getGift(giftName, dbGuild.id)
   if (!gift) {

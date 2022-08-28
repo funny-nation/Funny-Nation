@@ -21,7 +21,6 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const dbGuild = await getDbGuild(interaction.guild.id)
     const language = await getLanguage(dbGuild.languageInGuild)
     if (interaction.commandName !== language.gift.command.name) return
-
     // if (interaction.options.getSubcommand() !== language.gift.command.createGift.name) return
     if (!interaction.member) return
     if (!(interaction.member instanceof GuildMember)) return
