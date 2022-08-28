@@ -211,5 +211,19 @@ export interface Language {
         rangeNumberOptionDescription: string,
         embedMessageTitle: string,
         minNumberIsMaxNumberError: string
-    }
+    },
+    // badge: {
+    //     commands: {
+    //         name: string,
+    //         create: {
+    //             name: string,
+    //             desc: string,
+    //             emojiOption: string,
+    //             descOption: string,
+    //             priceOption: string,
+    //             tagOption: string
+    //         },
+    //
+    //     }
+    // }
 }

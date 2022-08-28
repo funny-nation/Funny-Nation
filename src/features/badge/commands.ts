@@ -15,6 +15,7 @@ newCommand(async (language, guildID) => {
           option => option
             .setName('name')
             .setDescription('name')
+            .setMaxLength(20)
             .setRequired(true)
         )
         .addStringOption(
@@ -27,6 +28,7 @@ newCommand(async (language, guildID) => {
           option => option
             .setName('description')
             .setDescription('desc')
+            .setMaxLength(1024)
             .setRequired(true)
         )
         .addIntegerOption(

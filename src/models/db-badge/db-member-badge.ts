@@ -1,6 +1,7 @@
 import { MemberBadge } from '@prisma/client'
 import { prismaClient } from '../../prisma-client'
 import moment from 'moment-timezone'
+import { DBBadge } from './db-badge'
 
 class DBMemberBadge {
   data: MemberBadge
@@ -19,6 +20,20 @@ class DBMemberBadge {
     })
     const result: DBMemberBadge[] = []
     for (const memberBadge of allMemberBadge) {
+      result.push(new this(memberBadge))
+    }
+    return result
+  }
+
+  public static async fetchBadgesByMember (userID: string, guildID: string): Promise<DBMemberBadge[]> {
+    const memberBadges = await prismaClient.memberBadge.findMany({
+      where: {
+        userID,
+        guildID
+      }
+    })
+    const result: DBMemberBadge[] = []
+    for (const memberBadge of memberBadges) {
       result.push(new this(memberBadge))
     }
     return result
@@ -95,6 +110,26 @@ class DBMemberBadge {
         }
       }
     })
+  }
+
+  async getDBBadge (): Promise<DBBadge | null> {
+    return DBBadge.fetchByID(this.data.badgeID)
+  }
+
+  async toggleAutoRenew (): Promise<void> {
+    await prismaClient.memberBadge.update({
+      where: {
+        badgeID_userID_guildID: {
+          badgeID: this.data.badgeID,
+          userID: this.data.userID,
+          guildID: this.data.guildID
+        }
+      },
+      data: {
+        autoRenew: !this.data.autoRenew
+      }
+    })
+    this.data.autoRenew = !this.data.autoRenew
   }
 }
 
