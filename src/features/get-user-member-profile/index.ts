@@ -9,6 +9,7 @@ import { renderExpBar } from './render-exp-bar'
 import { calculateLevelByExp } from '../../utils'
 import { logger } from '../../logger'
 import './commands'
+import { DBMemberBadge } from '../../models/db-badge'
 
 client.on('interactionCreate', async function (interaction: Interaction) {
   try {
@@ -22,8 +23,16 @@ client.on('interactionCreate', async function (interaction: Interaction) {
     const coinRanking = await dbMember.getCoinRanking()
     const expInGuildRanking = await dbMember.getExpRanking()
     const expInBotRanking = await dbUser.getExpRanking()
+    const memberBadges = await DBMemberBadge.fetchBadgesByMember(dbUser.id, dbGuild.id)
+    let badgeEmojiStr = ''
+    for (const memberBadge of memberBadges) {
+      const dbBadge = await memberBadge.getDBBadge()
+      if (!dbBadge) continue
+      badgeEmojiStr += dbBadge.badgeData.emoji + ' • '
+    }
     const embedMsg = new MessageEmbed()
       .setColor('#FF99CC')
+      .setDescription(badgeEmojiStr)
       .setTitle(language.coinBalanceDisplay(Number(dbMember.coinBalanceInGuild), coinRanking))
       .setAuthor({ name: language.viewProfile.profile })
       .addFields(
