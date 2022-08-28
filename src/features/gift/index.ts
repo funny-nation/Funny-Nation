@@ -1,6 +1,5 @@
 import './send-gift'
-import './gift-info'
-import './exp-adjustment'
+import './helper'
 import './command'
-import './gift-type'
 import './gift-modal'
+import './remove-gift'

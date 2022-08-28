@@ -56,7 +56,7 @@ class DBGift {
   public async remove () {
     const name = this.giftData.name
     const guildID = this.giftData.guildID
-    await prismaClient.gift.delete({
+    return await prismaClient.gift.delete({
       where: {
         name_guildID: {
           name,

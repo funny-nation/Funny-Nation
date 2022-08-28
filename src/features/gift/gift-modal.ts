@@ -12,6 +12,8 @@ import { getLanguage } from '../../language'
 import { logger } from '../../logger'
 import { isAdmin } from '../../utils'
 import { DBGift } from '../../models/db-gift/creat-gift'
+import { updateGiftToOption } from './helper/update-gift-to-option'
+
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isCommand() || !interaction.guild) return
@@ -96,6 +98,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     // save gift info
     const giftName = interaction.fields.getField('giftNameInput').value
     const giftPrice = Number(interaction.fields.getField('priceInput').value)
+    // localization
+    const dbGuild = await getDbGuild(interaction.guild.id)
+    const language = await getLanguage(dbGuild.languageInGuild)
 
     if (isNaN(giftPrice)) {
       await interaction.reply({
@@ -116,6 +121,11 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       )
       return
     }
+    // update gift to option
+    const guildId = dbGuild.id
+    const giftList = await DBGift.getGiftList(guildId)
+    const option = 'create'
+    await updateGiftToOption(giftList, interaction, language, option)
     await interaction.reply({
       content: 'Gift created'
     })

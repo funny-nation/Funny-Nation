@@ -11,12 +11,12 @@ newCommand(
       .setDescription((language.gift.command.desc))
       .addSubcommand(
         subcommand => subcommand
-          .setName(language.gift.command.subCommand.name)
-          .setDescription(language.gift.command.subCommand.desc)
+          .setName(language.gift.command.sendGift.name)
+          .setDescription(language.gift.command.sendGift.desc)
           .addStringOption(option => {
             const opts = option
-              .setName(language.gift.command.subCommand.stringOptionName)
-              .setDescription(language.gift.command.subCommand.stringOptionDesc)
+              .setName(language.gift.command.sendGift.stringOptionName)
+              .setDescription(language.gift.command.sendGift.stringOptionDesc)
               .setMaxLength(20)
               .setRequired(true)
             giftList.forEach((gift) => {
@@ -29,8 +29,8 @@ newCommand(
           }
           )
           .addUserOption(option => option
-            .setName(language.gift.command.subCommand.userOptionName)
-            .setDescription(language.gift.command.subCommand.userOptionDesc)
+            .setName(language.gift.command.sendGift.userOptionName)
+            .setDescription(language.gift.command.sendGift.userOptionDesc)
             .setRequired(true)
           )
       )
@@ -45,7 +45,7 @@ newCommand(
             .setRequired(true)
           )
           .addStringOption(option => option
-            .setName(language.gift.command.createGift.emojiOptionDesc)
+            .setName(language.gift.command.createGift.emojiOptionName)
             .setMaxLength(20)
             .setDescription(language.gift.command.createGift.emojiOptionDesc)
             .setRequired(true)
@@ -55,6 +55,26 @@ newCommand(
             .setMinValue(1)
             .setDescription(language.gift.command.createGift.numberOptionDesc)
             .setRequired(true)
+          )
+      )
+      .addSubcommand(
+        subcommand => subcommand
+          .setName(language.gift.command.removeGift.name)
+          .setDescription(language.gift.command.removeGift.desc)
+          .addStringOption(option => {
+            const opts2 = option
+              .setName(language.gift.command.removeGift.stringOptionName)
+              .setDescription(language.gift.command.removeGift.stringOptionDesc)
+              .setMaxLength(20)
+              .setRequired(true)
+            giftList.forEach((gift) => {
+              opts2.addChoices({
+                name: gift.giftData.name,
+                value: gift.giftData.name
+              })
+            })
+            return opts2
+          }
           )
       )
   }

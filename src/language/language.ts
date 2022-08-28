@@ -1,5 +1,4 @@
 import { LanguageEnum } from '../models'
-import { Gift } from '../features/gift/gift-type'
 import { CoinTransfer } from '@prisma/client'
 import { EmbedFieldData, User } from 'discord.js'
 
@@ -129,7 +128,7 @@ export interface Language {
         command: {
             name: string,
             desc: string,
-            subCommand: {
+            sendGift: {
                 name: string,
                 desc: string,
                 stringOptionName: string,
@@ -146,15 +145,15 @@ export interface Language {
                 emojiOptionDesc: string,
                 numberOptionName: string,
                 numberOptionDesc: string,
+            },
+            removeGift:{
+                name: string,
+                desc: string,
+                stringOptionName: string,
+                stringOptionDesc: string,
             }
         },
-        embedTitle: string,
-        embedDesc: string
         hasEnoughMoney: string,
-        presetGifts: {
-            gift1: Gift,
-            gift2: Gift
-        }
     },
     dailyCheckIn: {
         titleForBooster: string,

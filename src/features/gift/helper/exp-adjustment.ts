@@ -6,8 +6,8 @@ type ExpAdjustment = {
 
 const expAdjustment = (price: number): ExpAdjustment => {
   return {
-    senderExp: price * 0.2,
-    receiverExp: price * 0.2
+    senderExp: Math.floor(price * 0.2),
+    receiverExp: Math.floor(price * 0.2)
   }
 }
 

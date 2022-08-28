@@ -1,6 +1,5 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
-import { User } from 'discord.js'
 import moment from 'moment-timezone'
 
 const english: Language = {
@@ -156,7 +155,7 @@ const english: Language = {
     command: {
       name: 'gift',
       desc: 'a gift',
-      subCommand: {
+      sendGift: {
         name: 'send',
         desc: 'Send gift to others',
         stringOptionName: 'sent',
@@ -173,31 +172,15 @@ const english: Language = {
         emojiOptionDesc: 'emoji',
         numberOptionName: 'gift-value',
         numberOptionDesc: 'price'
+      },
+      removeGift: {
+        name: 'remove',
+        desc: 'remove the gift from current guild',
+        stringOptionName: 'gift-name',
+        stringOptionDesc: 'gift name'
       }
     },
-    embedTitle: 'you received a new gift',
-    embedDesc: 'you received a new gift',
-    hasEnoughMoney: 'you poor',
-    presetGifts: {
-      gift1: {
-        name: 'feiji',
-        pictureURL: '123',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} received feiji from ${sender}`
-        }
-      },
-      gift2: {
-        name: 'feiji',
-        pictureURL: '123',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} received huojian from${sender}`
-        }
-      }
-    }
+    hasEnoughMoney: 'you poor'
   },
   tabletopRoleAssign: {
     cannotCloseGame: ' You are not the owner of the game and cannot close this game',
