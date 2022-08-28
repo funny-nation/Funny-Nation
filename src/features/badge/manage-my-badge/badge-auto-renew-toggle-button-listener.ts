@@ -3,6 +3,8 @@ import { DBMemberBadge } from '../../../models/db-badge'
 import { replyOnlyInteractorCanSee } from '../../../utils'
 import { manageMyBadgePanelRender } from './manage-my-badge-panel-render'
 import { logger } from '../../../logger'
+import { getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
 
 const badgeAutoRenewToggleButtonListener = async (interaction: ButtonInteraction) => {
   const customIDArr = interaction.customId.split(':')
@@ -13,12 +15,15 @@ const badgeAutoRenewToggleButtonListener = async (interaction: ButtonInteraction
     !guild
   ) return
 
+  const dbGuild = await getDbGuild(guild.id)
+  const language = getLanguage(dbGuild.languageInGuild).badge
+
   const badgeID = customIDArr[1]
 
   const dbMemberBadge = await DBMemberBadge.fetchBadge(Number(badgeID), user.id, guild.id)
 
   if (!dbMemberBadge) {
-    replyOnlyInteractorCanSee(interaction, 'Badge not found')
+    replyOnlyInteractorCanSee(interaction, language.badgeNotFound)
     return
   }
 

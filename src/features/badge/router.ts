@@ -5,25 +5,33 @@ import { buyFromButton, buyFromCommand } from './buy-badge'
 import { deleteBadge } from './delete-badge'
 import { badgeAutoRenewToggleButtonListener, getManageMyBadgePanel } from './manage-my-badge'
 import { listAllBadges } from './list-all-badges'
+import { getDbGuild } from '../../models'
+import { getLanguage } from '../../language'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
+  const guild = interaction.guild
+  if (!guild) return
+
+  const dbGuild = await getDbGuild(guild.id)
+  const language = getLanguage(dbGuild.languageInGuild).badge.commands
+
   if (interaction.isCommand()) {
-    if (interaction.commandName !== 'badge') return
+    if (interaction.commandName !== language.name) return
     const subCommand = interaction.options.getSubcommand()
     switch (subCommand) {
-      case 'create':
+      case language.create.name:
         await createBadge(interaction)
         return
-      case 'buy':
+      case language.buy.name:
         await buyFromCommand(interaction)
         return
-      case 'remove':
+      case language.remove.name:
         await deleteBadge(interaction)
         return
-      case 'manage-my-badge':
+      case language.manageMyBadge.name:
         await getManageMyBadgePanel(interaction)
         return
-      case 'list':
+      case language.list.name:
         await listAllBadges(interaction)
         return
     }

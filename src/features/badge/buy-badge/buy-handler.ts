@@ -3,6 +3,7 @@ import { DBBadge, DBMemberBadge } from '../../../models/db-badge'
 import { getEmojiIDFromStr, replyOnlyInteractorCanSee } from '../../../utils'
 import { addDbCoinTransfer, getDbGuild, getDbMember } from '../../../models'
 import moment from 'moment-timezone'
+import { getLanguage } from '../../../language'
 
 const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, badgeID: number, autoRenew: boolean) => {
   const user = interaction.user
@@ -13,34 +14,35 @@ const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, b
   if (isNaN(badgeID) || !user || !guild || !member || !currentChannel) return
 
   if (!(member instanceof GuildMember)) return
+  const dbGuild = await getDbGuild(guild.id)
+  const language = getLanguage(dbGuild.languageInGuild).badge
 
   const dbBadge = await DBBadge.fetchByID(badgeID)
   if (!dbBadge) {
-    replyOnlyInteractorCanSee(interaction, 'Badge not found')
+    replyOnlyInteractorCanSee(interaction, language.badgeNotFound)
     return
   }
   const emojiID = getEmojiIDFromStr(dbBadge.badgeData.emoji)
   if (!emojiID) {
-    replyOnlyInteractorCanSee(interaction, 'Badge emoji not found')
+    replyOnlyInteractorCanSee(interaction, language.badgeEmojiNotFound)
     return
   }
   const emoji = await guild.emojis.fetch(emojiID)
 
   const dbMember = await getDbMember(user.id, guild.id)
   if (dbBadge.badgeData.price > dbMember.coinBalanceInGuild) {
-    replyOnlyInteractorCanSee(interaction, 'You have not enough money')
+    replyOnlyInteractorCanSee(interaction, language.youHaveNoEnoughMoney)
     return
   }
   const price = Number(dbBadge.badgeData.price)
   await dbMember.reduceCoins(price)
   await addDbCoinTransfer(user.id, guild.id, -price, null, '', 'buyBadge')
   const dbMemberBadge = await DBMemberBadge.buyBadge(dbBadge.badgeData.id, user.id, guild.id, autoRenew)
-  const dbGuild = await getDbGuild(guild.id)
   const expireTimeString = moment(dbMemberBadge.data.expiredAt).tz(dbGuild.timeZone).format('YYYY - MM - DD')
   try {
     await member.roles.add(dbBadge.badgeData.roleIDRelated)
   } catch (e) {
-    const msg = await currentChannel.send('Due to lack of permission, I cannot put this tag on you. ')
+    const msg = await currentChannel.send(language.youDontHavePermission)
     setTimeout(async () => {
       await msg.delete()
     }, 20000)
@@ -48,11 +50,11 @@ const buyHandler = async (interaction: CommandInteraction | ButtonInteraction, b
   replyOnlyInteractorCanSee(interaction, {
     embeds: [
       new MessageEmbed()
-        .setTitle('Purchase success')
-        .setDescription(`Your "${dbBadge.badgeData.name}" will be expired in ${expireTimeString}`)
+        .setTitle(language.purchaseSuccess)
+        .setDescription(language.YourBadgeWillBeExpiredIn(dbBadge.badgeData.name, expireTimeString))
         .addFields({
-          name: 'Auto-renew',
-          value: autoRenew ? 'Yes' : 'Nop'
+          name: language.autoRenew,
+          value: autoRenew ? language.yes : language.no
         })
         .setColor('#FF99CC')
         .setThumbnail(emoji.url)

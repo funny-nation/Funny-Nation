@@ -2,15 +2,19 @@ import { CommandInteraction, MessageEmbed, Role } from 'discord.js'
 import { DBBadge } from '../../../models/db-badge'
 import { replyOnlyInteractorCanSee } from '../../../utils'
 import { logger } from '../../../logger'
+import { getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
 
 const listAllBadges = async (interaction: CommandInteraction) => {
   const guild = interaction.guild
   if (!guild) return
 
+  const dbGuild = await getDbGuild(guild.id)
+  const language = getLanguage(dbGuild.languageInGuild).badge
   const dbBadges = await DBBadge.fetchManyByGuild(guild.id)
   const embed = new MessageEmbed()
-    .setTitle('Badges in this server')
-    .setDescription('Here are the badges for you to buy')
+    .setTitle(language.badgesInThisServer)
+    .setDescription(language.hereAreBadgesForYouToBuy)
     .setColor('#FF99CC')
 
   for (const dbBadge of dbBadges) {
