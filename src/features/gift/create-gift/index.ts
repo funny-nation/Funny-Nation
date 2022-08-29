@@ -1,26 +1,21 @@
-import { client } from '../../client'
 import {
+  CommandInteraction,
   GuildMember,
-  Interaction,
   MessageActionRow,
   Modal,
   ModalActionRowComponent,
   TextInputComponent
 } from 'discord.js'
-import { getDbGuild } from '../../models'
-import { getLanguage } from '../../language'
-import { logger } from '../../logger'
-import { isAdmin } from '../../utils'
-import { DBGift } from '../../models/db-gift/creat-gift'
-import { updateGiftToOption } from './helper/update-gift-to-option'
+import { Language } from '../../../language'
+import { isAdmin } from '../../../utils'
+import { logger } from '../../../logger'
+import { DBGuild } from '../../../models'
+import { DBGift } from '../../../models/db-gift/creat-gift'
+import { updateGiftToOption } from '../helper/update-gift-to-option'
 
-client.on('interactionCreate', async (interaction: Interaction) => {
+const createGift = async (interaction: CommandInteraction, language: Language, dbGuild: DBGuild) => {
+  // create gift
   try {
-    if (!interaction.isCommand() || !interaction.guild) return
-    // localization
-    const dbGuild = await getDbGuild(interaction.guild.id)
-    const language = await getLanguage(dbGuild.languageInGuild)
-    if (interaction.commandName !== language.gift.command.name) return
     // if (interaction.options.getSubcommand() !== language.gift.command.createGift.name) return
     if (!interaction.member) return
     if (!(interaction.member instanceof GuildMember)) return
@@ -35,7 +30,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     const giftName = interaction.options.getString(language.gift.command.createGift.stringOptionName)
     const giftEmoji = interaction.options.getString(language.gift.command.createGift.emojiOptionName)
     const giftPrice = interaction.options.getNumber(language.gift.command.createGift.numberOptionName)
-    console.log('giftName', giftName, 'giftEmoji', giftEmoji, 'giftPrice', giftPrice)
+
     if (!giftName || !giftEmoji || !giftPrice) return
     // create gift modal
     const modal = new Modal()
@@ -87,8 +82,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     console.log(e)
     logger.error('error occurs when executing feature/gift/gift-modal')
   }
-})
-client.on('interactionCreate', async (interaction: Interaction) => {
+  // submit creation with model
   try {
     if (!interaction.isModalSubmit()) return
     if (interaction.guild === null) return
@@ -97,9 +91,6 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     // save gift info
     const giftName = interaction.fields.getField('giftNameInput').value
     const giftPrice = Number(interaction.fields.getField('priceInput').value)
-    // localization
-    const dbGuild = await getDbGuild(interaction.guild.id)
-    const language = await getLanguage(dbGuild.languageInGuild)
 
     if (isNaN(giftPrice)) {
       await interaction.reply({
@@ -130,6 +121,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     })
   } catch (e) {
     console.log(e)
-    logger.error('error occurs when executing feature/gift/gift-modal')
+    logger.error('error occurs when executing feature/gift/create-gift')
   }
-})
+}
+
+export { createGift }

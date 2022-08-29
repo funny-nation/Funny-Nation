@@ -1,5 +1,3 @@
-import './send-gift'
 import './helper'
 import './command'
-import './gift-modal'
-import './remove-gift'
+import './router'

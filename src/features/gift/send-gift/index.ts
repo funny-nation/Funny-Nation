@@ -1,21 +1,15 @@
-import { client } from '../../client'
-import { Interaction, MessageEmbed } from 'discord.js'
-import { addDbCoinTransfer, getDbGuild, getDbMember } from '../../models'
-// import { createInventory } from '../../models/db-inventory/create-inventory'
-import { getLanguage } from '../../language'
-import { expAdjustment } from './helper/exp-adjustment'
-import { logger } from '../../logger'
-import { createInventory } from '../../models/db-inventory'
+import { addDbCoinTransfer, DBGuild, getDbMember } from '../../../models'
+import { Language } from '../../../language'
+import { client } from '../../../client'
+import { DBGift } from '../../../models/db-gift/creat-gift'
+import { expAdjustment } from '../helper/exp-adjustment'
+import { createInventory } from '../../../models/db-inventory'
 import moment from 'moment'
-import { DBGift } from '../../models/db-gift/creat-gift'
+import { CommandInteraction, MessageEmbed } from 'discord.js'
+import { logger } from '../../../logger'
 
-client.on('interactionCreate', async (interaction: Interaction) => {
+const sendGift = async (interaction: CommandInteraction, language: Language, dbGuild: DBGuild) => {
   try {
-    if (!interaction.isCommand() || !interaction.guild) return
-    // localization
-    const dbGuild = await getDbGuild(interaction.guild.id)
-    const language = await getLanguage(dbGuild.languageInGuild)
-    if (interaction.commandName !== language.gift.command.name) return
     const giftID = interaction.options.getString(language.gift.command.sendGift.stringOptionName)
     const receiver = interaction.options.getUser(language.gift.command.sendGift.userOptionName)
 
@@ -31,6 +25,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       return
     }
     // query sender and receiver from db with ids
+    if (!interaction.guild) return
     const senderInfo = await getDbMember(interaction.user.id, interaction.guild.id)
     const receiverInfo = await getDbMember(receiver.id, interaction.guild.id)
     // get gift info
@@ -66,6 +61,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
   } catch (e) {
     console.log(e)
-    logger.error('error occurs when executing features/gift/gift-listener')
+    logger.error('error occurs when executing features/gift/send-gift')
   }
-})
+}
+
+export { sendGift }
