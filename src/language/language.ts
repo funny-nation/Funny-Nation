@@ -113,6 +113,8 @@ export interface Language {
         coinsDisplay(coins: number): string
     },
     gift: {
+        emojiInvalid: string
+        emojiDoesNotExistHere: string
         errorHandler:{
             botReply: string,
             userReply: string

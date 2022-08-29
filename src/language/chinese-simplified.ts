@@ -157,6 +157,8 @@ const chineseSimplified: Language = {
     yourNewNameIs: '你的新昵称是：'
   },
   gift: {
+    emojiInvalid: '礼物不合法',
+    emojiDoesNotExistHere: '表情不存在',
     errorHandler: {
       botReply: '你不能送礼物给机器人',
       userReply: '你不能送礼物给你自己'

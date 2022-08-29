@@ -21,7 +21,7 @@ newCommand(
               .setRequired(true)
             giftList.forEach((gift) => {
               opts.addChoices({
-                name: gift.giftData.name,
+                name: `${gift.giftData.name} - ${gift.giftData.price}`,
                 value: gift.giftData.name
               })
             })
@@ -46,7 +46,7 @@ newCommand(
           )
           .addStringOption(option => option
             .setName(language.gift.command.createGift.emojiOptionName)
-            .setMaxLength(20)
+            .setMaxLength(256)
             .setDescription(language.gift.command.createGift.emojiOptionDesc)
             .setRequired(true)
           )
@@ -69,7 +69,7 @@ newCommand(
               .setRequired(true)
             giftList.forEach((gift) => {
               opts2.addChoices({
-                name: gift.giftData.name,
+                name: `${gift.giftData.name} - ${gift.giftData.price}`,
                 value: gift.giftData.name
               })
             })

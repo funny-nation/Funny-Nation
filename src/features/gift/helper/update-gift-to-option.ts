@@ -3,7 +3,7 @@ import { ApplicationCommandOptionChoiceData, Interaction } from 'discord.js'
 import { updateCommandOptionChoicesForGuild } from '../../../utils'
 import { Language } from '../../../language'
 
-const updateGiftToOption = async (gifts: DBGift[], interaction: Interaction, language: Language, option: string) => {
+const updateGiftToOption = async (gifts: DBGift[], interaction: Interaction, language: Language) => {
   const newChoices: ApplicationCommandOptionChoiceData[] = []
   for (const gift of gifts) {
     newChoices.push({
@@ -12,27 +12,20 @@ const updateGiftToOption = async (gifts: DBGift[], interaction: Interaction, lan
     })
   }
   if (interaction.guild === null) return
-  switch (option) {
-    case 'create':
-      await updateCommandOptionChoicesForGuild(
-        interaction.guild,
-        language.gift.command.name,
-        language.gift.command.sendGift.name,
-        language.gift.command.sendGift.stringOptionName,
-        newChoices
-      )
-      break
-    case 'remove':
-      await updateCommandOptionChoicesForGuild(
-        interaction.guild,
-        language.gift.command.name,
-        language.gift.command.removeGift.name,
-        language.gift.command.removeGift.stringOptionName,
-        newChoices
-      )
-      break
-    default:
-  }
+  await updateCommandOptionChoicesForGuild(
+    interaction.guild,
+    language.gift.command.name,
+    language.gift.command.sendGift.name,
+    language.gift.command.sendGift.stringOptionName,
+    newChoices
+  )
+  await updateCommandOptionChoicesForGuild(
+    interaction.guild,
+    language.gift.command.name,
+    language.gift.command.removeGift.name,
+    language.gift.command.removeGift.stringOptionName,
+    newChoices
+  )
 }
 
 export { updateGiftToOption }

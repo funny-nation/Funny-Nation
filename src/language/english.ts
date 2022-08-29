@@ -140,6 +140,8 @@ const english: Language = {
     yourNewNameIs: 'Your new nick name is: '
   },
   gift: {
+    emojiInvalid: 'emoji invalid',
+    emojiDoesNotExistHere: 'emoji dos not exist here',
     errorHandler: {
       botReply: 'You cannot send gift to me',
       userReply: 'You cannot send gift to your self'
