@@ -22,6 +22,7 @@ newCommand(async (language, guildID) => {
         .addStringOption(
           option => option
             .setName(commandLang.create.emojiOption)
+            .setMaxLength(512)
             .setDescription(commandLang.create.emojiOption)
             .setRequired(true)
         )
@@ -37,6 +38,7 @@ newCommand(async (language, guildID) => {
             .setName(commandLang.create.priceOption)
             .setDescription(commandLang.create.priceOption)
             .setRequired(true)
+            .setMinValue(1)
         )
         .addRoleOption(
           option => option
