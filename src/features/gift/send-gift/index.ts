@@ -48,10 +48,8 @@ const sendGift = async (interaction: CommandInteraction, language: Language, dbG
   await replyOnlyInteractorCanSee(interaction, 'gift sent')
   const emojiStr = gift.giftData.emoji
   const emojiId = getEmojiIDFromStr(emojiStr)
-  if (!emojiId) {
-    await replyOnlyInteractorCanSee(interaction, language.gift.emojiInvalid)
-    return
-  }
+  if (!emojiId) return
+
   let emoji
   try {
     emoji = await interaction.guild.emojis.fetch(emojiId)
