@@ -153,3 +153,9 @@ client.on('something', async function () {
     // do something here
 })
 ```
+
+### Developer guides extension
+
+Here is the [extension of developer guides](./developer-guides-ext.md). 
+
+There are some suggestion for your development. 

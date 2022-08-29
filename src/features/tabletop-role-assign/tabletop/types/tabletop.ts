@@ -1,4 +1,8 @@
-import { TextBasedChannel, GuildMember, MessageActionRow } from 'discord.js'
+import {
+  TextBasedChannel,
+  GuildMember,
+  MessageActionRow
+} from 'discord.js'
 import { RoleGroup } from './role-group'
 import { Language } from '../../../../language'
 
@@ -8,6 +12,7 @@ export type Player = {
 }
 
 export type Tabletop = {
+  lastActiveTime: Date
   channel: TextBasedChannel,
   roleGroups: RoleGroup[],
   players: Map<string, Player>,
@@ -19,5 +24,6 @@ export type Tabletop = {
   addPlayer(member: GuildMember): boolean,
   dropPlayer(memberID: string): boolean,
   renderComponents(): MessageActionRow[],
-  addPlayerToBlacklist (memberId: string): boolean
+  addPlayerToBlacklist (memberId: string): boolean,
+  resetLastActiveTime(): void,
 }

@@ -3,68 +3,76 @@ import { SlashCommandBuilder } from '@discordjs/builders'
 import { DBBadge } from '../../models/db-badge'
 
 newCommand(async (language, guildID) => {
-  const dbBadges: DBBadge[] = await DBBadge.fetchByGuild(guildID)
+  const dbBadges: DBBadge[] = await DBBadge.fetchManyByGuild(guildID)
+  const commandLang = language.badge.commands
   const comm = new SlashCommandBuilder()
-    .setName('badge')
-    .setDescription('badge')
+    .setName(commandLang.name)
+    .setDescription(commandLang.name)
     .addSubcommand( // Create
       subcommandGroup => subcommandGroup
-        .setName('create')
-        .setDescription('Create a new badge')
+        .setName(commandLang.create.name)
+        .setDescription(commandLang.create.desc)
         .addStringOption(
           option => option
-            .setName('name')
-            .setDescription('name')
+            .setName(commandLang.create.badgeNameOption)
+            .setDescription(commandLang.create.badgeNameOption)
+            .setMaxLength(20)
             .setRequired(true)
         )
         .addStringOption(
           option => option
-            .setName('emoji')
-            .setDescription('emoji')
+            .setName(commandLang.create.emojiOption)
+            .setMaxLength(512)
+            .setDescription(commandLang.create.emojiOption)
             .setRequired(true)
         )
         .addStringOption(
           option => option
-            .setName('description')
-            .setDescription('desc')
+            .setName(commandLang.create.descOption)
+            .setDescription(commandLang.create.descOption)
+            .setMaxLength(1024)
             .setRequired(true)
         )
         .addIntegerOption(
           option => option
-            .setName('price')
-            .setDescription('price')
+            .setName(commandLang.create.priceOption)
+            .setDescription(commandLang.create.priceOption)
             .setRequired(true)
+            .setMinValue(1)
         )
         .addRoleOption(
           option => option
-            .setName('tag')
-            .setDescription('tag')
+            .setName(commandLang.create.tagOption)
+            .setDescription(commandLang.create.tagOption)
             .setRequired(true)
         )
     )
     .addSubcommand(
       subcommandGroup => subcommandGroup
-        .setName('list')
-        .setDescription('List all badge')
+        .setName(commandLang.list.name)
+        .setDescription(commandLang.list.desc)
     )
     .addSubcommand(
       subcommandGroup => subcommandGroup
-        .setName('my-manage')
-        .setDescription('Manage my badge')
+        .setName(commandLang.manageMyBadge.name)
+        .setDescription(commandLang.manageMyBadge.desc)
     )
-  if (dbBadges.length === 0) {
-    return comm
-  }
   comm.addSubcommand( // Remove
     subcommandGroup => subcommandGroup
-      .setName('remove')
-      .setDescription('Remove a badge')
+      .setName(commandLang.remove.name)
+      .setDescription(commandLang.remove.desc)
       .addStringOption(
         option => {
           const op = option
-            .setName('badge')
-            .setDescription('badge')
+            .setName(commandLang.badge)
+            .setDescription(commandLang.badge)
             .setRequired(true)
+          if (dbBadges.length === 0) {
+            op.addChoices({
+              name: commandLang.remove.noBadgeYet,
+              value: '0'
+            })
+          }
           for (const dbBadge of dbBadges) {
             op.addChoices({
               name: dbBadge.badgeData.name,
@@ -77,14 +85,20 @@ newCommand(async (language, guildID) => {
   )
   comm.addSubcommand( // Buy
     subcommandGroup => subcommandGroup
-      .setName('buy')
-      .setDescription('Buy a badge')
+      .setName(commandLang.buy.name)
+      .setDescription(commandLang.buy.desc)
       .addStringOption(
         option => {
           const op = option
-            .setName('badge')
-            .setDescription('badge')
+            .setName(commandLang.badge)
+            .setDescription(commandLang.badge)
             .setRequired(true)
+          if (dbBadges.length === 0) {
+            op.addChoices({
+              name: commandLang.remove.noBadgeYet,
+              value: '0'
+            })
+          }
           for (const dbBadge of dbBadges) {
             op.addChoices({
               name: dbBadge.badgeData.name,
@@ -96,8 +110,8 @@ newCommand(async (language, guildID) => {
       )
       .addBooleanOption(
         option => option
-          .setName('auto-renew')
-          .setDescription('auto-renew')
+          .setName(commandLang.buy.autoRenew)
+          .setDescription(commandLang.buy.autoRenew)
           .setRequired(true)
       )
   )

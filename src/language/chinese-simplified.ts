@@ -246,7 +246,12 @@ const chineseSimplified: Language = {
     channelUsed: '该频道已被占用',
     subcommandDescription: '可定制角色内容和玩家数量的发牌器，每个玩家一个角色',
     commandsDescription: '发牌器',
-    subcommandName: '自定义角色'
+    subcommandName: '自定义角色',
+    playIntroduction: '例子：\n 角色A：1 \n角色B：2\n（角色名称：角色数量）',
+    gameClosed: '游戏关闭^ ^',
+    noRoleNameError: '所有角色必须有名称',
+    noRoleNumberError: '所有角色必须有数量',
+    longTimeNoActiveError: '该角色分配器静默时间过长，已自动关闭'
   },
   monetaryControl: {
     coinCommand: 'coin',
@@ -266,6 +271,84 @@ const chineseSimplified: Language = {
     issuedSuccessInfo (targetUser, amount: number): string {
       return `群主大发慈悲，随手给${targetUser}施舍了${amount}个金币。`
     }
+  },
+  randomNumber: {
+    subcommandName: '随机数',
+    subcommandDescription: '为您生成对应设置的随机数',
+    firstNumberOptionName: '第一个数',
+    secondNumberOptionName: '第二个数',
+    rangeNumberOptionName: '生成个数',
+    firstNumberOptionDescription: '随机数最小值',
+    secondNumberOptionDescription: '随机数最大值',
+    rangeNumberOptionDescription: '随机数生成个数',
+    embedMessageTitle: '您生成的随机数是：',
+    minNumberIsMaxNumberError: '错误：您的第一个数和第二个数不能一样'
+  },
+  badge: {
+    commands: {
+      name: 'badge',
+      badge: '徽章',
+      create: {
+        name: '创建',
+        badgeNameOption: '名称',
+        desc: '创建一个徽章（管理员）',
+        emojiOption: 'emoji',
+        descOption: '简介',
+        priceOption: '价格',
+        tagOption: 'tag'
+      },
+      list: {
+        name: '所有徽章',
+        desc: '查看所有徽章'
+      },
+      manageMyBadge: {
+        name: '管理我的徽章',
+        desc: '管理我自己的徽章'
+      },
+      remove: {
+        name: '删除',
+        desc: '删除服务器的徽章（管理员）',
+        noBadgeYet: '这个服务器还没有任何徽章哦'
+      },
+      buy: {
+        name: '购买',
+        desc: '在这个服务器购买一个徽章',
+        autoRenew: '自动续费'
+      }
+    },
+    badgeNotFound: '找不到徽章',
+    badgeEmojiNotFound: '徽章的emoji找不到',
+    youHaveNoEnoughMoney: '你太穷了',
+    CannotPubTagOnYouDueToPermission: '我没权限给你加tag',
+    purchaseSuccess: '购买成功',
+    YourBadgeWillBeExpiredIn (badgeName:string, expiredDateStr: string) {
+      return `你的徽章 "${badgeName}" 将会在 ${expiredDateStr} 过期`
+    },
+    yes: '是',
+    no: '否',
+    youDontHavePermission: '你没有权限',
+    waitForOneMinuteForAddBadge: '你需要等一分钟',
+    tooManyBadges: '服务器里的徽章太多了',
+    emojiInvalid: 'Emoji不对',
+    emojiDoesNotExistHere: 'Emoji不在这个服务器里',
+    badgeExisted: '徽章已存在',
+    NewBadgeHasBeenCreated (badgeName: string) {
+      return `"${badgeName}"徽章已创建`
+    },
+    priceCoinsPerMonth: '一个月需要的金币价格',
+    buyItNow: '立刻购买',
+    autoRenew: '自动续费',
+    badgeIsSuccessfullyRemoved (badgeName: string) {
+      return `"${badgeName}"徽章已成功移除`
+    },
+    badgesInThisServer: '徽章',
+    hereAreBadgesForYouToBuy: '这是一些你可以在这个服务器里购买的徽章',
+    youDontHaveAnyBadgeInThisServer: '你在这个服务器里没有徽章',
+    badgeExpireIn (badgeName: string, expireIn: string) {
+      return `${badgeName} - 过期时间 ${expireIn}`
+    },
+    autoRenewOn: '自动续费 - 开',
+    autoRenewOff: '自动续费 - 关'
   }
 }
 

@@ -40,6 +40,7 @@ model Member {
     experienceInGuild BigInt
     coinBalanceInGuild BigInt
     coinTransfers CoinTransfer[]
+    memberBadges MemberBadge[]
     @@unique([userID, guildID])
 }
 
@@ -90,6 +91,18 @@ model Badge {
     roleIDRelated String
     guildID String
     guild Guild @relation(fields: [guildID], references: [id])
+    memberBadge MemberBadge[]
+}
+
+model MemberBadge {
+    badgeID Int
+    badge Badge @relation(fields: [badgeID], references: [id])
+    userID String
+    guildID String
+    member Member @relation(fields: [userID, guildID], references: [userID, guildID])
+    expiredAt DateTime @default(now())
+    autoRenew Boolean @default(false)
+    @@unique([badgeID, userID, guildID])
 }
 
 enum LanguageEnum {

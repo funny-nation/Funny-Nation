@@ -5,11 +5,11 @@ import { getLanguage } from '../../../language'
 import { DBGuild, getDbGuild } from '../../../models'
 import { cleanTable } from './utils/cleanTable'
 import { logger } from '../../../logger'
+import { replyOnlyInteractorCanSee } from '../../../utils'
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (!interaction.isButton()) return
-
     if (interaction.customId !== 'roleAssignCloseButton') return
     const tabletop = getTabletop(interaction.channelId)
     if (!interaction.guild) return
@@ -21,7 +21,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
     if (tabletop.owner !== interaction.member) {
       if (interaction.channel) {
-        await interaction.reply(interaction.user.username + language.tabletopRoleAssign.cannotCloseGame)
+        replyOnlyInteractorCanSee(interaction, interaction.user.username + language.tabletopRoleAssign.cannotCloseGame)
+        // await interaction.reply(interaction.user.username + language.tabletopRoleAssign.cannotCloseGame)
       }
       return
     }

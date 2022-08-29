@@ -1,15 +1,30 @@
-import { CommandInteraction, GuildMember, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
+import {
+  CommandInteraction,
+  GuildMember,
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed
+} from 'discord.js'
 import { DBBadge } from '../../../models/db-badge'
-import { getEmojiIDFromStr, isAdmin } from '../../../utils'
+import { getEmojiIDFromStr, isAdmin, replyOnlyInteractorCanSee } from '../../../utils'
+import { resetBadgeChoice } from '../utils/reset-badge-choice'
+import { badgeUpdateLock } from '../badge-update-lock'
+import { getDbGuild } from '../../../models'
+import { getLanguage } from '../../../language'
 
 const createBadge = async (interaction: CommandInteraction) => {
-  const name = interaction.options.getString('name')
-  const emojiStr = interaction.options.getString('emoji')
-  const description = interaction.options.getString('description')
-  const price = interaction.options.getInteger('price')
-  const tag = interaction.options.getRole('tag')
   const guild = interaction.guild
   const member = interaction.member
+  if (!guild) return
+  const dbGuild = await getDbGuild(guild.id)
+  const originLanguage = getLanguage(dbGuild.languageInGuild)
+  const language = originLanguage.badge
+
+  const name = interaction.options.getString(language.commands.create.badgeNameOption)
+  const emojiStr = interaction.options.getString(language.commands.create.emojiOption)
+  const description = interaction.options.getString(language.commands.create.descOption)
+  const price = interaction.options.getInteger(language.commands.create.priceOption)
+  const tag = interaction.options.getRole(language.commands.create.tagOption)
 
   if (!(member instanceof GuildMember)) return
 
@@ -19,43 +34,56 @@ const createBadge = async (interaction: CommandInteraction) => {
     !description ||
     !price ||
     !tag ||
-    !guild ||
     !member
   ) return
 
   if (!await isAdmin(member)) {
-    await interaction.reply('You dont have permission')
+    replyOnlyInteractorCanSee(interaction, language.youDontHavePermission)
+    return
+  }
+
+  if (badgeUpdateLock.isLock(guild.id)) {
+    replyOnlyInteractorCanSee(interaction, language.waitForOneMinuteForAddBadge)
+    return
+  }
+
+  if (await DBBadge.countBadgesInGuild(guild.id) > 19) {
+    replyOnlyInteractorCanSee(interaction, language.tooManyBadges)
     return
   }
 
   const emojiID = getEmojiIDFromStr(emojiStr)
 
   if (!emojiID) {
-    await interaction.reply('Emoji Invalid')
+    replyOnlyInteractorCanSee(interaction, language.emojiInvalid)
     return
   }
   let emoji
   try {
     emoji = await guild.emojis.fetch(emojiID)
   } catch (e) {
-    await interaction.reply('Emoji does not existed in this server')
+    replyOnlyInteractorCanSee(interaction, language.emojiDoesNotExistHere)
     return
   }
 
   const dbBadge = await DBBadge.create(name, emojiStr, description, price, tag.id, guild.id)
   if (!dbBadge) {
-    await interaction.reply('Badge existed')
+    replyOnlyInteractorCanSee(interaction, language.badgeExisted)
     return
   }
+  await resetBadgeChoice(guild, originLanguage)
+
+  badgeUpdateLock.lock(guild.id)
+
   await interaction.reply({
     embeds: [
       new MessageEmbed()
         .setTitle(name)
-        .setDescription(`New badge "${name}" has been created. \nClick the button below to buy it. `)
+        .setDescription(language.NewBadgeHasBeenCreated(name))
         .setColor('#FF99CC')
         .setFields(
           {
-            name: 'Price (coins per month)', value: String(price)
+            name: language.priceCoinsPerMonth, value: String(price)
           },
           {
             name: '-', value: description
@@ -67,8 +95,8 @@ const createBadge = async (interaction: CommandInteraction) => {
       new MessageActionRow()
         .addComponents(
           new MessageButton()
-            .setCustomId(`badgeOneClickBuyButton${dbBadge.badgeData.id}`)
-            .setLabel('Buy it now')
+            .setCustomId(`badgeOneClickBuyButton_${dbBadge.badgeData.id}`)
+            .setLabel(language.buyItNow)
             .setStyle('SUCCESS')
         )
     ]
