@@ -7,7 +7,7 @@ const updateGiftToOption = async (gifts: DBGift[], interaction: Interaction, lan
   const newChoices: ApplicationCommandOptionChoiceData[] = []
   for (const gift of gifts) {
     newChoices.push({
-      name: gift.giftData.name,
+      name: `${gift.giftData.name} - ${gift.giftData.price}`,
       value: gift.giftData.name
     })
   }
