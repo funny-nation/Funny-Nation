@@ -1,6 +1,5 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
-import { User } from 'discord.js'
 import moment from 'moment-timezone'
 
 const english: Language = {
@@ -141,45 +140,49 @@ const english: Language = {
     yourNewNameIs: 'Your new nick name is: '
   },
   gift: {
+    emojiInvalid: 'emoji invalid',
+    emojiDoesNotExistHere: 'emoji dos not exist here',
     errorHandler: {
       botReply: 'You cannot send gift to me',
       userReply: 'You cannot send gift to your self'
     },
+    modal: {
+      titleName: 'titleName',
+      giftLabelName: 'name',
+      emojiLabelName: 'emoji',
+      priceLabelName: 'price',
+      giftDescLabelName: 'gift description',
+      giftAnnounceLabelName: 'gift announcement'
+    },
     command: {
       name: 'gift',
       desc: 'a gift',
-      subCommand: {
+      sendGift: {
         name: 'send',
         desc: 'Send gift to others',
         stringOptionName: 'sent',
         stringOptionDesc: 'sentGift',
         userOptionName: 'receiver',
         userOptionDesc: 'receiver name'
+      },
+      createGift: {
+        name: 'create',
+        desc: 'create a gift in this guild',
+        stringOptionName: 'gift-name',
+        stringOptionDesc: 'the name of the gift',
+        emojiOptionName: 'gift-emoji',
+        emojiOptionDesc: 'emoji',
+        numberOptionName: 'gift-value',
+        numberOptionDesc: 'price'
+      },
+      removeGift: {
+        name: 'remove',
+        desc: 'remove the gift from current guild',
+        stringOptionName: 'gift-name',
+        stringOptionDesc: 'gift name'
       }
     },
-    embedTitle: 'you received a new gift',
-    embedDesc: 'you received a new gift',
-    hasEnoughMoney: 'you poor',
-    presetGifts: {
-      gift1: {
-        name: 'feiji',
-        pictureURL: '123',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} received feiji from ${sender}`
-        }
-      },
-      gift2: {
-        name: 'feiji',
-        pictureURL: '123',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} received huojian from${sender}`
-        }
-      }
-    }
+    hasEnoughMoney: 'you poor'
   },
   tabletopRoleAssign: {
     cannotCloseGame: ' You are not the owner of the game and cannot close this game',

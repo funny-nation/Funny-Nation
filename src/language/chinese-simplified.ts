@@ -1,6 +1,5 @@
 import { Language } from './index'
 import { LanguageEnum } from '../models'
-import { User } from 'discord.js'
 import moment from 'moment-timezone'
 
 const chineseSimplified: Language = {
@@ -158,45 +157,49 @@ const chineseSimplified: Language = {
     yourNewNameIs: '你的新昵称是：'
   },
   gift: {
+    emojiInvalid: '礼物不合法',
+    emojiDoesNotExistHere: '表情不存在',
     errorHandler: {
       botReply: '你不能送礼物给机器人',
       userReply: '你不能送礼物给你自己'
     },
+    modal: {
+      titleName: '标题',
+      giftLabelName: '名字',
+      emojiLabelName: '图案',
+      priceLabelName: '价格',
+      giftDescLabelName: '礼物描述',
+      giftAnnounceLabelName: '礼物声明'
+    },
     command: {
       name: 'gift',
       desc: '一份礼物',
-      subCommand: {
+      sendGift: {
         name: '发送',
         desc: '发送礼物给其他人',
         stringOptionName: '发送的礼物',
         stringOptionDesc: '发送的礼物',
         userOptionName: '接收者',
         userOptionDesc: '接收者名字'
+      },
+      createGift: {
+        name: '创建',
+        desc: '创建一个礼物在这个公会',
+        stringOptionName: '礼物名',
+        stringOptionDesc: '礼物的名字',
+        emojiOptionName: '礼物图案',
+        emojiOptionDesc: '礼物的图案',
+        numberOptionName: '礼物价格',
+        numberOptionDesc: '礼物的价格'
+      },
+      removeGift: {
+        name: '移除',
+        desc: '从公会移除礼物',
+        stringOptionName: '礼物名称',
+        stringOptionDesc: '礼物名称'
       }
     },
-    embedTitle: '你收到一份新的礼物',
-    embedDesc: '你收到一份新的礼物',
-    hasEnoughMoney: '你太穷了',
-    presetGifts: {
-      gift1: {
-        name: '飞机',
-        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/baoanduizhang.png',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} 收到来自老板${sender}的大飞机`
-        }
-      },
-      gift2: {
-        name: '火箭',
-        pictureURL: 'https://www.funnynation.org/wp-content/uploads/2022/04/chuoqi.png',
-        desc: '123123',
-        price: 200,
-        announcement (sender: User, receiver: User): string {
-          return `${receiver} 收到来自老板${sender}的大火箭`
-        }
-      }
-    }
+    hasEnoughMoney: '你太穷了'
   },
   dailyCheckIn: {
     titleForBooster: '你好呀Booster，今日签到成功',

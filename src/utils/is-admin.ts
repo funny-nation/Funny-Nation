@@ -7,6 +7,7 @@ import { getDbGuild } from '../models'
  */
 const isAdmin = async (member: GuildMember): Promise<boolean> => {
   let hasPermission = member.permissions.has('ADMINISTRATOR')
+  hasPermission = hasPermission || (member.guild.ownerId === member.id)
   const dbGuild = await getDbGuild(member.guild.id)
   if (dbGuild.administratorRoleID !== null) {
     hasPermission = hasPermission || member.roles.cache.has(dbGuild.administratorRoleID)
